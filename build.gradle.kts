@@ -35,6 +35,7 @@ dependencies {
 
     // Example library: Guava. Add what you need (and remove Guava if you don't use it)
     // implementation("com.google.guava:guava:28.1-jre")
+    implementation("com.google.code.gson:gson:2.10.1")
 
     // JavaFX: comment out if you do not need them
     val javaFxVersion = 15
@@ -55,7 +56,7 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
-//application {
-//    // Define the main class for the application
-//    mainClass.set("class-name")
-//}
+application {
+    // Define the main class for the application
+    mainClass.set("flowerforce.FlowerForce")
+}
