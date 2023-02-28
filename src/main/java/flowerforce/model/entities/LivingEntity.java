@@ -1,9 +1,20 @@
 package flowerforce.model.entities;
 
-public interface LivingEntity extends Entity{
+/**
+ * Models a in-game entity that has a health associated.
+ */
+public interface LivingEntity extends Entity {
 
+    /**
+     * 
+     * @return the remaining health
+     */
     double getHealth();
 
+    /**
+     * Called to do some damage on the entity.
+     * @param damage the damage to do
+     */
     void receiveDamage(double damage);
-    
+
 }
