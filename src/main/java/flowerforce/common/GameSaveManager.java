@@ -14,18 +14,19 @@ import java.util.Optional;
  */
 public final class GameSaveManager<T> {
 
-    private static final String SAVING_PATH = "C:/Users/Nicolas/Downloads/OOP22-flower-force";
-    private static final String SAVING_FILE_NAME = "savings.json";
-    private static final Gson GSON = new Gson();
+    private static final Gson GSON = new Gson(); //Instance to json text converter
 
-    private Class<T> genericClass;
+    private Class<T> genericClass; //class of the type to deserialize 
+    private String savingFilePath; //path of the savingFile
 
     /**
      * Create a new instance of the game saving manager.
      * @param genericClass the class of the generic type
+     * @param fileName the name for the saving file
      */
-    public GameSaveManager(final Class<T> genericClass) {
+    public GameSaveManager(final Class<T> genericClass, final String fileName) {
         this.genericClass = genericClass;
+        this.savingFilePath = System.getProperty("user.dir") + File.separator + fileName + ".json";
     }
 
     /**
@@ -34,7 +35,7 @@ public final class GameSaveManager<T> {
      * @return True if the save operation was successful, false otherwise.
      */
     public boolean save(final T p) {
-        try (FileWriter fw = new FileWriter(SAVING_PATH + File.separator + SAVING_FILE_NAME)) {
+        try (FileWriter fw = new FileWriter(savingFilePath)) {
             fw.write(GSON.toJson(p));
             return true;
 
@@ -50,7 +51,7 @@ public final class GameSaveManager<T> {
      *  empty if the file does not exist or in case of an error during the read operation.
      */
     public Optional<T> load() {
-        File file = new File(SAVING_PATH + File.separator + SAVING_FILE_NAME);
+        File file = new File(savingFilePath);
 
         if (!file.exists()) {
             return Optional.empty();
