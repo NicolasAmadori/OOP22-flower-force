@@ -10,6 +10,4 @@ public interface Entity {
 
     void update();
 
-    void setPosition(Point2D position);
-
 }

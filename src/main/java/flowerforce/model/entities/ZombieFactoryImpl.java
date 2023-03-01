@@ -1,5 +1,7 @@
 package flowerforce.model.entities;
 
+import javafx.geometry.Point2D;
+
 public class ZombieFactoryImpl implements ZombieFactory {
 
     private static final double BASIC_HEALTH = 1.0;
@@ -7,23 +9,28 @@ public class ZombieFactoryImpl implements ZombieFactory {
     private static final int BASIC_DELTA = 5;
 
     @Override
-    public Zombie basic() {
-        return new ZombieImpl(BASIC_DELTA, BASIC_DAMAGE, BASIC_HEALTH);
+    public Zombie basic(Point2D position) {
+        return new ZombieImpl(BASIC_DELTA, BASIC_DAMAGE, BASIC_HEALTH, position);
     }
 
     @Override
-    public Zombie withTrafficCone() {
-        return new ZombieImpl(BASIC_DELTA, BASIC_DAMAGE, BASIC_HEALTH*2);
+    public Zombie conehead(Point2D position) {
+        return new ZombieImpl(BASIC_DELTA, BASIC_DAMAGE, BASIC_HEALTH*3, position);
     }
 
     @Override
-    public Zombie withMetalBucket() {
-        return new ZombieImpl(BASIC_DELTA, BASIC_DAMAGE*2, BASIC_HEALTH*3);
+    public Zombie buckethead(Point2D position) {
+        return new ZombieImpl(BASIC_DELTA, BASIC_DAMAGE*2, BASIC_HEALTH*10, position);
     }
 
     @Override
-    public Zombie running() {
-        return new ZombieImpl(BASIC_DELTA*2, BASIC_DAMAGE, BASIC_HEALTH);
+    public Zombie running(Point2D position) {
+        return new ZombieImpl(BASIC_DELTA*2, BASIC_DAMAGE, BASIC_HEALTH, position);
+    }
+
+    @Override
+    public Zombie quarterback(Point2D position) {
+        return new ZombieImpl(BASIC_DELTA*2, BASIC_DAMAGE, BASIC_HEALTH*13, position);
     }
     
 }

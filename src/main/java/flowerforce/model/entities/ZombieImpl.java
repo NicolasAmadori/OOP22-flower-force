@@ -14,10 +14,11 @@ public class ZombieImpl implements Zombie {
     private boolean isFrozen;
     
 
-    protected ZombieImpl(final int delta, final double damage, final double health) {
+    protected ZombieImpl(final int delta, final double damage, final double health, final Point2D position) {
         this.delta = delta;
         this.damage = damage;
         this.health = health;
+        this.position = position;
         this.counter = 0;
         this.isFrozen = false;
     }
@@ -49,13 +50,8 @@ public class ZombieImpl implements Zombie {
             this.warmUp();
             this.counter = 0;
         }
-    }    
-
-    @Override
-    public void setPosition(Point2D position) {
-        this.position = position;
     }
-
+    
     @Override
     public double getHealth() {
         return this.health;
