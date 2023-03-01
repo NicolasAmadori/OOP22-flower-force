@@ -6,15 +6,9 @@ package flowerforce.model.entities;
 public interface Bullet extends ActiveEntity {
 
     /**
-     * 
-     * @return true if the bullet freezes the opponent
+     * Called to hit a zombie.
+     * @param zombie the zombie to hit
      */
-    boolean isFreezeBullet();
-
-    /**
-     * 
-     * @return true if the bullet warms up the opponent
-     */
-    boolean isFireBullet();
+    void hit(Zombie zombie);
 
 }
