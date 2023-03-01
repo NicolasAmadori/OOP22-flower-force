@@ -25,7 +25,7 @@ public class ZombieImpl implements Zombie {
 
     @Override
     public void move() {
-        this.position = this.position.subtract(this.isFrozen ? this.delta*ZombieImpl.FREEZE_FACTOR : this.delta, 0);
+        this.position = this.position.subtract(this.isFrozen ? (int)(this.delta*FREEZE_FACTOR) : this.delta, 0);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class ZombieImpl implements Zombie {
     @Override
     public void update() {
         this.counter++;
-        if (this.counter >= ZombieImpl.FREEZE_TIME) {
+        if (this.counter >= FREEZE_TIME) {
             this.warmUp();
             this.counter = 0;
         }
