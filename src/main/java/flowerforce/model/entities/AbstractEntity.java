@@ -25,4 +25,11 @@ public abstract class AbstractEntity implements Entity {
         this.timer.updateState();
     }
 
+    /**
+     * @return entity's timer.
+     */
+    protected Timer getTimer() {
+        return this.timer;
+    }
+
 }

@@ -27,7 +27,7 @@ public abstract class AbstractBullet extends AbstractActiveEntity implements Bul
      */
     @Override
     public void move() {
-        this.setPosition(new Point2D(this.getPosition().getX() + 1, this.getPosition().getY()));
+        this.setPosition(new Point2D(this.getPosition().getX(), this.getPosition().getY() + 1));
     }
 
     /**
