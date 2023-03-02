@@ -63,6 +63,4 @@ public class ShootingPlantImpl extends AbstractLivingEntity implements ShootingP
         super.update();
     }
 
-    
-
 }

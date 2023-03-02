@@ -12,5 +12,5 @@ public interface ShootingPlant extends LivingEntity {
      * @throws SecurityException
      * @throws NoSuchMethodException
      */
-    Optional<Bullet> nextBullet() throws NoSuchMethodException, SecurityException;
+    Optional<Bullet> nextBullet();
 }

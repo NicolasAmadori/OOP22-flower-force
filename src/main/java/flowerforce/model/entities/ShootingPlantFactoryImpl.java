@@ -15,27 +15,47 @@ public class ShootingPlantFactoryImpl {
      * {@inheritDoc}
      */
     ShootingPlant createShooter(final Point2D pos) {
-        return new ShootingPlantImpl(pos, new TimerImpl(STANDARD_SHOOTING_TIME), STANDARD_SHOOTER_HEALTH, StandardBullet.class);
+        return new ShootingPlantImpl(
+            pos,
+            new TimerImpl(STANDARD_SHOOTING_TIME),
+            STANDARD_SHOOTER_HEALTH,
+            StandardBullet.class
+        );
     }
 
     /**
      * {@inheritDoc}
      */
     ShootingPlant createSnowPlant(final Point2D pos) {
-        return new ShootingPlantImpl(pos, new TimerImpl(STANDARD_SHOOTING_TIME), STANDARD_SHOOTER_HEALTH, SnowBullet.class);
+        return new ShootingPlantImpl(
+            pos,
+            new TimerImpl(STANDARD_SHOOTING_TIME),
+            STANDARD_SHOOTER_HEALTH,
+            SnowBullet.class
+        );
     }
 
     /**
      * {@inheritDoc}
      */
     ShootingPlant createFirePlant(final Point2D pos) {
-        return new ShootingPlantImpl(pos, new TimerImpl(STANDARD_SHOOTING_TIME), STANDARD_SHOOTER_HEALTH, FireBullet.class);
+        return new ShootingPlantImpl(
+            pos,
+            new TimerImpl(STANDARD_SHOOTING_TIME),
+            STANDARD_SHOOTER_HEALTH,
+            FireBullet.class
+        );
     }
 
     /**
      * {@inheritDoc}
      */
     ShootingPlant createFastShooter(final Point2D pos) {
-        return new ShootingPlantImpl(pos, new TimerImpl(STANDARD_SHOOTING_TIME / 2), STANDARD_SHOOTER_HEALTH, StandardBullet.class);
+        return new ShootingPlantImpl(
+            pos,
+            new TimerImpl(STANDARD_SHOOTING_TIME / 2),
+            STANDARD_SHOOTER_HEALTH,
+            StandardBullet.class
+        );
     }
 }

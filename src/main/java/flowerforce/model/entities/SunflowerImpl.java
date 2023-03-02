@@ -3,6 +3,9 @@ package flowerforce.model.entities;
 import flowerforce.common.TimerImpl;
 import javafx.geometry.Point2D;
 
+/**
+ * Models a flower that doesn't attack zombies but produces suns.
+ */
 public class SunflowerImpl extends AbstractLivingEntity implements Sunflower {
 
 
@@ -17,9 +20,12 @@ public class SunflowerImpl extends AbstractLivingEntity implements Sunflower {
         super(pos, new TimerImpl(STANDARD_SUNPRODUCING_TIME), STANDARD_SUNFLOWER_HEALTH);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isSunGenerated() {
         return this.getTimer().isReady();
     }
-    
+
 }
