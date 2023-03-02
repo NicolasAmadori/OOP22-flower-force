@@ -1,9 +1,14 @@
 package flowerforce.model.entities;
 
-public interface Bullet extends ActiveEntity{
+/**
+ * Models a bullet, shot by some plants against zombies.
+ */
+public interface Bullet extends ActiveEntity {
 
-    boolean isFreezeBullet();
-
-    boolean isFireBullet();
+    /**
+     * Called to hit a zombie.
+     * @param zombie the zombie to hit
+     */
+    void hit(Zombie zombie);
 
 }
