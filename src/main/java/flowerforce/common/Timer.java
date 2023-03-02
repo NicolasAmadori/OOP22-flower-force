@@ -15,4 +15,9 @@ public interface Timer {
      * @return true if it's time to perform an action
      */
     boolean isReady();
+
+    /**
+     * Reset the timer to the initial value.
+     */
+    void reset();
 }

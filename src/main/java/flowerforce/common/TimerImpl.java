@@ -21,7 +21,7 @@ public class TimerImpl implements Timer {
      */
     @Override
     public void updateState() {
-        this.timerCyclesCount = (this.timerCyclesCount + 1) & this.nCycles;
+        this.timerCyclesCount = (this.timerCyclesCount + 1) % this.nCycles;
     }
 
     /**
@@ -29,7 +29,15 @@ public class TimerImpl implements Timer {
      */
     @Override
     public boolean isReady() {
-        return this.nCycles == 0;
+        return this.timerCyclesCount == 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void reset() {
+        this.timerCyclesCount = 0;
     }
 
 }

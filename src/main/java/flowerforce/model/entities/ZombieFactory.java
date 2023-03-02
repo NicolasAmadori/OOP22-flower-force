@@ -3,7 +3,7 @@ package flowerforce.model.entities;
 import javafx.geometry.Point2D;
 
 /**
- * Model a factory of different zombies.
+ * Factory of different istances of {@link Zombie}.
  */
 public interface ZombieFactory {
 
