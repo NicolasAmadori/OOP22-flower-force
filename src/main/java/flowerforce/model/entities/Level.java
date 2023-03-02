@@ -2,6 +2,9 @@ package flowerforce.model.entities;
 
 import java.util.List;
 
+/**
+ * It contains the information that characterizes each level of the game.
+ */
 public interface Level {
     /**
      * 
