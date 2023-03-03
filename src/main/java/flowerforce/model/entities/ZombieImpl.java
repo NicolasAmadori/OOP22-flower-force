@@ -17,7 +17,7 @@ public class ZombieImpl implements Zombie {
     private final Timer eatingTimer;
     private final Timer freezeTimer;
     private double health;
-    private Point2D position;  
+    private Point2D position;
     private boolean isFrozen;
     private boolean canBite;
 
@@ -30,10 +30,10 @@ public class ZombieImpl implements Zombie {
     protected ZombieImpl(final int delta, final double damage, final double health, final Point2D position) {
         this.delta = delta;
         this.damage = damage;
-        this.freezeTimer = new TimerImpl(this.delta*FREEZE_TIME_UNIT);
-        this.eatingTimer = new TimerImpl(this.delta*EATING_TIME_UNIT);
+        this.freezeTimer = new TimerImpl(this.delta * FREEZE_TIME_UNIT);
+        this.eatingTimer = new TimerImpl(this.delta * EATING_TIME_UNIT);
         this.health = health;
-        this.position = position;        
+        this.position = position;
         this.isFrozen = false;
         this.canBite = true;
     }
@@ -43,7 +43,7 @@ public class ZombieImpl implements Zombie {
      */
     @Override
     public void move() {
-        this.position = this.position.subtract(this.isFrozen ? (int)(this.delta*FREEZE_FACTOR) : this.delta, 0);
+        this.position = this.position.subtract(this.isFrozen ? (int) (this.delta * FREEZE_FACTOR) : this.delta, 0);
     }
 
     /**
@@ -77,7 +77,7 @@ public class ZombieImpl implements Zombie {
     public void update() {
         if (this.isFrozen) {
             this.freezeTimer.updateState();
-            if (this.freezeTimer.isReady()) {                
+            if (this.freezeTimer.isReady()) {
                 this.warmUp();
             }
         }
@@ -99,7 +99,7 @@ public class ZombieImpl implements Zombie {
      * {@inheritDoc}
      */
     @Override
-    public void receiveDamage(double damage) {
+    public void receiveDamage(final double damage) {
         this.health -= damage;
     }
 
