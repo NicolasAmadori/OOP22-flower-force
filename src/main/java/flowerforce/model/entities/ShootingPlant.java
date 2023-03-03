@@ -4,7 +4,7 @@ import java.util.Optional;
 /**
  * Models a plant that shoots bullets.
  */
-public interface ShootingPlant extends LivingEntity {
+public interface ShootingPlant extends Plant {
 
     /**
      * 
