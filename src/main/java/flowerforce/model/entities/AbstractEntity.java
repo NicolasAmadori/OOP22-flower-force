@@ -1,35 +1,36 @@
 package flowerforce.model.entities;
 
-import flowerforce.common.Timer;
+import javafx.geometry.Point2D;
 
 /**
  * Represents a generical entity.
  */
 public abstract class AbstractEntity implements Entity {
 
-    private final Timer timer;
+    private Point2D pos;
 
     /**
      * 
      * @param timer the timer used by the entity to do actions
      */
-    protected AbstractEntity(final Timer timer) {
-        this.timer = timer;
+    protected AbstractEntity(final Point2D pos) {
+        this.pos = pos;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void update() {
-        this.timer.updateState();
+    public Point2D getPosition() {
+        return this.pos;
     }
 
     /**
-     * @return entity's timer.
+     * Called by subclasses to update entity's position.
+     * @param newPos the position to update
      */
-    protected Timer getTimer() {
-        return this.timer;
+    protected void setPosition(final Point2D newPos) {
+        this.pos = newPos;
     }
 
 }

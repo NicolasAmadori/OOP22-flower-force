@@ -19,9 +19,4 @@ public interface Entity {
      */
     boolean isOver();
 
-    /**
-     * Called to update an entity's internal state.
-     */
-    void update();
-
 }

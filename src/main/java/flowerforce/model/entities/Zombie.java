@@ -1,13 +1,6 @@
 package flowerforce.model.entities;
 
-/**
- * Interface that models a Zombie.
- */
-public interface Zombie extends ActiveEntity, LivingEntity {
-
-    /**
-     * This method freezes the zombie, reducing its velocity.
-     */
+public interface Zombie extends MovingEntity, LivingEntity{
     void freeze();
 
     /**

@@ -56,11 +56,11 @@ public class ShootingPlantImpl extends AbstractLivingEntity implements ShootingP
      * {@inheritDoc}
      */
     @Override
-    public void update() {
+    public void updateState() {
         if (this.getTimer().isReady()) {
             this.canShoot = true;
         }
-        super.update();
+        super.updateState();
     }
 
 }

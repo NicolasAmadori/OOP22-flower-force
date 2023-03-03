@@ -10,6 +10,8 @@ public abstract class AbstractLivingEntity extends AbstractEntity implements Liv
 
     private double health;
     private final Point2D pos;
+    private final Timer timer;
+
 
     /**
      * 
@@ -18,8 +20,9 @@ public abstract class AbstractLivingEntity extends AbstractEntity implements Liv
      * @param health the starting health of the entity
      */
     protected AbstractLivingEntity(final Point2D pos, final Timer timer, final double health) {
-        super(timer);
+        super(pos);
         this.pos = pos;
+        this.timer = timer;
         this.health = health;
     }
 
@@ -53,6 +56,21 @@ public abstract class AbstractLivingEntity extends AbstractEntity implements Liv
     @Override
     public void receiveDamage(final double damage) {
         this.health -= damage;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void updateState() {
+        this.timer.updateState();
+    }
+
+    /**
+     * @return entity's timer.
+     */
+    protected Timer getTimer() {
+        return this.timer;
     }
 
 }
