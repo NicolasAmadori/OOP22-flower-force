@@ -14,7 +14,7 @@ public class ShootingPlantFactoryImpl implements ShootingPlantFactory {
     /**
      * {@inheritDoc}
      */
-    public ShootingPlant createCommonShooterPlant(final Point2D pos) {
+    public ShootingPlant common(final Point2D pos) {
         return new ShootingPlantImpl(
             pos,
             new TimerImpl(STANDARD_SHOOTING_TIME),
@@ -26,7 +26,7 @@ public class ShootingPlantFactoryImpl implements ShootingPlantFactory {
     /**
      * {@inheritDoc}
      */
-    public ShootingPlant createSnowPlant(final Point2D pos) {
+    public ShootingPlant snow(final Point2D pos) {
         return new ShootingPlantImpl(
             pos,
             new TimerImpl(STANDARD_SHOOTING_TIME),
@@ -38,7 +38,7 @@ public class ShootingPlantFactoryImpl implements ShootingPlantFactory {
     /**
      * {@inheritDoc}
      */
-    public ShootingPlant createFirePlant(final Point2D pos) {
+    public ShootingPlant fire(final Point2D pos) {
         return new ShootingPlantImpl(
             pos,
             new TimerImpl(STANDARD_SHOOTING_TIME),
@@ -50,7 +50,7 @@ public class ShootingPlantFactoryImpl implements ShootingPlantFactory {
     /**
      * {@inheritDoc}
      */
-    public ShootingPlant createFastShooterPlant(final Point2D pos) {
+    public ShootingPlant fast(final Point2D pos) {
         return new ShootingPlantImpl(
             pos,
             new TimerImpl(STANDARD_SHOOTING_TIME / 2),
