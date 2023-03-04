@@ -7,17 +7,14 @@ import javafx.geometry.Point2D;
 /**
  * Implementation of {@link Zombie}.
  */
-public class ZombieImpl implements Zombie {
+public class ZombieImpl extends AbstractLivingEntity implements Zombie {
 
     private static final double FREEZE_FACTOR = 0.5;
-    private static final int FREEZE_TIME_UNIT = 10; //updates for each delta
+    private static final int FREEZE_TIME_UNIT = 10; //updates for each delta unit
     private static final int EATING_TIME_UNIT = 2;
     private final int delta;
     private final double damage;
-    private final Timer eatingTimer;
     private final Timer freezeTimer;
-    private double health;
-    private Point2D position;
     private boolean isFrozen;
     private boolean canBite;
 
@@ -28,12 +25,10 @@ public class ZombieImpl implements Zombie {
      * @param position of the zombie
      */
     protected ZombieImpl(final int delta, final double damage, final double health, final Point2D position) {
+        super(position, new TimerImpl(delta * EATING_TIME_UNIT), health);
         this.delta = delta;
         this.damage = damage;
         this.freezeTimer = new TimerImpl(this.delta * FREEZE_TIME_UNIT);
-        this.eatingTimer = new TimerImpl(this.delta * EATING_TIME_UNIT);
-        this.health = health;
-        this.position = position;
         this.isFrozen = false;
         this.canBite = true;
     }
@@ -43,64 +38,26 @@ public class ZombieImpl implements Zombie {
      */
     @Override
     public void move() {
-        this.position = this.position.subtract(this.isFrozen ? (int) (this.delta * FREEZE_FACTOR) : this.delta, 0);
+        super.setPosition(super.getPosition().subtract(0, this.isFrozen ? (int) (this.delta * FREEZE_FACTOR) : this.delta));
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public double getDamage() {
-        return this.damage;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Point2D getPosition() {
-        return this.position;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isOver() {
-        return this.health <= 0;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void update() {
+    public void updateState() {
         if (this.isFrozen) {
             this.freezeTimer.updateState();
             if (this.freezeTimer.isReady()) {
                 this.warmUp();
             }
         }
-        this.eatingTimer.updateState();
-        if (this.eatingTimer.isReady()) {
-            this.canBite = true;
+        if (!this.canBite) {
+            super.updateState();
+            if (super.getTimer().isReady()) {
+                this.canBite = true;
+            }
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public double getHealth() {
-        return this.health;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void receiveDamage(final double damage) {
-        this.health -= damage;
     }
 
     /**
@@ -124,11 +81,12 @@ public class ZombieImpl implements Zombie {
      * {@inheritDoc}
      */
     @Override
-    public boolean bite() {
+    public void manageEating(final Plant plant) {
         if (this.canBite) {
-            this.eatingTimer.reset();
+            plant.receiveDamage(this.damage);
+            super.getTimer().reset();
+            this.canBite = false;
         }
-        return this.canBite;
     }
 
 }

@@ -17,4 +17,9 @@ public interface LivingEntity extends Entity {
      */
     void receiveDamage(double damage);
 
+    /**
+     * Called to update an entity's internal state.
+     */
+    void updateState();
+
 }
