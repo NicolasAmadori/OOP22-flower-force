@@ -15,7 +15,6 @@ public abstract class AbstractBullet extends AbstractEntity implements Bullet {
     /**
      * 
      * @param pos the initial position to place the bullet in
-     * @param timer used to move at the right time
      * @param damage the damage that the bullet does to zombies
      */
     protected AbstractBullet(final Point2D pos, final double damage) {

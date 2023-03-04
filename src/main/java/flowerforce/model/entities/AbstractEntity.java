@@ -11,7 +11,7 @@ public abstract class AbstractEntity implements Entity {
 
     /**
      * 
-     * @param timer the timer used by the entity to do actions
+     * @param pos the position of the entity
      */
     protected AbstractEntity(final Point2D pos) {
         this.pos = pos;
