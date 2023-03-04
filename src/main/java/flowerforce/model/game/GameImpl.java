@@ -36,7 +36,7 @@ public class GameImpl {
     }
 
     private void generateSun() {
-        if(sunTimer.isReady()){
+        if (sunTimer.isReady()) {
             sun += SUN_VALUE;
             sunTimer.reset();
         }
@@ -47,7 +47,7 @@ public class GameImpl {
 
     private void collidingBullet() {
          for (var bullet : bullets) {
-             for (var zombie : zombies ) {
+             for (var zombie : zombies) {
                  bullet.hit(zombie);
              }
          }
@@ -57,7 +57,7 @@ public class GameImpl {
 
     private void eatingPlant() {
         for (var plant : plants) {
-            for (var zombie : zombies ) {
+            for (var zombie : zombies) {
             }
         }
         plants = plants.stream().filter(p -> !p.isOver()).toList();
@@ -65,13 +65,13 @@ public class GameImpl {
     }
 
     private void updatePlant() {
-        for(var plant : plants) {
-            if(plant instanceof Sunflower) {
-                if(((Sunflower) plant).isSunGenerated()) {
+        for (var plant : plants) {
+            if (plant instanceof Sunflower) {
+                if (((Sunflower) plant).isSunGenerated()) {
                     sun += SUN_VALUE;
                 }
                 else {
-                    ((Sunflower) plant).update();
+                    ((Sunflower) plant).updateState();
                 }
             }
             else {
@@ -79,7 +79,7 @@ public class GameImpl {
                 if (!bullet.isEmpty()) {
                     bullets.add(bullet.get());
                 }
-                ((ShootingPlant) plant).update();
+                ((ShootingPlant) plant).updateState();
             }
         }
     }

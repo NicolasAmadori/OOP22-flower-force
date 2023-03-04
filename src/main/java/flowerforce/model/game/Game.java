@@ -1,12 +1,11 @@
 package flowerforce.model.game;
 
-import flowerforce.model.entities.Plant;
-
-import java.util.HashMap;
-
 /**
- * Models the develpment of the game
+ * Models the development of the game.
  */
 public interface Game {
+    /**
+     *
+     */
     void update();
 }

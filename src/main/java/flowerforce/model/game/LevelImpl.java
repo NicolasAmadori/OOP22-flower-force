@@ -30,7 +30,9 @@ public class LevelImpl implements Level {
         this.nZombie = nZombie;
     }
 
-
+    /**
+     * {@inheritDoc}.
+     */
     @Override
     public int getLevelCoins() {
         return this.coins;
