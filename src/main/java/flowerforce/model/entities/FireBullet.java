@@ -1,6 +1,5 @@
 package flowerforce.model.entities;
 
-import flowerforce.common.TimerImpl;
 import javafx.geometry.Point2D;
 
 /**
@@ -15,7 +14,7 @@ public class FireBullet extends AbstractBullet {
      * @param pos the position to place the bullet in
      */
     public FireBullet(final Point2D pos) {
-        super(pos, new TimerImpl(getStandardSpeed()), getStandardDamage() + ADDITIONAL_DAMAGE);
+        super(pos, getStandardDamage() + ADDITIONAL_DAMAGE);
     }
 
     /**

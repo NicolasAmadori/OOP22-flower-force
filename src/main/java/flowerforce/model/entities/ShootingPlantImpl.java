@@ -13,6 +13,7 @@ import javafx.geometry.Point2D;
 public class ShootingPlantImpl extends AbstractLivingEntity implements ShootingPlant {
 
     private final Class<?> bulletClass;
+    private boolean canShoot;
 
     /**
      * 
@@ -45,7 +46,21 @@ public class ShootingPlantImpl extends AbstractLivingEntity implements ShootingP
         ) {
             return Optional.empty();
         }
-        return Optional.of(bullet).filter(e -> this.getTimer().isReady());
+        final Optional<Bullet> optBullet = Optional.of(bullet).filter(e -> this.canShoot);
+        this.canShoot = false;
+        this.getTimer().reset();
+        return optBullet;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void updateState() {
+        if (this.getTimer().isReady()) {
+            this.canShoot = true;
+        }
+        super.updateState();
     }
 
 }

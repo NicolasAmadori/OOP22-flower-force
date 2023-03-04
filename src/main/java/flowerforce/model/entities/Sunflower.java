@@ -3,7 +3,7 @@ package flowerforce.model.entities;
 /**
  * Models a plant that doesn't shoot bullets and produce suns.
  */
-public interface UtilityPlant {
+public interface Sunflower extends Plant {
 
     /**
      * 

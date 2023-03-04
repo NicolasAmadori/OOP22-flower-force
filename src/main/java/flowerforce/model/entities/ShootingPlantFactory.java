@@ -12,7 +12,7 @@ public interface ShootingPlantFactory {
      * @param pos the position where to place it
      * @return a Common Shooter Plant
      */
-    ShootingPlant createShooter(Point2D pos);
+    ShootingPlant createCommonShooterPlant(Point2D pos);
 
     /**
      * 
@@ -33,5 +33,5 @@ public interface ShootingPlantFactory {
      * @param pos the position where to place it
      * @return a Fast Shooter Plant
      */
-    ShootingPlant createFastShooter(Point2D pos);
+    ShootingPlant createFastShooterPlant(Point2D pos);
 }
