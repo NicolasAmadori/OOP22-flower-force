@@ -3,6 +3,7 @@ package flowerforce.model.game;
 import flowerforce.model.entities.Bullet;
 import flowerforce.model.entities.Plant;
 import flowerforce.model.entities.Zombie;
+import javafx.geometry.Point2D;
 
 import java.util.List;
 
@@ -39,4 +40,17 @@ public interface Game {
      */
     List<Bullet> getBullet();
 
+    /**
+     * If possible, place a plant in the field.
+     * @param idPlant Plant type ID to place
+     * @param position Coordinates of the plant to be placed
+     * @return True if the plant has been placed
+     */
+    boolean placePlant(int idPlant, Point2D position);
+
+    /**
+     * Determine if the game has ended.
+     * @return True if the game has ended
+     */
+    boolean isOver();
 }
