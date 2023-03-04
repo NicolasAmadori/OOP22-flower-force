@@ -6,7 +6,7 @@ import javafx.geometry.Point2D;
 /**
  * An implementation of ShootingPlantFactory.
  */
-public class ShootingPlantFactoryImpl {
+public class ShootingPlantFactoryImpl implements ShootingPlantFactory {
 
     private static final int STANDARD_SHOOTING_TIME = 60;
     private static final double STANDARD_SHOOTER_HEALTH = 100.0;
@@ -14,7 +14,7 @@ public class ShootingPlantFactoryImpl {
     /**
      * {@inheritDoc}
      */
-    ShootingPlant createShooter(final Point2D pos) {
+    public ShootingPlant createCommonShooterPlant(final Point2D pos) {
         return new ShootingPlantImpl(
             pos,
             new TimerImpl(STANDARD_SHOOTING_TIME),
@@ -26,7 +26,7 @@ public class ShootingPlantFactoryImpl {
     /**
      * {@inheritDoc}
      */
-    ShootingPlant createSnowPlant(final Point2D pos) {
+    public ShootingPlant createSnowPlant(final Point2D pos) {
         return new ShootingPlantImpl(
             pos,
             new TimerImpl(STANDARD_SHOOTING_TIME),
@@ -38,7 +38,7 @@ public class ShootingPlantFactoryImpl {
     /**
      * {@inheritDoc}
      */
-    ShootingPlant createFirePlant(final Point2D pos) {
+    public ShootingPlant createFirePlant(final Point2D pos) {
         return new ShootingPlantImpl(
             pos,
             new TimerImpl(STANDARD_SHOOTING_TIME),
@@ -50,7 +50,7 @@ public class ShootingPlantFactoryImpl {
     /**
      * {@inheritDoc}
      */
-    ShootingPlant createFastShooter(final Point2D pos) {
+    public ShootingPlant createFastShooterPlant(final Point2D pos) {
         return new ShootingPlantImpl(
             pos,
             new TimerImpl(STANDARD_SHOOTING_TIME / 2),
@@ -58,4 +58,5 @@ public class ShootingPlantFactoryImpl {
             StandardBullet.class
         );
     }
+
 }
