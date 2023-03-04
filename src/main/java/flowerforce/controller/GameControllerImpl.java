@@ -1,11 +1,26 @@
 package flowerforce.controller;
 
+import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.Map;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 
 /**
  * {@inheritDoc}.
  */
 public class GameControllerImpl implements GameController {
+
+    @FXML
+    public void provaClick(ActionEvent e) {
+        System.out.println("Click bottone avvenuto");
+    }
+
+    @FXML
+    public void regionClick(MouseEvent e) throws IOException {
+        System.out.println("Click region avvenuto");
+    }
 
     /**
      * {@inheritDoc}

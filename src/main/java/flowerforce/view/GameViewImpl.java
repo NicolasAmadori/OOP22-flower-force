@@ -14,7 +14,7 @@ public class GameViewImpl extends Application implements GameView  {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(ClassLoader.getSystemResource("flowerforce/game/Main.fxml"));
+        Parent root = FXMLLoader.load(ClassLoader.getSystemResource("flowerforce/game/Garden.fxml"));
         Scene scene = new Scene(root);
 
         primaryStage.setTitle("Titolo prova");

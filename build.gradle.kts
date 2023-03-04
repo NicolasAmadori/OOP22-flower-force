@@ -38,7 +38,7 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
 
     // JavaFX: comment out if you do not need them
-    val javaFxVersion = 15
+    val javaFxVersion = 19
     for (platform in supportedPlatforms) {
         for (module in javaFXModules) {
             implementation("org.openjfx:javafx-$module:$javaFxVersion:$platform")
