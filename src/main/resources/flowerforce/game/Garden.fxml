@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="gamePane" maxHeight="-Infinity" maxWidth="-Infinity" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="flowerforce.controller.GameControllerImpl">
    <children>
@@ -16,6 +17,18 @@
             <Image url="@images/Garden.png" />
          </image>
       </ImageView>
+       <ImageView fitHeight="96.0" fitWidth="86.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+           <image>
+               <Image url="@images/bar.jpeg" />
+           </image>
+       </ImageView>
+       <Button fx:id="btnSunflower" layoutX="3.0" layoutY="140.0" mnemonicParsing="false" onAction="#selectSunflower" prefHeight="52.0" prefWidth="96.0" text="Sunflower" />
+       <Button fx:id="btnPeashooter" layoutX="4.0" layoutY="206.0" mnemonicParsing="false" onAction="#selectPeashooter" prefHeight="52.0" prefWidth="96.0" text="Peashooter" />
+       <Label fx:id="lblSunCounter" alignment="CENTER" layoutX="22.0" layoutY="84.0" prefHeight="25.0" prefWidth="64.0" text="500">
+           <font>
+               <Font size="18.0" />
+           </font>
+       </Label>
       <GridPane fx:id="griglia" layoutX="390.0" layoutY="100.0" prefHeight="570.0" prefWidth="855.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -36,197 +49,196 @@
             <RowConstraints maxHeight="139.73334960937495" minHeight="10.0" prefHeight="114.1333129882812" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="0">
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="0">
                  <image>
                      <Image url="@images/sunflower.gif" />
                  </image></ImageView>
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="1">
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="1">
                  <image>
                      <Image url="@images/sunflower.gif" />
                  </image></ImageView>
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="2">
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="2">
                  <image>
                      <Image url="@images/sunflower.gif" />
                  </image></ImageView>
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="3">
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="3">
                  <image>
                      <Image url="@images/sunflower.gif" />
                  </image></ImageView>
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="4">
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="4">
                  <image>
                      <Image url="@images/sunflower.gif" />
                  </image></ImageView>
 
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="0">
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="0">
                  <image>
                      <Image url="@images/peashooter.gif" />
                  </image></ImageView>
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
                  <image>
                      <Image url="@images/peashooter.gif" />
                  </image></ImageView>
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
                  <image>
                      <Image url="@images/peashooter.gif" />
                  </image></ImageView>
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
                  <image>
                      <Image url="@images/peashooter.gif" />
                  </image></ImageView>
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                 <image>
-                     <Image url="@images/peashooter.gif" />
-                 </image></ImageView>
-
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="0">
-                 <image>
-                     <Image url="@images/peashooter.gif" />
-                 </image></ImageView>
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                 <image>
-                     <Image url="@images/peashooter.gif" />
-                 </image></ImageView>
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                 <image>
-                     <Image url="@images/peashooter.gif" />
-                 </image></ImageView>
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="3">
-                 <image>
-                     <Image url="@images/peashooter.gif" />
-                 </image></ImageView>
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="4">
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
                  <image>
                      <Image url="@images/peashooter.gif" />
                  </image></ImageView>
 
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="0">
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="0">
                  <image>
                      <Image url="@images/peashooter.gif" />
                  </image></ImageView>
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1">
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
                  <image>
                      <Image url="@images/peashooter.gif" />
                  </image></ImageView>
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="2">
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2">
                  <image>
                      <Image url="@images/peashooter.gif" />
                  </image></ImageView>
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="3">
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="3">
                  <image>
                      <Image url="@images/peashooter.gif" />
                  </image></ImageView>
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="4">
-                 <image>
-                     <Image url="@images/peashooter.gif" />
-                 </image></ImageView>
-
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="0">
-                 <image>
-                     <Image url="@images/peashooter.gif" />
-                 </image></ImageView>
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="1">
-                 <image>
-                     <Image url="@images/peashooter.gif" />
-                 </image></ImageView>
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="2">
-                 <image>
-                     <Image url="@images/peashooter.gif" />
-                 </image></ImageView>
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="3">
-                 <image>
-                     <Image url="@images/peashooter.gif" />
-                 </image></ImageView>
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="4">
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="4">
                  <image>
                      <Image url="@images/peashooter.gif" />
                  </image></ImageView>
 
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="0">
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="0">
                  <image>
                      <Image url="@images/peashooter.gif" />
                  </image></ImageView>
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="1">
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1">
                  <image>
                      <Image url="@images/peashooter.gif" />
                  </image></ImageView>
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="2">
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="2">
                  <image>
                      <Image url="@images/peashooter.gif" />
                  </image></ImageView>
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="3">
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="3">
                  <image>
                      <Image url="@images/peashooter.gif" />
                  </image></ImageView>
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="4">
-                 <image>
-                     <Image url="@images/peashooter.gif" />
-                 </image></ImageView>
-
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="0">
-                 <image>
-                     <Image url="@images/peashooter.gif" />
-                 </image></ImageView>
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="1">
-                 <image>
-                     <Image url="@images/peashooter.gif" />
-                 </image></ImageView>
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="2">
-                 <image>
-                     <Image url="@images/peashooter.gif" />
-                 </image></ImageView>
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="3">
-                 <image>
-                     <Image url="@images/peashooter.gif" />
-                 </image></ImageView>
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="4">
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="4">
                  <image>
                      <Image url="@images/peashooter.gif" />
                  </image></ImageView>
 
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="0">
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="0">
                  <image>
                      <Image url="@images/peashooter.gif" />
                  </image></ImageView>
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="1">
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="1">
                  <image>
                      <Image url="@images/peashooter.gif" />
                  </image></ImageView>
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="2">
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="2">
                  <image>
                      <Image url="@images/peashooter.gif" />
                  </image></ImageView>
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="3">
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="3">
                  <image>
                      <Image url="@images/peashooter.gif" />
                  </image></ImageView>
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="4">
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="4">
                  <image>
                      <Image url="@images/peashooter.gif" />
                  </image></ImageView>
 
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="8" GridPane.rowIndex="0">
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="0">
                  <image>
                      <Image url="@images/peashooter.gif" />
                  </image></ImageView>
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="8" GridPane.rowIndex="1">
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="1">
                  <image>
                      <Image url="@images/peashooter.gif" />
                  </image></ImageView>
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="8" GridPane.rowIndex="2">
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="2">
                  <image>
                      <Image url="@images/peashooter.gif" />
                  </image></ImageView>
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="8" GridPane.rowIndex="3">
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="3">
                  <image>
                      <Image url="@images/peashooter.gif" />
                  </image></ImageView>
-             <ImageView fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="8" GridPane.rowIndex="4">
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="4">
+                 <image>
+                     <Image url="@images/peashooter.gif" />
+                 </image></ImageView>
+
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="0">
+                 <image>
+                     <Image url="@images/peashooter.gif" />
+                 </image></ImageView>
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="1">
+                 <image>
+                     <Image url="@images/peashooter.gif" />
+                 </image></ImageView>
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="2">
+                 <image>
+                     <Image url="@images/peashooter.gif" />
+                 </image></ImageView>
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="3">
+                 <image>
+                     <Image url="@images/peashooter.gif" />
+                 </image></ImageView>
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="4">
+                 <image>
+                     <Image url="@images/peashooter.gif" />
+                 </image></ImageView>
+
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="0">
+                 <image>
+                     <Image url="@images/peashooter.gif" />
+                 </image></ImageView>
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="1">
+                 <image>
+                     <Image url="@images/peashooter.gif" />
+                 </image></ImageView>
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="2">
+                 <image>
+                     <Image url="@images/peashooter.gif" />
+                 </image></ImageView>
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="3">
+                 <image>
+                     <Image url="@images/peashooter.gif" />
+                 </image></ImageView>
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.rowIndex="4">
+                 <image>
+                     <Image url="@images/peashooter.gif" />
+                 </image></ImageView>
+
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="8" GridPane.rowIndex="0">
+                 <image>
+                     <Image url="@images/peashooter.gif" />
+                 </image></ImageView>
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="8" GridPane.rowIndex="1">
+                 <image>
+                     <Image url="@images/peashooter.gif" />
+                 </image></ImageView>
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="8" GridPane.rowIndex="2">
+                 <image>
+                     <Image url="@images/peashooter.gif" />
+                 </image></ImageView>
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="8" GridPane.rowIndex="3">
+                 <image>
+                     <Image url="@images/peashooter.gif" />
+                 </image></ImageView>
+             <ImageView fitHeight="96.0" fitWidth="96.0" onMouseClicked="#cellClicked" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="8" GridPane.rowIndex="4">
                  <image>
                      <Image url="@images/peashooter.gif" />
                  </image></ImageView>
 
          </children>
       </GridPane>
-      <Button fx:id="btnProva" layoutX="167.0" layoutY="203.0" mnemonicParsing="false" text="Button" />
    </children>
 </AnchorPane>

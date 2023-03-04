@@ -1,22 +1,22 @@
 package flowerforce.controller;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
-import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-
 
 /**
  * {@inheritDoc}.
@@ -27,22 +27,48 @@ public class GameControllerImpl implements GameController, Initializable {
     private AnchorPane gamePane;
 
     @FXML
-    private Button btnProva;
-
-    @FXML
     private ImageView imgBackground;
 
     @FXML
     private GridPane griglia;
 
     @FXML
-    void entered(MouseEvent event) {
-        System.out.println("ARGH");
+    private Button btnSunflower;
+
+    @FXML
+    private Button btnPeashooter;
+
+    @FXML
+    private Label lblSunCounter;
+
+    @FXML
+    void selectPeashooter(ActionEvent event) {
+        System.out.println("Peashooter selected");
     }
 
     @FXML
-    void regionClicked(ActionEvent event) {
-        System.out.println("ARGH");
+    void selectSunflower(ActionEvent event) {
+        System.out.println("Sunflower selected");
+    }
+
+    @FXML
+    void cellClicked(MouseEvent event) {
+        Node source = (Node) event.getSource();
+        System.out.println(griglia.getColumnIndex(source) + " " + griglia.getRowIndex(source));
+    }
+
+    /**
+     * Called to initialize a controller after its root element has been
+     * completely processed.
+     *
+     * @param location  The location used to resolve relative paths for the root object, or
+     *                  {@code null} if the location is not known.
+     * @param resources The resources used to localize the root object, or {@code null} if
+     *                  the root object was not localized.
+     */
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        setWindowSize();
     }
 
     /**
@@ -81,33 +107,15 @@ public class GameControllerImpl implements GameController, Initializable {
         throw new UnsupportedOperationException("Unimplemented method 'startInfiniteGame'");
     }
 
-    /**
-     * Called to initialize a controller after its root element has been
-     * completely processed.
-     *
-     * @param location  The location used to resolve relative paths for the root object, or
-     *                  {@code null} if the location is not known.
-     * @param resources The resources used to localize the root object, or {@code null} if
-     *                  the root object was not localized.
-     */
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        //setWindowSize();
-
-        griglia.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
-            @Override
-            public void handle(javafx.scene.input.MouseEvent event) {
-                Node source = (Node) event.getTarget();
-                System.out.println(griglia.getColumnIndex(source) + " " + griglia.getRowIndex(source));
-            }
-        });
-    }
-
     private void setWindowSize() {
         final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        imgBackground.setFitHeight(screenSize.getHeight() - 200);
+        imgBackground.setFitWidth(screenSize.getWidth() - 200);
         gamePane.setPrefWidth(screenSize.getWidth() - 200);
         gamePane.setPrefHeight(screenSize.getHeight() - 200);
-        imgBackground.setFitWidth(gamePane.getPrefWidth());
-        imgBackground.setFitHeight(gamePane.getPrefHeight());
+        gamePane.setLeftAnchor(imgBackground, 0.0);
+        gamePane.setRightAnchor(imgBackground, 0.0);
+        gamePane.setTopAnchor(imgBackground, 0.0);
+        gamePane.setBottomAnchor(imgBackground, 0.0);
     }
 }
