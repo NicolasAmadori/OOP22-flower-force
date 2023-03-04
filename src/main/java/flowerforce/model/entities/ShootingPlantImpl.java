@@ -35,7 +35,7 @@ public class ShootingPlantImpl extends AbstractLivingEntity implements ShootingP
         Bullet bullet;
         try {
             final Constructor<?> constr = this.bulletClass.getConstructor(Point2D.class);
-            bullet = (Bullet) constr.newInstance();
+            bullet = (Bullet) constr.newInstance(new Point2D(this.getPosition().getX(), this.getPosition().getY() + 1));
         } catch (
             InvocationTargetException
             | SecurityException
