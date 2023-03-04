@@ -1,4 +1,4 @@
-package flowerforce.model.entities;
+package flowerforce.model.game;
 
 import java.util.List;
 
@@ -30,9 +30,7 @@ public class LevelImpl implements Level {
         this.nZombie = nZombie;
     }
 
-    /**
-     * {@inheritDoc}.
-     */
+
     @Override
     public int getLevelCoins() {
         return this.coins;
@@ -44,7 +42,6 @@ public class LevelImpl implements Level {
     @Override
     public List<Integer> getPlantsId() {
         return this.avaiablePlants;
-
     }
 
     /**

@@ -1,4 +1,4 @@
-package flowerforce.model.entities;
+package flowerforce.model.game;
 
 import java.util.List;
 
