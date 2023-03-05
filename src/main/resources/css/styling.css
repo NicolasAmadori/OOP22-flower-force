@@ -1,0 +1,50 @@
+.root{
+    -fx-background-image: url("./../flowerforce/game/images/levelmenu.png");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 100% 100%;
+}
+
+.btn {
+    -fx-background-color: transparent;
+    -fx-min-width: 0;
+    -fx-min-height: 0;
+    -fx-max-width: 1000;
+    -fx-max-height: 1000;
+    -fx-pref-width: 70;
+    -fx-pref-height: 70;
+}
+
+.flowpane {
+    -fx-padding: 10;
+    -fx-hgap: 60;
+    -fx-vgap: 10;
+}
+
+#lvl1 {
+    -fx-background-image: url("./../flowerforce/game/images/L1.png");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 100% 100%;
+}
+
+#lvl2 {
+    -fx-background-image: url("./../flowerforce/game/images/L2.png");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 100% 100%;
+}
+
+#lvl3 {
+    -fx-background-image: url("./../flowerforce/game/images/L3.png");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 100% 100%;
+}
+
+#lvladv {
+    -fx-background-image: url("./../flowerforce/game/images/Ladventure.png");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 100% 100%;
+}

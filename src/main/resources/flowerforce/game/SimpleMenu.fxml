@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="root" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <FlowPane layoutX="59.0" layoutY="125.0" prefHeight="200.0" prefWidth="482.0" styleClass="flowpane">
+         <children>
+            <Button id="lvl1" mnemonicParsing="false" styleClass="btn" />
+            <Button id="lvl2" mnemonicParsing="false" styleClass="btn" />
+            <Button id="lvl3" mnemonicParsing="false" styleClass="btn" />
+            <Button id="lvladv" mnemonicParsing="false" styleClass="btn" text="Avventura" />
+         </children>
+      </FlowPane>
+   </children>
+</AnchorPane>
