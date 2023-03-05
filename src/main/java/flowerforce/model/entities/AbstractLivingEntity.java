@@ -9,7 +9,6 @@ import javafx.geometry.Point2D;
 public abstract class AbstractLivingEntity extends AbstractEntity implements LivingEntity {
 
     private double health;
-    private final Point2D pos;
     private final Timer timer;
 
 
@@ -21,18 +20,10 @@ public abstract class AbstractLivingEntity extends AbstractEntity implements Liv
      */
     protected AbstractLivingEntity(final Point2D pos, final Timer timer, final double health) {
         super(pos);
-        this.pos = pos;
         this.timer = timer;
         this.health = health;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Point2D getPosition() {
-        return this.pos;
-    }
 
     /**
      * {@inheritDoc}
