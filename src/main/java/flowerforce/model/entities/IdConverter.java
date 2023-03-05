@@ -87,15 +87,15 @@ public final class IdConverter {
     public static Plant createPlant(final Plants plantType, final Point2D pos) {
         switch (plantType) {
             case SUNFLOWER:
-                return new SunflowerImpl(pos);
+                return new SunflowerImpl(pos, plantType);
             case COMMONSHOOTER:
-                return SHOOTING_PLANT_FACTORY.common(pos);
+                return SHOOTING_PLANT_FACTORY.common(pos, plantType);
             case SNOWSHOOTER:
-                return SHOOTING_PLANT_FACTORY.snow(pos);
+                return SHOOTING_PLANT_FACTORY.snow(pos, plantType);
             case FASTSHOOTER:
-                return SHOOTING_PLANT_FACTORY.fast(pos);
+                return SHOOTING_PLANT_FACTORY.fast(pos, plantType);
             case FIRESHOOTER:
-                return SHOOTING_PLANT_FACTORY.fire(pos);
+                return SHOOTING_PLANT_FACTORY.fire(pos, plantType);
             default:
                 throw new IllegalStateException("ERROR: plant type has not been identified");
         }
