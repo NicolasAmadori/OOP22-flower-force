@@ -6,6 +6,7 @@ import javafx.geometry.Point2D;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Manages the development of the game.
@@ -13,10 +14,11 @@ import java.util.List;
 public class GameImpl implements Game {
     private static final int TIME_TO_SPAWN_SUN = 50;
     private static final int SUN_VALUE = 25;
+    private static final int INITIAL_SUN = 2;
     private List<Plant> plants = new LinkedList<>();
     private List<Zombie> zombies = new LinkedList<>();
     private List<Bullet> bullets = new LinkedList<>();
-    private final TimerImpl timer;
+    private TimerImpl zombieTimer;
     private final TimerImpl sunTimer;
     private final Level level;
     private int sun;
@@ -26,8 +28,9 @@ public class GameImpl implements Game {
      * @param level level of the game that has started.
      */
     public GameImpl(final Level level) {
+        sun = INITIAL_SUN * SUN_VALUE;
         this.level = level;
-        timer = new TimerImpl(level.getTotalZombies());
+        zombieTimer = new TimerImpl(level.getTotalZombies());
         sunTimer = new TimerImpl(TIME_TO_SPAWN_SUN);
         remainingZombie = level.getTotalZombies();
     }
@@ -44,7 +47,6 @@ public class GameImpl implements Game {
         this.collidingBullet();
         this.eatingPlant();
         this.updatePlant();
-        timer.updateState();
     }
 
     /**
@@ -52,7 +54,7 @@ public class GameImpl implements Game {
      */
     @Override
     public List<Zombie> getZombies() {
-        return zombies;
+        return this.zombies;
     }
 
     /**
@@ -60,7 +62,7 @@ public class GameImpl implements Game {
      */
     @Override
     public List<Plant> getPlants() {
-        return plants;
+        return this.plants;
     }
 
     /**
@@ -76,20 +78,30 @@ public class GameImpl implements Game {
      */
     @Override
     public List<Bullet> getBullet() {
-        return bullets;
+        return this.bullets;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public boolean placePlant(final int idPlant, final Point2D position) {
+    public Integer getSun() {
+        return this.sun;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean placePlant(final IdConverter.Plants idPlant, final Point2D position) {
         for (var plant : plants) {
             if (plant.getPosition().equals(position)) {
                 return false;
             }
         }
-        //plants.add();
+        var plant = IdConverter.createPlant(idPlant, position);
+        //sun = plant.ge
+        plants.add(plant);
         return true;
     }
 
@@ -175,8 +187,12 @@ public class GameImpl implements Game {
      *
      */
     private void generateZombie() {
-
+        if (zombieTimer.isReady()) {
+            Random randomZombie = new Random();
+            zombieTimer = new TimerImpl(remainingZombie);
+            remainingZombie--;
+        }
+        zombieTimer.updateState();
     }
-
 
 }
