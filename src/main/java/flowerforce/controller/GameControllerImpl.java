@@ -13,6 +13,7 @@ import javafx.scene.Node;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -55,6 +56,12 @@ public class GameControllerImpl implements GameController, Initializable {
     void cellClicked(MouseEvent event) {
         Node source = (Node) event.getSource();
         System.out.println(griglia.getColumnIndex(source) + " " + griglia.getRowIndex(source));
+
+        ImageView newPlant = new ImageView(new Image("flowerforce/icon.png"));
+        newPlant.setOnMouseClicked(this::cellClicked);
+
+        griglia.add(newPlant, griglia.getColumnIndex(source), griglia.getRowIndex(source));
+        griglia.getChildren().remove(source);
     }
 
     /**
@@ -109,13 +116,9 @@ public class GameControllerImpl implements GameController, Initializable {
 
     private void setWindowSize() {
         final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        imgBackground.setFitHeight(screenSize.getHeight() - 200);
-        imgBackground.setFitWidth(screenSize.getWidth() - 200);
-        gamePane.setPrefWidth(screenSize.getWidth() - 200);
-        gamePane.setPrefHeight(screenSize.getHeight() - 200);
-        gamePane.setLeftAnchor(imgBackground, 0.0);
-        gamePane.setRightAnchor(imgBackground, 0.0);
-        gamePane.setTopAnchor(imgBackground, 0.0);
-        gamePane.setBottomAnchor(imgBackground, 0.0);
+        //imgBackground.setFitHeight(screenSize.getHeight());
+        //imgBackground.setFitWidth(screenSize.getWidth());
+        //gamePane.setPrefWidth(screenSize.getWidth());
+        //gamePane.setPrefHeight(screenSize.getHeight());
     }
 }
