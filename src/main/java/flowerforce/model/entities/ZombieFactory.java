@@ -1,5 +1,6 @@
 package flowerforce.model.entities;
 
+import flowerforce.model.entities.IdConverter.Zombies;
 import javafx.geometry.Point2D;
 
 /**
@@ -12,34 +13,34 @@ public interface ZombieFactory {
      * @param zombieType the type of zombie
      * @return a basic zombie
      */
-    Zombie basic(Point2D position, IdConverter.Zombies zombieType);
+    Zombie basic(Point2D position, Zombies zombieType);
 
     /** 
      * @param position where it is initially placed
      * @param zombieType the type of zombie
      * @return a medium-resistance zombie
      */
-    Zombie conehead(Point2D position, IdConverter.Zombies zombieType);
+    Zombie conehead(Point2D position, Zombies zombieType);
 
     /**
      * @param position where it is initially placed
      * @param zombieType the type of zombie
      * @return a high-resistance zombie
      */
-    Zombie buckethead(Point2D position, IdConverter.Zombies zombieType);
+    Zombie buckethead(Point2D position, Zombies zombieType);
 
     /**
      * @param position where it is initially placed
      * @param zombieType the type of zombie
      * @return a running zombie
      */
-    Zombie running(Point2D position, IdConverter.Zombies zombieType);
+    Zombie running(Point2D position, Zombies zombieType);
 
     /** 
      * @param position where it is initially placed
      * @param zombieType the type of zombie
      * @return a running and high-resistance zombie
      */
-    Zombie quarterback(Point2D position, IdConverter.Zombies zombieType);
+    Zombie quarterback(Point2D position, Zombies zombieType);
 
 }

@@ -84,7 +84,7 @@ public final class IdConverter {
      * @param pos the position of the plant
      * @return a new placed plant of the specified type
      */
-    public static Plant createPlant(final IdConverter.Plants plantType, final Point2D pos) {
+    public static Plant createPlant(final Plants plantType, final Point2D pos) {
         switch (plantType) {
             case SUNFLOWER:
                 return new SunflowerImpl(pos);
@@ -107,7 +107,7 @@ public final class IdConverter {
      * @param pos the position of the zombie
      * @return a new placed zombie of the specified type
      */
-    public static Zombie createZombie(final IdConverter.Zombies zombieType, final Point2D pos) {
+    public static Zombie createZombie(final Zombies zombieType, final Point2D pos) {
         switch (zombieType) {
             case BASIC:
                 return ZOMBIE_FACTORY.basic(pos, zombieType);

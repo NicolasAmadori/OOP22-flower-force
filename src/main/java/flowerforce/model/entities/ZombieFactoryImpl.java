@@ -1,5 +1,6 @@
 package flowerforce.model.entities;
 
+import flowerforce.model.entities.IdConverter.Zombies;
 import javafx.geometry.Point2D;
 
 /**
@@ -19,7 +20,7 @@ public class ZombieFactoryImpl implements ZombieFactory {
      * {@inheritDoc}
      */
     @Override
-    public Zombie basic(final Point2D position, final IdConverter.Zombies zombieType) {
+    public Zombie basic(final Point2D position, final Zombies zombieType) {
         return new ZombieImpl(BASIC_DELTA, BASIC_DAMAGE, BASIC_HEALTH, position, zombieType);
     }
 
@@ -27,7 +28,7 @@ public class ZombieFactoryImpl implements ZombieFactory {
      * {@inheritDoc}
      */
     @Override
-    public Zombie conehead(final Point2D position, final IdConverter.Zombies zombieType) {
+    public Zombie conehead(final Point2D position, final Zombies zombieType) {
         return new ZombieImpl(BASIC_DELTA, BASIC_DAMAGE, BASIC_HEALTH + CONE_HEALTH, position, zombieType);
     }
 
@@ -35,7 +36,7 @@ public class ZombieFactoryImpl implements ZombieFactory {
      * {@inheritDoc}
      */
     @Override
-    public Zombie buckethead(final Point2D position, final IdConverter.Zombies zombieType) {
+    public Zombie buckethead(final Point2D position, final Zombies zombieType) {
         return new ZombieImpl(BASIC_DELTA, BASIC_DAMAGE, BASIC_HEALTH + BUCKET_HEALTH, position, zombieType);
     }
 
@@ -43,7 +44,7 @@ public class ZombieFactoryImpl implements ZombieFactory {
      * {@inheritDoc}
      */
     @Override
-    public Zombie running(final Point2D position, final IdConverter.Zombies zombieType) {
+    public Zombie running(final Point2D position, final Zombies zombieType) {
         return new ZombieImpl(RUNNING_DELTA, BASIC_DAMAGE, BASIC_HEALTH, position, zombieType);
     }
 
@@ -51,7 +52,7 @@ public class ZombieFactoryImpl implements ZombieFactory {
      * {@inheritDoc}
      */
     @Override
-    public Zombie quarterback(final Point2D position, final IdConverter.Zombies zombieType) {
+    public Zombie quarterback(final Point2D position, final Zombies zombieType) {
         return new ZombieImpl(RUNNING_DELTA, BASIC_DAMAGE, BASIC_HEALTH + HELMET_HEALTH, position, zombieType);
     }
 

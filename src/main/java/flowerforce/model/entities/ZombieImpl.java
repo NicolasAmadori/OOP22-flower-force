@@ -16,7 +16,7 @@ public class ZombieImpl extends AbstractLivingEntity implements Zombie {
     private final int delta;
     private final double damage;
     private final Timer freezeTimer;
-    private final IdConverter.Zombies zombieType;
+    private final Zombies zombieType;
     private boolean isFrozen;
     private boolean canBite;
 
@@ -27,8 +27,8 @@ public class ZombieImpl extends AbstractLivingEntity implements Zombie {
      * @param position of the zombie
      * @param zombieType the type of zombie
      */
-    protected ZombieImpl(final int delta, final double damage, final double health, final Point2D position, 
-            final IdConverter.Zombies zombieType) {
+    protected ZombieImpl(final int delta, final double damage, final double health, final Point2D position,
+            final Zombies zombieType) {
         super(position, new TimerImpl(delta * EATING_TIME_UNIT), health);
         this.delta = delta;
         this.damage = damage;
