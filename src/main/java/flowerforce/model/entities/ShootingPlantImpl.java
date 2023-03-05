@@ -5,12 +5,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Optional;
 
 import flowerforce.common.Timer;
+import flowerforce.model.entities.IdConverter.Plants;
 import javafx.geometry.Point2D;
 
 /**
  * Models a generical plant that shoots bullets.
  */
-public class ShootingPlantImpl extends AbstractLivingEntity implements ShootingPlant {
+public class ShootingPlantImpl extends AbstractPlant implements ShootingPlant {
 
     private final Class<?> bulletClass;
     private boolean canShoot;
@@ -22,8 +23,8 @@ public class ShootingPlantImpl extends AbstractLivingEntity implements ShootingP
      * @param health the starting health of the entity
      * @param bulletClass the class of the bullet type to generate
      */
-    public ShootingPlantImpl(final Point2D pos, final Timer timer, final double health, final Class<?> bulletClass) {
-        super(pos, timer, health);
+    public ShootingPlantImpl(final Point2D pos, final Timer timer, final double health, final Class<?> bulletClass, final Plants plantType) {
+        super(pos, timer, health, plantType);
         this.bulletClass = bulletClass;
     }
 
