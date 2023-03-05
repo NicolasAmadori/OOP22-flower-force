@@ -2,6 +2,7 @@ package flowerforce.model.entities;
 
 import flowerforce.common.Timer;
 import flowerforce.common.TimerImpl;
+import flowerforce.model.entities.IdConverter.Zombies;
 import javafx.geometry.Point2D;
 
 /**
@@ -15,6 +16,7 @@ public class ZombieImpl extends AbstractLivingEntity implements Zombie {
     private final int delta;
     private final double damage;
     private final Timer freezeTimer;
+    private final Zombies zombieType;
     private boolean isFrozen;
     private boolean canBite;
 
@@ -23,12 +25,15 @@ public class ZombieImpl extends AbstractLivingEntity implements Zombie {
      * @param damage given by the zombie
      * @param health of the zombie
      * @param position of the zombie
+     * @param zombieType the type of zombie
      */
-    protected ZombieImpl(final int delta, final double damage, final double health, final Point2D position) {
+    protected ZombieImpl(final int delta, final double damage, final double health, final Point2D position,
+            final Zombies zombieType) {
         super(position, new TimerImpl(delta * EATING_TIME_UNIT), health);
         this.delta = delta;
         this.damage = damage;
         this.freezeTimer = new TimerImpl(this.delta * FREEZE_TIME_UNIT);
+        this.zombieType = zombieType;
         this.isFrozen = false;
         this.canBite = true;
     }
@@ -87,6 +92,14 @@ public class ZombieImpl extends AbstractLivingEntity implements Zombie {
             super.getTimer().reset();
             this.canBite = false;
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Zombies getZombieType() {
+        return this.zombieType;
     }
 
 }

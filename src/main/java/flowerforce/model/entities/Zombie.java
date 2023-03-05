@@ -1,5 +1,7 @@
 package flowerforce.model.entities;
 
+import flowerforce.model.entities.IdConverter.Zombies;
+
 /**
  * Models a zombie that is both moving and living entity.
  */
@@ -21,4 +23,9 @@ public interface Zombie extends MovingEntity, LivingEntity {
      */
     void manageEating(Plant plant);
 
+    /**
+     * 
+     * @return the type of zombie
+     */
+    Zombies getZombieType();
 }

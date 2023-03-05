@@ -84,18 +84,18 @@ public final class IdConverter {
      * @param pos the position of the plant
      * @return a new placed plant of the specified type
      */
-    public static Plant createPlant(final IdConverter.Plants plantType, final Point2D pos) {
+    public static Plant createPlant(final Plants plantType, final Point2D pos) {
         switch (plantType) {
             case SUNFLOWER:
-                return new SunflowerImpl(pos);
+                return new SunflowerImpl(pos, plantType);
             case COMMONSHOOTER:
-                return SHOOTING_PLANT_FACTORY.common(pos);
+                return SHOOTING_PLANT_FACTORY.common(pos, plantType);
             case SNOWSHOOTER:
-                return SHOOTING_PLANT_FACTORY.snow(pos);
+                return SHOOTING_PLANT_FACTORY.snow(pos, plantType);
             case FASTSHOOTER:
-                return SHOOTING_PLANT_FACTORY.fast(pos);
+                return SHOOTING_PLANT_FACTORY.fast(pos, plantType);
             case FIRESHOOTER:
-                return SHOOTING_PLANT_FACTORY.fire(pos);
+                return SHOOTING_PLANT_FACTORY.fire(pos, plantType);
             default:
                 throw new IllegalStateException("ERROR: plant type has not been identified");
         }
@@ -107,18 +107,18 @@ public final class IdConverter {
      * @param pos the position of the zombie
      * @return a new placed zombie of the specified type
      */
-    public static Zombie createZombie(final IdConverter.Zombies zombieType, final Point2D pos) {
+    public static Zombie createZombie(final Zombies zombieType, final Point2D pos) {
         switch (zombieType) {
             case BASIC:
-                return ZOMBIE_FACTORY.basic(pos);
+                return ZOMBIE_FACTORY.basic(pos, zombieType);
             case CONEHEAD:
-                return ZOMBIE_FACTORY.conehead(pos);
+                return ZOMBIE_FACTORY.conehead(pos, zombieType);
             case BUCKETHEAD:
-                return ZOMBIE_FACTORY.buckethead(pos);
+                return ZOMBIE_FACTORY.buckethead(pos, zombieType);
             case RUNNER:
-                return ZOMBIE_FACTORY.running(pos);
+                return ZOMBIE_FACTORY.running(pos, zombieType);
             case QUARTERBACK:
-                return ZOMBIE_FACTORY.quarterback(pos);
+                return ZOMBIE_FACTORY.quarterback(pos, zombieType);
             default:
                 throw new IllegalStateException("ERROR: zombie type has not been identified");
         }
