@@ -63,6 +63,10 @@ public final class IdConverter {
          * High resistance and running zombie.
          */
         QUARTERBACK;
+
+        public int getDifficulty() {
+            return this.ordinal();
+        }
     }
 
     /**
