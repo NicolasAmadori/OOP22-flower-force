@@ -110,15 +110,15 @@ public final class IdConverter {
     public static Zombie createZombie(final IdConverter.Zombies zombieType, final Point2D pos) {
         switch (zombieType) {
             case BASIC:
-                return ZOMBIE_FACTORY.basic(pos);
+                return ZOMBIE_FACTORY.basic(pos, zombieType);
             case CONEHEAD:
-                return ZOMBIE_FACTORY.conehead(pos);
+                return ZOMBIE_FACTORY.conehead(pos, zombieType);
             case BUCKETHEAD:
-                return ZOMBIE_FACTORY.buckethead(pos);
+                return ZOMBIE_FACTORY.buckethead(pos, zombieType);
             case RUNNER:
-                return ZOMBIE_FACTORY.running(pos);
+                return ZOMBIE_FACTORY.running(pos, zombieType);
             case QUARTERBACK:
-                return ZOMBIE_FACTORY.quarterback(pos);
+                return ZOMBIE_FACTORY.quarterback(pos, zombieType);
             default:
                 throw new IllegalStateException("ERROR: zombie type has not been identified");
         }

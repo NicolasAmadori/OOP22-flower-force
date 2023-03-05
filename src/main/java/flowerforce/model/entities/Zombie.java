@@ -21,4 +21,9 @@ public interface Zombie extends MovingEntity, LivingEntity {
      */
     void manageEating(Plant plant);
 
+    /**
+     * 
+     * @return the type of zombie
+     */
+    IdConverter.Zombies getZombieType();
 }

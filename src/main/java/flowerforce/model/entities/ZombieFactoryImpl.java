@@ -19,40 +19,40 @@ public class ZombieFactoryImpl implements ZombieFactory {
      * {@inheritDoc}
      */
     @Override
-    public Zombie basic(final Point2D position) {
-        return new ZombieImpl(BASIC_DELTA, BASIC_DAMAGE, BASIC_HEALTH, position);
+    public Zombie basic(final Point2D position, final IdConverter.Zombies zombieType) {
+        return new ZombieImpl(BASIC_DELTA, BASIC_DAMAGE, BASIC_HEALTH, position, zombieType);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Zombie conehead(final Point2D position) {
-        return new ZombieImpl(BASIC_DELTA, BASIC_DAMAGE, BASIC_HEALTH + CONE_HEALTH, position);
+    public Zombie conehead(final Point2D position, final IdConverter.Zombies zombieType) {
+        return new ZombieImpl(BASIC_DELTA, BASIC_DAMAGE, BASIC_HEALTH + CONE_HEALTH, position, zombieType);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Zombie buckethead(final Point2D position) {
-        return new ZombieImpl(BASIC_DELTA, BASIC_DAMAGE, BASIC_HEALTH + BUCKET_HEALTH, position);
+    public Zombie buckethead(final Point2D position, final IdConverter.Zombies zombieType) {
+        return new ZombieImpl(BASIC_DELTA, BASIC_DAMAGE, BASIC_HEALTH + BUCKET_HEALTH, position, zombieType);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Zombie running(final Point2D position) {
-        return new ZombieImpl(RUNNING_DELTA, BASIC_DAMAGE, BASIC_HEALTH, position);
+    public Zombie running(final Point2D position, final IdConverter.Zombies zombieType) {
+        return new ZombieImpl(RUNNING_DELTA, BASIC_DAMAGE, BASIC_HEALTH, position, zombieType);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Zombie quarterback(final Point2D position) {
-        return new ZombieImpl(RUNNING_DELTA, BASIC_DAMAGE, BASIC_HEALTH + HELMET_HEALTH, position);
+    public Zombie quarterback(final Point2D position, final IdConverter.Zombies zombieType) {
+        return new ZombieImpl(RUNNING_DELTA, BASIC_DAMAGE, BASIC_HEALTH + HELMET_HEALTH, position, zombieType);
     }
 
 }
