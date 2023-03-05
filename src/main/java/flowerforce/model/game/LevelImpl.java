@@ -1,5 +1,7 @@
 package flowerforce.model.game;
 
+import flowerforce.model.entities.IdConverter;
+
 import java.util.List;
 
 /**
@@ -7,25 +9,25 @@ import java.util.List;
  */
 public class LevelImpl implements Level {
 
-    private final List<Integer> avaiableZombies;
-    private final List<Integer> avaiablePlants;
+    private final List<IdConverter.Zombies> availableZombies;
+    private final List<IdConverter.Plants> availablePlants;
     private final int coins;
     private final int row;
     private final int nZombie;
 
     /**
      *
-     * @param avaiableZombies Zombies that can be used in this level
-     * @param avaiablePlants Plants that can be used in this level
+     * @param availableZombies Zombies that can be used in this level
+     * @param availablePlants Plants that can be used in this level
      * @param coins Coins that are awarded once the level is completed
      * @param nZombie Number of zombies that must be spawned in the level
      * @param row Number of rows that can be used in the game field
      */
-    public LevelImpl(final List<Integer> avaiableZombies, final List<Integer> avaiablePlants,
+    public LevelImpl(final List<IdConverter.Zombies> availableZombies, final List<IdConverter.Plants> availablePlants,
                      final int coins, final int nZombie, final int row) {
         this.coins = coins;
-        this.avaiablePlants = avaiablePlants;
-        this.avaiableZombies = avaiableZombies;
+        this.availablePlants = availablePlants;
+        this.availableZombies = availableZombies;
         this.row = row;
         this.nZombie = nZombie;
     }
@@ -42,23 +44,23 @@ public class LevelImpl implements Level {
      * {@inheritDoc}.
      */
     @Override
-    public List<Integer> getPlantsId() {
-        return this.avaiablePlants;
+    public List<IdConverter.Plants> getPlantsId() {
+        return this.availablePlants;
     }
 
     /**
      * {@inheritDoc}.
      */
     @Override
-    public List<Integer> getZombiesId() {
-        return this.avaiableZombies;
+    public List<IdConverter.Zombies> getZombiesId() {
+        return this.availableZombies;
     }
 
     /**
      * {@inheritDoc}.
      */
     @Override
-    public Integer getNumberOfRowAvaiable() {
+    public Integer getNumberOfRowAvailable() {
         return this.row;
     }
 
