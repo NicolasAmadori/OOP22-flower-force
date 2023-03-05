@@ -46,27 +46,36 @@ public final class IdConverter {
         /**
          * Basic zombie, with default health and velocity.
          */
-        BASIC,
+        BASIC(0),
         /**
          * Medium resistance zombie.
          */
-        CONEHEAD,
+        CONEHEAD(1),
         /**
          * High resistance zombie.
          */
-        BUCKETHEAD,
+        BUCKETHEAD(2),
         /**
          * High velocity zombie.
          */
-        RUNNER,
+        RUNNER(1),
         /**
          * High resistance and running zombie.
          */
-        QUARTERBACK;
+        QUARTERBACK(3);
 
-        public int getDifficulty() {
-            return this.ordinal();
+        private final int difficulty;
+
+        Zombies(final int difficulty) {
+            this.difficulty = difficulty;
         }
+
+        /**
+         * @return a generic difficulty of the zombie
+         */
+        public int getDifficulty() {
+            return this.difficulty;
+        } 
     }
 
     /**
