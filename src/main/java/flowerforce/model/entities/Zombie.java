@@ -1,6 +1,13 @@
 package flowerforce.model.entities;
 
-public interface Zombie extends MovingEntity, LivingEntity{
+/**
+ * Models a zombie that is both moving and living entity.
+ */
+public interface Zombie extends MovingEntity, LivingEntity {
+
+    /**
+     * This method slows down the zombie.
+     */
     void freeze();
 
     /**
@@ -8,9 +15,10 @@ public interface Zombie extends MovingEntity, LivingEntity{
      */
     void warmUp();
 
-    /** 
-     * @return true if the zombie can bite, false otherwise
+    /**
+     * 
+     * @param plant that can be eaten by the zombie
      */
-    boolean bite();
+    void manageEating(Plant plant);
 
 }
