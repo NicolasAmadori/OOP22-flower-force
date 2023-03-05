@@ -25,7 +25,7 @@ public class GameViewImpl extends Application implements GameView  {
     }
 
     @Override
-    public int getAllCoins() {
-        return 0;
+    public void renderCoins() {
+
     }
 }
