@@ -5,7 +5,7 @@ import flowerforce.model.entities.IdConverter;
 import java.util.List;
 
 /**
- * {@inheritDoc}.
+ * This is an implementation of {@link Level}.
  */
 public class LevelImpl implements Level {
 
