@@ -16,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.canvas.Canvas;
 
 /**
  * This is an implementation of {@link GameController}.
@@ -41,6 +42,9 @@ public final class GameControllerImpl implements GameController, Initializable {
     private Label lblSunCounter;
 
     @FXML
+    private Canvas cnvYard;
+
+    @FXML
     void selectPeashooter(final ActionEvent event) {
         System.out.println("Peashooter selected"); //TODO: remove
     }
@@ -50,6 +54,10 @@ public final class GameControllerImpl implements GameController, Initializable {
         System.out.println("Sunflower selected"); //TODO: remove
     }
 
+    @FXML
+    void mouseEntered(MouseEvent event) {
+        System.out.println(event.getX() + " " + event.getY());
+    }
     @FXML
     void cellClicked(final MouseEvent event) {
         final Node source = (Node) event.getSource();
