@@ -16,8 +16,8 @@ public final class GameSaveManager<T> {
 
     private static final Gson GSON = new Gson(); //Instance to json text converter
 
-    private Class<T> genericClass; //class of the type to deserialize 
-    private String savingFilePath; //path of the savingFile
+    private final Class<T> genericClass; //class of the type to deserialize
+    private final String savingFilePath; //path of the savingFile
 
     /**
      * Create a new instance of the game saving manager.
@@ -39,8 +39,7 @@ public final class GameSaveManager<T> {
             fw.write(GSON.toJson(p));
             return true;
 
-        } catch (IOException  e) {
-            e.printStackTrace();
+        } catch (IOException e) {
             return false;
         }
     }
@@ -51,7 +50,7 @@ public final class GameSaveManager<T> {
      *  empty if the file does not exist or in case of an error during the read operation.
      */
     public Optional<T> load() {
-        File file = new File(savingFilePath);
+        final File file = new File(savingFilePath);
 
         if (!file.exists()) {
             return Optional.empty();
@@ -59,8 +58,7 @@ public final class GameSaveManager<T> {
 
         try (FileReader fr = new FileReader(file)) {
             return Optional.of(GSON.fromJson(fr, genericClass));
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException e) {
             return Optional.empty();
         }
     }

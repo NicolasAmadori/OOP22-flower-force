@@ -1,12 +1,10 @@
 package flowerforce.controller;
 
-import java.awt.*;
 import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 
@@ -22,7 +20,7 @@ import javafx.scene.layout.GridPane;
 /**
  * {@inheritDoc}.
  */
-public class GameControllerImpl implements GameController, Initializable {
+public final class GameControllerImpl implements GameController, Initializable {
 
     @FXML
     private AnchorPane gamePane;
@@ -43,21 +41,21 @@ public class GameControllerImpl implements GameController, Initializable {
     private Label lblSunCounter;
 
     @FXML
-    void selectPeashooter(ActionEvent event) {
-        System.out.println("Peashooter selected");
+    void selectPeashooter(final ActionEvent event) {
+        System.out.println("Peashooter selected"); //TODO: remove
     }
 
     @FXML
-    void selectSunflower(ActionEvent event) {
-        System.out.println("Sunflower selected");
+    void selectSunflower(final ActionEvent event) {
+        System.out.println("Sunflower selected"); //TODO: remove
     }
 
     @FXML
-    void cellClicked(MouseEvent event) {
-        Node source = (Node) event.getSource();
+    void cellClicked(final MouseEvent event) {
+        final Node source = (Node) event.getSource();
         System.out.println(griglia.getColumnIndex(source) + " " + griglia.getRowIndex(source));
 
-        ImageView newPlant = new ImageView(new Image("flowerforce/icon.png"));
+        final ImageView newPlant = new ImageView(new Image("flowerforce/icon.png"));
         newPlant.setOnMouseClicked(this::cellClicked);
 
         griglia.add(newPlant, griglia.getColumnIndex(source), griglia.getRowIndex(source));
@@ -74,7 +72,7 @@ public class GameControllerImpl implements GameController, Initializable {
      *                  the root object was not localized.
      */
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(final URL location, final ResourceBundle resources) {
         setWindowSize();
     }
 
@@ -115,7 +113,7 @@ public class GameControllerImpl implements GameController, Initializable {
     }
 
     private void setWindowSize() {
-        final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        //final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         //imgBackground.setFitHeight(screenSize.getHeight());
         //imgBackground.setFitWidth(screenSize.getWidth());
         //gamePane.setPrefWidth(screenSize.getWidth());

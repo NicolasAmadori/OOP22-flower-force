@@ -7,18 +7,21 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class GameViewImpl extends Application implements GameView  {
+/**
+ * @{inheritDoc}.
+ */
+public final class GameViewImpl extends Application implements GameView  {
 
-    public final static void main(final String[] args) {
+    public static void main(final String[] args) {
         launch(args);
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(ClassLoader.getSystemResource("flowerforce/game/Garden.fxml"));
-        Scene scene = new Scene(root);
+    public void start(final Stage primaryStage) throws Exception {
+        final Parent root = FXMLLoader.load(ClassLoader.getSystemResource("flowerforce/game/Garden.fxml"));
+        final Scene scene = new Scene(root);
 
-        primaryStage.setTitle("Plant vs Zombie - Level 1");
+        primaryStage.setTitle("Flower Force - Level 1");
         primaryStage.getIcons().add(new Image("flowerforce/icon.png"));
         primaryStage.setScene(scene);
         primaryStage.show();
