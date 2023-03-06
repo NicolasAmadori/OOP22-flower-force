@@ -16,6 +16,7 @@ public class SunflowerImpl extends AbstractPlant implements Sunflower {
     /**
      * 
      * @param pos the initial position to place the entity in
+     * @param plantType the type of the plant
      */
     public SunflowerImpl(final Point2D pos, final Plants plantType) {
         super(pos, new TimerImpl(STANDARD_SUNPRODUCING_TIME), STANDARD_SUNFLOWER_HEALTH, plantType);
