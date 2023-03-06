@@ -10,7 +10,7 @@ public abstract class AbstractBullet extends AbstractEntity implements Bullet {
     private static final double STANDARD_DAMAGE = 40.0;
     private static final int DELTA = 10;
     private boolean hasHit;
-    private double damage;
+    private final double damage;
 
     /**
      * 
