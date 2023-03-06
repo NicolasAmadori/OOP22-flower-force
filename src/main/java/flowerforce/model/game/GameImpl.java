@@ -4,9 +4,8 @@ import flowerforce.common.TimerImpl;
 import flowerforce.model.entities.*;
 import javafx.geometry.Point2D;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+
 
 /**
  * Manages the development of the game.
@@ -20,6 +19,7 @@ public class GameImpl implements Game {
     private List<Bullet> bullets = new LinkedList<>();
     private TimerImpl zombieTimer;
     private final TimerImpl sunTimer;
+    private final Map<IdConverter.Plants, TimerImpl> plantsTimer = new HashMap();
     private final Level level;
     private int sun;
     private int remainingZombie;
@@ -33,11 +33,13 @@ public class GameImpl implements Game {
         zombieTimer = new TimerImpl(level.getTotalZombies());
         sunTimer = new TimerImpl(TIME_TO_SPAWN_SUN);
         remainingZombie = level.getTotalZombies();
+        level.getPlantsId().forEach(p -> plantsTimer.put(p, new TimerImpl(p.getUnlockTime())));
     }
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public void update() {
         this.generateSun();
         this.generateZombie();
@@ -70,7 +72,7 @@ public class GameImpl implements Game {
      */
     @Override
     public List<Zombie> getZombieEating() {
-        return null;
+        return Collections.emptyList();
     }
 
     /**
@@ -94,13 +96,13 @@ public class GameImpl implements Game {
      */
     @Override
     public boolean placePlant(final IdConverter.Plants idPlant, final Point2D position) {
-        for (var plant : plants) {
+        for (final var plant : plants) {
             if (plant.getPosition().equals(position)) {
                 return false;
             }
         }
-        var plant = IdConverter.createPlant(idPlant, position);
-        //sun = plant.ge
+        final var plant = IdConverter.createPlant(idPlant, position);
+        sun -= idPlant.getCost();
         plants.add(plant);
         return true;
     }
@@ -110,12 +112,26 @@ public class GameImpl implements Game {
      */
     @Override
     public boolean isOver() {
-        for (var zombie : zombies) {
+        for (final var zombie : zombies) {
             if (zombie.getPosition().getY() == 0) {
                 return true;
             }
         }
-        return remainingZombie == 0 && zombies.size() == 0;
+        return remainingZombie == 0 && zombies.isEmpty();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Set<IdConverter.Plants> availablePlants() {
+        final Set<IdConverter.Plants> availablePlant = new HashSet<>();
+        for (final var plantType : level.getPlantsId()) {
+            if (plantType.getCost() <= sun && plantsTimer.get(plantType).isReady()) {
+                availablePlant.add(plantType);
+            }
+        }
+        return availablePlant;
     }
 
     /**
@@ -125,8 +141,7 @@ public class GameImpl implements Game {
         if (sunTimer.isReady()) {
             sun += SUN_VALUE;
             sunTimer.reset();
-        }
-        else {
+        } else {
             sunTimer.updateState();
         }
     }
@@ -135,8 +150,8 @@ public class GameImpl implements Game {
      * Checks which bullets hit the zombies and updates which zombies and bullets are still alive.
      */
     private void collidingBullet() {
-         for (var bullet : bullets) {
-             for (var zombie : zombies) {
+         for (final var bullet : bullets) {
+             for (final var zombie : zombies) {
                  if (bullet.getPosition().equals(zombie.getPosition())) {
                      bullet.hit(zombie);
                  }
@@ -150,8 +165,8 @@ public class GameImpl implements Game {
      * Check which zombies are eating and update which plants are still alive.
      */
     private void eatingPlant() {
-        for (var plant : plants) {
-            for (var zombie : zombies) {
+        for (final var plant : plants) {
+            for (final var zombie : zombies) {
                 if (zombie.getPosition().equals(plant.getPosition())) {
                     zombie.manageEating(plant);
                 }
@@ -164,17 +179,15 @@ public class GameImpl implements Game {
      * Update the plants and check if they could produce suns or projectiles.
      */
     private void updatePlant() {
-        for (var plant : plants) {
+        for (final var plant : plants) {
             if (plant instanceof Sunflower) {
                 if (((Sunflower) plant).isSunGenerated()) {
                     sun += SUN_VALUE;
-                }
-                else {
+                } else {
                     ((Sunflower) plant).updateState();
                 }
-            }
-            else {
-                var bullet = ((ShootingPlant) plant).nextBullet();
+            } else {
+                final var bullet = ((ShootingPlant) plant).nextBullet();
                 if (!bullet.isEmpty()) {
                     bullets.add(bullet.get());
                 }
@@ -188,9 +201,10 @@ public class GameImpl implements Game {
      */
     private void generateZombie() {
         if (zombieTimer.isReady()) {
-            Random randomZombie = new Random();
+            //final Random randomZombie = new Random();
             zombieTimer = new TimerImpl(remainingZombie);
             remainingZombie--;
+            zombies.add(IdConverter.createZombie(IdConverter.Zombies.BASIC, new Point2D(50, 50)));
         }
         zombieTimer.updateState();
     }

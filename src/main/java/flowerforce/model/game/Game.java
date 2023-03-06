@@ -7,6 +7,7 @@ import flowerforce.model.entities.Zombie;
 import javafx.geometry.Point2D;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Models the development of the game.
@@ -61,5 +62,9 @@ public interface Game {
      */
     boolean isOver();
 
-
+    /**
+     * Identify which plants can be selected to be placed on the playing field.
+     * @return the types of plants that can be selected
+     */
+    Set<IdConverter.Plants> availablePlants();
 }
