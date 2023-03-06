@@ -5,21 +5,22 @@ import flowerforce.model.entities.*;
 import javafx.geometry.Point2D;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 /**
- * Manages the development of the game.
+ * This is an implementation of {@link Game}.
  */
 public class GameImpl implements Game {
     private static final int TIME_TO_SPAWN_SUN = 50;
     private static final int SUN_VALUE = 25;
     private static final int INITIAL_SUN = 2;
-    private List<Plant> plants = new LinkedList<>();
-    private List<Zombie> zombies = new LinkedList<>();
-    private List<Bullet> bullets = new LinkedList<>();
+    private Set<Plant> plants = new HashSet<>();
+    private Set<Zombie> zombies = new HashSet<>();
+    private Set<Bullet> bullets = new HashSet<>();
     private TimerImpl zombieTimer;
     private final TimerImpl sunTimer;
-    private final Map<IdConverter.Plants, TimerImpl> plantsTimer = new HashMap();
+    private final Map<IdConverter.Plants, TimerImpl> plantsTimer = new HashMap<>();
     private final Level level;
     private int sun;
     private int remainingZombie;
@@ -43,9 +44,9 @@ public class GameImpl implements Game {
     public void update() {
         this.generateSun();
         this.generateZombie();
-        bullets.forEach(b -> b.move());
+        bullets.forEach(Bullet::move);
         this.collidingBullet();
-        zombies.forEach(z -> z.move());
+        zombies.forEach(Zombie::move);
         this.collidingBullet();
         this.eatingPlant();
         this.updatePlant();
@@ -55,7 +56,7 @@ public class GameImpl implements Game {
      * {@inheritDoc}
      */
     @Override
-    public List<Zombie> getZombies() {
+    public Set<Zombie> getZombies() {
         return this.zombies;
     }
 
@@ -63,7 +64,7 @@ public class GameImpl implements Game {
      * {@inheritDoc}
      */
     @Override
-    public List<Plant> getPlants() {
+    public Set<Plant> getPlants() {
         return this.plants;
     }
 
@@ -79,7 +80,7 @@ public class GameImpl implements Game {
      * {@inheritDoc}
      */
     @Override
-    public List<Bullet> getBullet() {
+    public Set<Bullet> getBullet() {
         return this.bullets;
     }
 
@@ -157,8 +158,8 @@ public class GameImpl implements Game {
                  }
              }
          }
-         bullets = bullets.stream().filter(b -> !b.isOver()).toList();
-         zombies = zombies.stream().filter(z -> !z.isOver()).toList();
+         bullets = bullets.stream().filter(b -> !b.isOver()).collect(Collectors.toSet());
+         zombies = zombies.stream().filter(z -> !z.isOver()).collect(Collectors.toSet());
     }
 
     /**
@@ -172,7 +173,7 @@ public class GameImpl implements Game {
                 }
             }
         }
-        plants = plants.stream().filter(p -> !p.isOver()).toList();
+        plants = plants.stream().filter(p -> !p.isOver()).collect(Collectors.toSet());
     }
 
     /**
@@ -184,14 +185,12 @@ public class GameImpl implements Game {
                 if (((Sunflower) plant).isSunGenerated()) {
                     sun += SUN_VALUE;
                 } else {
-                    ((Sunflower) plant).updateState();
+                    plant.updateState();
                 }
             } else {
                 final var bullet = ((ShootingPlant) plant).nextBullet();
-                if (!bullet.isEmpty()) {
-                    bullets.add(bullet.get());
-                }
-                ((ShootingPlant) plant).updateState();
+                bullet.ifPresent(b -> bullets.add(b));
+                plant.updateState();
             }
         }
     }
