@@ -7,6 +7,7 @@ import javafx.geometry.Point2D;
  */
 public final class IdConverter {
 
+    private static final int SHORT_TIME = 300;
     private static final ZombieFactory ZOMBIE_FACTORY = new ZombieFactoryImpl();
     private static final ShootingPlantFactory SHOOTING_PLANT_FACTORY = new ShootingPlantFactoryImpl();
 
@@ -20,23 +21,47 @@ public final class IdConverter {
         /**
          * Produces suns.
          */
-        SUNFLOWER,
+        SUNFLOWER(50, SHORT_TIME),
         /**
          * Shoots standard bullets.
          */
-        COMMONSHOOTER,
+        COMMONSHOOTER(100, SHORT_TIME),
         /**
          * Shoots special bullets that freeze zombies.
          */
-        SNOWSHOOTER,
+        SNOWSHOOTER(175, SHORT_TIME),
         /**
-         * Shoots standard bullets with an high firing rate.
+         * Shoots standard bullets with a high firing rate.
          */
-        FASTSHOOTER,
+        FASTSHOOTER(225, SHORT_TIME),
         /**
          * Shoots special bullets that unfreeze zombies but gives them higher damage. 
          */
-        FIRESHOOTER;
+        FIRESHOOTER(175, SHORT_TIME);
+
+        private final int cost;
+        private final int unlockTime;
+
+        Plants(final int cost, final int unlockTime) {
+            this.cost = cost;
+            this.unlockTime = unlockTime;
+        }
+
+        /**
+         *
+         * @return the cost in suns of the plant
+         */
+        public int getCost() {
+            return this.cost;
+        }
+
+        /**
+         *
+         * @return the time to wait for the plant to unlock
+         */
+        public int getUnlockTime() {
+            return this.unlockTime;
+        }
     }
 
     /**
