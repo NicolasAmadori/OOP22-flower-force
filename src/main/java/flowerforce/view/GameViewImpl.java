@@ -8,7 +8,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * @{inheritDoc}.
+ * This is an implementation of {@link GameView}.
  */
 public final class GameViewImpl extends Application implements GameView  {
 

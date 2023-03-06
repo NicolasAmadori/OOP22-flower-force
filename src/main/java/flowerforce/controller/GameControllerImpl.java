@@ -18,7 +18,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
 /**
- * {@inheritDoc}.
+ * This is an implementation of {@link GameController}.
  */
 public final class GameControllerImpl implements GameController, Initializable {
 
