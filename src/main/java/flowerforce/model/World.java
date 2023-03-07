@@ -11,4 +11,11 @@ public class World {
     public int getCoins() {
         return this.nCoins;
     }
+
+    public int getSunCounter() {
+        return 100;
+    }
+    public void update() {
+
+    }
 }
