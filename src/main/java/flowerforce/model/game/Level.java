@@ -37,4 +37,10 @@ public interface Level {
      * @return the number of zombies in this level
      */
     Integer getTotalZombies();
+
+    /**
+     *
+     * @return the ID of the level
+     */
+    Integer getLevelId();
 }
