@@ -14,6 +14,7 @@ public class LevelImpl implements Level {
     private final int coins;
     private final int row;
     private final int nZombie;
+    private final int iDLevel;
 
     /**
      *
@@ -22,15 +23,19 @@ public class LevelImpl implements Level {
      * @param coins Coins that are awarded once the level is completed
      * @param nZombie Number of zombies that must be spawned in the level
      * @param row Number of rows that can be used in the game field
+     * @param iD ID of the level
      */
     public LevelImpl(final List<IdConverter.Zombies> availableZombies, final List<IdConverter.Plants> availablePlants,
-                     final int coins, final int nZombie, final int row) {
+                     final int coins, final int nZombie, final int row, final int iD) {
         this.coins = coins;
         this.availablePlants = availablePlants;
         this.availableZombies = availableZombies;
         this.row = row;
         this.nZombie = nZombie;
+        this.iDLevel = iD;
     }
+
+
 
     /**
      * {@inheritDoc}.
@@ -70,5 +75,13 @@ public class LevelImpl implements Level {
     @Override
     public Integer getTotalZombies() {
         return this.nZombie;
+    }
+
+    /**
+     * {@inheritDoc}.
+     */
+    @Override
+    public Integer getLevelId() {
+        return this.iDLevel;
     }
 }
