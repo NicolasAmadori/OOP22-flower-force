@@ -15,7 +15,7 @@
             <Image url="@images/Garden.png" />
          </image>
       </ImageView>
-      <Canvas fx:id="cnvYard" height="593.0" layoutX="383.0" layoutY="84.0" onMouseClicked="#mouseEntered" width="869.0" />
+      <Canvas fx:id="cnvYard" height="593.0" layoutX="383.0" layoutY="84.0" onMouseClicked="#canvasClicked" width="869.0" />
        <ImageView fitHeight="96.0" fitWidth="86.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
            <image>
                <Image url="@images/bar.jpeg" />
