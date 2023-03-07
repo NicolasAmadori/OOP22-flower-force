@@ -6,16 +6,15 @@ import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.canvas.Canvas;
 
 /**
  * This is an implementation of {@link GameController}.
@@ -41,6 +40,9 @@ public final class GameControllerImpl implements GameController, Initializable {
     private Label lblSunCounter;
 
     @FXML
+    private Canvas cnvYard;
+
+    @FXML
     void selectPeashooter(final ActionEvent event) {
         System.out.println("Peashooter selected"); //TODO: remove
     }
@@ -51,15 +53,26 @@ public final class GameControllerImpl implements GameController, Initializable {
     }
 
     @FXML
-    void cellClicked(final MouseEvent event) {
-        final Node source = (Node) event.getSource();
-        System.out.println(griglia.getColumnIndex(source) + " " + griglia.getRowIndex(source));
+    void canvasClicked(final MouseEvent event) {
+        System.out.println(getRow(event.getY()) + " " + getColumn(event.getX()));
+    }
 
-        final ImageView newPlant = new ImageView(new Image("flowerforce/icon.png"));
-        newPlant.setOnMouseClicked(this::cellClicked);
+    private int getRow(final double y) {
+        return getGridIndex(y, cnvYard.getHeight(), 5); //TODO: remove magic number
+    }
 
-        griglia.add(newPlant, griglia.getColumnIndex(source), griglia.getRowIndex(source));
-        griglia.getChildren().remove(source);
+    private int getColumn(final double x) {
+        return getGridIndex(x, cnvYard.getWidth(), 9); //TODO: remove magic number
+    }
+
+    private int getGridIndex(final double val, final double totalLength, final int nSlices) {
+        final double span = totalLength / nSlices;
+        for (int r = nSlices - 1; r >= 0; r--) {
+            if (val >= r * span) {
+                return r;
+            }
+        }
+        return 0;
     }
 
     /**
