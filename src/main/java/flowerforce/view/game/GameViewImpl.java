@@ -1,5 +1,9 @@
-package flowerforce.view;
+package flowerforce.view.game;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import flowerforce.view.entities.EntityView;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +15,8 @@ import javafx.stage.Stage;
  * This is an implementation of {@link GameView}.
  */
 public final class GameViewImpl extends Application implements GameView  {
+
+    private final Set<EntityView> entities = new HashSet<>();
 
     public static void main(final String[] args) {
         launch(args);
@@ -27,8 +33,35 @@ public final class GameViewImpl extends Application implements GameView  {
         primaryStage.show();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public int getAllCoins() {
-        return 0;
+    public void addEntity(EntityView entity) {
+        this.entities.add(entity);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void removeEntity(EntityView entity) {
+        this.entities.remove(entity);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void clearEntities() {
+        this.entities.clear();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void render() {
+        
     }
 }

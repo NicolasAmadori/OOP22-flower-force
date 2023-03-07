@@ -1,8 +1,8 @@
 package flowerforce;
 
-import flowerforce.view.GameViewImpl;
-
 import static javafx.application.Application.launch;
+
+import flowerforce.view.game.GameViewImpl;
 
 public final class FlowerForce {
 
