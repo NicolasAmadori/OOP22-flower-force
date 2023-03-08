@@ -12,6 +12,8 @@ import javafx.stage.Stage;
 public final class FlowerForceApplication extends Application implements FlowerForceView {
 
     //private final GameController controller = new GameControllerImpl();
+
+    private static final String GAMEICON_PATH = "flowerforce/icon.png";
     private Stage stage;
 
     @Override
@@ -21,7 +23,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
         //this.stage.setFullScreen(true);
         this.stage.setResizable(false);
         this.stage.setTitle("Flower Force");
-        this.stage.getIcons().add(new Image("flowerforce/icon.png"));
+        this.stage.getIcons().add(new Image(GAMEICON_PATH));
         this.menu();        
         this.stage.show();
     }
