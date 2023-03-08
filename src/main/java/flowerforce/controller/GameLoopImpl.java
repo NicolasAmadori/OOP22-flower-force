@@ -2,7 +2,7 @@ package flowerforce.controller;
 
 import flowerforce.model.World;
 import flowerforce.view.GameView;
-public class GameLoopImpl extends Thread implements GameLoop {
+public class GameLoopImpl implements GameLoop, Runnable {
 
     private GameView view;
     private World model;
@@ -20,15 +20,15 @@ public class GameLoopImpl extends Thread implements GameLoop {
     }
 
     /**
-     * When an object implementing interface {@code Runnable} is used
-     * to create a thread, starting the thread causes the object's
-     * {@code run} method to be called in that separately executing
-     * thread.
-     * <p>
-     * The general contract of the method {@code run} is that it may
-     * take any action whatsoever.
-     *
-     * @see Thread#run()
+     * @{inheritDoc}
+     */
+    @Override
+    public void start() {
+
+    }
+
+    /**
+     * @{inheritDoc}
      */
     @Override
     public void run() {
