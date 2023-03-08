@@ -2,12 +2,12 @@ package flowerforce;
 
 import static javafx.application.Application.launch;
 
-import flowerforce.view.game.GameViewImpl;
+import flowerforce.view.game.FlowerForceApplication;
 
 public final class FlowerForce {
 
     public final static void main(final String[] args) {
-        launch(GameViewImpl.class, args);
+        launch(FlowerForceApplication.class, args);
     }
 
 
