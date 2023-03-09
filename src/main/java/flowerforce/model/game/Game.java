@@ -67,4 +67,10 @@ public interface Game {
      * @return the types of plants that can be selected
      */
     Set<IdConverter.Plants> availablePlants();
+
+    /**
+     *
+     * @return true if the player won the level.
+     */
+    boolean result();
 }

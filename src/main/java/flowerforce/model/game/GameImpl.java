@@ -147,6 +147,14 @@ public class GameImpl implements Game {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean result() {
+        return remainingZombie == 0 && zombies.isEmpty();
+    }
+
+    /**
      * decides whether to generate a sun.
      */
     private void generateSun() {
