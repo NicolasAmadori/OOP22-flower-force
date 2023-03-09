@@ -55,6 +55,8 @@ public final class GameSceneController implements GameController, Initializable 
     @FXML
     void canvasClicked(final MouseEvent event) {
         System.out.println(getRow(event.getY()) + " " + getColumn(event.getX()));
+        controller.placePlant(getRow(event.getY()), getColumn(event.getX()));
+        //lblSunCounter.setText(Integer.toString(controller.getSunCounter()));
     }
 
     private int getRow(final double y) {

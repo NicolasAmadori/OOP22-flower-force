@@ -25,6 +25,16 @@ public class ControllerImpl implements Controller {
     }
 
     @Override
+    public int updateSunCounter() {
+        
+    }
+
+    @Override
+    public void placePlant(int row, int col) {
+        this.world.placePlant(row, col);
+    }
+
+    @Override
     public void StartNewLevelGame(int levelId) {
         final GameLoop gameLoop = new GameLoopImpl(this, this.world);
         new Thread((Runnable) gameLoop).start();
