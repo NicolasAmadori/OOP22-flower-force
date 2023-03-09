@@ -4,6 +4,7 @@ import flowerforce.common.TimerImpl;
 import flowerforce.model.entities.*;
 import javafx.geometry.Point2D;
 
+import javax.swing.text.Position;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -43,7 +44,7 @@ public class GameImpl implements Game {
         sunTimer = new TimerImpl(TIME_TO_SPAWN_SUN);
         remainingZombie = level.getTotalZombies();
         level.getPlantsId().forEach(p -> plantsTimer.put(p, new TimerImpl(p.getUnlockTime())));
-        cellsSizeHeight = height / rows;
+        cellsSizeHeight = height / ( rows * 2);
         cellsSizeWidth = width / cols;
         totalCols = cols;
     }
@@ -113,7 +114,7 @@ public class GameImpl implements Game {
             }
         }
         final var plant = IdConverter.createPlant(idPlant,
-                new Point2D(position.getX() * cellsSizeHeight, position.getY() * cellsSizeWidth));
+                new Point2D(position.getX() * ( cellsSizeHeight * 2 + 1), position.getY() * cellsSizeWidth));
         sun -= idPlant.getCost();
         plants.add(plant);
         return true;
@@ -226,7 +227,7 @@ public class GameImpl implements Game {
             remainingZombie--;
             zombies.add(IdConverter.createZombie(IdConverter.Zombies.BASIC,
                     new Point2D(
-                            randomZombie.nextInt(level.getNumberOfRowAvailable()) * cellsSizeHeight, cellsSizeWidth * totalCols)));
+                            randomZombie.nextInt(level.getNumberOfRowAvailable()) * ( cellsSizeHeight * 2 + 1), cellsSizeWidth * totalCols)));
         }
         zombieTimer.updateState();
     }
