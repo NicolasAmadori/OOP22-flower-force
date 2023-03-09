@@ -17,8 +17,8 @@ plugins {
      */
     id("com.github.johnrengelman.shadow") version "7.1.2"
     id("org.danilopianini.gradle-java-qa") version "1.0.0"
-    id("de.aaschmid.cpd") version "3.1"
-    id("com.github.spotbugs") version "4.3.0"
+    //id("de.aaschmid.cpd") version "3.1"
+    //id("com.github.spotbugs") version "4.3.0"
     id("org.openjfx.javafxplugin") version "0.0.13"
 }
 
