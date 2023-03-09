@@ -40,6 +40,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
     public void game() {
         try {
             FlowerForceScene sceneClass = new GameScene(this);
+            controller.StartNewLevelGame(0);
             this.setScene(sceneClass.getScene());
         } catch (Exception e) {
             System.out.println(e);

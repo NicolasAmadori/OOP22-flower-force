@@ -11,7 +11,6 @@ public class ControllerImpl implements Controller {
     public ControllerImpl(FlowerForceApplication application) {
         this.application = application;
         this.world = new World(100);
-
     }
 
     @Override
@@ -36,8 +35,8 @@ public class ControllerImpl implements Controller {
 
     @Override
     public void StartNewLevelGame(int levelId) {
-        //final GameLoop gameLoop = new GameLoopImpl(this, this.world);
-        //new Thread((Runnable) gameLoop).start();
+        final GameLoop gameLoop = new GameLoopImpl(this, this.world.createGame(levelId));
+        new Thread((Runnable) gameLoop).start();
     }
 
     @Override

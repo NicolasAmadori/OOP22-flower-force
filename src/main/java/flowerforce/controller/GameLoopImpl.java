@@ -2,7 +2,7 @@ package flowerforce.controller;
 
 import flowerforce.model.World;
 import flowerforce.view.GameView;
-import flowerforce.model.Game;
+import flowerforce.model.game.Game;
 public class GameLoopImpl implements GameLoop, Runnable {
 
     private Controller controller;

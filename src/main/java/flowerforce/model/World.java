@@ -1,5 +1,8 @@
 package flowerforce.model;
 
+import flowerforce.model.game.Game;
+import flowerforce.model.game.GameImpl;
+
 public class World {
 
     private int nCoins;
@@ -23,5 +26,10 @@ public class World {
     }
     public void update() {
 
+    }
+
+    public Game createGame(int levelId) {
+        //return new GameImpl();
+        return null;
     }
 }
