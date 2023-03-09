@@ -13,7 +13,7 @@ public class World {
     }
 
     public int getSunCounter() {
-        return 100;
+        return 0;
     }
     public void update() {
 

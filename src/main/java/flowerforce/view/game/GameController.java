@@ -1,4 +1,4 @@
-package flowerforce.controller;
+package flowerforce.view.game;
 
 import java.util.Map;
 

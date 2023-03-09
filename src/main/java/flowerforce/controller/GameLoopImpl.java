@@ -13,7 +13,7 @@ public class GameLoopImpl implements GameLoop, Runnable {
 
     private boolean isRunning = false;
 
-    public GameLoopImpl(GameView view, World model) {
+    public GameLoopImpl(Controller controller, World model) {
         this.view = view;
         this.model = model;
 
@@ -53,10 +53,6 @@ public class GameLoopImpl implements GameLoop, Runnable {
     }
 
     private void updateAndRenderView() {
-        view.setSunCounter(model.getSunCounter());//esempio di utilizzo
-
-        //view.setEntities(model.getEntities());//esempio, bisognerà passare alla view tutte le view delle entità utilizzando un converter
-
-        view.render();//Sent to the view the command to render all the elements of the GUI
+        //view.render();//Sent to the view the command to render all the elements of the GUI
     }
 }

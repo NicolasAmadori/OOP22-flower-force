@@ -1,67 +1,78 @@
-package flowerforce.controller;
+package flowerforce.view.game;
 
-import java.awt.*;
 import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import flowerforce.controller.Controller;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.canvas.Canvas;
 
 /**
- * {@inheritDoc}.
+ * This is an implementation of {@link GameController}.
  */
-public class GameControllerImpl implements GameController, Initializable {
+public final class GameSceneController implements GameController, Initializable {
 
-    @FXML
-    private AnchorPane gamePane;
+    @FXML private AnchorPane gamePane;
 
-    @FXML
-    private ImageView imgBackground;
+    @FXML private ImageView imgBackground;
 
-    @FXML
-    private GridPane griglia;
+    @FXML private GridPane griglia;
 
-    @FXML
-    private Button btnSunflower;
+    @FXML private Button btnSunflower;
 
-    @FXML
-    private Button btnPeashooter;
+    @FXML private Button btnPeashooter;
 
-    @FXML
-    private Label lblSunCounter;
+    @FXML private Label lblSunCounter;
 
-    @FXML
-    void selectPeashooter(ActionEvent event) {
-        System.out.println("Peashooter selected");
+    @FXML private Canvas cnvYard;
+
+    private Controller controller;
+
+    public GameSceneController(Controller controller) {
+        this.controller = controller;
     }
 
     @FXML
-    void selectSunflower(ActionEvent event) {
-        System.out.println("Sunflower selected");
+    void selectPeashooter(final ActionEvent event) {
+        System.out.println("Peashooter selected"); //TODO: remove
     }
 
     @FXML
-    void cellClicked(MouseEvent event) {
-        Node source = (Node) event.getSource();
-        System.out.println(griglia.getColumnIndex(source) + " " + griglia.getRowIndex(source));
+    void selectSunflower(final ActionEvent event) {
+        System.out.println("Sunflower selected"); //TODO: remove
+    }
 
-        ImageView newPlant = new ImageView(new Image("flowerforce/icon.png"));
-        newPlant.setOnMouseClicked(this::cellClicked);
+    @FXML
+    void canvasClicked(final MouseEvent event) {
+        System.out.println(getRow(event.getY()) + " " + getColumn(event.getX()));
+    }
 
-        griglia.add(newPlant, griglia.getColumnIndex(source), griglia.getRowIndex(source));
-        griglia.getChildren().remove(source);
+    private int getRow(final double y) {
+        return getGridIndex(y, cnvYard.getHeight(), 5); //TODO: remove magic number
+    }
+
+    private int getColumn(final double x) {
+        return getGridIndex(x, cnvYard.getWidth(), 9); //TODO: remove magic number
+    }
+
+    private int getGridIndex(final double val, final double totalLength, final int nSlices) {
+        final double span = totalLength / nSlices;
+        for (int r = nSlices - 1; r >= 0; r--) {
+            if (val >= r * span) {
+                return r;
+            }
+        }
+        return 0;
     }
 
     /**
@@ -74,8 +85,9 @@ public class GameControllerImpl implements GameController, Initializable {
      *                  the root object was not localized.
      */
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(final URL location, final ResourceBundle resources) {
         setWindowSize();
+        lblSunCounter.setText(Integer.toString(controller.getSunCounter()));
     }
 
     /**
@@ -115,7 +127,7 @@ public class GameControllerImpl implements GameController, Initializable {
     }
 
     private void setWindowSize() {
-        final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        //final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         //imgBackground.setFitHeight(screenSize.getHeight());
         //imgBackground.setFitWidth(screenSize.getWidth());
         //gamePane.setPrefWidth(screenSize.getWidth());
