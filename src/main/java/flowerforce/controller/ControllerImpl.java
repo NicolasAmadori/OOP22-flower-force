@@ -26,7 +26,7 @@ public class ControllerImpl implements Controller {
 
     @Override
     public int updateSunCounter() {
-        
+        return 0;
     }
 
     @Override
@@ -36,13 +36,13 @@ public class ControllerImpl implements Controller {
 
     @Override
     public void StartNewLevelGame(int levelId) {
-        final GameLoop gameLoop = new GameLoopImpl(this, this.world);
-        new Thread((Runnable) gameLoop).start();
+        //final GameLoop gameLoop = new GameLoopImpl(this, this.world);
+        //new Thread((Runnable) gameLoop).start();
     }
 
     @Override
     public void startNewInfiniteGame() {
-        final GameLoop gameLoop = new GameLoopImpl(this, this.world);
-        new Thread((Runnable) gameLoop).start();
+        //final GameLoop gameLoop = new GameLoopImpl(this, this.world);
+        //new Thread((Runnable) gameLoop).start();
     }
 }

@@ -2,10 +2,11 @@ package flowerforce.controller;
 
 import flowerforce.model.World;
 import flowerforce.view.GameView;
+import flowerforce.model.Game;
 public class GameLoopImpl implements GameLoop, Runnable {
 
     private Controller controller;
-    private World model;
+    private Game model;
 
     private static final int FPS = 60;
 
@@ -13,7 +14,7 @@ public class GameLoopImpl implements GameLoop, Runnable {
 
     private boolean isRunning = false;
 
-    public GameLoopImpl(Controller controller, World model) {
+    public GameLoopImpl(Controller controller, Game model) {
         this.controller = controller;
         this.model = model;
 
@@ -55,6 +56,6 @@ public class GameLoopImpl implements GameLoop, Runnable {
     private void updateAndRenderView() {
         //view.render();//Sent to the view the command to render all the elements of the GUI
 
-        controller.
+        //controller.
     }
 }
