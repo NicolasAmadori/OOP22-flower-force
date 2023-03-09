@@ -24,17 +24,28 @@ public class GameImpl implements Game {
     private final Level level;
     private int sun;
     private int remainingZombie;
+    private final int cellsSizeHeight;
+    private final int cellsSizeWidth;
+    private final int totalCols;
+
 
     /**
      * @param level level of the game that has started.
+     * @param rows number of lines in the field.
+     * @param cols number of columns in the field.
+     * @param width field size corresponding to the width.
+     * @param height field size corresponding to the height.
      */
-    public GameImpl(final Level level) {
+    public GameImpl(final Level level, final int rows, final int cols, final int width, final int height) {
         sun = INITIAL_SUN * SUN_VALUE;
         this.level = level;
         zombieTimer = new TimerImpl(level.getTotalZombies());
         sunTimer = new TimerImpl(TIME_TO_SPAWN_SUN);
         remainingZombie = level.getTotalZombies();
         level.getPlantsId().forEach(p -> plantsTimer.put(p, new TimerImpl(p.getUnlockTime())));
+        cellsSizeHeight = height / rows;
+        cellsSizeWidth = width / cols;
+        totalCols = cols;
     }
 
     /**
@@ -46,7 +57,6 @@ public class GameImpl implements Game {
         this.generateZombie();
         bullets.forEach(Bullet::move);
         this.collidingBullet();
-        zombies.forEach(Zombie::move);
         this.collidingBullet();
         this.eatingPlant();
         this.updatePlant();
@@ -102,7 +112,8 @@ public class GameImpl implements Game {
                 return false;
             }
         }
-        final var plant = IdConverter.createPlant(idPlant, position);
+        final var plant = IdConverter.createPlant(idPlant,
+                new Point2D(position.getX() * cellsSizeHeight, position.getY() * cellsSizeWidth));
         sun -= idPlant.getCost();
         plants.add(plant);
         return true;
@@ -170,6 +181,8 @@ public class GameImpl implements Game {
             for (final var zombie : zombies) {
                 if (zombie.getPosition().equals(plant.getPosition())) {
                     zombie.manageEating(plant);
+                } else {
+                    zombie.move();
                 }
             }
         }
@@ -200,10 +213,12 @@ public class GameImpl implements Game {
      */
     private void generateZombie() {
         if (zombieTimer.isReady()) {
-            //final Random randomZombie = new Random();
+            final Random randomZombie = new Random();
             zombieTimer = new TimerImpl(remainingZombie);
             remainingZombie--;
-            zombies.add(IdConverter.createZombie(IdConverter.Zombies.BASIC, new Point2D(50, 50)));
+            zombies.add(IdConverter.createZombie(IdConverter.Zombies.BASIC,
+                    new Point2D(
+                            randomZombie.nextInt(level.getNumberOfRowAvailable()) * cellsSizeHeight, cellsSizeWidth * totalCols)));
         }
         zombieTimer.updateState();
     }
