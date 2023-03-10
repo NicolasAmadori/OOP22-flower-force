@@ -1,26 +1,24 @@
 package flowerforce.view.game;
 
+import java.awt.Dimension;
 import java.net.URL;
-import java.util.Map;
 import java.util.ResourceBundle;
 
-import flowerforce.controller.GameController;
 import javafx.event.ActionEvent;
-import javafx.fxml.Initializable;
-
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.geometry.Point2D;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.canvas.Canvas;
 
-/**
- * This is an implementation of {@link GameController}.
- */
-public final class GameSceneController implements GameController, Initializable {
+public final class GameSceneController implements Initializable {
 
     @FXML
     private AnchorPane gamePane;
@@ -43,10 +41,12 @@ public final class GameSceneController implements GameController, Initializable 
     @FXML
     private Canvas cnvYard;
 
-    private FlowerForceApplication application;
+    private final FlowerForceApplication application;
+    private final Dimension size;
 
-    public GameSceneController(FlowerForceApplication application) {
+    public GameSceneController(final FlowerForceApplication application, final Dimension size) {
         this.application = application;
+        this.size = size;
     }
 
     @FXML
@@ -96,47 +96,25 @@ public final class GameSceneController implements GameController, Initializable 
         setWindowSize();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getPlayerCoins() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPlayerCoins'");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Map<Integer, Boolean> getLevelIds() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getLevelIds'");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void startLevelGame(final int levelId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'startLevelGame'");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void startInfiniteGame() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'startInfiniteGame'");
-    }
-
     private void setWindowSize() {
-        //final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        //imgBackground.setFitHeight(screenSize.getHeight());
-        //imgBackground.setFitWidth(screenSize.getWidth());
-        //gamePane.setPrefWidth(screenSize.getWidth());
-        //gamePane.setPrefHeight(screenSize.getHeight());
+        imgBackground.setFitHeight(size.getHeight());
+        imgBackground.setFitWidth(size.getWidth());
+        gamePane.setPrefWidth(size.getWidth());
+        gamePane.setPrefHeight(size.getHeight());
+        //TODO: find the correct ratio between canvas and gamePane size
+        cnvYard.setWidth(size.getWidth()*0.8);
+        cnvYard.setHeight(size.getHeight()*0.8);
+    }
+
+    protected void clearCanvas() {
+        GraphicsContext gc = this.cnvYard.getGraphicsContext2D();
+        gc.clearRect(0, 0, size.getWidth(), size.getHeight());
+    }
+
+    protected void draw(final Image image, final Point2D pos) {
+        GraphicsContext gc = this.cnvYard.getGraphicsContext2D();
+        //TODO: must resize correctly the image, depending on screen size
+        gc.drawImage(image, 0, 0, image.getWidth(), image.getHeight(), pos.getX(), pos.getY(), image.getWidth(), image.getHeight());
+        System.out.println("DRAWN " + image.getHeight());
     }
 }

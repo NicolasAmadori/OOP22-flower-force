@@ -3,9 +3,9 @@ package flowerforce.view.game;
 import flowerforce.view.entities.EntityView;
 
 /**
- * Interface of the view of the game playing.
+ * Interface of the engine of the game view.
  */
-public interface GameView {
+public interface GameEngine {
 
     /**
      * 
