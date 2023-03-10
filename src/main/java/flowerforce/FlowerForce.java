@@ -1,6 +1,6 @@
 package flowerforce;
 
-import flowerforce.view.MyMenuGUIApp;
+import flowerforce.view.game.FlowerForceApplication;
 
 import static javafx.application.Application.launch;
 
@@ -17,7 +17,7 @@ public final class FlowerForce {
      * @param args
      */
     public static void main(final String[] args) {
-        launch(MyMenuGUIApp.class, args);
+        launch(FlowerForceApplication.class, args);
     }
 
 
