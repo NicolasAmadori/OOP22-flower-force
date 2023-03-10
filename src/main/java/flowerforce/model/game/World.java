@@ -1,4 +1,4 @@
-package flowerforce.model.entities;
+package flowerforce.model.game;
 
 import java.util.HashMap;
 import java.util.List;
@@ -37,10 +37,28 @@ public class World {
      */
     public Map<Integer, Boolean> getLevels() {
         final Map<Integer, Boolean> levelsMap = new HashMap<>();
-        IntStream.rangeClosed(1, this.player.getLastUnlockedLevel())
+        IntStream.rangeClosed(1, this.player.getLastUnlockedLevelId())
             .forEach(e -> levelsMap.put(e, true));
-        IntStream.rangeClosed(this.player.getLastUnlockedLevel() + 1, this.levelList.size())
+        IntStream.rangeClosed(this.player.getLastUnlockedLevelId() + 1, this.levelList.size())
             .forEach(e -> levelsMap.put(e, false));
         return levelsMap;
+    }
+
+    /**
+     * Creates a level game.
+     * @param levelId the level to create
+     * @return the game to be played
+     */
+    Game createLevelGame(final int levelId) {
+        //TODO complete game method implementations
+        return null;
+    }
+
+    /**
+     * Creates an infinite game.
+     * @return the game to be played
+     */
+    Game createInfiniteGame() {
+        return null;
     }
 }
