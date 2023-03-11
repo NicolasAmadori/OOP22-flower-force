@@ -17,6 +17,7 @@ public final class GameSaveManager<T> {
     private static final Gson GSON = new Gson(); //Instance to json text converter
 
     private final Class<T> genericClass; //class of the type to deserialize
+    private final String SAVING_FOLDER_PATH = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "flowerforce";
     private final String savingFilePath; //path of the savingFile
 
     /**
@@ -26,7 +27,7 @@ public final class GameSaveManager<T> {
      */
     public GameSaveManager(final Class<T> genericClass, final String fileName) {
         this.genericClass = genericClass;
-        this.savingFilePath = System.getProperty("user.dir") + File.separator + fileName + ".json";
+        this.savingFilePath = System.getProperty("user.dir") + SAVING_FOLDER_PATH + File.separator + fileName + ".json";
     }
 
     /**
@@ -46,7 +47,7 @@ public final class GameSaveManager<T> {
 
     /**
      * Reads the player's information save file, if it exists and returns an optional with the object of the generic type.
-     * @return An optional containing the instance of the saved player read from file, 
+     * @return An optional containing the instance of the saved player read from file,
      *  empty if the file does not exist or in case of an error during the read operation.
      */
     public Optional<T> load() {
