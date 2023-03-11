@@ -10,12 +10,12 @@
 
 <AnchorPane fx:id="gamePane" maxHeight="-Infinity" maxWidth="-Infinity" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Canvas fx:id="cnvYard" layoutX="383.0" layoutY="84.0" onMouseClicked="#canvasClicked" />
-      <ImageView fx:id="imgBackground" fitHeight="782.0" fitWidth="1252.0" layoutX="-126.0" layoutY="-110.0" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ImageView fx:id="imgBackground" fitHeight="782.0" fitWidth="1252.0" layoutX="-126.0" layoutY="-110.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
             <Image url="@../images/Garden.png" />
          </image>
       </ImageView>
+      <Canvas fx:id="cnvYard" layoutX="383.0" layoutY="84.0" onMouseClicked="#canvasClicked" />
        <ImageView layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
            <image>
                <Image url="@../images/bar.jpeg" />

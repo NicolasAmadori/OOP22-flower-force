@@ -1,7 +1,5 @@
 package flowerforce.view.entities;
 
-import java.io.FileDescriptor;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 import javafx.geometry.Point2D;

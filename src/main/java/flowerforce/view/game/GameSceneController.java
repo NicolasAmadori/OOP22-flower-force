@@ -2,8 +2,11 @@ package flowerforce.view.game;
 
 import java.awt.Dimension;
 import java.net.URL;
+import java.util.HashSet;
 import java.util.ResourceBundle;
+import java.util.Set;
 
+import flowerforce.view.entities.EntityView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,7 +21,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
-public final class GameSceneController implements Initializable {
+public final class GameSceneController implements Initializable, GameEngine {
 
     @FXML
     private AnchorPane gamePane;
@@ -43,6 +46,7 @@ public final class GameSceneController implements Initializable {
 
     private final FlowerForceApplication application;
     private final Dimension size;
+    private final Set<EntityView> entities = new HashSet<>();
 
     public GameSceneController(final FlowerForceApplication application, final Dimension size) {
         this.application = application;
@@ -104,17 +108,48 @@ public final class GameSceneController implements Initializable {
         //TODO: find the correct ratio between canvas and gamePane size
         cnvYard.setWidth(size.getWidth()*0.8);
         cnvYard.setHeight(size.getHeight()*0.8);
+    }    
+
+    @Override
+    public void addEntity(EntityView entity) {
+        entities.add(entity);
     }
 
-    protected void clearCanvas() {
+    @Override
+    public void removeEntity(EntityView entity) {
+        entities.remove(entity);
+    }
+
+    @Override
+    public void clearEntities() {
+        entities.clear();
+    }
+
+    @Override
+    public void render() {
+        this.clearCanvas();
+        entities.forEach(e -> this.draw(e.getImage(), e.getPlacingPosition()));
+    }
+
+    private void clearCanvas() {
         GraphicsContext gc = this.cnvYard.getGraphicsContext2D();
         gc.clearRect(0, 0, size.getWidth(), size.getHeight());
     }
 
-    protected void draw(final Image image, final Point2D pos) {
+    private void draw(final Image image, final Point2D pos) {
         GraphicsContext gc = this.cnvYard.getGraphicsContext2D();
         //TODO: must resize correctly the image, depending on screen size
         gc.drawImage(image, 0, 0, image.getWidth(), image.getHeight(), pos.getX(), pos.getY(), image.getWidth(), image.getHeight());
-        System.out.println("DRAWN " + image.getHeight());
+    }
+
+    @Override
+    public Dimension getFieldSize() {
+        return new Dimension((int) this.cnvYard.getWidth(), (int) this.cnvYard.getHeight());
+    }
+
+    @Override
+    public void over(boolean isWon) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'over'");
     }
 }

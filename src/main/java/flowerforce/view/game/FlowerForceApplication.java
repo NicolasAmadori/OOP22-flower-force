@@ -2,6 +2,8 @@ package flowerforce.view.game;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.Optional;
+
 import flowerforce.controller.GameController;
 import flowerforce.view.entities.SunflowerView;
 import javafx.application.Application;
@@ -15,12 +17,12 @@ import javafx.stage.Stage;
  */
 public final class FlowerForceApplication extends Application implements FlowerForceView {
 
-    //private final GameController controller = new GameControllerImpl();
-
-    //TODO: use generic separators
+    //TODO: use generic separators "/" "\"
     private static final String GAMEICON_PATH = "flowerforce/icon.png";
+    private final GameController controller = new GameControllerImpl();
     private Stage stage;
     private Dimension screenSize;
+    private FlowerForceScene sceneClass; 
 
     @Override
     public void start(final Stage primaryStage) throws Exception {
@@ -42,12 +44,19 @@ public final class FlowerForceApplication extends Application implements FlowerF
     @Override
     public void game() {
         try {
-            GameScene sceneClass = new GameScene(this, this.screenSize);
-            this.setScene(sceneClass.getScene());
+            this.sceneClass = new GameScene(this, this.screenSize);
+            this.setScene(this.sceneClass.getScene());
+            this.controller.setGameEngine(this.sceneClass.getGameEngine().get());
 
             //TOREMOVE: test
-            sceneClass.addEntity(new SunflowerView(new Point2D(100, 100)));
-            sceneClass.render();
+            sceneClass.getGameEngine().ifPresent(ge -> {
+                try {
+                    ge.addEntity(new SunflowerView(new Point2D(100, 100)));
+                    ge.render();
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            });
             
         } catch (Exception e) {
             System.out.println(e);
