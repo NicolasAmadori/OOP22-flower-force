@@ -1,16 +1,20 @@
 package flowerforce.controller;
 
 import flowerforce.model.World;
-import flowerforce.view.game.FlowerForceApplication;
+import flowerforce.view.game.GameEngine;
 
 public class ControllerImpl implements Controller {
 
-    private final FlowerForceApplication application;
+    private GameEngine gameEngine;
     private final World world;
 
-    public ControllerImpl(FlowerForceApplication application) {
-        this.application = application;
+    public ControllerImpl() {
         this.world = new World(100);
+    }
+
+    @Override
+    public void setGameEngine(GameEngine gameEngine) {
+        this.gameEngine = gameEngine;
     }
 
     @Override
@@ -41,7 +45,7 @@ public class ControllerImpl implements Controller {
 
     @Override
     public void startNewInfiniteGame() {
-        //final GameLoop gameLoop = new GameLoopImpl(this, this.world);
+        //final GameLoop gameLoop = new GameLoopImpl(GameEngine, this.world.StartNewGame());
         //new Thread((Runnable) gameLoop).start();
     }
 }
