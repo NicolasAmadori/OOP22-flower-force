@@ -13,7 +13,7 @@ public class GameScene implements FlowerForceScene {
     public GameScene(final FlowerForceApplication application) throws IOException {
         final FXMLLoader loader = new FXMLLoader();
         loader.setLocation(ClassLoader.getSystemResource(FXML_PATH));
-        loader.setController(new GameSceneController(application));
+        loader.setController(new GameSceneController(application.getController()));
 
         final Parent root = loader.load();
 

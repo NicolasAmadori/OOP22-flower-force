@@ -19,6 +19,4 @@ public final class FlowerForce {
     public static void main(final String[] args) {
         launch(FlowerForceApplication.class, args);
     }
-
-
 }

@@ -1,6 +1,7 @@
 package flowerforce.view.game;
 
-import flowerforce.controller.GameController;
+import flowerforce.controller.Controller;
+import flowerforce.controller.ControllerImpl;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.scene.Scene;
@@ -11,7 +12,7 @@ import javafx.stage.Stage;
  */
 public final class FlowerForceApplication extends Application implements FlowerForceView {
 
-    //private final GameController controller = new GameControllerImpl();
+    private Controller controller;//The controller of the game
 
     private static final String GAMEICON_PATH = "flowerforce/icon.png";
     private Stage stage;
@@ -19,13 +20,14 @@ public final class FlowerForceApplication extends Application implements FlowerF
     @Override
     public void start(final Stage primaryStage) throws Exception {
         this.stage = primaryStage;
+        this.controller = new ControllerImpl();//Instantiate the Controller
+
         //TODO: setStageSize()
         //this.stage.setFullScreen(true);
         this.stage.setResizable(false);
         this.stage.setTitle("Flower Force");
         this.stage.getIcons().add(new Image(GAMEICON_PATH));
-        this.menu();        
-        this.stage.show();
+        this.menu();
     }
 
     @Override
@@ -42,10 +44,16 @@ public final class FlowerForceApplication extends Application implements FlowerF
     public void game() {
         try {
             FlowerForceScene sceneClass = new GameScene(this);
+            controller.StartNewLevelGame(0);
             this.setScene(sceneClass.getScene());
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    @Override
+    public Controller getController() {
+        return this.controller;
     }
 
     private void setScene(final Scene scene) {

@@ -20,15 +20,15 @@ public interface Game {
 
     /**
      * Call to know which zombies are still alive.
-     * @return the list of zombie still alive
+     * @return the set of zombie still alive
      */
-    List<Zombie> getZombies();
+    Set<Zombie> getZombies();
 
     /**
      * Call to know which zombies are still alive.
-     * @return the list of plants still alive
+     * @return the set of plants still alive
      */
-    List<Plant> getPlants();
+    Set<Plant> getPlants();
 
     /**
      * Call to know which zombies are eating.
@@ -38,9 +38,9 @@ public interface Game {
 
     /**
      * Call to know which bullets are in the game field.
-     * @return the list of bullets in the game field
+     * @return the set of bullets in the game field
      */
-    List<Bullet> getBullet();
+    Set<Bullet> getBullet();
 
     /**
      *
@@ -67,4 +67,10 @@ public interface Game {
      * @return the types of plants that can be selected
      */
     Set<IdConverter.Plants> availablePlants();
+
+    /**
+     *
+     * @return true if the player won the level.
+     */
+    boolean result();
 }

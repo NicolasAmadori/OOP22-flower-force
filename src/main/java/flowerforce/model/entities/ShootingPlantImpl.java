@@ -22,8 +22,15 @@ public class ShootingPlantImpl extends AbstractPlant implements ShootingPlant {
      * @param timer used to produce bullets/suns at the right time
      * @param health the starting health of the entity
      * @param bulletClass the class of the bullet type to generate
+     * @param plantType the type of the plant
      */
-    public ShootingPlantImpl(final Point2D pos, final Timer timer, final double health, final Class<?> bulletClass, final Plants plantType) {
+    public ShootingPlantImpl(
+        final Point2D pos,
+        final Timer timer,
+        final double health,
+        final Class<?> bulletClass,
+        final Plants plantType
+    ) {
         super(pos, timer, health, plantType);
         this.bulletClass = bulletClass;
     }

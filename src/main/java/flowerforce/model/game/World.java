@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
+import flowerforce.model.game.Level;
+
 /**
  * Models the world the game's played in.
  */

@@ -4,7 +4,7 @@ import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import flowerforce.controller.GameController;
+import flowerforce.controller.Controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 
@@ -22,31 +22,24 @@ import javafx.scene.canvas.Canvas;
  */
 public final class GameSceneController implements GameController, Initializable {
 
-    @FXML
-    private AnchorPane gamePane;
+    @FXML private AnchorPane gamePane;
 
-    @FXML
-    private ImageView imgBackground;
+    @FXML private ImageView imgBackground;
 
-    @FXML
-    private GridPane griglia;
+    @FXML private GridPane griglia;
 
-    @FXML
-    private Button btnSunflower;
+    @FXML private Button btnSunflower;
 
-    @FXML
-    private Button btnPeashooter;
+    @FXML private Button btnPeashooter;
 
-    @FXML
-    private Label lblSunCounter;
+    @FXML private Label lblSunCounter;
 
-    @FXML
-    private Canvas cnvYard;
+    @FXML private Canvas cnvYard;
 
-    private FlowerForceApplication application;
+    private Controller controller;
 
-    public GameSceneController(FlowerForceApplication application) {
-        this.application = application;
+    public GameSceneController(Controller controller) {
+        this.controller = controller;
     }
 
     @FXML
@@ -62,6 +55,8 @@ public final class GameSceneController implements GameController, Initializable 
     @FXML
     void canvasClicked(final MouseEvent event) {
         System.out.println(getRow(event.getY()) + " " + getColumn(event.getX()));
+        controller.placePlant(getRow(event.getY()), getColumn(event.getX()));
+        //lblSunCounter.setText(Integer.toString(controller.getSunCounter()));
     }
 
     private int getRow(final double y) {
@@ -94,6 +89,7 @@ public final class GameSceneController implements GameController, Initializable 
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
         setWindowSize();
+        lblSunCounter.setText(Integer.toString(controller.getSunCounter()));
     }
 
     /**
