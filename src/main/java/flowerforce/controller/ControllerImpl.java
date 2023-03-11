@@ -9,7 +9,7 @@ public class ControllerImpl implements Controller {
     private final World world;
 
     public ControllerImpl() {
-        this.world = new World(100);
+        this.world = new World(100);//TODO: replace with gameSaveManager
     }
 
     @Override
