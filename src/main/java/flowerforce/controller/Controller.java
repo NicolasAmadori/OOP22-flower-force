@@ -1,6 +1,6 @@
 package flowerforce.controller;
 
-import flowerforce.view.game.GameEngine;
+import flowerforce.view.GameEngine;
 public interface Controller {
 
     void setGameEngine(GameEngine gameEngine);

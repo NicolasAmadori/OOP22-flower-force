@@ -1,7 +1,7 @@
 package flowerforce.controller;
 
 import flowerforce.model.World;
-import flowerforce.view.game.GameEngine;
+import flowerforce.view.GameEngine;
 
 public class ControllerImpl implements Controller {
 

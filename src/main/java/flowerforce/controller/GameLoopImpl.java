@@ -45,7 +45,7 @@ public class GameLoopImpl implements GameLoop, Runnable {
             timeAccumulator += elapsedTime;
 
             while(timeAccumulator > TIME_SLICE){
-                model.update();
+                //model.update();
                 timeAccumulator -= TIME_SLICE;
             }
 

@@ -20,7 +20,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
     @Override
     public void start(final Stage primaryStage) throws Exception {
         this.stage = primaryStage;
-        this.controller = new ControllerImpl(this);//Instantiate the Controller
+        this.controller = new ControllerImpl();//Instantiate the Controller
 
         //TODO: setStageSize()
         //this.stage.setFullScreen(true);
