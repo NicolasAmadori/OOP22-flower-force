@@ -2,12 +2,10 @@ package flowerforce.view.game;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.util.Optional;
 
-import flowerforce.controller.GameController;
-import flowerforce.view.entities.SunflowerView;
+import flowerforce.controller.Controller;
+import flowerforce.controller.ControllerImpl;
 import javafx.application.Application;
-import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -17,9 +15,10 @@ import javafx.stage.Stage;
  */
 public final class FlowerForceApplication extends Application implements FlowerForceView {
 
+    private Controller controller;
+
     //TODO: use generic separators "/" "\"
     private static final String GAMEICON_PATH = "flowerforce/icon.png";
-    private final GameController controller = new GameControllerImpl();
     private Stage stage;
     private Dimension screenSize;
     private FlowerForceScene sceneClass; 
@@ -28,10 +27,12 @@ public final class FlowerForceApplication extends Application implements FlowerF
     public void start(final Stage primaryStage) throws Exception {
         this.setScreenSize();
         this.stage = primaryStage;
+        this.controller = new ControllerImpl();
         this.stage.setFullScreen(true);
         this.stage.setResizable(false);
         this.stage.setTitle("Flower Force");
         this.stage.getIcons().add(new Image(GAMEICON_PATH));
+        this.menu();
         this.menu();
     }
 
@@ -45,22 +46,17 @@ public final class FlowerForceApplication extends Application implements FlowerF
     public void game() {
         try {
             this.sceneClass = new GameScene(this, this.screenSize);
-            this.setScene(this.sceneClass.getScene());
+            this.controller.StartNewLevelGame(0);
             this.controller.setGameEngine(this.sceneClass.getGameEngine().get());
-
-            //TOREMOVE: test
-            sceneClass.getGameEngine().ifPresent(ge -> {
-                try {
-                    ge.addEntity(new SunflowerView(new Point2D(100, 100)));
-                    ge.render();
-                } catch (Exception e) {
-                    System.out.println(e);
-                }
-            });
-            
+            this.setScene(this.sceneClass.getScene());
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    @Override
+    public Controller getController() {
+        return this.controller;
     }
 
     private void setScene(final Scene scene) {

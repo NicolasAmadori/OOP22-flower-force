@@ -15,6 +15,7 @@ public class ShootingPlantFactoryImpl implements ShootingPlantFactory {
     /**
      * {@inheritDoc}
      */
+    @Override
     public ShootingPlant common(final Point2D pos, final Plants plantType) {
         return new ShootingPlantImpl(
             pos,
@@ -28,6 +29,7 @@ public class ShootingPlantFactoryImpl implements ShootingPlantFactory {
     /**
      * {@inheritDoc}
      */
+    @Override
     public ShootingPlant snow(final Point2D pos, final Plants plantType) {
         return new ShootingPlantImpl(
             pos,
@@ -41,6 +43,7 @@ public class ShootingPlantFactoryImpl implements ShootingPlantFactory {
     /**
      * {@inheritDoc}
      */
+    @Override
     public ShootingPlant fire(final Point2D pos, final Plants plantType) {
         return new ShootingPlantImpl(
             pos,
@@ -54,6 +57,7 @@ public class ShootingPlantFactoryImpl implements ShootingPlantFactory {
     /**
      * {@inheritDoc}
      */
+    @Override
     public ShootingPlant fast(final Point2D pos, final Plants plantType) {
         return new ShootingPlantImpl(
             pos,

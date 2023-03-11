@@ -23,26 +23,19 @@ import javafx.scene.layout.GridPane;
 
 public final class GameSceneController implements Initializable, GameEngine {
 
-    @FXML
-    private AnchorPane gamePane;
+    @FXML private AnchorPane gamePane;
 
-    @FXML
-    private ImageView imgBackground;
+    @FXML private ImageView imgBackground;
 
-    @FXML
-    private GridPane griglia;
+    @FXML private GridPane griglia;
 
-    @FXML
-    private Button btnSunflower;
+    @FXML private Button btnSunflower;
 
-    @FXML
-    private Button btnPeashooter;
+    @FXML private Button btnPeashooter;
 
-    @FXML
-    private Label lblSunCounter;
+    @FXML private Label lblSunCounter;
 
-    @FXML
-    private Canvas cnvYard;
+    @FXML private Canvas cnvYard;
 
     private final FlowerForceApplication application;
     private final Dimension size;
@@ -66,6 +59,8 @@ public final class GameSceneController implements Initializable, GameEngine {
     @FXML
     void canvasClicked(final MouseEvent event) {
         System.out.println(getRow(event.getY()) + " " + getColumn(event.getX()));
+        this.application.getController().placePlant(getRow(event.getY()), getColumn(event.getX()));
+        //lblSunCounter.setText(Integer.toString(controller.getSunCounter()));
     }
 
     private int getRow(final double y) {
@@ -98,6 +93,7 @@ public final class GameSceneController implements Initializable, GameEngine {
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
         setWindowSize();
+        lblSunCounter.setText(Integer.toString(this.application.getController().getSunCounter()));
     }
 
     private void setWindowSize() {
