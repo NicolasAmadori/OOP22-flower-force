@@ -14,18 +14,21 @@ import java.util.Optional;
  */
 public final class GameSaveManager<T> {
 
-    private static final String SAVING_PATH = "C:/Users/Nicolas/Downloads/OOP22-flower-force";
-    private static final String SAVING_FILE_NAME = "savings.json";
-    private static final Gson GSON = new Gson();
+    private static final Gson GSON = new Gson(); //Instance to json text converter
 
-    private Class<T> genericClass;
+    private final Class<T> genericClass; //class of the type to deserialize
+
+    private final String SAVING_FOLDER_PATH = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "flowerforce";
+    private final String savingFilePath; //path of the savingFile
 
     /**
      * Create a new instance of the game saving manager.
      * @param genericClass the class of the generic type
+     * @param fileName the name for the saving file
      */
-    public GameSaveManager(final Class<T> genericClass) {
+    public GameSaveManager(final Class<T> genericClass, final String fileName) {
         this.genericClass = genericClass;
+        this.savingFilePath = System.getProperty("user.dir") + SAVING_FOLDER_PATH + File.separator + fileName + ".json";
     }
 
     /**
@@ -34,23 +37,22 @@ public final class GameSaveManager<T> {
      * @return True if the save operation was successful, false otherwise.
      */
     public boolean save(final T p) {
-        try (FileWriter fw = new FileWriter(SAVING_PATH + File.separator + SAVING_FILE_NAME)) {
+        try (FileWriter fw = new FileWriter(savingFilePath)) {
             fw.write(GSON.toJson(p));
             return true;
 
-        } catch (IOException  e) {
-            e.printStackTrace();
+        } catch (IOException e) {
             return false;
         }
     }
 
     /**
      * Reads the player's information save file, if it exists and returns an optional with the object of the generic type.
-     * @return An optional containing the instance of the saved player read from file, 
+     * @return An optional containing the instance of the saved player read from file,
      *  empty if the file does not exist or in case of an error during the read operation.
      */
     public Optional<T> load() {
-        File file = new File(SAVING_PATH + File.separator + SAVING_FILE_NAME);
+        final File file = new File(savingFilePath);
 
         if (!file.exists()) {
             return Optional.empty();
@@ -58,8 +60,7 @@ public final class GameSaveManager<T> {
 
         try (FileReader fr = new FileReader(file)) {
             return Optional.of(GSON.fromJson(fr, genericClass));
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException e) {
             return Optional.empty();
         }
     }
