@@ -8,17 +8,17 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="gamePane" maxHeight="-Infinity" maxWidth="-Infinity" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="flowerforce.controller.GameControllerImpl">
+<AnchorPane fx:id="gamePane" maxHeight="-Infinity" maxWidth="-Infinity" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fx:id="imgBackground" fitHeight="782.0" fitWidth="1252.0" layoutX="-126.0" layoutY="-110.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
-            <Image url="@images/Garden.png" />
+            <Image url="@../images/Garden.png" />
          </image>
       </ImageView>
       <Canvas fx:id="cnvYard" height="593.0" layoutX="383.0" layoutY="84.0" onMouseClicked="#canvasClicked" width="869.0" />
        <ImageView fitHeight="96.0" fitWidth="86.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
            <image>
-               <Image url="@images/bar.jpeg" />
+               <Image url="@../images/bar.jpeg" />
            </image>
        </ImageView>
        <Button fx:id="btnSunflower" layoutX="3.0" layoutY="140.0" mnemonicParsing="false" onAction="#selectSunflower" prefHeight="52.0" prefWidth="96.0" text="Sunflower" />
