@@ -2,7 +2,9 @@ package flowerforce.controller;
 
 import flowerforce.common.WorldSavingManager;
 import flowerforce.model.game.World;
-import flowerforce.view.GameEngine;
+import flowerforce.view.game.GameEngine;
+
+import javafx.geometry.Dimension2D;
 
 public class ControllerImpl implements Controller {
 
@@ -12,6 +14,7 @@ public class ControllerImpl implements Controller {
     public ControllerImpl() {
         try {
             this.world = WorldSavingManager.load();
+            System.out.println(this.world.getCoins());
         } catch (InstantiationException e) {
             throw new RuntimeException(e);//TODO: change
         }
@@ -49,9 +52,10 @@ public class ControllerImpl implements Controller {
     }
 
     @Override
-    public void StartNewLevelGame(int levelId) {
-        //final GameLoop gameLoop = new GameLoopImpl(this, this.world.createGame(levelId));
-        //new Thread((Runnable) gameLoop).start();
+    public void startNewLevelGame(int levelId) {
+        Dimension2D fieldDimension = this.gameEngine.getFieldSize();
+        final GameLoop gameLoop = new GameLoopImpl(this.gameEngine, this.world.createLevelGame(levelId, (int) fieldDimension.getWidth(), (int) fieldDimension.getHeight()));//TODO
+        new Thread((Runnable) gameLoop).start();
     }
 
     @Override

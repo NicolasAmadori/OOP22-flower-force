@@ -1,21 +1,18 @@
 package flowerforce.controller;
 
 import flowerforce.model.game.Game;
+import flowerforce.view.game.GameEngine;
 public class GameLoopImpl implements GameLoop, Runnable {
 
-    private Controller controller;
+    private GameEngine gameEngine;
     private Game model;
-
     private static final int FPS = 60;
-
     private static final long TIME_SLICE = 1000_000_000 / FPS;
-
     private boolean isRunning = false;
 
-    public GameLoopImpl(Controller controller, Game model) {
-        this.controller = controller;
+    public GameLoopImpl(GameEngine gameEngine, Game model) {
+        this.gameEngine = gameEngine;
         this.model = model;
-
     }
 
     /**
@@ -43,7 +40,7 @@ public class GameLoopImpl implements GameLoop, Runnable {
             timeAccumulator += elapsedTime;
 
             while(timeAccumulator > TIME_SLICE){
-                //model.update();
+                model.update();
                 timeAccumulator -= TIME_SLICE;
             }
 

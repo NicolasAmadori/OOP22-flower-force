@@ -1,11 +1,12 @@
 package flowerforce.view.game;
 
 import flowerforce.view.entities.EntityView;
+import javafx.geometry.Dimension2D;
 
 /**
- * Interface of the view of the game playing.
+ * Interface of the engine of the game view.
  */
-public interface GameView {
+public interface GameEngine {
 
     /**
      * 
@@ -28,4 +29,15 @@ public interface GameView {
      * This method can be called to refresh the view.
      */
     void render();
+
+    /**
+     * 
+     * @return the dimensions of the game field
+     */
+    Dimension2D getFieldSize();
+
+    /**
+     * This method can be called to show the outcome of the game.
+     */
+    void over(boolean isWon);
 }

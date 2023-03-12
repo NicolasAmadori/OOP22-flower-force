@@ -13,7 +13,7 @@ public class PlayerImpl implements Player {
      * Constructor to instantiate a totally new player.
      */
     public PlayerImpl() {
-        this(0, 0, 0);
+        this(0, 0, 1);
     }
 
     /**

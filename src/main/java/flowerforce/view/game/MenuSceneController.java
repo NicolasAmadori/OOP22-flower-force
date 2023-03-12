@@ -35,7 +35,7 @@ public class MenuSceneController {
             this.mainController.startNewInfiniteGame();
         }
         else {
-            this.mainController.StartNewLevelGame(levelId);
+            this.mainController.startNewLevelGame(levelId);
         }
         this.application.game();
     }

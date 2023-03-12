@@ -1,20 +1,19 @@
 package flowerforce.view.entities;
 
 import javafx.geometry.Point2D;
-import javafx.scene.image.Image;
 
 public interface EntityView {
 
     /**
      * 
-     * @return the position to correctly draw the entity on the {@link GameView}
+     * @return the type of entity
      */
-    Point2D getPlacingPosition();
+    EntityTypeView getEntityType();
 
     /**
      * 
-     * @return the entity image to display on the {@link GameView}
+     * @return the position to correctly draw the entity on the {@link GameEngine}
      */
-    Image getImage();
+    Point2D getPlacingPosition();
 
 }
