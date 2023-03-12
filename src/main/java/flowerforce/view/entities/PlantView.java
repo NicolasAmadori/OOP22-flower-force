@@ -2,7 +2,7 @@ package flowerforce.view.entities;
 
 import java.util.Optional;
 
-public interface PlantView extends EntityView {
+public interface PlantView extends EntityTypeView {
 
     /**
      * 

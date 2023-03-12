@@ -14,6 +14,10 @@ public interface FlowerForceView {
      */
     void game();
 
+    /**
+     * 
+     * @return the controller of the application
+     */
     Controller getController();
 
 }

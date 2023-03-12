@@ -1,7 +1,7 @@
 package flowerforce.view.game;
 
-import java.awt.Dimension;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Dimension2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
@@ -14,7 +14,7 @@ public class GameScene implements FlowerForceScene {
     private final Scene scene;
     private final GameSceneController sceneController;
 
-    public GameScene(final FlowerForceApplication application, final Dimension size) throws IOException {
+    public GameScene(final FlowerForceApplication application, final Dimension2D size) throws IOException {
         final FXMLLoader loader = new FXMLLoader();
         this.sceneController = new GameSceneController(application, size);
         loader.setLocation(ClassLoader.getSystemResource(FXML_PATH));
@@ -32,10 +32,6 @@ public class GameScene implements FlowerForceScene {
 
     @Override
     public Optional<GameEngine> getGameEngine() {
-        if (this.sceneController instanceof GameEngine) {
-            return Optional.of((GameEngine) this.sceneController);
-        } else {
-            return Optional.empty();
-        }
+        return Optional.of((GameEngine) this.sceneController);
     }
 }

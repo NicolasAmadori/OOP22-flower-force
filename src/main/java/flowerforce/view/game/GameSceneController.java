@@ -1,15 +1,16 @@
 package flowerforce.view.game;
 
-import java.awt.Dimension;
 import java.net.URL;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import flowerforce.view.entities.EntityTypeView;
 import flowerforce.view.entities.EntityView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -37,13 +38,27 @@ public final class GameSceneController implements Initializable, GameEngine {
 
     @FXML private Canvas cnvYard;
 
+    //Garden size: 1920x1080, yard size: 1320x880. Down-shift: 150px, right-shift: 600px.
+    private static final double RIGHTSHIFT_RATIO = 600.0 / 1920.0;
+    private static final double DOWNSHIFT_RATIO = 150.0 / 1080.0;
+    private static final double WIDTH_RATIO = 1320.0 / 1920.0;
+    private static final double HEIGHT_RATIO = 880.0 / 1080.0;
+    private static final double IMAGE_RATIO_WIDTH = 2 / 1920.0; //TODO: resize must be equal to all images?
+    private static final double IMAGE_RATIO_HEIGHT = 2 / 1080.0;
     private final FlowerForceApplication application;
-    private final Dimension size;
+    private final Dimension2D size;
     private final Set<EntityView> entities = new HashSet<>();
+    private final Point2D firstYardPoint;
+    private final Dimension2D yardDimension;
+    private final Dimension2D imageRatio;
 
-    public GameSceneController(final FlowerForceApplication application, final Dimension size) {
+    public GameSceneController(final FlowerForceApplication application, final Dimension2D size) {
         this.application = application;
         this.size = size;
+        this.firstYardPoint = new Point2D((int) (size.getWidth() * RIGHTSHIFT_RATIO), (int) (size.getHeight() * DOWNSHIFT_RATIO));
+        this.yardDimension = new Dimension2D((int) (size.getWidth() * WIDTH_RATIO), (int) (size.getHeight() * HEIGHT_RATIO));
+        System.out.println(this.firstYardPoint + " " + this.yardDimension); //TODO: remove
+        this.imageRatio = new Dimension2D(size.getWidth() * IMAGE_RATIO_WIDTH, size.getHeight() * IMAGE_RATIO_HEIGHT);
     }
 
     @FXML
@@ -102,8 +117,10 @@ public final class GameSceneController implements Initializable, GameEngine {
         gamePane.setPrefWidth(size.getWidth());
         gamePane.setPrefHeight(size.getHeight());
         //TODO: find the correct ratio between canvas and gamePane size
-        cnvYard.setWidth(size.getWidth()*0.8);
-        cnvYard.setHeight(size.getHeight()*0.8);
+        cnvYard.setWidth(this.yardDimension.getWidth());
+        cnvYard.setHeight(this.yardDimension.getHeight());
+        cnvYard.setTranslateX(this.firstYardPoint.getX());
+        cnvYard.setTranslateY(this.firstYardPoint.getY());
     }    
 
     @Override
@@ -124,23 +141,30 @@ public final class GameSceneController implements Initializable, GameEngine {
     @Override
     public void render() {
         this.clearCanvas();
-        entities.forEach(e -> this.draw(e.getImage(), e.getPlacingPosition()));
+        entities.forEach(e -> this.draw(e.getEntityType().getImage(), e.getPlacingPosition()));
     }
 
     private void clearCanvas() {
         GraphicsContext gc = this.cnvYard.getGraphicsContext2D();
-        gc.clearRect(0, 0, size.getWidth(), size.getHeight());
+        gc.clearRect(0, 0, this.cnvYard.getWidth(), this.cnvYard.getHeight());
     }
 
     private void draw(final Image image, final Point2D pos) {
         GraphicsContext gc = this.cnvYard.getGraphicsContext2D();
         //TODO: must resize correctly the image, depending on screen size
-        gc.drawImage(image, 0, 0, image.getWidth(), image.getHeight(), pos.getX(), pos.getY(), image.getWidth(), image.getHeight());
+        gc.drawImage(image, 0, 0, image.getWidth(), image.getHeight(),
+                this.firstYardPoint.getX() + pos.getX(), this.firstYardPoint.getY() + pos.getY(), image.getWidth() * this.imageRatio.getWidth(), image.getHeight() * this.imageRatio.getHeight());
+        ImageView iv = new ImageView(image);
+        iv.relocate(this.firstYardPoint.getX() + pos.getX(), this.firstYardPoint.getY() + pos.getY());
+        iv.setPreserveRatio(true);
+        iv.setFitWidth(image.getWidth() * this.imageRatio.getWidth());
+        iv.setFitHeight(image.getHeight() * this.imageRatio.getHeight());
+        this.gamePane.getChildren().add(iv);
     }
 
     @Override
-    public Dimension getFieldSize() {
-        return new Dimension((int) this.cnvYard.getWidth(), (int) this.cnvYard.getHeight());
+    public Dimension2D getFieldSize() {
+        return this.yardDimension;
     }
 
     @Override

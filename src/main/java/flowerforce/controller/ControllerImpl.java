@@ -39,8 +39,8 @@ public class ControllerImpl implements Controller {
 
     @Override
     public void StartNewLevelGame(int levelId) {
-        final GameLoop gameLoop = new GameLoopImpl(this, this.world.createGame(levelId));
-        new Thread((Runnable) gameLoop).start();
+        //final GameLoop gameLoop = new GameLoopImpl(this, this.world.createGame(levelId));
+        //new Thread((Runnable) gameLoop).start();
     }
 
     @Override
