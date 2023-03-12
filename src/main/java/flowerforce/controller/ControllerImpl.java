@@ -27,18 +27,17 @@ public class ControllerImpl implements Controller {
 
     @Override
     public int getPlayerCoins() {
-        return this.world.getCoins();
+        return this.world.getPlayer().getCoins();
     }
 
     @Override
     public int getSunCounter() {
-        //return world.getSunCounter();
         return 0;
     }
 
     @Override
     public int getLastUnlockedLevelId() {
-        return 0;
+        return this.world.getPlayer().getLastUnlockedLevelId();
     }
 
     @Override
