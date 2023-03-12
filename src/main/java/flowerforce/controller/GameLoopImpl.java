@@ -44,13 +44,11 @@ public class GameLoopImpl implements GameLoop, Runnable {
                 timeAccumulator -= TIME_SLICE;
             }
 
-            updateAndRenderView();
+            updateView();
         }
     }
 
-    private void updateAndRenderView() {
-        //view.render();//Sent to the view the command to render all the elements of the GUI
-
-        //controller.
+    private void updateView() {
+        this.gameEngine.render();
     }
 }
