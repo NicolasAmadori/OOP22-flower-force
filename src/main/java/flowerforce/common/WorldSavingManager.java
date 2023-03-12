@@ -15,7 +15,7 @@ public class WorldSavingManager {
     private static String LEVEL_FILE_PREFIX = "level";
     private final String SAVING_FOLDER_PATH = "src" + File.separator + "main" + File.separator + "resources" + File.separator
             + "flowerforce" + File.separator + "game" + File.separator + "savings";
-    public World load() throws InstantiationException {
+    public static World load() throws InstantiationException {
         Optional<Player> p = loadPlayer();
 
         Level infiniteLevel = loadInfiniteLevel();
@@ -25,17 +25,17 @@ public class WorldSavingManager {
         return new World(p, levels, infiniteLevel);
     }
 
-    public void save(World world) {
+    public static void save(World world) {
         SaveManager<Player> playerSaveManager = new SaveManager(Player.class, PLAYER_FILE_NAME);
         playerSaveManager.save(world.getPlayer());
     }
 
-    private Optional<Player> loadPlayer() {
+    private static Optional<Player> loadPlayer() {
         SaveManager<Player> playerSaveManager = new SaveManager(Player.class, PLAYER_FILE_NAME);
         return playerSaveManager.load();
     }
 
-    private Level loadInfiniteLevel() throws InstantiationException {
+    private static Level loadInfiniteLevel() throws InstantiationException {
         SaveManager<Level> infiniteLevelSaveManager = new SaveManager(Level.class, INFINITELEVEL_FILE_NAME);
         Optional<Level> infiniteLevel = infiniteLevelSaveManager.load();
         if(infiniteLevel.isEmpty()) {
@@ -44,7 +44,7 @@ public class WorldSavingManager {
         return infiniteLevel.get();
     }
 
-    private List<Level> loadLevels() throws InstantiationException {
+    private static List<Level> loadLevels() throws InstantiationException {
         File savingFolder = new File(SAVING_FOLDER_PATH);
         String[] levelNames = (String[]) Arrays.stream(savingFolder.listFiles())
                 .filter(f -> f.getName().startsWith(LEVEL_FILE_PREFIX))
