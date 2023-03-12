@@ -12,12 +12,13 @@ import java.util.Optional;
  * A utility class that manages saving information to a JSON file or loading information from it.
  * @param <T> The type of the file to save on the file or to load from it
  */
-public final class GameSaveManager<T> {
+public final class SaveManager<T> {
 
     private static final Gson GSON = new Gson(); //Instance to json text converter
 
     private final Class<T> genericClass; //class of the type to deserialize
-    private final String SAVING_FOLDER_PATH = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "flowerforce" + File.separator + "game" + File.separator + "savings";
+    private final String SAVING_FOLDER_PATH = "src" + File.separator + "main" + File.separator + "resources" + File.separator
+                                                + "flowerforce" + File.separator + "game" + File.separator + "savings";
     private final String savingFilePath; //path of the savingFile
 
     /**
@@ -25,7 +26,7 @@ public final class GameSaveManager<T> {
      * @param genericClass the class of the generic type
      * @param fileName the name for the saving file
      */
-    public GameSaveManager(final Class<T> genericClass, final String fileName) {
+    public SaveManager(final Class<T> genericClass, final String fileName) {
         this.genericClass = genericClass;
         this.savingFilePath = System.getProperty("user.dir") + File.separator + SAVING_FOLDER_PATH + File.separator + fileName + ".json";
     }
