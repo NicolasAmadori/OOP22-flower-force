@@ -3,15 +3,11 @@ package flowerforce.common;
 import flowerforce.model.entities.World;
 import flowerforce.model.game.Level;
 import flowerforce.model.game.Player;
-import flowerforce.model.game.PlayerImpl;
-
-import javax.swing.text.html.Option;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 public class WorldSavingManager {
 
@@ -27,7 +23,8 @@ public class WorldSavingManager {
 
         List<Level> levels = loadLevels();
 
-        return new World(p, levels, infiniteLevel);
+        //return new World(p, levels, infiniteLevel);
+        return new World(p.get(), levels);//TODO: remove
     }
 
     public void save(World world) {
@@ -35,7 +32,8 @@ public class WorldSavingManager {
 
         playerSaveManager.save(world.getPlayer());
 
-        List<Level> levels = world.getLevels();
+        //List<Level> levels = world.getLevels();
+        List<Level> levels = List.of();//TODO: remove
 
         SaveManager<Level> levelSaveManager;
         for (Level level : levels) {
