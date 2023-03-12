@@ -1,6 +1,6 @@
 package flowerforce.controller;
 
-import flowerforce.view.GameEngine;
+import flowerforce.view.game.GameEngine;
 public interface Controller {
 
     void setGameEngine(GameEngine gameEngine);
@@ -14,7 +14,7 @@ public interface Controller {
 
     void placePlant(int row, int col);
 
-    void StartNewLevelGame(final int levelId);
+    void startNewLevelGame(final int levelId);
 
     void startNewInfiniteGame();
 }
