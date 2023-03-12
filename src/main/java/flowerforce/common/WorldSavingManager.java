@@ -15,27 +15,19 @@ import java.util.stream.Stream;
 
 public class WorldSavingManager {
 
+    private static String PLAYER_FILE_NAME = "player";
+    private static String INFINITELEVEL_FILE_NAME = "infiniteLevel";
+    private static String LEVEL_FILE_PREFIX = "level";
     private final String SAVING_FOLDER_PATH = "src" + File.separator + "main" + File.separator + "resources" + File.separator
             + "flowerforce" + File.separator + "game" + File.separator + "savings";
-    public World load() {
-        SaveManager<Player> playerSaveManager = new SaveManager(Player.class, "player");
+    public World load() throws InstantiationException {
+        Optional<Player> p = loadPlayer();
 
-        Optional<Player> p = playerSaveManager.load();
+        Optional<Level> infiniteLevel = loadInfiniteLevel();
 
-        File folder = new File(SAVING_FOLDER_PATH);
-        File[] levelSavingFiles = (File[]) Arrays.stream(folder.listFiles()).filter(f -> f.getName().startsWith("level")).toArray();//saving just level save files
+        List<Level> levels = loadLevels();
 
-        List<Level> levels = new ArrayList<Level>();
-
-        SaveManager<Level> levelSaveManager;
-        for (File levelFile : levelSavingFiles) {
-            levelSaveManager = new SaveManager(Level.class, levelFile.getName());
-
-            Optional<Level> loadedLevel = levelSaveManager.load();
-            loadedLevel.ifPresent(l -> levels.add(l));
-        }
-
-        return new World(levels, p);
+        return new World(p, levels, infiniteLevel);
     }
 
     public void save(World world) {
@@ -51,5 +43,43 @@ public class WorldSavingManager {
 
             levelSaveManager.save(level);
         }
+    }
+
+    private Optional<Player> loadPlayer() {
+        SaveManager<Player> playerSaveManager = new SaveManager(Player.class, PLAYER_FILE_NAME);
+        return playerSaveManager.load();
+    }
+
+    private Optional<Level> loadInfiniteLevel() throws InstantiationException {
+        SaveManager<Level> infiniteLevelSaveManager = new SaveManager(Level.class, INFINITELEVEL_FILE_NAME);
+        Optional<Level> infiniteLevel = infiniteLevelSaveManager.load();
+        if(infiniteLevel.isEmpty()) {
+            throw new InstantiationException("Infinite level file has not been found.");
+        }
+        return infiniteLevel;
+    }
+
+    private List<Level> loadLevels() throws InstantiationException {
+        File savingFolder = new File(SAVING_FOLDER_PATH);
+        String[] levelNames = (String[]) Arrays.stream(savingFolder.listFiles())
+                .filter(f -> f.getName().startsWith(LEVEL_FILE_PREFIX))
+                .map(f -> f.getName())
+                .toArray(); //saving just level save files, excluding player and infiniteLevel files
+
+        List<Level> levels = new ArrayList<Level>();
+
+        SaveManager<Level> levelSaveManager;
+        for (String levelName : levelNames) {
+            levelSaveManager = new SaveManager(Level.class, levelName);
+
+            Optional<Level> loadedLevel = levelSaveManager.load();
+            loadedLevel.ifPresent(l -> levels.add(l));
+        }
+
+        if (levels.isEmpty()) {
+            throw new InstantiationException("Not enough levels are saved in the saving path.");
+        }
+
+        return levels;
     }
 }
