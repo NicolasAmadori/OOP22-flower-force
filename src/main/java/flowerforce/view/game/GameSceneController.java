@@ -37,6 +37,10 @@ public final class GameSceneController implements Initializable, GameEngine {
     @FXML private Label lblSunCounter;
 
     @FXML private Canvas cnvYard;
+    
+    @FXML private ImageView imageMenu;
+
+    @FXML private ImageView imageResult;
 
     //Garden size: 1920x1080, yard size: 1320x880. Down-shift: 150px, right-shift: 600px.
     private static final double RIGHTSHIFT_RATIO = 600.0 / 1920.0;
@@ -45,6 +49,7 @@ public final class GameSceneController implements Initializable, GameEngine {
     private static final double HEIGHT_RATIO = 880.0 / 1080.0;
     private static final double IMAGE_RATIO_WIDTH = 2 / 1920.0; //TODO: resize must be equal to all images?
     private static final double IMAGE_RATIO_HEIGHT = 2 / 1080.0;
+
     private final FlowerForceApplication application;
     private final Dimension2D size;
     private final Set<EntityView> entities = new HashSet<>();
@@ -76,6 +81,15 @@ public final class GameSceneController implements Initializable, GameEngine {
         System.out.println(getRow(event.getY()) + " " + getColumn(event.getX()));
         this.application.getController().placePlant(getRow(event.getY()), getColumn(event.getX()));
         //lblSunCounter.setText(Integer.toString(controller.getSunCounter()));
+    }
+
+    @FXML
+    void selectMenu( final MouseEvent event) {
+        imageResult.setVisible(false);
+        imageMenu.setVisible(false);
+        imageResult.setDisable(true);
+        System.out.println("prova");
+        application.menu();
     }
 
     private int getRow(final double y) {
@@ -168,8 +182,17 @@ public final class GameSceneController implements Initializable, GameEngine {
     }
 
     @Override
-    public void over(boolean isWon) {
+    public void over( final boolean isWon) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'over'");
+        //throw new UnsupportedOperationException("Unimplemented method 'over'");
+        imageResult.setVisible(true);
+        imageMenu.setVisible(true);
+        imageMenu.setDisable(false);
+        if ( isWon) {
+            imageResult.setImage(new Image("..\\images\\LevelWin.png"));
+        }
+        else {
+            imageResult.setImage(new Image("..\\images\\ZombiesAteYourBrains.png"));
+        }
     }
 }
