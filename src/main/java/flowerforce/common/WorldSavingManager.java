@@ -1,8 +1,11 @@
 package flowerforce.common;
 
 import flowerforce.model.game.World;
-import flowerforce.model.game.Level;
 import flowerforce.model.game.Player;
+import flowerforce.model.game.PlayerImpl;
+import flowerforce.model.game.Level;
+import flowerforce.model.game.LevelImpl;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,17 +29,17 @@ public class WorldSavingManager {
     }
 
     public static void save(World world) {
-        SaveManager<Player> playerSaveManager = new SaveManager(Player.class, PLAYER_FILE_NAME);
+        SaveManager<Player> playerSaveManager = new SaveManager(PlayerImpl.class, PLAYER_FILE_NAME);
         playerSaveManager.save(world.getPlayer());
     }
 
     private static Optional<Player> loadPlayer() {
-        SaveManager<Player> playerSaveManager = new SaveManager(Player.class, PLAYER_FILE_NAME);
+        SaveManager<Player> playerSaveManager = new SaveManager(PlayerImpl.class, PLAYER_FILE_NAME);
         return playerSaveManager.load();
     }
 
     private static Level loadInfiniteLevel() throws InstantiationException {
-        SaveManager<Level> infiniteLevelSaveManager = new SaveManager(Level.class, INFINITELEVEL_FILE_NAME);
+        SaveManager<Level> infiniteLevelSaveManager = new SaveManager(LevelImpl.class, INFINITELEVEL_FILE_NAME);
         Optional<Level> infiniteLevel = infiniteLevelSaveManager.load();
         if(infiniteLevel.isEmpty()) {
             throw new InstantiationException("Infinite level file has not been found.");
@@ -46,16 +49,17 @@ public class WorldSavingManager {
 
     private static List<Level> loadLevels() throws InstantiationException {
         File savingFolder = new File(SAVING_FOLDER_PATH);
-        String[] levelNames = (String[]) Arrays.stream(savingFolder.listFiles())
-                .map(f -> f.getName())
-                .filter(f -> f.startsWith(LEVEL_FILE_PREFIX))
-                .toArray(); //saving just level save files, excluding player and infiniteLevel files
+        List<String> levelNames = Arrays.stream(savingFolder.listFiles())
+                .map(f -> f.getName())//get just the names
+                .map(n -> n.split("\\..")[0])//Remove extension from the names
+                .filter(f -> f.startsWith(LEVEL_FILE_PREFIX))//Get just levels names
+                .toList();
 
         List<Level> levels = new ArrayList<Level>();
 
         SaveManager<Level> levelSaveManager;
         for (String levelName : levelNames) {
-            levelSaveManager = new SaveManager(Level.class, levelName);
+            levelSaveManager = new SaveManager(LevelImpl.class, levelName);
 
             Optional<Level> loadedLevel = levelSaveManager.load();
             loadedLevel.ifPresent(l -> levels.add(l));
