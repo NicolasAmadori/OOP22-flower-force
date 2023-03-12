@@ -1,6 +1,6 @@
 package flowerforce.common;
 
-import flowerforce.model.entities.World;
+import flowerforce.model.game.World;
 import flowerforce.model.game.Level;
 import flowerforce.model.game.Player;
 import java.io.File;
@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class WorldSavingManager {
-
     private static String PLAYER_FILE_NAME = "player";
     private static String INFINITELEVEL_FILE_NAME = "infiniteLevel";
     private static String LEVEL_FILE_PREFIX = "level";
@@ -19,28 +18,16 @@ public class WorldSavingManager {
     public World load() throws InstantiationException {
         Optional<Player> p = loadPlayer();
 
-        Optional<Level> infiniteLevel = loadInfiniteLevel();
+        Level infiniteLevel = loadInfiniteLevel();
 
         List<Level> levels = loadLevels();
 
-        //return new World(p, levels, infiniteLevel);
-        return new World(p.get(), levels);//TODO: remove
+        return new World(p, levels, infiniteLevel);
     }
 
     public void save(World world) {
-        SaveManager<Player> playerSaveManager = new SaveManager(Player.class, "player");
-
+        SaveManager<Player> playerSaveManager = new SaveManager(Player.class, PLAYER_FILE_NAME);
         playerSaveManager.save(world.getPlayer());
-
-        //List<Level> levels = world.getLevels();
-        List<Level> levels = List.of();//TODO: remove
-
-        SaveManager<Level> levelSaveManager;
-        for (Level level : levels) {
-            levelSaveManager = new SaveManager(Level.class, "level" + level.getLevelId());
-
-            levelSaveManager.save(level);
-        }
     }
 
     private Optional<Player> loadPlayer() {
@@ -48,13 +35,13 @@ public class WorldSavingManager {
         return playerSaveManager.load();
     }
 
-    private Optional<Level> loadInfiniteLevel() throws InstantiationException {
+    private Level loadInfiniteLevel() throws InstantiationException {
         SaveManager<Level> infiniteLevelSaveManager = new SaveManager(Level.class, INFINITELEVEL_FILE_NAME);
         Optional<Level> infiniteLevel = infiniteLevelSaveManager.load();
         if(infiniteLevel.isEmpty()) {
             throw new InstantiationException("Infinite level file has not been found.");
         }
-        return infiniteLevel;
+        return infiniteLevel.get();
     }
 
     private List<Level> loadLevels() throws InstantiationException {
