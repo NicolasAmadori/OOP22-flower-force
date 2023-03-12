@@ -15,22 +15,22 @@
       </ImageView>
       <FlowPane hgap="60.0" layoutX="59.0" layoutY="125.0" prefHeight="200.0" prefWidth="482.0" styleClass="flowpane" vgap="10.0">
          <children>
-            <ImageView fx:id="Lvl1" fitHeight="70.0" fitWidth="70.0" onMouseClicked="#start" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="Lvl1" accessibleText="1" fitHeight="70.0" fitWidth="70.0" onMouseClicked="#start" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/L1.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="Lvl2" fitHeight="70.0" fitWidth="70.0" onMouseClicked="#start" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="Lvl2" accessibleText="2" fitHeight="70.0" fitWidth="70.0" onMouseClicked="#start" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/L2.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="Lvl3" fitHeight="70.0" fitWidth="70.0" onMouseClicked="#start" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="Lvl3" accessibleText="3" fitHeight="70.0" fitWidth="70.0" onMouseClicked="#start" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/L3.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="Infinite" fitHeight="70.0" fitWidth="70.0" onMouseClicked="#start" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="InfiniteMode" accessibleText="0" fitHeight="70.0" fitWidth="70.0" onMouseClicked="#start" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/Ladventure.png" />
                </image>
