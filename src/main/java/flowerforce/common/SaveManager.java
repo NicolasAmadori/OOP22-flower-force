@@ -28,7 +28,7 @@ public final class SaveManager<T> {
      */
     public SaveManager(final Class<T> genericClass, final String fileName) {
         this.genericClass = genericClass;
-        this.savingFilePath = System.getProperty("user.dir") + SAVING_FOLDER_PATH + File.separator + fileName + ".json";
+        this.savingFilePath = System.getProperty("user.dir") + File.separator + SAVING_FOLDER_PATH + File.separator + fileName + ".json";
     }
 
     /**
