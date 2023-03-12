@@ -8,6 +8,8 @@ public interface Controller {
 
     int getSunCounter();
 
+    int getLastUnlockedLevelId();
+
     int updateSunCounter();
 
     void placePlant(int row, int col);

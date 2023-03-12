@@ -1,6 +1,7 @@
 package flowerforce.controller;
 
-import flowerforce.model.World;
+import flowerforce.common.WorldSavingManager;
+import flowerforce.model.game.World;
 import flowerforce.view.GameEngine;
 
 public class ControllerImpl implements Controller {
@@ -9,7 +10,11 @@ public class ControllerImpl implements Controller {
     private final World world;
 
     public ControllerImpl() {
-        this.world = new World(100);//TODO: replace with gameSaveManager
+        try {
+            this.world = WorldSavingManager.load();
+        } catch (InstantiationException e) {
+            throw new RuntimeException(e);//TODO: change
+        }
     }
 
     @Override
@@ -24,7 +29,13 @@ public class ControllerImpl implements Controller {
 
     @Override
     public int getSunCounter() {
-        return world.getSunCounter();
+        //return world.getSunCounter();
+        return 0;
+    }
+
+    @Override
+    public int getLastUnlockedLevelId() {
+        return 0;
     }
 
     @Override
@@ -34,13 +45,13 @@ public class ControllerImpl implements Controller {
 
     @Override
     public void placePlant(int row, int col) {
-        this.world.placePlant(row, col);
+        //this.world.placePlant(row, col);
     }
 
     @Override
     public void StartNewLevelGame(int levelId) {
-        final GameLoop gameLoop = new GameLoopImpl(this, this.world.createGame(levelId));
-        new Thread((Runnable) gameLoop).start();
+        //final GameLoop gameLoop = new GameLoopImpl(this, this.world.createGame(levelId));
+        //new Thread((Runnable) gameLoop).start();
     }
 
     @Override
