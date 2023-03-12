@@ -10,7 +10,7 @@
 
 <AnchorPane fx:id="gamePane" maxHeight="-Infinity" maxWidth="-Infinity" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fx:id="imgBackground" fitHeight="782.0" fitWidth="1252.0" layoutX="-126.0" layoutY="-110.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ImageView fx:id="imgBackground" fitHeight="782.0" fitWidth="1252.0" layoutY="-14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="14.75" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-14.0">
          <image>
             <Image url="@../images/Garden.png" />
          </image>
@@ -28,5 +28,15 @@
                <Font size="18.0" />
            </font>
        </Label>
+      <ImageView fx:id="imageResult" fitHeight="346.0" fitWidth="513.0" layoutX="370.0" layoutY="118.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@../images/LevelWin.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="imageMenu" disable="true" fitHeight="150.0" fitWidth="200.0" layoutX="526.0" layoutY="493.0" onMouseClicked="#selectMenu" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@../images/returnToMainMenu.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

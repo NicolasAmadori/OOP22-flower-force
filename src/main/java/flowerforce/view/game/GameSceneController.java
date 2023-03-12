@@ -37,6 +37,10 @@ public final class GameSceneController implements Initializable, GameEngine {
 
     @FXML private Canvas cnvYard;
 
+    @FXML private ImageView imageMenu;
+
+    @FXML private ImageView imageResult;
+
     private final FlowerForceApplication application;
     private final Dimension size;
     private final Set<EntityView> entities = new HashSet<>();
@@ -61,6 +65,15 @@ public final class GameSceneController implements Initializable, GameEngine {
         System.out.println(getRow(event.getY()) + " " + getColumn(event.getX()));
         this.application.getController().placePlant(getRow(event.getY()), getColumn(event.getX()));
         //lblSunCounter.setText(Integer.toString(controller.getSunCounter()));
+    }
+
+    @FXML
+    void selectMenu( final MouseEvent event) {
+        imageResult.setVisible(false);
+        imageMenu.setVisible(false);
+        imageResult.setDisable(true);
+        System.out.println("prova");
+        application.menu();
     }
 
     private int getRow(final double y) {
@@ -144,8 +157,17 @@ public final class GameSceneController implements Initializable, GameEngine {
     }
 
     @Override
-    public void over(boolean isWon) {
+    public void over( final boolean isWon) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'over'");
+        //throw new UnsupportedOperationException("Unimplemented method 'over'");
+        imageResult.setVisible(true);
+        imageMenu.setVisible(true);
+        imageMenu.setDisable(false);
+        if ( isWon) {
+            imageResult.setImage(new Image("..\\images\\LevelWin.png"));
+        }
+        else {
+            imageResult.setImage(new Image("..\\images\\ZombiesAteYourBrains.png"));
+        }
     }
 }
