@@ -7,6 +7,7 @@ import java.util.Set;
 
 import flowerforce.view.entities.EntityTypeView;
 import flowerforce.view.entities.EntityView;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -154,8 +155,18 @@ public final class GameSceneController implements Initializable, GameEngine {
 
     @Override
     public void render() {
-        this.clearCanvas();
-        entities.forEach(e -> this.draw(e.getEntityType().getImage(), e.getPlacingPosition()));
+        int sunNumer = this.application.getController().getSunCounter();
+        System.out.println(sunNumer);
+        this.lblSunCounter.setText(String.valueOf(sunNumer));
+        /*Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                this.lblSunCounter.setText(String.valueOf(sunNumer));
+            }
+        });*/
+        //
+        //this.clearCanvas();
+        //entities.forEach(e -> this.draw(e.getEntityType().getImage(), e.getPlacingPosition()));
     }
 
     private void clearCanvas() {

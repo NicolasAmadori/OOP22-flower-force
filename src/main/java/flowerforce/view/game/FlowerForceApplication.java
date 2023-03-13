@@ -24,7 +24,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
     private static final String GAMEICON_PATH = "flowerforce/icon.png";
     private Stage stage;
     private Dimension2D screenSize;
-    private FlowerForceScene sceneClass; 
+    private FlowerForceScene sceneClass;
 
     @Override
     public void start(final Stage primaryStage) throws Exception {
@@ -51,17 +51,19 @@ public final class FlowerForceApplication extends Application implements FlowerF
     }
 
     @Override
-    public void game() {
+    public void game(final int levelId) {
         try {
             this.sceneClass = new GameScene(this, this.screenSize);
-            this.controller.startNewLevelGame(0);
             this.controller.setGameEngine(this.sceneClass.getGameEngine().get());
-            this.setScene(this.sceneClass.getScene());
+            this.controller.startNewLevelGame(levelId);
 
             //TODO: remove test
             GameEngine ge = this.sceneClass.getGameEngine().get();
             ge.addEntity(new EntityViewImpl(new SunflowerView(50), new Point2D(0, 0)));
+            ge.addEntity(new EntityViewImpl(new SunflowerView(50), new Point2D(4, 3)));
             ge.render();
+
+            this.setScene(this.sceneClass.getScene());
         } catch (Exception e) {
             System.out.println(e);
         }

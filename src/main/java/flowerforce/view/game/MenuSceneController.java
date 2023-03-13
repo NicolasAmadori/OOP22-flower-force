@@ -31,12 +31,12 @@ public class MenuSceneController {
     @FXML
     void start(final MouseEvent event) {
         final int levelId = Integer.parseInt(((ImageView) event.getSource()).getAccessibleText());
-        if (levelId == INFINITE_MODE_ID) {
+        /*if (levelId == INFINITE_MODE_ID) {
             this.mainController.startNewInfiniteGame();
         }
         else {
             this.mainController.startNewLevelGame(levelId);
-        }
-        this.application.game();
+        }*/
+        this.application.game(levelId);
     }
 }
