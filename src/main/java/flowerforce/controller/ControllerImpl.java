@@ -17,13 +17,8 @@ public final class ControllerImpl implements Controller {
     /**
      * Create a new instance of Controller.
      */
-    public ControllerImpl() {
-        try {
-            this.world = WorldSavingManager.load();
-            System.out.println(this.world.getCoins());
-        } catch (InstantiationException e) {
-            throw new RuntimeException(e); //TODO: change
-        }
+    public ControllerImpl() throws InstantiationException{
+        this.world = WorldSavingManager.load();
     }
 
     /**
@@ -71,7 +66,7 @@ public final class ControllerImpl implements Controller {
      */
     @Override
     public void startNewLevelGame(final int levelId) {
-        Dimension2D fieldDimension = this.gameEngine.getFieldSize();
+        final Dimension2D fieldDimension = this.gameEngine.getFieldSize();
         final GameLoop gameLoop = new GameLoopImpl(this.gameEngine,
                 this.world.createLevelGame(levelId,
                         (int) fieldDimension.getWidth(), (int) fieldDimension.getHeight())); //TODO: update

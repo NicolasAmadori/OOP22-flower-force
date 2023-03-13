@@ -8,11 +8,10 @@ import flowerforce.view.game.GameEngine;
  */
 public class GameLoopImpl implements GameLoop, Runnable {
 
-    private GameEngine gameEngine;
-    private Game model;
+    private final GameEngine gameEngine;
+    private final Game model;
     private static final int FPS = 60;
-    private static final long TIME_SLICE = 1000_000_000 / FPS;
-    private boolean isRunning = false;
+    private static final long TIME_SLICE = 1_000_000_000 / FPS;
 
     /**
      * Instantiate a new GameLoop giving it the model and the GameEngine it will communicate with.
@@ -37,14 +36,12 @@ public class GameLoopImpl implements GameLoop, Runnable {
      */
     @Override
     public void run() {
-        this.isRunning = true;
-
         long lastUpdateTime = System.nanoTime();
         long timeAccumulator = 0;
 
-        while (this.isRunning) {
-            long actualTime = System.nanoTime();
-            long elapsedTime = actualTime - lastUpdateTime;
+        while (!model.isOver()) {
+            final long actualTime = System.nanoTime();
+            final long elapsedTime = actualTime - lastUpdateTime;
             lastUpdateTime += elapsedTime;
             timeAccumulator += elapsedTime;
 
