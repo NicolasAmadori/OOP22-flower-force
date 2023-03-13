@@ -2,6 +2,10 @@ package flowerforce.controller;
 
 import flowerforce.model.game.Game;
 import flowerforce.view.game.GameEngine;
+
+/**
+ * This is an implementation of {@link GameLoop}.
+ */
 public class GameLoopImpl implements GameLoop, Runnable {
 
     private GameEngine gameEngine;
@@ -10,7 +14,12 @@ public class GameLoopImpl implements GameLoop, Runnable {
     private static final long TIME_SLICE = 1000_000_000 / FPS;
     private boolean isRunning = false;
 
-    public GameLoopImpl(GameEngine gameEngine, Game model) {
+    /**
+     * Instantiate a new GameLoop giving it the model and the GameEngine it will communicate with.
+     * @param gameEngine The gameEngine to render on the view
+     * @param model The GameModel to get the game information
+     */
+    public GameLoopImpl(final GameEngine gameEngine, final Game model) {
         this.gameEngine = gameEngine;
         this.model = model;
     }
@@ -33,13 +42,13 @@ public class GameLoopImpl implements GameLoop, Runnable {
         long lastUpdateTime = System.nanoTime();
         long timeAccumulator = 0;
 
-        while(this.isRunning) {
+        while (this.isRunning) {
             long actualTime = System.nanoTime();
             long elapsedTime = actualTime - lastUpdateTime;
             lastUpdateTime += elapsedTime;
             timeAccumulator += elapsedTime;
 
-            while(timeAccumulator > TIME_SLICE){
+            while (timeAccumulator > TIME_SLICE) {
                 model.update();
                 timeAccumulator -= TIME_SLICE;
             }
