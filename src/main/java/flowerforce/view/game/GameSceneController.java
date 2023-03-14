@@ -49,11 +49,12 @@ public final class GameSceneController implements Initializable, GameEngine {
     private static final double HEIGHT_RATIO = 880.0 / 1080.0;
     private static final double IMAGE_RATIO_WIDTH = 148.0 / 1920.0;
     private static final double IMAGE_RATIO_HEIGHT = 146.0 / 1080.0;
-    //TODO: place MAX_TYPE_PLANTS_NUM imageviews on scenebuilder, fill it correcly
+    //TODO: place MAX_TYPE_PLANTS_NUM imageviews on scenebuilder, fill it correcly (or with canvas)
 
     private final FlowerForceApplication application;
     private final Dimension2D size;
     private final Set<EntityView> entities = new HashSet<>();
+    private final Set<ImageView> entityImages = new HashSet<>();
     private final Point2D firstYardPoint;
     private final Dimension2D yardDimension;
     private final Dimension2D imageDimension;
@@ -132,11 +133,6 @@ public final class GameSceneController implements Initializable, GameEngine {
         imgBackground.setFitWidth(this.size.getWidth());
         gamePane.setPrefWidth(this.size.getWidth());
         gamePane.setPrefHeight(this.size.getHeight());
-        //TODO: find the correct ratio between canvas and gamePane size
-        sideCanvas.setWidth(this.yardDimension.getWidth());
-        sideCanvas.setHeight(this.yardDimension.getHeight());
-        sideCanvas.setTranslateX(this.firstYardPoint.getX());
-        sideCanvas.setTranslateY(this.firstYardPoint.getY());
     }    
 
     @Override
@@ -156,8 +152,9 @@ public final class GameSceneController implements Initializable, GameEngine {
 
     @Override
     public void render() {
-        this.clearCanvas();
-        entities.forEach(e -> this.draw(e.getEntityType().getImage(), e.getPlacingPosition()));
+        this.gamePane.getChildren().stream().filter(n -> this.entityImages.contains(n)).forEach(n -> this.gamePane.getChildren().remove(n));
+        this.entityImages.clear();
+        entities.forEach(e -> this.drawEntity(e.getEntityType().getImage(), e.getPlacingPosition()));
         this.updateSunCounter();
     }
 
@@ -165,21 +162,13 @@ public final class GameSceneController implements Initializable, GameEngine {
         this.lblSunCounter.setText(Integer.toString(this.application.getController().getSunCounter()));
     }
 
-    private void clearCanvas() {
-        GraphicsContext gc = this.sideCanvas.getGraphicsContext2D();
-        gc.clearRect(0, 0, this.sideCanvas.getWidth(), this.sideCanvas.getHeight());
-    }
-
-    private void draw(final Image image, final Point2D pos) {
-        GraphicsContext gc = this.sideCanvas.getGraphicsContext2D();
-        //TODO: must resize correctly the image, depending on screen size
-        gc.drawImage(image, 0, 0, image.getWidth(), image.getHeight(),
-                this.firstYardPoint.getX() + pos.getX(), this.firstYardPoint.getY() + pos.getY(), this.imageDimension.getWidth(), this.imageDimension.getHeight());
+    private void drawEntity(final Image image, final Point2D pos) {
         ImageView iv = new ImageView(image);
         iv.relocate(this.firstYardPoint.getX() + pos.getX(), this.firstYardPoint.getY() + pos.getY());
         iv.setPreserveRatio(true);
         iv.setFitWidth(this.imageDimension.getWidth());
         iv.setFitHeight(this.imageDimension.getHeight());
+        this.entityImages.add(iv);
         this.gamePane.getChildren().add(iv);
     }
 
