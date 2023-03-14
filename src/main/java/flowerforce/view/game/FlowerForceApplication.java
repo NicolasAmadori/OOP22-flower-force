@@ -1,18 +1,9 @@
 package flowerforce.view.game;
 
-import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Iterator;
-
-import javax.imageio.ImageIO;
-import javax.imageio.ImageReader;
-import javax.imageio.stream.ImageInputStream;
 
 import flowerforce.controller.Controller;
-import flowerforce.controller.ControllerImpl;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
@@ -92,9 +83,16 @@ public final class FlowerForceApplication extends Application implements FlowerF
         this.stage.show();
     }
 
-    public static Scene getScaledScene(final AnchorPane root, String imageName) throws IOException {
-        final String imageFileName = "flowerforce" + File.separator + "game" + File.separator + "images" + File.separator + imageName;
-        final Image image = new Image(imageFileName);
+    /**
+     * Produces a scene scaled on screen's dimensions.
+     * @param root the root element to resize
+     * @param imageName the image to take proportions from
+     * @return a scaled scene based on screen's dimensions
+     * @throws IOException
+     */
+    public static Scene getScaledScene(final AnchorPane root, final String imageName) throws IOException {
+        final String imgPath = "flowerforce" + File.separator + "game" + File.separator + "images" + File.separator + imageName;
+        final Image image = new Image(imgPath);
         //background's dimensions
         final double imgWidth = image.getWidth();
         final double imgHeight = image.getHeight();
