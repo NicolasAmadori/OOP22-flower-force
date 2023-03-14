@@ -65,6 +65,7 @@ public final class GameSceneController implements Initializable, GameEngine {
         this.yardDimension = new Dimension2D((int) (size.getWidth() * WIDTH_RATIO), (int) (size.getHeight() * HEIGHT_RATIO));
         System.out.println(this.firstYardPoint + " " + this.yardDimension); //TODO: remove
         this.imageDimension = new Dimension2D((int) (size.getWidth() * IMAGE_RATIO_WIDTH), (int) (size.getHeight() * IMAGE_RATIO_HEIGHT));
+        this.application.getController().setGameEngine(this);
     }
 
     @FXML

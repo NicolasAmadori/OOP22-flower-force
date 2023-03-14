@@ -6,7 +6,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 
 import java.io.IOException;
-import java.util.Optional;
 
 public class GameScene implements FlowerForceScene {
 
@@ -28,10 +27,5 @@ public class GameScene implements FlowerForceScene {
     @Override
     public Scene getScene() {
         return this.scene;
-    }
-
-    @Override
-    public Optional<GameEngine> getGameEngine() {
-        return Optional.of((GameEngine) this.sceneController);
     }
 }

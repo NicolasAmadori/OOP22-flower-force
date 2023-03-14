@@ -4,11 +4,8 @@ import java.awt.Toolkit;
 
 import flowerforce.controller.Controller;
 import flowerforce.controller.ControllerImpl;
-import flowerforce.view.entities.EntityViewImpl;
-import flowerforce.view.entities.SunflowerView;
 import javafx.application.Application;
 import javafx.geometry.Dimension2D;
-import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -50,13 +47,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
         try {
             this.sceneClass = new GameScene(this, this.screenSize);
             this.controller.StartNewLevelGame(0);
-            this.controller.setGameEngine(this.sceneClass.getGameEngine().get());
             this.setScene(this.sceneClass.getScene());
-
-            //TODO: remove test
-            GameEngine ge = this.sceneClass.getGameEngine().get();
-            ge.addEntity(new EntityViewImpl(new SunflowerView(50), new Point2D(0, 0)));
-            ge.render();
         } catch (Exception e) {
             System.out.println(e);
         }
