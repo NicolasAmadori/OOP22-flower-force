@@ -6,6 +6,10 @@ public interface EntityTypeView {
 
     enum GenericValues {
         /**
+         * A generic null value.
+         */
+        NONE("None"),
+        /**
          * A generic low value.
          */
         LOW("Low"),
