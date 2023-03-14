@@ -4,8 +4,11 @@ import java.io.IOException;
 
 import flowerforce.controller.Controller;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.transform.Scale;
+import javafx.stage.Screen;
 
 /**
  * Models the Menu screen.
@@ -26,7 +29,8 @@ public class MenuScene implements FlowerForceScene {
         loader.setLocation(ClassLoader.getSystemResource(FXML_PATH));
         loader.setController(new MenuSceneController(application, mainController));
         final AnchorPane root = loader.load();
-        this.scene = new Scene(root);
+
+        this.scene = FlowerForceApplication.getScaledScene(root, "menu.png");
     }
 
     /**
