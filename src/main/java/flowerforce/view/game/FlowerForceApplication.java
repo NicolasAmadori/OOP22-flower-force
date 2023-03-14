@@ -95,16 +95,21 @@ public final class FlowerForceApplication extends Application implements FlowerF
     public static Scene getScaledScene(final AnchorPane root, String imageName) throws IOException {
         final String imageFileName = "flowerforce" + File.separator + "game" + File.separator + "images" + File.separator + imageName;
         final Image image = new Image(imageFileName);
-        //dimensioni dell'immagine
+        //background's dimensions
         final double imgWidth = image.getWidth();
         final double imgHeight = image.getHeight();
-        //prendo le dimensioni dello schermo
+        //screen's dimensions
         final Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-        //calcolo la larghezza dell'applicazione (prendendo come bound sempre la larghezza)
-        final double appSizeWidth = SCREEN_FILL_INDEX * screenBounds.getWidth();
-        //calcolo la relativa altezza
-        final double appSizeHeight = appSizeWidth / imgWidth * imgHeight;
-        //calcolo i fattori di scala
+        //calculation of app's width
+        double appSizeWidth = SCREEN_FILL_INDEX * screenBounds.getWidth();
+        //calculation of app's height
+        double appSizeHeight = appSizeWidth / imgWidth * imgHeight;
+        //case where app's height would be greater than screen's height
+        if (appSizeHeight > screenBounds.getHeight()) {
+            appSizeHeight = screenBounds.getHeight();
+            appSizeWidth = appSizeHeight / imgHeight * imgWidth;
+        }
+        //calculation of scale factors
         final double scaleFactorWidth = appSizeWidth / imgWidth;
         final double scaleFactorHeight = appSizeHeight / imgHeight;
         final Scale scaleTransformation = new Scale(scaleFactorWidth, scaleFactorHeight, 0, 0);
