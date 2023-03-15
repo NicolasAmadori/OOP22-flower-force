@@ -1,37 +1,41 @@
 package flowerforce.view.entities;
 
 import javafx.geometry.Point2D;
-import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 
 import java.util.Optional;
 
 /**
- * This is an implementation of {@link EntityView}
+ * This is an implementation of {@link EntityView}.
  */
 public class EntityViewImpl implements EntityView {
-    private final String pathImage;
+    private static final String EMPTY_PATH = "";
+    private static final int NULL_COST = 0;
+    private final String pathPlaceableImage;
+    private final String pathMenuImage;
     private final Point2D position;
-    private final Optional<Integer> cost;
+    private final int cost;
 
     /**
      * @param placingPosition position of the entity in the field
-     * @param pathImage of the entity to show
+     * @param pathPlaceableImage of the entity to show in the field
+     * @param pathMenuImage of the entity to show in the menu
      * @param cost of the entity
      */
-    public EntityViewImpl(final Point2D placingPosition, final String pathImage, final int cost) {
-        this.pathImage = pathImage;
-        this.cost = Optional.of(cost);
+    public EntityViewImpl ( final Point2D placingPosition, final String pathPlaceableImage,
+                           final String pathMenuImage, final int cost) {
+        this.pathPlaceableImage = pathPlaceableImage;
+        this.pathMenuImage = pathMenuImage;
+        this.cost = cost;
         this.position = placingPosition;
     }
 
     /**
      * @param placingPosition position of the entity in the field
-     * @param pathImage of the entity to show
+     * @param pathPlaceableImage of the entity to show in the field
      */
-    public EntityViewImpl(final Point2D placingPosition, final String pathImage) {
-        this.pathImage = pathImage;
-        this.cost = Optional.empty();
-        this.position = placingPosition;
+    public EntityViewImpl ( final Point2D placingPosition, final String pathPlaceableImage) {
+        this(placingPosition, pathPlaceableImage, EMPTY_PATH, NULL_COST);
     }
 
     /**
@@ -39,15 +43,23 @@ public class EntityViewImpl implements EntityView {
      */
     @Override
     public Optional<Integer> getCost() {
-        return this.cost;
+        return Optional.of(cost).filter(x -> x != 0);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public ImageView getImageView() {
-        return new ImageView(pathImage);
+    public Image getMenuImage() {
+        return new Image(pathPlaceableImage);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Image getPlacableImage() {
+        return new Image(pathMenuImage);
     }
 
     /**
@@ -57,5 +69,4 @@ public class EntityViewImpl implements EntityView {
     public Point2D getPlacingPosition() {
         return this.position;
     }
-    
 }
