@@ -47,8 +47,7 @@ public class GameImpl implements Game {
      */
     @Override
     public void update() {
-        this.sun += 10;
-        //this.generateSun();
+        this.generateSun();
         this.generateZombie();
         bullets.forEach(Bullet::move);
         this.collidingBullet();
@@ -179,7 +178,10 @@ public class GameImpl implements Game {
     private void eatingPlant() {
         for (final var plant : plants) {
             for (final var zombie : zombies) {
-                if (zombie.getPosition().equals(plant.getPosition())) {
+                if (zombie.getPosition().getY() == plant.getPosition().getY() &&
+                        zombie.getPosition().getX() <= plant.getPosition().getX() &&
+                        zombie.getPosition().getX() >= plant.getPosition().getX()
+                                + yard.getCellDimension().getWidth()) {
                     zombie.manageEating(plant);
                 } else {
                     zombie.move();
@@ -216,13 +218,11 @@ public class GameImpl implements Game {
             final Random randomZombiePosition = new Random();
             zombieTimer = new TimerImpl(remainingZombie);
             remainingZombie--;
-            /*
             zombies.add(IdConverter.createZombie(IdConverter.Zombies.BASIC,
-                    yard.getRightEntityPosition(
-                            randomZombiePosition.nextInt(yard.getRows(),
-                                    randomZombiePosition.nextInt(getCols()))
+                    yard.getLeftEntityPosition(
+                            randomZombiePosition.nextInt(yard.getRowsNum()),
+                            randomZombiePosition.nextInt(yard.getRowsNum())
                     )));
-             */
         }
         zombieTimer.updateState();
     }
