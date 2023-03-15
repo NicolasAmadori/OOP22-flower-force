@@ -31,8 +31,9 @@ public final class FlowerForceApplication extends Application implements FlowerF
     @Override
     public void start(final Stage primaryStage) throws Exception {
         this.stage = primaryStage;
-        this.controller = new ControllerImpl();
-        this.stage.setFullScreen(true);
+        this.controller = new ControllerImpl();//Instantiate the Controller
+        //TODO: setStageSize()
+        //this.stage.setFullScreen(true);
         this.stage.setResizable(false);
         this.stage.setTitle("Flower Force");
         this.stage.getIcons().add(new Image(GAMEICON_PATH));
@@ -51,10 +52,18 @@ public final class FlowerForceApplication extends Application implements FlowerF
     }
 
     @Override
-    public void game() {
+    public void game(final int levelId) {
         try {
-            this.sceneClass = new GameScene(this);
-            this.controller.StartNewLevelGame(0);
+            this.sceneClass = new GameScene(this, this.screenSize);
+            this.controller.setGameEngine(this.sceneClass.getGameEngine().get());
+            this.controller.startNewLevelGame(levelId);
+
+            //TODO: remove test
+            GameEngine ge = this.sceneClass.getGameEngine().get();
+            ge.addEntity(new EntityViewImpl(new SunflowerView(50), new Point2D(0, 0)));
+            ge.addEntity(new EntityViewImpl(new SunflowerView(50), new Point2D(4, 3)));
+            ge.render();
+
             this.setScene(this.sceneClass.getScene());
         } catch (Exception e) {
             System.out.println(e);

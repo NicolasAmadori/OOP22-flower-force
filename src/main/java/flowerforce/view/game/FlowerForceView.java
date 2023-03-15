@@ -12,7 +12,7 @@ public interface FlowerForceView {
     /**
      * This method is called to set the game scene in the application.
      */
-    void game();
+    void game(int levelId);
 
     /**
      * 

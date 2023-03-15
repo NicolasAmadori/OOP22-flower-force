@@ -1,6 +1,7 @@
 package flowerforce.view.game;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import flowerforce.controller.Controller;
 import javafx.fxml.FXMLLoader;
@@ -37,6 +38,14 @@ public class MenuScene implements FlowerForceScene {
     @Override
     public Scene getScene() {
         return this.scene;
+    }
+
+    /**
+     * @return the game engine if there is one in this scene, empty otherwise.
+     */
+    @Override
+    public Optional<GameEngine> getGameEngine() {
+        return Optional.empty();
     }
 
 }

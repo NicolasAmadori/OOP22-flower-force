@@ -7,6 +7,7 @@ import java.util.Set;
 
 import flowerforce.view.entities.EntityTypeView;
 import flowerforce.view.entities.EntityView;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -36,8 +37,13 @@ public final class GameSceneController implements Initializable, GameEngine {
 
     @FXML private Label lblSunCounter;
 
+<<<<<<< HEAD
     @FXML private Canvas sideCanvas;
     
+=======
+    @FXML private Canvas cnvYard;
+
+>>>>>>> aa1e376512eef88751a30fbe7d912b7301cb10da
     @FXML private ImageView imageMenu;
 
     @FXML private ImageView imageResult;
@@ -82,12 +88,12 @@ public final class GameSceneController implements Initializable, GameEngine {
     @FXML
     void canvasClicked(final MouseEvent event) {
         System.out.println(getRow(event.getY()) + " " + getColumn(event.getX()));
-        this.application.getController().placePlant(getRow(event.getY()), getColumn(event.getX()));
+        //this.application.getController().placePlant(getRow(event.getY()), getColumn(event.getX()));
         //lblSunCounter.setText(Integer.toString(controller.getSunCounter()));
     }
 
     @FXML
-    void selectMenu( final MouseEvent event) {
+    void selectMenu(final MouseEvent event) {
         imageResult.setVisible(false);
         imageMenu.setVisible(false);
         imageResult.setDisable(true);
@@ -152,10 +158,25 @@ public final class GameSceneController implements Initializable, GameEngine {
 
     @Override
     public void render() {
+<<<<<<< HEAD
         this.gamePane.getChildren().stream().filter(n -> this.entityImages.contains(n)).forEach(n -> this.gamePane.getChildren().remove(n));
         this.entityImages.clear();
         entities.forEach(e -> this.drawEntity(e.getEntityType().getImage(), e.getPlacingPosition()));
         this.updateSunCounter();
+=======
+        int sunNumer = this.application.getController().getSunCounter();
+        System.out.println(sunNumer);
+        this.lblSunCounter.setText(String.valueOf(sunNumer));
+        /*Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                this.lblSunCounter.setText(String.valueOf(sunNumer));
+            }
+        });*/
+        //
+        //this.clearCanvas();
+        //entities.forEach(e -> this.draw(e.getEntityType().getImage(), e.getPlacingPosition()));
+>>>>>>> aa1e376512eef88751a30fbe7d912b7301cb10da
     }
 
     private void updateSunCounter() {
@@ -178,13 +199,13 @@ public final class GameSceneController implements Initializable, GameEngine {
     }
 
     @Override
-    public void over( final boolean isWon) {
+    public void over(final boolean isWon) {
         // TODO Auto-generated method stub
         //throw new UnsupportedOperationException("Unimplemented method 'over'");
         imageResult.setVisible(true);
         imageMenu.setVisible(true);
         imageMenu.setDisable(false);
-        if ( isWon) {
+        if (isWon) {
             imageResult.setImage(new Image("..\\images\\LevelWin.png"));
         }
         else {
