@@ -1,7 +1,12 @@
 package flowerforce.view.entities;
 
 import javafx.geometry.Point2D;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
+/**
+ * This is an implementation of {@link EntityView}
+ */
 public class EntityViewImpl implements EntityView {
     private final String pathImage;
     private final Point2D position;
@@ -30,8 +35,8 @@ public class EntityViewImpl implements EntityView {
      * {@inheritDoc}
      */
     @Override
-    public String pathImage() {
-        return this.pathImage;
+    public ImageView getImageView() {
+        return new ImageView(pathImage);
     }
 
     /**
