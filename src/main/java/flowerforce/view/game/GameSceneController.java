@@ -2,9 +2,13 @@ package flowerforce.view.game;
 
 import java.awt.*;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.List;
+import java.util.Map;
 
 import flowerforce.view.entities.EntityTypeView;
 import flowerforce.view.entities.EntityView;
@@ -13,9 +17,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -31,14 +32,28 @@ public final class GameSceneController implements Initializable, GameEngine {
 
     @FXML private GridPane griglia;
 
-    @FXML private Button btnSunflower;
-
-    @FXML private Button btnPeashooter;
-
     @FXML private Label lblSunCounter;
 
-    @FXML private Canvas sideCanvas;
-    
+    @FXML private ImageView imgSunflower;
+
+    @FXML private ImageView imgPeashooter;
+
+    @FXML private ImageView imgSnowshooter;
+
+    @FXML private ImageView imgFastshooter;
+
+    @FXML private ImageView imgFireshooter;
+
+    @FXML private Label lblSunflower;
+
+    @FXML private Label lblPeashooter;
+
+    @FXML private Label lblSnowshooter;
+
+    @FXML private Label lblFastshooter;
+
+    @FXML private Label lblFireshooter;
+
     @FXML private ImageView imageMenu;
 
     @FXML private ImageView imageResult;
@@ -56,6 +71,7 @@ public final class GameSceneController implements Initializable, GameEngine {
     private final Dimension2D size;
     private final Set<EntityView> entities = new HashSet<>();
     private final Set<ImageView> entityImages = new HashSet<>();
+    private final Map<ImageView, Label> entityCards = new HashMap<>();
     private final Point2D firstYardPoint;
     private final Dimension2D yardDimension;
     private final Dimension2D imageDimension;
@@ -68,6 +84,12 @@ public final class GameSceneController implements Initializable, GameEngine {
         System.out.println(this.firstYardPoint + " " + this.yardDimension); //TODO: remove
         this.imageDimension = new Dimension2D((int) (size.getWidth() * IMAGE_RATIO_WIDTH), (int) (size.getHeight() * IMAGE_RATIO_HEIGHT));
         this.application.getController().setGameEngine(this);
+        this.loadEntityCards();
+    }
+
+    private void loadEntityCards() {
+        entityCards.putAll(Map.of(imgSunflower, lblSunflower, imgPeashooter, lblPeashooter, 
+            imgSnowshooter, lblSnowshooter, imgFastshooter, lblFastshooter, imgFireshooter, lblFireshooter));
     }
 
     @FXML
@@ -78,6 +100,21 @@ public final class GameSceneController implements Initializable, GameEngine {
     @FXML
     void selectSunflower(final ActionEvent event) {
         System.out.println("Sunflower selected"); //TODO: remove
+    }
+
+    @FXML
+    void selectSnowshooter(final ActionEvent event) {
+        System.out.println("Peashooter selected"); //TODO: remove
+    }
+
+    @FXML
+    void selectFastshooter(final ActionEvent event) {
+
+    }
+
+    @FXML
+    void selectFireshooter(final ActionEvent event) {
+
     }
 
     @FXML
@@ -96,11 +133,11 @@ public final class GameSceneController implements Initializable, GameEngine {
     }
 
     private int getRow(final double y) {
-        return getGridIndex(y, sideCanvas.getHeight(), 5); //TODO: remove magic number
+        return getGridIndex(y, this.yardDimension.getHeight(), 5); //TODO: remove magic number
     }
 
     private int getColumn(final double x) {
-        return getGridIndex(x, sideCanvas.getWidth(), 9); //TODO: remove magic number
+        return getGridIndex(x, this.yardDimension.getWidth(), 9); //TODO: remove magic number
     }
 
     private int getGridIndex(final double val, final double totalLength, final int nSlices) {
@@ -122,10 +159,12 @@ public final class GameSceneController implements Initializable, GameEngine {
      * @param resources The resources used to localize the root object, or {@code null} if
      *                  the root object was not localized.
      */
+
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
         this.updateSunCounter();
     }
+
     @Override
     public void addEntity(EntityView entity) {
         entities.add(entity);
