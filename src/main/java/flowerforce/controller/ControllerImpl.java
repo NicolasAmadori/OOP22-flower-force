@@ -75,8 +75,7 @@ public final class ControllerImpl implements Controller {
      */
     @Override
     public void startNewLevelGame(final int levelId) {
-        final Dimension2D fieldDimension = this.gameEngine.getFieldSize();
-        this.game = this.world.createLevelGame(1, (int) fieldDimension.getWidth(), (int) fieldDimension.getHeight());
+        this.game = this.world.createLevelGame(1);
         final GameLoop gameLoop = new GameLoopImpl(this.gameEngine, this.game); //TODO: update
         new Thread((Runnable) gameLoop).start();
     }
