@@ -55,4 +55,9 @@ public abstract class AbstractBullet extends AbstractEntity implements Bullet {
         return STANDARD_DAMAGE;
     }
 
+    @Override
+    public int getDeltaMovement() {
+        return DELTA;
+    }
+
 }

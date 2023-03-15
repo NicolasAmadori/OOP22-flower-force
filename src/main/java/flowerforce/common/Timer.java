@@ -20,4 +20,10 @@ public interface Timer {
      * Resets the timer to the initial value.
      */
     void reset();
+
+    /**
+     * 
+     * @param numCycles before performing an action
+     */
+    void setNumCycles(int numCycles);
 }
