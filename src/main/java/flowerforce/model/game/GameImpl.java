@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  * This is an implementation of {@link Game}.
  */
 public class GameImpl implements Game {
-    private static final int TIME_TO_SPAWN_SUN = 300;
+    private static final int TIME_TO_SPAWN_SUN = 50;
     private static final int SUN_VALUE = 25;
     private static final int INITIAL_SUN = 2;
     private Set<Plant> plants = new HashSet<>();
