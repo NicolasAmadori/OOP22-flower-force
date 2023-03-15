@@ -150,7 +150,7 @@ public final class GameSceneController implements Initializable, GameEngine {
     }
 
     private void updateSunCounter() {
-        this.lblSunCounter.setText(Integer.toString(this.application.getController().getSunCounter()));
+        //this.lblSunCounter.setText(Integer.toString(this.application.getController().getSunCounter()));
     }
 
     private void drawEntity(final Image image, final Point2D pos) {
