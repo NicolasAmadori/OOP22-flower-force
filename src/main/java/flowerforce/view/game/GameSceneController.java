@@ -154,8 +154,8 @@ public final class GameSceneController implements Initializable, GameEngine {
     @Override
     public void render() {
         int sunNumer = this.application.getController().getSunCounter();
-        System.out.println(sunNumer);
-        this.lblSunCounter.setText(String.valueOf(sunNumer));
+        //System.out.println(sunNumer);
+        //this.lblSunCounter.setText(String.valueOf(sunNumer));
         /*Platform.runLater(new Runnable() {
             @Override
             public void run() {
