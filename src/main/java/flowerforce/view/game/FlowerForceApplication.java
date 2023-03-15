@@ -1,11 +1,19 @@
 package flowerforce.view.game;
 
+<<<<<<< HEAD
 import java.io.File;
 import java.io.IOException;
+=======
+import java.awt.Toolkit;
+>>>>>>> feat_add-GameView
 
 import flowerforce.controller.Controller;
 import javafx.application.Application;
+<<<<<<< HEAD
 import javafx.geometry.Rectangle2D;
+=======
+import javafx.geometry.Dimension2D;
+>>>>>>> feat_add-GameView
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.transform.Scale;
@@ -14,20 +22,29 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 /**
- * This is an implementation of {@link GameView}.
+ * This is an implementation of {@link GameEngine}.
  */
 public final class FlowerForceApplication extends Application implements FlowerForceView {
 
+<<<<<<< HEAD
     private static final double SCREEN_FILL_INDEX = 0.8;
 
     private Controller controller;//The controller of the game
+=======
+    private Controller controller;
+>>>>>>> feat_add-GameView
 
+    //TODO: use generic separators "/" "\"
     private static final String GAMEICON_PATH = "flowerforce/icon.png";
     private Stage stage;
+    private Dimension2D screenSize;
+    private FlowerForceScene sceneClass; 
 
     @Override
     public void start(final Stage primaryStage) throws Exception {
+        this.setScreenSize();
         this.stage = primaryStage;
+<<<<<<< HEAD
         this.controller = null;//Instantiate the Controller
 
         //TODO: setStageSize()
@@ -46,9 +63,14 @@ public final class FlowerForceApplication extends Application implements FlowerF
 		// primaryStage.setHeight(menuSizeHeight);
 
 
+=======
+        this.controller = new ControllerImpl();
+        this.stage.setFullScreen(true);
+>>>>>>> feat_add-GameView
         this.stage.setResizable(false);
         this.stage.setTitle("Flower Force");
         this.stage.getIcons().add(new Image(GAMEICON_PATH));
+        this.menu();
         this.menu();
     }
 
@@ -65,9 +87,9 @@ public final class FlowerForceApplication extends Application implements FlowerF
     @Override
     public void game() {
         try {
-            FlowerForceScene sceneClass = new GameScene(this);
-            controller.StartNewLevelGame(0);
-            this.setScene(sceneClass.getScene());
+            this.sceneClass = new GameScene(this, this.screenSize);
+            this.controller.StartNewLevelGame(0);
+            this.setScene(this.sceneClass.getScene());
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -83,6 +105,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
         this.stage.show();
     }
 
+<<<<<<< HEAD
     /**
      * Produces a scene scaled on screen's dimensions.
      * @param root the root element to resize
@@ -113,5 +136,10 @@ public final class FlowerForceApplication extends Application implements FlowerF
         final Scale scaleTransformation = new Scale(scaleFactorWidth, scaleFactorHeight, 0, 0);
         root.getTransforms().add(scaleTransformation);
         return new Scene(root, appSizeWidth, appSizeHeight);
+=======
+    private void setScreenSize() {
+        //TODO: control screen size ratio (16:9)
+        this.screenSize = new Dimension2D(Toolkit.getDefaultToolkit().getScreenSize().getWidth(), Toolkit.getDefaultToolkit().getScreenSize().getHeight());
+>>>>>>> feat_add-GameView
     }
 }
