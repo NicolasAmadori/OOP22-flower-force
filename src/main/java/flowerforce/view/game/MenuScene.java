@@ -39,13 +39,4 @@ public class MenuScene implements FlowerForceScene {
     public Scene getScene() {
         return this.scene;
     }
-
-    /**
-     * @return the game engine if there is one in this scene, empty otherwise.
-     */
-    @Override
-    public Optional<GameEngine> getGameEngine() {
-        return Optional.empty();
-    }
-
 }
