@@ -143,6 +143,19 @@ public final class GameSceneController implements Initializable, GameEngine {
 
     @Override
     public void render() {
+
+        int sunNumer = this.application.getController().getSunCounter();
+        //System.out.println(sunNumer);
+        //this.lblSunCounter.setText(String.valueOf(sunNumer));
+        /*Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                this.lblSunCounter.setText(String.valueOf(sunNumer));
+            }
+        });*/
+        //
+        //this.clearCanvas();
+        //entities.forEach(e -> this.draw(e.getEntityType().getImage(), e.getPlacingPosition()));
         this.gamePane.getChildren().stream().filter(n -> this.entityImages.contains(n)).forEach(n -> this.gamePane.getChildren().remove(n));
         this.entityImages.clear();
         //entities.forEach(e -> this.drawEntity(e.getEntityType().getImage(), e.getPlacingPosition()));

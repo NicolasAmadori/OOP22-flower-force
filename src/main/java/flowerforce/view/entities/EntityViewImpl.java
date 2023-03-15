@@ -1,36 +1,23 @@
 package flowerforce.view.entities;
 
 import javafx.geometry.Point2D;
-import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 
 import java.util.Optional;
 
 /**
- * This is an implementation of {@link EntityView}
+ * This is an implementation of {@link EntityView}.
  */
 public class EntityViewImpl implements EntityView {
-    private final String pathImage;
+    private final String pathPlaceableImage;
     private final Point2D position;
-    private final Optional<Integer> cost;
 
     /**
      * @param placingPosition position of the entity in the field
-     * @param pathImage of the entity to show
-     * @param cost of the entity
+     * @param pathPlaceableImage of the entity to show in the field
      */
-    public EntityViewImpl(final Point2D placingPosition, final String pathImage, final int cost) {
-        this.pathImage = pathImage;
-        this.cost = Optional.of(cost);
-        this.position = placingPosition;
-    }
-
-    /**
-     * @param placingPosition position of the entity in the field
-     * @param pathImage of the entity to show
-     */
-    public EntityViewImpl(final Point2D placingPosition, final String pathImage) {
-        this.pathImage = pathImage;
-        this.cost = Optional.empty();
+    public EntityViewImpl ( final Point2D placingPosition, final String pathPlaceableImage) {
+        this.pathPlaceableImage = pathPlaceableImage;
         this.position = placingPosition;
     }
 
@@ -38,16 +25,8 @@ public class EntityViewImpl implements EntityView {
      * {@inheritDoc}
      */
     @Override
-    public Optional<Integer> getCost() {
-        return this.cost;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public ImageView getImageView() {
-        return new ImageView(pathImage);
+    public Image getPlacableImage() {
+        return new Image(pathPlaceableImage);
     }
 
     /**
@@ -57,5 +36,4 @@ public class EntityViewImpl implements EntityView {
     public Point2D getPlacingPosition() {
         return this.position;
     }
-    
 }

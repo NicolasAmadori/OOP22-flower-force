@@ -11,4 +11,10 @@ public interface Bullet extends MovingEntity {
      */
     void hit(Zombie zombie);
 
+    /**
+     * 
+     * @return the number of cells each bullet moves every game loop cycle.
+     */
+    int getDeltaMovement();
+
 }
