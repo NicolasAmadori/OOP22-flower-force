@@ -1,5 +1,6 @@
 package flowerforce.view.game;
 
+import java.awt.*;
 import java.net.URL;
 import java.util.HashSet;
 import java.util.ResourceBundle;
@@ -7,7 +8,6 @@ import java.util.Set;
 
 import flowerforce.view.entities.EntityTypeView;
 import flowerforce.view.entities.EntityView;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -37,8 +37,8 @@ public final class GameSceneController implements Initializable, GameEngine {
 
     @FXML private Label lblSunCounter;
 
-    @FXML private Canvas cnvYard;
-
+    @FXML private Canvas sideCanvas;
+    
     @FXML private ImageView imageMenu;
 
     @FXML private ImageView imageResult;
@@ -60,9 +60,9 @@ public final class GameSceneController implements Initializable, GameEngine {
     private final Dimension2D yardDimension;
     private final Dimension2D imageDimension;
 
-    public GameSceneController(final FlowerForceApplication application, final Dimension2D size) {
+    public GameSceneController(final FlowerForceApplication application) {
         this.application = application;
-        this.size = size;
+        this.size = new Dimension2D(Toolkit.getDefaultToolkit().getScreenSize().getWidth(), Toolkit.getDefaultToolkit().getScreenSize().getHeight());
         this.firstYardPoint = new Point2D((int) (size.getWidth() * RIGHTSHIFT_RATIO), (int) (size.getHeight() * DOWNSHIFT_RATIO));
         this.yardDimension = new Dimension2D((int) (size.getWidth() * WIDTH_RATIO), (int) (size.getHeight() * HEIGHT_RATIO));
         System.out.println(this.firstYardPoint + " " + this.yardDimension); //TODO: remove
@@ -83,12 +83,13 @@ public final class GameSceneController implements Initializable, GameEngine {
     @FXML
     void canvasClicked(final MouseEvent event) {
         System.out.println(getRow(event.getY()) + " " + getColumn(event.getX()));
-        //this.application.getController().placePlant(getRow(event.getY()), getColumn(event.getX()));
+        //TODO: remove magic number
+        this.application.getController().placePlant(1, getRow(event.getY()), getColumn(event.getX()));
         //lblSunCounter.setText(Integer.toString(controller.getSunCounter()));
     }
 
     @FXML
-    void selectMenu(final MouseEvent event) {
+    void selectMenu( final MouseEvent event) {
         imageResult.setVisible(false);
         imageMenu.setVisible(false);
         imageResult.setDisable(true);
@@ -97,11 +98,11 @@ public final class GameSceneController implements Initializable, GameEngine {
     }
 
     private int getRow(final double y) {
-        return getGridIndex(y, cnvYard.getHeight(), 5); //TODO: remove magic number
+        return getGridIndex(y, sideCanvas.getHeight(), 5); //TODO: remove magic number
     }
 
     private int getColumn(final double x) {
-        return getGridIndex(x, cnvYard.getWidth(), 9); //TODO: remove magic number
+        return getGridIndex(x, sideCanvas.getWidth(), 9); //TODO: remove magic number
     }
 
     private int getGridIndex(final double val, final double totalLength, final int nSlices) {
@@ -153,6 +154,7 @@ public final class GameSceneController implements Initializable, GameEngine {
 
     @Override
     public void render() {
+
         int sunNumer = this.application.getController().getSunCounter();
         //System.out.println(sunNumer);
         //this.lblSunCounter.setText(String.valueOf(sunNumer));
@@ -165,6 +167,10 @@ public final class GameSceneController implements Initializable, GameEngine {
         //
         //this.clearCanvas();
         //entities.forEach(e -> this.draw(e.getEntityType().getImage(), e.getPlacingPosition()));
+        this.gamePane.getChildren().stream().filter(n -> this.entityImages.contains(n)).forEach(n -> this.gamePane.getChildren().remove(n));
+        this.entityImages.clear();
+        //entities.forEach(e -> this.drawEntity(e.getEntityType().getImage(), e.getPlacingPosition()));
+        this.updateSunCounter();
     }
 
     private void updateSunCounter() {
@@ -187,13 +193,13 @@ public final class GameSceneController implements Initializable, GameEngine {
     }
 
     @Override
-    public void over(final boolean isWon) {
+    public void over( final boolean isWon) {
         // TODO Auto-generated method stub
         //throw new UnsupportedOperationException("Unimplemented method 'over'");
         imageResult.setVisible(true);
         imageMenu.setVisible(true);
         imageMenu.setDisable(false);
-        if (isWon) {
+        if ( isWon) {
             imageResult.setImage(new Image("..\\images\\LevelWin.png"));
         }
         else {

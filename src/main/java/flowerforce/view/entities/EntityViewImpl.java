@@ -1,8 +1,9 @@
 package flowerforce.view.entities;
 
 import javafx.geometry.Point2D;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
+import java.util.Optional;
 
 /**
  * This is an implementation of {@link EntityView}
@@ -10,7 +11,7 @@ import javafx.scene.image.ImageView;
 public class EntityViewImpl implements EntityView {
     private final String pathImage;
     private final Point2D position;
-    private final int cost;
+    private final Optional<Integer> cost;
 
     /**
      * @param placingPosition position of the entity in the field
@@ -19,7 +20,17 @@ public class EntityViewImpl implements EntityView {
      */
     public EntityViewImpl(final Point2D placingPosition, final String pathImage, final int cost) {
         this.pathImage = pathImage;
-        this.cost = cost;
+        this.cost = Optional.of(cost);
+        this.position = placingPosition;
+    }
+
+    /**
+     * @param placingPosition position of the entity in the field
+     * @param pathImage of the entity to show
+     */
+    public EntityViewImpl(final Point2D placingPosition, final String pathImage) {
+        this.pathImage = pathImage;
+        this.cost = Optional.empty();
         this.position = placingPosition;
     }
 
@@ -27,7 +38,7 @@ public class EntityViewImpl implements EntityView {
      * {@inheritDoc}
      */
     @Override
-    public int cost() {
+    public Optional<Integer> getCost() {
         return this.cost;
     }
 
