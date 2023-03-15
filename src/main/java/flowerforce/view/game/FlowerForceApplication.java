@@ -53,15 +53,14 @@ public final class FlowerForceApplication extends Application implements FlowerF
     @Override
     public void game(final int levelId) {
         try {
-            this.sceneClass = new GameScene(this, this.screenSize);
-            this.controller.setGameEngine(this.sceneClass.getGameEngine().get());
+            this.sceneClass = new GameScene(this, new Dimension2D(750, 500));//TODO: modify of course
             this.controller.startNewLevelGame(levelId);
 
             //TODO: remove test
-            GameEngine ge = this.sceneClass.getGameEngine().get();
-            ge.addEntity(new EntityViewImpl(new SunflowerView(50), new Point2D(0, 0)));
-            ge.addEntity(new EntityViewImpl(new SunflowerView(50), new Point2D(4, 3)));
-            ge.render();
+//            GameEngine ge = this.sceneClass.getGameEngine().get();
+//            ge.addEntity(new EntityViewImpl(new SunflowerView(50), new Point2D(0, 0)));
+//            ge.addEntity(new EntityViewImpl(new SunflowerView(50), new Point2D(4, 3)));
+//            ge.render();
 
             this.setScene(this.sceneClass.getScene());
         } catch (Exception e) {
