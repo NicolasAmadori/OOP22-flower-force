@@ -12,8 +12,6 @@ import java.util.stream.IntStream;
  */
 public class World {
 
-    private static final int ROWS = 5;
-    private static final int COLS = 9;
     private static final int NEW_PLAYER_COINS = 0;
     private static final int NEW_PLAYER_RECORD = 0;
     private static final int NEW_PLAYER_LAST_UNLOCKED_LEVEL = 1;
@@ -71,12 +69,12 @@ public class World {
      * @param height to pass to GameImpl's constructor
      * @return the game to be played
      */
-    public Game createLevelGame(final int levelId, final int width, final int height) {
+    public Game createLevelGame(final int levelId) {
         final Level level = this.levelList.stream()
                                 .filter(x -> x.getLevelId() == levelId)
                                 .findAny()
                                 .get();
-        return new GameImpl(level, ROWS, COLS, width, height);
+        return new GameImpl(level);
     }
 
     /**
@@ -85,7 +83,7 @@ public class World {
      * @param height to pass to GameImpl's constructor
      * @return the game to be played
      */
-    public Game createInfiniteGame(final int width, final int height) {
-        return new GameImpl(infiniteModeLevel, ROWS, COLS, width, height);
+    public Game createInfiniteGame() {
+        return new GameImpl(infiniteModeLevel);
     }
 }
