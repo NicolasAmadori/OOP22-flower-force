@@ -10,7 +10,7 @@ public class GameLoopImpl implements GameLoop, Runnable {
 
     private final GameEngine gameEngine;
     private final Game model;
-    private static final int FPS = 60;
+    private static final int FPS = 30;
     private static final long TIME_SLICE = 1_000_000_000 / FPS;
 
     /**
