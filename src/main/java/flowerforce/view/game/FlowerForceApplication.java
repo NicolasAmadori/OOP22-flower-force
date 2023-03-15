@@ -1,13 +1,17 @@
 package flowerforce.view.game;
 
-import java.awt.Toolkit;
+import java.io.File;
+import java.io.IOException;
 
 import flowerforce.controller.Controller;
 import flowerforce.controller.ControllerImpl;
 import javafx.application.Application;
-import javafx.geometry.Dimension2D;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.transform.Scale;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 /**
@@ -15,7 +19,9 @@ import javafx.stage.Stage;
  */
 public final class FlowerForceApplication extends Application implements FlowerForceView {
 
-    private Controller controller;
+    private static final double SCREEN_FILL_INDEX = 0.8;
+
+    private Controller controller;//The controller of the game
 
     //TODO: use generic separators "/" "\"
     private static final String GAMEICON_PATH = "flowerforce/icon.png";
@@ -25,25 +31,31 @@ public final class FlowerForceApplication extends Application implements FlowerF
     @Override
     public void start(final Stage primaryStage) throws Exception {
         this.stage = primaryStage;
-        this.controller = new ControllerImpl();
-        this.stage.setFullScreen(true);
+        this.controller = new ControllerImpl();//Instantiate the Controller
+        //TODO: setStageSize()
+        //this.stage.setFullScreen(true);
         this.stage.setResizable(false);
         this.stage.setTitle("Flower Force");
         this.stage.getIcons().add(new Image(GAMEICON_PATH));
+        this.menu();
         this.menu();
     }
 
     @Override
     public void menu() {
-        //TODO: open MenuScene
-        this.game();
+        try {
+            FlowerForceScene sceneClass = new MenuScene(this, controller);
+            this.setScene(sceneClass.getScene());
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     @Override
-    public void game() {
+    public void game(final int levelId) {
         try {
             this.sceneClass = new GameScene(this);
-            this.controller.StartNewLevelGame(0);
+            this.controller.startNewLevelGame(levelId);
             this.setScene(this.sceneClass.getScene());
         } catch (Exception e) {
             System.out.println(e);
@@ -58,5 +70,37 @@ public final class FlowerForceApplication extends Application implements FlowerF
     private void setScene(final Scene scene) {
         this.stage.setScene(scene);
         this.stage.show();
+    }
+
+    /**
+     * Produces a scene scaled on screen's dimensions.
+     * @param root the root element to resize
+     * @param imageName the image to take proportions from
+     * @return a scaled scene based on screen's dimensions
+     * @throws IOException
+     */
+    public static Scene getScaledScene(final AnchorPane root, final String imageName) throws IOException {
+        final String imgPath = "flowerforce" + File.separator + "game" + File.separator + "images" + File.separator + imageName;
+        final Image image = new Image(imgPath);
+        //background's dimensions
+        final double imgWidth = image.getWidth();
+        final double imgHeight = image.getHeight();
+        //screen's dimensions
+        final Rectangle2D screenBounds = Screen.getPrimary().getBounds();
+        //calculation of app's width
+        double appSizeWidth = SCREEN_FILL_INDEX * screenBounds.getWidth();
+        //calculation of app's height
+        double appSizeHeight = appSizeWidth / imgWidth * imgHeight;
+        //case where app's height would be greater than screen's height
+        if (appSizeHeight > screenBounds.getHeight()) {
+            appSizeHeight = screenBounds.getHeight();
+            appSizeWidth = appSizeHeight / imgHeight * imgWidth;
+        }
+        //calculation of scale factors
+        final double scaleFactorWidth = appSizeWidth / imgWidth;
+        final double scaleFactorHeight = appSizeHeight / imgHeight;
+        final Scale scaleTransformation = new Scale(scaleFactorWidth, scaleFactorHeight, 0, 0);
+        root.getTransforms().add(scaleTransformation);
+        return new Scene(root, appSizeWidth, appSizeHeight);
     }
 }

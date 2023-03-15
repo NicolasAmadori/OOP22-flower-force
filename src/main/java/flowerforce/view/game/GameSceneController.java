@@ -83,7 +83,8 @@ public final class GameSceneController implements Initializable, GameEngine {
     @FXML
     void canvasClicked(final MouseEvent event) {
         System.out.println(getRow(event.getY()) + " " + getColumn(event.getX()));
-        this.application.getController().placePlant(getRow(event.getY()), getColumn(event.getX()));
+        //TODO: remove magic number
+        this.application.getController().placePlant(1, getRow(event.getY()), getColumn(event.getX()));
         //lblSunCounter.setText(Integer.toString(controller.getSunCounter()));
     }
 
