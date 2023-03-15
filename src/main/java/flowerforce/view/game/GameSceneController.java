@@ -97,11 +97,11 @@ public final class GameSceneController implements Initializable, GameEngine {
     }
 
     private int getRow(final double y) {
-        return getGridIndex(y, sideCanvas.getHeight(), 5); //TODO: remove magic number
+        return getGridIndex(y, cnvYard.getHeight(), 5); //TODO: remove magic number
     }
 
     private int getColumn(final double x) {
-        return getGridIndex(x, sideCanvas.getWidth(), 9); //TODO: remove magic number
+        return getGridIndex(x, cnvYard.getWidth(), 9); //TODO: remove magic number
     }
 
     private int getGridIndex(final double val, final double totalLength, final int nSlices) {
