@@ -37,13 +37,8 @@ public final class GameSceneController implements Initializable, GameEngine {
 
     @FXML private Label lblSunCounter;
 
-<<<<<<< HEAD
-    @FXML private Canvas sideCanvas;
-    
-=======
     @FXML private Canvas cnvYard;
 
->>>>>>> aa1e376512eef88751a30fbe7d912b7301cb10da
     @FXML private ImageView imageMenu;
 
     @FXML private ImageView imageResult;
@@ -158,12 +153,6 @@ public final class GameSceneController implements Initializable, GameEngine {
 
     @Override
     public void render() {
-<<<<<<< HEAD
-        this.gamePane.getChildren().stream().filter(n -> this.entityImages.contains(n)).forEach(n -> this.gamePane.getChildren().remove(n));
-        this.entityImages.clear();
-        entities.forEach(e -> this.drawEntity(e.getEntityType().getImage(), e.getPlacingPosition()));
-        this.updateSunCounter();
-=======
         int sunNumer = this.application.getController().getSunCounter();
         System.out.println(sunNumer);
         this.lblSunCounter.setText(String.valueOf(sunNumer));
@@ -176,7 +165,6 @@ public final class GameSceneController implements Initializable, GameEngine {
         //
         //this.clearCanvas();
         //entities.forEach(e -> this.draw(e.getEntityType().getImage(), e.getPlacingPosition()));
->>>>>>> aa1e376512eef88751a30fbe7d912b7301cb10da
     }
 
     private void updateSunCounter() {
