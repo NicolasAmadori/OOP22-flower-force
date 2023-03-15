@@ -83,9 +83,7 @@ public final class GameSceneController implements Initializable, GameEngine {
     @FXML
     void canvasClicked(final MouseEvent event) {
         System.out.println(getRow(event.getY()) + " " + getColumn(event.getX()));
-        //TODO: remove magic number
-        this.application.getController().placePlant(1, getRow(event.getY()), getColumn(event.getX()));
-        //lblSunCounter.setText(Integer.toString(controller.getSunCounter()));
+        //this.application.getController().placePlant(getRow(event.getY()), getColumn(event.getX()));
     }
 
     @FXML
@@ -126,17 +124,8 @@ public final class GameSceneController implements Initializable, GameEngine {
      */
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
-        this.setWindowSize();
         this.updateSunCounter();
     }
-
-    private void setWindowSize() {
-        imgBackground.setFitHeight(this.size.getHeight());
-        imgBackground.setFitWidth(this.size.getWidth());
-        gamePane.setPrefWidth(this.size.getWidth());
-        gamePane.setPrefHeight(this.size.getHeight());
-    }    
-
     @Override
     public void addEntity(EntityView entity) {
         entities.add(entity);
