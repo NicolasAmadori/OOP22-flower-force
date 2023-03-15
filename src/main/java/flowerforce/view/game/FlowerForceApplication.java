@@ -13,6 +13,7 @@ import javafx.scene.transform.Scale;
 import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.geometry.Dimension2D;
 
 /**
  * This is an implementation of {@link GameEngine}.
