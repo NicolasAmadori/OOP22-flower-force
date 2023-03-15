@@ -30,16 +30,15 @@ public class GameImpl implements Game {
 
     /**
      * @param level level of the game that has started.
-     * @param yard contains information of the field.
      */
-    public GameImpl(final Level level, final Yard yard ) {
+    public GameImpl(final Level level ) {
         sun = INITIAL_SUN * SUN_VALUE;
         this.level = level;
         zombieTimer = new TimerImpl(level.getTotalZombies());
         sunTimer = new TimerImpl(TIME_TO_SPAWN_SUN);
         remainingZombie = level.getTotalZombies();
         level.getPlantsId().forEach(p -> plantsTimer.put(p, new TimerImpl(p.getUnlockTime())));
-        this.yard = yard;
+        this.yard = new YardImpl();
     }
 
     /**
