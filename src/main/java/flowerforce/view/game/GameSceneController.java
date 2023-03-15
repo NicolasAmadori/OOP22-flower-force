@@ -1,5 +1,6 @@
 package flowerforce.view.game;
 
+import java.awt.*;
 import java.net.URL;
 import java.util.HashSet;
 import java.util.ResourceBundle;
@@ -59,9 +60,9 @@ public final class GameSceneController implements Initializable, GameEngine {
     private final Dimension2D yardDimension;
     private final Dimension2D imageDimension;
 
-    public GameSceneController(final FlowerForceApplication application, final Dimension2D size) {
+    public GameSceneController(final FlowerForceApplication application) {
         this.application = application;
-        this.size = size;
+        this.size = new Dimension2D(Toolkit.getDefaultToolkit().getScreenSize().getWidth(), Toolkit.getDefaultToolkit().getScreenSize().getHeight());
         this.firstYardPoint = new Point2D((int) (size.getWidth() * RIGHTSHIFT_RATIO), (int) (size.getHeight() * DOWNSHIFT_RATIO));
         this.yardDimension = new Dimension2D((int) (size.getWidth() * WIDTH_RATIO), (int) (size.getHeight() * HEIGHT_RATIO));
         System.out.println(this.firstYardPoint + " " + this.yardDimension); //TODO: remove
@@ -82,7 +83,8 @@ public final class GameSceneController implements Initializable, GameEngine {
     @FXML
     void canvasClicked(final MouseEvent event) {
         System.out.println(getRow(event.getY()) + " " + getColumn(event.getX()));
-        this.application.getController().placePlant(getRow(event.getY()), getColumn(event.getX()));
+        //TODO: remove magic number
+        this.application.getController().placePlant(1, getRow(event.getY()), getColumn(event.getX()));
         //lblSunCounter.setText(Integer.toString(controller.getSunCounter()));
     }
 
@@ -154,7 +156,7 @@ public final class GameSceneController implements Initializable, GameEngine {
     public void render() {
         this.gamePane.getChildren().stream().filter(n -> this.entityImages.contains(n)).forEach(n -> this.gamePane.getChildren().remove(n));
         this.entityImages.clear();
-        entities.forEach(e -> this.drawEntity(e.getEntityType().getImage(), e.getPlacingPosition()));
+        //entities.forEach(e -> this.drawEntity(e.getEntityType().getImage(), e.getPlacingPosition()));
         this.updateSunCounter();
     }
 
