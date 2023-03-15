@@ -20,19 +20,16 @@ public final class FlowerForceApplication extends Application implements FlowerF
     //TODO: use generic separators "/" "\"
     private static final String GAMEICON_PATH = "flowerforce/icon.png";
     private Stage stage;
-    private Dimension2D screenSize;
     private FlowerForceScene sceneClass; 
 
     @Override
     public void start(final Stage primaryStage) throws Exception {
-        this.setScreenSize();
         this.stage = primaryStage;
         this.controller = new ControllerImpl();
         this.stage.setFullScreen(true);
         this.stage.setResizable(false);
         this.stage.setTitle("Flower Force");
         this.stage.getIcons().add(new Image(GAMEICON_PATH));
-        this.menu();
         this.menu();
     }
 
@@ -45,7 +42,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
     @Override
     public void game() {
         try {
-            this.sceneClass = new GameScene(this, this.screenSize);
+            this.sceneClass = new GameScene(this);
             this.controller.StartNewLevelGame(0);
             this.setScene(this.sceneClass.getScene());
         } catch (Exception e) {
@@ -61,10 +58,5 @@ public final class FlowerForceApplication extends Application implements FlowerF
     private void setScene(final Scene scene) {
         this.stage.setScene(scene);
         this.stage.show();
-    }
-
-    private void setScreenSize() {
-        //TODO: control screen size ratio (16:9)
-        this.screenSize = new Dimension2D(Toolkit.getDefaultToolkit().getScreenSize().getWidth(), Toolkit.getDefaultToolkit().getScreenSize().getHeight());
     }
 }

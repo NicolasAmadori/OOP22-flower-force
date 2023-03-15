@@ -13,9 +13,9 @@ public class GameScene implements FlowerForceScene {
     private final Scene scene;
     private final GameSceneController sceneController;
 
-    public GameScene(final FlowerForceApplication application, final Dimension2D size) throws IOException {
+    public GameScene(final FlowerForceApplication application) throws IOException {
         final FXMLLoader loader = new FXMLLoader();
-        this.sceneController = new GameSceneController(application, size);
+        this.sceneController = new GameSceneController(application);
         loader.setLocation(ClassLoader.getSystemResource(FXML_PATH));
         loader.setController(this.sceneController);
 
