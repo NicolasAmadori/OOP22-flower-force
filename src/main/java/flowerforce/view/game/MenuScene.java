@@ -1,6 +1,7 @@
 package flowerforce.view.game;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import flowerforce.controller.Controller;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +14,7 @@ import javafx.scene.layout.AnchorPane;
 public class MenuScene implements FlowerForceScene {
 
     private static final String FXML_PATH = "flowerforce/game/fxml/SimpleMenu.fxml";
+    private static final String IMAGE_NAME = "menu.png";
     private final Scene scene;
 
     /**
@@ -26,7 +28,8 @@ public class MenuScene implements FlowerForceScene {
         loader.setLocation(ClassLoader.getSystemResource(FXML_PATH));
         loader.setController(new MenuSceneController(application, mainController));
         final AnchorPane root = loader.load();
-        this.scene = new Scene(root);
+
+        this.scene = FlowerForceApplication.getScaledScene(root, IMAGE_NAME);
     }
 
     /**
@@ -36,5 +39,4 @@ public class MenuScene implements FlowerForceScene {
     public Scene getScene() {
         return this.scene;
     }
-
 }

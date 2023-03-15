@@ -10,23 +10,33 @@
 
 <AnchorPane fx:id="gamePane" maxHeight="-Infinity" maxWidth="-Infinity" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fx:id="imgBackground" fitHeight="782.0" fitWidth="1252.0" layoutX="-126.0" layoutY="-110.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ImageView fx:id="imgBackground" fitHeight="782.0" fitWidth="1252.0" layoutY="-14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="14.75" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-14.0">
          <image>
             <Image url="@../images/Garden.png" />
          </image>
       </ImageView>
-      <Canvas fx:id="cnvYard" height="593.0" layoutX="383.0" layoutY="84.0" onMouseClicked="#canvasClicked" width="869.0" />
-       <ImageView fitHeight="96.0" fitWidth="86.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+      <Canvas fx:id="sideCanvas" layoutX="383.0" layoutY="84.0" onMouseClicked="#canvasClicked" />
+       <ImageView layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
            <image>
                <Image url="@../images/bar.jpeg" />
            </image>
        </ImageView>
        <Button fx:id="btnSunflower" layoutX="3.0" layoutY="140.0" mnemonicParsing="false" onAction="#selectSunflower" prefHeight="52.0" prefWidth="96.0" text="Sunflower" />
        <Button fx:id="btnPeashooter" layoutX="4.0" layoutY="206.0" mnemonicParsing="false" onAction="#selectPeashooter" prefHeight="52.0" prefWidth="96.0" text="Peashooter" />
-       <Label fx:id="lblSunCounter" alignment="CENTER" layoutX="22.0" layoutY="84.0" prefHeight="25.0" prefWidth="64.0" text="500">
+       <Label fx:id="lblSunCounter" alignment="CENTER" layoutX="26.0" layoutY="91.0" prefHeight="25.0" prefWidth="64.0" text="500">
            <font>
                <Font size="18.0" />
            </font>
        </Label>
+      <ImageView fx:id="imageResult" fitHeight="346.0" fitWidth="513.0" layoutX="370.0" layoutY="118.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@../images/LevelWin.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="imageMenu" disable="true" fitHeight="150.0" fitWidth="200.0" layoutX="526.0" layoutY="493.0" onMouseClicked="#selectMenu" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@../images/returnToMainMenu.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

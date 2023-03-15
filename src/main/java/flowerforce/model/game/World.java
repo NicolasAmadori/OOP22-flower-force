@@ -12,11 +12,11 @@ import java.util.stream.IntStream;
  */
 public class World {
 
-    private final static int ROWS = 5;
-    private final static int COLS = 9;
-    private final static int NEW_PLAYER_COINS = 0;
-    private final static int NEW_PLAYER_RECORD = 0;
-    private final static int NEW_PLAYER_LAST_UNLOCKED_LEVEL = 1;
+    private static final int ROWS = 5;
+    private static final int COLS = 9;
+    private static final int NEW_PLAYER_COINS = 0;
+    private static final int NEW_PLAYER_RECORD = 0;
+    private static final int NEW_PLAYER_LAST_UNLOCKED_LEVEL = 1;
 
     private final Player player;
     private final List<Level> levelList;
@@ -29,10 +29,10 @@ public class World {
      * @param infiniteModeLevel the level that models the infinite mode
      */
     public World(final Optional<Player> player, final List<Level> levelList, final Level infiniteModeLevel) {
-        this.player = player.orElse(new PlayerImpl(NEW_PLAYER_COINS,NEW_PLAYER_RECORD, NEW_PLAYER_LAST_UNLOCKED_LEVEL));
+        this.player = player.orElse(new PlayerImpl(NEW_PLAYER_COINS, NEW_PLAYER_RECORD, NEW_PLAYER_LAST_UNLOCKED_LEVEL));
         this.levelList = levelList;
         this.infiniteModeLevel = infiniteModeLevel;
-        
+
     }
 
     /**
@@ -67,6 +67,8 @@ public class World {
     /**
      * Creates a level game.
      * @param levelId the level to create
+     * @param width to pass to GameImpl's constructor
+     * @param height to pass to GameImpl's constructor
      * @return the game to be played
      */
     public Game createLevelGame(final int levelId, final int width, final int height) {
@@ -79,6 +81,8 @@ public class World {
 
     /**
      * Creates an infinite game.
+     * @param width to pass to GameImpl's constructor
+     * @param height to pass to GameImpl's constructor
      * @return the game to be played
      */
     public Game createInfiniteGame(final int width, final int height) {

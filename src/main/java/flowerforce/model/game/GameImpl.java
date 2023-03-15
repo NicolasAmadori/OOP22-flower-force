@@ -47,7 +47,8 @@ public class GameImpl implements Game {
      */
     @Override
     public void update() {
-        this.generateSun();
+        this.sun += 10;
+        //this.generateSun();
         this.generateZombie();
         bullets.forEach(Bullet::move);
         this.collidingBullet();

@@ -9,7 +9,7 @@ import javafx.scene.input.MouseEvent;
  */
 public class MenuSceneController {
 
-    private final static int INFINITE_MODE_ID = 0;
+    private static final int INFINITE_MODE_ID = 0;
 
     private final FlowerForceApplication application;
     private final Controller mainController;
@@ -31,12 +31,12 @@ public class MenuSceneController {
     @FXML
     void start(final MouseEvent event) {
         final int levelId = Integer.parseInt(((ImageView) event.getSource()).getAccessibleText());
-        if (levelId == INFINITE_MODE_ID) {
+        /*if (levelId == INFINITE_MODE_ID) {
             this.mainController.startNewInfiniteGame();
         }
         else {
-            this.mainController.StartNewLevelGame(levelId);
-        }
-        this.application.game();
+            this.mainController.startNewLevelGame(levelId);
+        }*/
+        this.application.game(levelId);
     }
 }
