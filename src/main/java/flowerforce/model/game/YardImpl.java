@@ -57,6 +57,22 @@ public class YardImpl implements Yard {
     @Override
     public Dimension2D getYardDimension() {
         return this.yardDimension;
-    }    
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getRowsNum() {
+        return ROWS;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getColsNum() {
+        return COLS;
+    }
 
 }
