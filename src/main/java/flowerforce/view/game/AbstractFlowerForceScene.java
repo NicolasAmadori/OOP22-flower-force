@@ -15,17 +15,17 @@ public abstract class AbstractFlowerForceScene implements FlowerForceScene {
 
     /**
      * 
-     * @param FXMLPath the path of the FXML file to load
-     * @param imageName the image name to pass to getScaledScene method
+     * @param fxmlPath the path of the FXML file to load
+     * @param imgName the image name to pass to getScaledScene method
      * @param controller the scene's controller to pass to the FXML Loader
      * @throws IOException
      */
-    protected AbstractFlowerForceScene(final String FXMLPath, final String imageName, final Object controller) throws IOException {
+    protected AbstractFlowerForceScene(final String fxmlPath, final String imgName, final Object controller) throws IOException {
         final FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(ClassLoader.getSystemResource(FXMLPath));
+        loader.setLocation(ClassLoader.getSystemResource(fxmlPath));
         loader.setController(controller);
         final AnchorPane root = loader.load();
-        this.scene = FlowerForceApplication.getScaledScene(root, imageName);
+        this.scene = FlowerForceApplication.getScaledScene(root, imgName);
     }
 
     /**
@@ -36,5 +36,4 @@ public abstract class AbstractFlowerForceScene implements FlowerForceScene {
         return this.scene;
     }
 
-    
 }
