@@ -6,6 +6,7 @@ import java.io.IOException;
 import flowerforce.controller.Controller;
 import flowerforce.controller.ControllerImpl;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -37,14 +38,17 @@ public final class FlowerForceApplication extends Application implements FlowerF
         this.stage.setResizable(false);
         this.stage.setTitle("Flower Force");
         this.stage.getIcons().add(new Image(GAMEICON_PATH));
-        this.menu();
+        this.stage.setOnCloseRequest(e -> {
+            Platform.exit();
+            System.exit(0);
+        });
         this.menu();
     }
 
     @Override
     public void menu() {
         try {
-            FlowerForceScene sceneClass = new MenuScene(this, controller);
+            FlowerForceScene sceneClass = new MenuScene(this);
             this.setScene(sceneClass.getScene());
         } catch (Exception e) {
             System.out.println(e);

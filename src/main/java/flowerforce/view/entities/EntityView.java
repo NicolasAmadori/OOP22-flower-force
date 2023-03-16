@@ -10,12 +10,6 @@ import java.util.Optional;
  * Models a view entity
  */
 public interface EntityView {
-
-    /**
-     * @return if it's present, return the cost of entity
-     */
-    Optional<Integer> getCost();
-
     /**
      * @return the position to correctly draw the entity on the {@link GameEngine}
      */
@@ -25,10 +19,4 @@ public interface EntityView {
      * @return the image of the entity to show in the field
      */
     Image getPlacableImage();
-
-    /**
-     * @return the image of the entity to show in the menu
-     */
-    Image getMenuImage();
-
 }

@@ -20,7 +20,6 @@ public final class FlowerForce {
      * @param args
      */
     public static void main(final String[] args) {
-        Bullet b = new StandardBullet(new Point2D(0, 0));
-        System.out.println(b.getClass().getName());
+        launch(FlowerForceApplication.class, args);
     }
 }
