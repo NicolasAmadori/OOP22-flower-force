@@ -14,6 +14,7 @@ public class ZombieImpl extends AbstractLivingEntity implements Zombie {
     private static final int FREEZE_TIME_UNIT = 10; //updates for each delta unit
     private static final int EATING_TIME_UNIT = 2;
     private final int delta;
+    private final int eatingTime;
     private final double damage;
     private final Timer freezeTimer;
     private final Zombies zombieType;
@@ -28,8 +29,9 @@ public class ZombieImpl extends AbstractLivingEntity implements Zombie {
      * @param zombieType the type of zombie
      */
     protected ZombieImpl(final int delta, final double damage, final double health, final Point2D position,
-            final Zombies zombieType) {
+            final Zombies zombieType) {                
         super(position, new TimerImpl(delta * EATING_TIME_UNIT), health);
+        this.eatingTime = delta * EATING_TIME_UNIT;
         this.delta = delta;
         this.damage = damage;
         this.freezeTimer = new TimerImpl(this.delta * FREEZE_TIME_UNIT);
@@ -43,7 +45,7 @@ public class ZombieImpl extends AbstractLivingEntity implements Zombie {
      */
     @Override
     public void move() {
-        super.setPosition(super.getPosition().subtract(0, this.isFrozen ? (int) (this.delta * FREEZE_FACTOR) : this.delta));
+        super.setPosition(super.getPosition().subtract(this.isFrozen ? (int) (this.delta * FREEZE_FACTOR) : this.delta, 0));
     }
 
     /**
@@ -71,6 +73,7 @@ public class ZombieImpl extends AbstractLivingEntity implements Zombie {
     @Override
     public void freeze() {
         this.isFrozen = true;
+        super.getTimer().setNumCycles((int) (this.eatingTime * FREEZE_FACTOR));
     }
 
     /**
@@ -80,6 +83,7 @@ public class ZombieImpl extends AbstractLivingEntity implements Zombie {
     public void warmUp() {
         this.freezeTimer.reset();
         this.isFrozen = false;
+        super.getTimer().setNumCycles(this.eatingTime);
     }
 
     /**

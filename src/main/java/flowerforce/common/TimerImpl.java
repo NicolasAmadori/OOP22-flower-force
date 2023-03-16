@@ -5,7 +5,7 @@ package flowerforce.common;
  */
 public class TimerImpl implements Timer {
 
-    private final int nCycles;
+    private int nCycles;
     private int timerCyclesCount;
 
     /**
@@ -38,6 +38,11 @@ public class TimerImpl implements Timer {
     @Override
     public void reset() {
         this.timerCyclesCount = 0;
+    }
+
+    @Override
+    public void setNumCycles(final int numCycles) {
+        this.nCycles = numCycles;
     }
 
 

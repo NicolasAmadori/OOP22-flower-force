@@ -1,30 +1,48 @@
 package flowerforce.model.game;
 
-import java.util.Map;
-
-import flowerforce.model.entities.Bullet;
-import flowerforce.model.entities.Entity;
-import flowerforce.model.entities.Plant;
-import flowerforce.model.entities.Zombie;
+import javafx.geometry.Dimension2D;
+import javafx.geometry.Point2D;
 
 /**
- * Models the yard of the game, that controls collisions between entities.
+ * Models the yard of the game, in which entities can move.
  */
 public interface Yard {
 
     /**
-     * @param entity to be placed based on its position
+     * @param row of the cell
+     * @param col of the cell
+     * @return the point on the left side of the cell, vertically centered
      */
-    void placeEntity(Entity entity);
+    Point2D getLeftEntityPosition(int row, int col);
 
-    /** 
-     * @return a map of the bullets that are colliding associated whith their respective zombies
+    /**
+     * @param row of the cell
+     * @param col of the cell
+     * @return the point on the right side of the cell, vertically centered
      */
-    Map<Bullet, Zombie> collidingBullets();
+    Point2D getRightEntityPosition(int row, int col);
 
-    /** 
-     * @return a map of the zombies that are eating associated with their respective plants
+    /**
+     * 
+     * @return the cell dimensions
      */
-    Map<Zombie, Plant> eatingZombies();
+    Dimension2D getCellDimension();
 
+    /**
+     * 
+     * @return the dimension of the entire yard
+     */
+    Dimension2D getYardDimension();
+
+    /**
+     * 
+     * @return the number of rows of yard's cells matrix
+     */
+    int getRowsNum();
+
+    /**
+     *
+     * @return the number of columns of yard's cells matrix
+     */
+    int getColsNum();
 }

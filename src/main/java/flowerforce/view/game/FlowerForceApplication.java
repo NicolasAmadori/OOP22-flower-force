@@ -7,6 +7,7 @@ import flowerforce.controller.Controller;
 import flowerforce.controller.ControllerImpl;
 import javafx.application.Application;
 import javafx.geometry.Dimension2D;
+import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -38,7 +39,10 @@ public final class FlowerForceApplication extends Application implements FlowerF
         this.stage.setResizable(false);
         this.stage.setTitle("Flower Force");
         this.stage.getIcons().add(new Image(GAMEICON_PATH));
-        this.menu();
+        this.stage.setOnCloseRequest(e -> {
+            Platform.exit();
+            System.exit(0);
+        });
         this.menu();
     }
 
@@ -55,16 +59,8 @@ public final class FlowerForceApplication extends Application implements FlowerF
     @Override
     public void game(final int levelId) {
         try {
-            this.sceneClass = new GameScene(this, this.screenSize);
-            this.controller.setGameEngine(this.sceneClass.getGameEngine().get());
+            this.sceneClass = new GameScene(this);
             this.controller.startNewLevelGame(levelId);
-
-            //TODO: remove test
-            GameEngine ge = this.sceneClass.getGameEngine().get();
-            ge.addEntity(new EntityViewImpl(new SunflowerView(50), new Point2D(0, 0)));
-            ge.addEntity(new EntityViewImpl(new SunflowerView(50), new Point2D(4, 3)));
-            ge.render();
-
             this.setScene(this.sceneClass.getScene());
         } catch (Exception e) {
             System.out.println(e);
