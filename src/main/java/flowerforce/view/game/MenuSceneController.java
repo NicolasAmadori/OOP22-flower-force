@@ -13,7 +13,6 @@ public class MenuSceneController {
     /**
      * Creates a new controller for a Menu scene.
      * @param application the application to communicate scene changes
-     * @param mainController the controller to communicate events to
      */
     public MenuSceneController(final FlowerForceApplication application) {
         this.application = application;

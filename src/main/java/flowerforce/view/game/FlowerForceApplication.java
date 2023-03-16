@@ -99,7 +99,13 @@ public final class FlowerForceApplication extends Application implements FlowerF
         return new Scene(root, appDimensions.getWidth(), appDimensions.getHeight());
     }
 
-    public static Dimension2D getAppDimensionFromImage(double imgWidth, double imgHeight) {
+    /**
+     * Returns the Application dimensions based on a given background image.
+     * @param imgWidth image's width
+     * @param imgHeight image's height
+     * @return
+     */
+    public static Dimension2D getAppDimensionFromImage(final double imgWidth, final double imgHeight) {
         //screen's dimensions
         final Rectangle2D screenBounds = Screen.getPrimary().getBounds();
         //calculation of app's width
