@@ -12,6 +12,7 @@ import java.util.Map;
 
 import flowerforce.view.entities.EntityTypeView;
 import flowerforce.view.entities.EntityView;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -182,23 +183,24 @@ public final class GameSceneController implements Initializable, GameEngine {
 
     @Override
     public void render() {
+        int sunNumber = this.application.getController().getSunCounter();
+        //
+        //System.out.println(sunNumber);
+        //this.lblSunCounter.setText(String.valueOf(sunNumber));
+        if(!this.lblSunCounter.getText().equals(String.valueOf(sunNumber))) {
+            Platform.runLater(() -> {
+                System.out.println(sunNumber + " " + Thread.currentThread().getName());
+                lblSunCounter.setText(String.valueOf(sunNumber));
+            });
+        }
 
-        int sunNumer = this.application.getController().getSunCounter();
-        //System.out.println(sunNumer);
-        //this.lblSunCounter.setText(String.valueOf(sunNumer));
-        /*Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                this.lblSunCounter.setText(String.valueOf(sunNumer));
-            }
-        });*/
         //
         //this.clearCanvas();
         //entities.forEach(e -> this.draw(e.getEntityType().getImage(), e.getPlacingPosition()));
-        this.gamePane.getChildren().stream().filter(n -> this.entityImages.contains(n)).forEach(n -> this.gamePane.getChildren().remove(n));
-        this.entityImages.clear();
+//        this.gamePane.getChildren().stream().filter(n -> this.entityImages.contains(n)).forEach(n -> this.gamePane.getChildren().remove(n));
+//        this.entityImages.clear();
         //entities.forEach(e -> this.drawEntity(e.getEntityType().getImage(), e.getPlacingPosition()));
-        this.updateSunCounter();
+//        this.updateSunCounter();
     }
 
     private void updateSunCounter() {

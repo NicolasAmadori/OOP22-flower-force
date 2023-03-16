@@ -1,9 +1,6 @@
 package flowerforce;
 
-import flowerforce.model.entities.Bullet;
-import flowerforce.model.entities.StandardBullet;
 import flowerforce.view.game.FlowerForceApplication;
-import javafx.geometry.Point2D;
 
 import static javafx.application.Application.launch;
 
@@ -20,7 +17,6 @@ public final class FlowerForce {
      * @param args
      */
     public static void main(final String[] args) {
-        Bullet b = new StandardBullet(new Point2D(0, 0));
-        System.out.println(b.getClass().getName());
+        launch(FlowerForceApplication.class, args);
     }
 }
