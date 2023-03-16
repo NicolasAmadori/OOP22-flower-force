@@ -79,7 +79,7 @@ public final class GameSceneController implements Initializable, GameEngine {
 
     public GameSceneController(final FlowerForceApplication application) {
         this.application = application;
-        this.size = new Dimension2D(Toolkit.getDefaultToolkit().getScreenSize().getWidth(), Toolkit.getDefaultToolkit().getScreenSize().getHeight());
+        this.size = FlowerForceApplication.getAppDimensionFromImage(this.imgBackground.getImage().getWidth(), this.imgBackground.getImage().getHeight());
         this.firstYardPoint = new Point2D((int) (size.getWidth() * RIGHTSHIFT_RATIO), (int) (size.getHeight() * DOWNSHIFT_RATIO));
         this.yardDimension = new Dimension2D((int) (size.getWidth() * WIDTH_RATIO), (int) (size.getHeight() * HEIGHT_RATIO));
         System.out.println(this.firstYardPoint + " " + this.yardDimension); //TODO: remove
