@@ -73,7 +73,7 @@ public class ZombieImpl extends AbstractLivingEntity implements Zombie {
     @Override
     public void freeze() {
         this.isFrozen = true;
-        super.getTimer().setNumCycles((int) (this.eatingTime * FREEZE_FACTOR));
+        super.getTimer().setNumCycles((int) (this.eatingTime / FREEZE_FACTOR));
     }
 
     /**

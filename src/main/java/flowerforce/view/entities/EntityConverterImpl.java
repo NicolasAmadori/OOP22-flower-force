@@ -19,7 +19,7 @@ public class EntityConverterImpl implements EntityConverter {
         final Point2D newPosition = convertPlantPosition(p.getPosition());
         final String completeimagePath = IMAGES_FOLDER_PATH + File.separator
                 + p.getPlantType().name().toLowerCase() + IMAGES_EXTENSION;
-        return new EntityViewImpl(newPosition, completeimagePath);g
+        return new EntityViewImpl(newPosition, completeimagePath);
     }
 
     @Override
