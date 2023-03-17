@@ -100,6 +100,7 @@ public final class GameSceneController implements Initializable, GameEngine {
             EntityViewId.SNOWSHOOTER, lblSnowshooter, EntityViewId.FASTSHOOTER, lblFastshooter, EntityViewId.FIRESHOOTER, lblFireshooter));
         this.cards.putAll(Map.of(EntityViewId.SUNFLOWER, imgSunflower, EntityViewId.PEASHOOTER, imgPeashooter, EntityViewId.SNOWSHOOTER, imgSnowshooter,
             EntityViewId.FASTSHOOTER, imgFastshooter, EntityViewId.FIRESHOOTER, imgFireshooter));
+        this.cardLabels.values().forEach(l -> l.setText(Integer.toString(100)));
     }
 
     private void addBloomEffect() {
