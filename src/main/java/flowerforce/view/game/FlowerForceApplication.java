@@ -85,15 +85,13 @@ public final class FlowerForceApplication extends Application implements FlowerF
      * @throws IOException
      */
     public static Scene getScaledScene(final AnchorPane root, final String imageName) throws IOException {
-        final String imgPath = "flowerforce" + File.separator + "game" + File.separator + "images" + File.separator + imageName;
-        final Image image = new Image(imgPath);
         //background's dimensions
-        final double imgWidth = image.getWidth();
-        final double imgHeight = image.getHeight();
-        final Dimension2D appDimensions = getAppDimensionFromImage(imgWidth, imgHeight);
+        final Dimension2D imgDimensions = getImgDimensions(imageName);
+        //app's dimensions
+        final Dimension2D appDimensions = getAppDimensionFromImage(imgDimensions);
         //calculation of scale factors
-        final double scaleFactorWidth = appDimensions.getWidth() / imgWidth;
-        final double scaleFactorHeight = appDimensions.getHeight() / imgHeight;
+        final double scaleFactorWidth = appDimensions.getWidth() / imgDimensions.getWidth();
+        final double scaleFactorHeight = appDimensions.getHeight() / imgDimensions.getHeight();
         final Scale scaleTransformation = new Scale(scaleFactorWidth, scaleFactorHeight, 0, 0);
         root.getTransforms().add(scaleTransformation);
         return new Scene(root, appDimensions.getWidth(), appDimensions.getHeight());
@@ -101,22 +99,33 @@ public final class FlowerForceApplication extends Application implements FlowerF
 
     /**
      * Returns the Application dimensions based on a given background image.
-     * @param imgWidth image's width
-     * @param imgHeight image's height
-     * @return
+     * @param imgDimensions image's dimensions in pixel
+     * @return a Dimension2D representing app's dimensions
      */
-    public static Dimension2D getAppDimensionFromImage(final double imgWidth, final double imgHeight) {
+    public static Dimension2D getAppDimensionFromImage(final Dimension2D imgDimensions) {
         //screen's dimensions
         final Rectangle2D screenBounds = Screen.getPrimary().getBounds();
         //calculation of app's width
         double appSizeWidth = SCREEN_FILL_INDEX * screenBounds.getWidth();
         //calculation of app's height
-        double appSizeHeight = appSizeWidth / imgWidth * imgHeight;
+        double appSizeHeight = appSizeWidth / imgDimensions.getWidth() * imgDimensions.getHeight();
         //case where app's height would be greater than screen's height
         if (appSizeHeight > screenBounds.getHeight()) {
             appSizeHeight = screenBounds.getHeight();
-            appSizeWidth = appSizeHeight / imgHeight * imgWidth;
+            appSizeWidth = appSizeHeight / imgDimensions.getHeight() * imgDimensions.getWidth();
         }
         return new Dimension2D(appSizeWidth, appSizeHeight);
+    }
+
+    /**
+     * Gets an image's dimension.
+     * @param imgName the image name (located in the standard image folder)
+     * @return a Dimension2D contaning image's dimensions
+     */
+    public static Dimension2D getImgDimensions(final String imgName) {
+        final String imgPath = "flowerforce" + File.separator + "game" + File.separator + "images" + File.separator + imgName;
+        final Image image = new Image(imgPath);
+        //image's dimensions
+        return new Dimension2D(image.getWidth(), image.getHeight());
     }
 }
