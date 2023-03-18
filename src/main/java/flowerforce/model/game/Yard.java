@@ -27,4 +27,15 @@ public interface Yard {
      */
     Dimension2D getYardDimension();
 
+    /**
+     * 
+     * @return the number of rows of yard's cells matrix
+     */
+    int getRowsNum();
+
+    /**
+     *
+     * @return the number of columns of yard's cells matrix
+     */
+    int getColsNum();
 }
