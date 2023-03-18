@@ -11,13 +11,6 @@ public interface Yard {
     /**
      * @param row of the cell
      * @param col of the cell
-     * @return the point on the left side of the cell, vertically centered
-     */
-    Point2D getLeftEntityPosition(int row, int col);
-
-    /**
-     * @param row of the cell
-     * @param col of the cell
      * @return the point on the right side of the cell, vertically centered
      */
     Point2D getRightEntityPosition(int row, int col);
