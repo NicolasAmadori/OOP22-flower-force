@@ -8,7 +8,6 @@ import flowerforce.model.entities.Zombie;
 import flowerforce.model.game.Game;
 import flowerforce.model.game.World;
 import flowerforce.view.entities.EntityConverter;
-import flowerforce.view.entities.EntityConverterImpl;
 import flowerforce.view.entities.EntityView;
 import flowerforce.view.game.GameEngine;
 
@@ -105,11 +104,10 @@ public final class ControllerImpl implements Controller {
         Set<Zombie> zombies = this.game.getZombies();
         Set<Bullet> bullets = this.game.getBullet();
 
-        EntityConverter converter = new EntityConverterImpl();
         Set<EntityView> output = new HashSet<>();
-        plants.forEach(p -> output.add(converter.getEntityView(p)));
-        zombies.forEach(z -> output.add(converter.getEntityView(z)));
-        bullets.forEach(z -> output.add(converter.getEntityView(z)));
+        plants.forEach(p -> output.add(EntityConverter.getEntityView(p)));
+        zombies.forEach(z -> output.add(EntityConverter.getEntityView(z)));
+        bullets.forEach(z -> output.add(EntityConverter.getEntityView(z)));
 
         return output;
     }
