@@ -59,4 +59,8 @@ public interface Controller {
     Map<IdConverter.Plants, Integer> getPlantCosts();
 
     Set<IdConverter.Plants> getEnabledCards();
+
+    int getTotalRows();
+
+    int getTotalColumns();
 }

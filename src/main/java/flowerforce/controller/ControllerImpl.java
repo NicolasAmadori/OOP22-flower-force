@@ -126,4 +126,14 @@ public final class ControllerImpl implements Controller {
     public Set<IdConverter.Plants> getEnabledCards() {
         return this.game.availablePlants();
     }
+
+    @Override
+    public int getTotalRows() {
+        return 0;
+    }
+
+    @Override
+    public int getTotalColumns() {
+        return 0;
+    }
 }
