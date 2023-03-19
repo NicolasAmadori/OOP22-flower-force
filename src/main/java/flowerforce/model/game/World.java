@@ -65,8 +65,6 @@ public class World {
     /**
      * Creates a level game.
      * @param levelId the level to create
-     * @param width to pass to GameImpl's constructor
-     * @param height to pass to GameImpl's constructor
      * @return the game to be played
      */
     public Game createLevelGame(final int levelId) {
@@ -79,8 +77,6 @@ public class World {
 
     /**
      * Creates an infinite game.
-     * @param width to pass to GameImpl's constructor
-     * @param height to pass to GameImpl's constructor
      * @return the game to be played
      */
     public Game createInfiniteGame() {

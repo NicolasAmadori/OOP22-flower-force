@@ -6,6 +6,7 @@ import java.io.IOException;
 import flowerforce.controller.Controller;
 import flowerforce.controller.ControllerImpl;
 import javafx.application.Application;
+import javafx.geometry.Dimension2D;
 import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
@@ -89,6 +90,22 @@ public final class FlowerForceApplication extends Application implements FlowerF
         //background's dimensions
         final double imgWidth = image.getWidth();
         final double imgHeight = image.getHeight();
+        final Dimension2D appDimensions = getAppDimensionFromImage(imgWidth, imgHeight);
+        //calculation of scale factors
+        final double scaleFactorWidth = appDimensions.getWidth() / imgWidth;
+        final double scaleFactorHeight = appDimensions.getHeight() / imgHeight;
+        final Scale scaleTransformation = new Scale(scaleFactorWidth, scaleFactorHeight, 0, 0);
+        root.getTransforms().add(scaleTransformation);
+        return new Scene(root, appDimensions.getWidth(), appDimensions.getHeight());
+    }
+
+    /**
+     * Returns the Application dimensions based on a given background image.
+     * @param imgWidth image's width
+     * @param imgHeight image's height
+     * @return
+     */
+    public static Dimension2D getAppDimensionFromImage(final double imgWidth, final double imgHeight) {
         //screen's dimensions
         final Rectangle2D screenBounds = Screen.getPrimary().getBounds();
         //calculation of app's width
@@ -100,11 +117,6 @@ public final class FlowerForceApplication extends Application implements FlowerF
             appSizeHeight = screenBounds.getHeight();
             appSizeWidth = appSizeHeight / imgHeight * imgWidth;
         }
-        //calculation of scale factors
-        final double scaleFactorWidth = appSizeWidth / imgWidth;
-        final double scaleFactorHeight = appSizeHeight / imgHeight;
-        final Scale scaleTransformation = new Scale(scaleFactorWidth, scaleFactorHeight, 0, 0);
-        root.getTransforms().add(scaleTransformation);
-        return new Scene(root, appSizeWidth, appSizeHeight);
+        return new Dimension2D(appSizeWidth, appSizeHeight);
     }
 }
