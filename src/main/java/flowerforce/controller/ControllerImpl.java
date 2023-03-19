@@ -14,6 +14,7 @@ import flowerforce.view.game.GameEngine;
 import javafx.geometry.Dimension2D;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -110,5 +111,15 @@ public final class ControllerImpl implements Controller {
         bullets.forEach(z -> output.add(EntityConverter.getEntityView(z)));
 
         return output;
+    }
+
+    @Override
+    public Map<IdConverter.Plants, Integer> getPlantCosts() {
+        return null;
+    }
+
+    @Override
+    public Set<IdConverter.Plants> getEnabledCards() {
+        return this.game.availablePlants();
     }
 }

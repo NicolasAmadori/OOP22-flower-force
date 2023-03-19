@@ -4,6 +4,7 @@ import flowerforce.model.entities.IdConverter;
 import flowerforce.view.entities.EntityView;
 import flowerforce.view.game.GameEngine;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -54,4 +55,8 @@ public interface Controller {
     void placePlant(IdConverter.Plants p, int row, int col);
 
     Set<EntityView> getPlacedEntities();
+
+    Map<IdConverter.Plants, Integer> getPlantCosts();
+
+    Set<IdConverter.Plants> getEnabledCards();
 }
