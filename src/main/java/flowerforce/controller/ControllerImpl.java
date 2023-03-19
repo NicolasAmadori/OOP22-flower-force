@@ -1,8 +1,10 @@
 package flowerforce.controller;
 
 import flowerforce.common.WorldSavingManager;
+import flowerforce.model.entities.Bullet;
 import flowerforce.model.entities.IdConverter;
 import flowerforce.model.entities.Plant;
+import flowerforce.model.entities.Zombie;
 import flowerforce.model.game.Game;
 import flowerforce.model.game.World;
 import flowerforce.view.entities.EntityView;
@@ -97,6 +99,10 @@ public final class ControllerImpl implements Controller {
     @Override
     public Set<EntityView> getPlacedEntities() {
         Set<Plant> plants = this.game.getPlants();
+        Set<Zombie> zombies = this.game.getZombies();
+        Set<Bullet> bullets = this.game.getBullet();
+
+        Set<EntityView> output;
 
     }
 }
