@@ -13,6 +13,7 @@ import flowerforce.view.game.GameEngine;
 
 import javafx.geometry.Dimension2D;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -115,7 +116,10 @@ public final class ControllerImpl implements Controller {
 
     @Override
     public Map<IdConverter.Plants, Integer> getPlantCosts() {
-        return null;
+        Map<IdConverter.Plants, Integer> output = new HashMap<>();
+        Set<Plant> plants = this.game.getPlants();
+        plants.forEach(p -> output.put(p.getPlantType(), p.getPlantType().getCost()));
+        return output;
     }
 
     @Override
