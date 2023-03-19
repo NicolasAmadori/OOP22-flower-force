@@ -47,7 +47,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Label fx:id="lblSunflower" layoutX="125.0" layoutY="70.0">
+                  <Label fx:id="lblSunflower" layoutX="125.0" layoutY="70.0" mouseTransparent="true">
                      <font>
                         <Font size="38.0" />
                      </font>
@@ -64,7 +64,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Label fx:id="lblPeashooter" layoutX="125.0" layoutY="70.0" textAlignment="RIGHT">
+                  <Label fx:id="lblPeashooter" layoutX="125.0" layoutY="70.0" mouseTransparent="true" textAlignment="RIGHT">
                      <font>
                         <Font size="38.0" />
                      </font>
@@ -81,7 +81,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Label fx:id="lblSnowshooter" layoutX="125.0" layoutY="70.0" textAlignment="RIGHT">
+                  <Label fx:id="lblSnowshooter" layoutX="125.0" layoutY="70.0" mouseTransparent="true" textAlignment="RIGHT">
                      <font>
                         <Font size="38.0" />
                      </font>
@@ -98,7 +98,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Label fx:id="lblFastshooter" layoutX="125.0" layoutY="70.0" textAlignment="RIGHT">
+                  <Label fx:id="lblFastshooter" layoutX="125.0" layoutY="70.0" mouseTransparent="true" textAlignment="RIGHT">
                      <font>
                         <Font size="38.0" />
                      </font>
@@ -115,7 +115,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Label fx:id="lblFireshooter" layoutX="125.0" layoutY="70.0" textAlignment="RIGHT">
+                  <Label fx:id="lblFireshooter" layoutX="125.0" layoutY="70.0" mouseTransparent="true" textAlignment="RIGHT">
                      <font>
                         <Font size="38.0" />
                      </font>
