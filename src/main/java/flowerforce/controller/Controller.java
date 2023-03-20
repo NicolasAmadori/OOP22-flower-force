@@ -1,9 +1,7 @@
 package flowerforce.controller;
 
-import flowerforce.model.entities.IdConverter;
 import flowerforce.view.entities.EntityView;
 import flowerforce.view.game.GameEngine;
-
 import java.util.Map;
 import java.util.Set;
 
@@ -49,6 +47,7 @@ public interface Controller {
 
     /**
      * Place a new plant in a specified position.
+     * @param plantId The id of the plant to place
      * @param row The row index in which to place the plant
      * @param col The column index in which to place the plant
      */
