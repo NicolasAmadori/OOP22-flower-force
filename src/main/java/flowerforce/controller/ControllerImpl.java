@@ -2,7 +2,6 @@ package flowerforce.controller;
 
 import flowerforce.common.WorldSavingManager;
 import flowerforce.model.entities.Bullet;
-import flowerforce.model.entities.IdConverter;
 import flowerforce.model.entities.Plant;
 import flowerforce.model.entities.Zombie;
 import flowerforce.model.game.Game;
@@ -10,9 +9,6 @@ import flowerforce.model.game.World;
 import flowerforce.view.entities.EntityConverter;
 import flowerforce.view.entities.EntityView;
 import flowerforce.view.game.GameEngine;
-
-import javafx.geometry.Dimension2D;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -32,7 +28,7 @@ public final class ControllerImpl implements Controller {
     /**
      * Create a new instance of Controller.
      */
-    public ControllerImpl() throws InstantiationException{
+    public ControllerImpl() throws InstantiationException {
         this.world = WorldSavingManager.load();
     }
 
@@ -65,7 +61,7 @@ public final class ControllerImpl implements Controller {
      */
     @Override
     public int getSunCounter() {
-        if(this.game != null) {
+        if (this.game != null) {
 
             return this.game.getSun();
         }
@@ -79,7 +75,7 @@ public final class ControllerImpl implements Controller {
      */
     @Override
     public void placePlant(final int plantId, final int row, final int col) {
-        //this.game.placePlant();//implement this when game is correctedg
+        //this.game.placePlant();//implement this when game is corrected
     }
 
     /**
@@ -103,11 +99,11 @@ public final class ControllerImpl implements Controller {
 
     @Override
     public Set<EntityView> getPlacedEntities() {
-        Set<Plant> plants = this.game.getPlants();
-        Set<Zombie> zombies = this.game.getZombies();
-        Set<Bullet> bullets = this.game.getBullet();
+        final Set<Plant> plants = this.game.getPlants();
+        final Set<Zombie> zombies = this.game.getZombies();
+        final Set<Bullet> bullets = this.game.getBullet();
 
-        Set<EntityView> output = new HashSet<>();
+        final Set<EntityView> output = new HashSet<>();
         plants.forEach(p -> output.add(EntityConverter.getEntityView(p)));
         zombies.forEach(z -> output.add(EntityConverter.getEntityView(z)));
         bullets.forEach(z -> output.add(EntityConverter.getEntityView(z)));
@@ -117,8 +113,8 @@ public final class ControllerImpl implements Controller {
 
     @Override
     public Map<Integer, Integer> getPlantCosts() {
-        Map<Integer, Integer> output = new HashMap<>();
-        Set<Plant> plants = this.game.getPlants();
+        final Map<Integer, Integer> output = new HashMap<>();
+        final Set<Plant> plants = this.game.getPlants();
         plants.forEach(p -> output.put(p.getPlantType().ordinal(), p.getPlantType().getCost()));
         return output;
     }
