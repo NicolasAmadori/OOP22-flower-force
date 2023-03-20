@@ -35,14 +35,6 @@ public class World {
 
     /**
      * 
-     * @return the player's coins
-     */
-    public int getCoins() {
-        return this.player.getCoins();
-    }
-
-    /**
-     * 
      * @return the current player
      */
     public Player getPlayer() {
