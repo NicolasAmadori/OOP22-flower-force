@@ -24,19 +24,19 @@ public class GameImpl implements Game {
     private final Level level;
     private int sun;
     private int remainingZombie;
-    private final Yard yard;
+    private final World world;
 
     /**
      * @param level level of the game that has started.
      */
-    public GameImpl(final Level level) {
+    public GameImpl(final Level level, final World world) {
         sun = INITIAL_SUN * SUN_VALUE;
         this.level = level;
         zombieTimer = new TimerImpl(level.getTotalZombies());
         sunTimer = new TimerImpl(TIME_TO_SPAWN_SUN);
         remainingZombie = level.getTotalZombies();
         level.getPlantsId().forEach(p -> plantsTimer.put(p, new TimerImpl(p.getUnlockTime())));
-        this.yard = new YardImpl();
+        this.world = world;
     }
 
     /**
@@ -97,15 +97,16 @@ public class GameImpl implements Game {
      * {@inheritDoc}
      */
     @Override
-    public boolean placePlant(final IdConverter.Plants idPlant, final Point2D position) {
+    public boolean placePlant(final int idPlant, final Point2D position) {
+        final var plantType = IdConverter.Plants.values()[idPlant];
         for (final var plant : plants) {
             if (plant.getPosition().equals(position)) {
                 return false;
             }
         }
-        final var plant = IdConverter.createPlant(idPlant,
-                yard.getRightEntityPosition((int) position.getX(), (int) position.getY()));
-        sun -= idPlant.getCost();
+        final var plant = IdConverter.createPlant(plantType,
+                Yard.getRightEntityPosition((int) position.getX(), (int) position.getY()));
+        sun -= plantType.getCost();
         plants.add(plant);
         return true;
     }
@@ -124,10 +125,11 @@ public class GameImpl implements Game {
      * {@inheritDoc}
      */
     @Override
-    public Set<IdConverter.Plants> availablePlants() {
+    public Set<Integer> availablePlants() {
         return level.getPlantsId().stream()
                 .filter(plantType -> plantType.getCost() <= sun)
                 .filter(plantType -> plantsTimer.get(plantType).isReady())
+                .map(Enum::ordinal)
                 .collect(Collectors.toSet());
     }
 
@@ -175,7 +177,7 @@ public class GameImpl implements Game {
                 .filter(zombie -> zombie.getPosition().getY() == plant.getPosition().getY())
                 .filter(zombie -> zombie.getPosition().getX() <= plant.getPosition().getX())
                 .filter(zombie -> zombie.getPosition().getX() > plant.getPosition().getX()
-                        + yard.getCellDimension().getWidth())
+                        + Yard.getCellDimension().getWidth())
                 .forEach(zombie -> zombieEating.put(zombie,plant)));
 
         zombies.forEach(zombie -> {
@@ -216,9 +218,9 @@ public class GameImpl implements Game {
             zombieTimer = new TimerImpl(remainingZombie);
             remainingZombie--;
             zombies.add(IdConverter.createZombie(IdConverter.Zombies.BASIC,
-                    yard.getRightEntityPosition(
-                            randomZombiePosition.nextInt(yard.getRowsNum()),
-                            yard.getColsNum()
+                    Yard.getRightEntityPosition(
+                            randomZombiePosition.nextInt(Yard.getRowsNum()),
+                            Yard.getColsNum()
                     )));
         }
         zombieTimer.updateState();
