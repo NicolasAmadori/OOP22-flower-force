@@ -150,11 +150,7 @@ public final class GameSceneController implements Initializable, GameEngine {
 
     @FXML
     void selectMenu(final MouseEvent event) {
-        imageResult.setVisible(false);
-        imageMenu.setVisible(false);
-        imageResult.setDisable(true);
-        System.out.println("prova");
-        application.menu();
+        this.application.menu();
     }
 
     private int getRow(final double y) {
@@ -237,14 +233,14 @@ public final class GameSceneController implements Initializable, GameEngine {
     public void over( final boolean isWon) {
         // TODO Auto-generated method stub
         //throw new UnsupportedOperationException("Unimplemented method 'over'");
-        imageResult.setVisible(true);
-        imageMenu.setVisible(true);
-        imageMenu.setDisable(false);
-        if ( isWon) {
-            imageResult.setImage(new Image("..\\images\\LevelWin.png"));
+        this.imageResult.setVisible(true);
+        this.imageMenu.setVisible(true);
+        this.imageMenu.setDisable(false);
+        if (isWon) {
+            imageResult.setImage(new Image("..//images//LevelWin.png"));
         }
         else {
-            imageResult.setImage(new Image("..\\images\\ZombiesAteYourBrains.png"));
+            imageResult.setImage(new Image("..//images//ZombiesAteYourBrains.png"));
         }
     }
 
