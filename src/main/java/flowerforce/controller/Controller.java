@@ -1,7 +1,10 @@
 package flowerforce.controller;
 
+import flowerforce.view.entities.CardView;
 import flowerforce.view.entities.EntityView;
 import flowerforce.view.game.GameEngine;
+
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -55,7 +58,7 @@ public interface Controller {
 
     Set<EntityView> getPlacedEntities();
 
-    Map<Integer, Integer> getPlantCosts();
+    List<CardView> getCards();
 
     Set<Integer> getEnabledCards();
 
