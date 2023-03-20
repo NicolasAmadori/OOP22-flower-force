@@ -48,5 +48,5 @@ public interface Player {
      * @param levelId The integer representing the level id
      * @return True if the operation was successful, false otherwise
      */
-    boolean setNewLastUnlockedLevelId(int levelId);
+    void unlockedNextLevel();
 }
