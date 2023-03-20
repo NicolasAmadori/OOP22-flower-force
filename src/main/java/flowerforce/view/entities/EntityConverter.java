@@ -1,6 +1,7 @@
 package flowerforce.view.entities;
 
 import flowerforce.model.entities.Bullet;
+import flowerforce.model.entities.IdConverter;
 import flowerforce.model.entities.Plant;
 import flowerforce.model.entities.Zombie;
 import javafx.geometry.Point2D;
@@ -61,10 +62,10 @@ public final class EntityConverter {
         return new EntityViewImpl(newPosition, completeImagePath);
     }
 
-    public static CardView getCardView(final Plant p) {
+    public static CardView getCardView(final IdConverter.Plants p) {
         final String completeImagePath = IMAGES_FOLDER_PATH + File.separator
-                + p.getPlantType().name().toLowerCase(Locale.getDefault()) + CARD_EXTENSION;
-        return new CardViewImpl(p.getPlantType().getCost(), completeImagePath);
+                + p.name().toLowerCase(Locale.getDefault()) + CARD_EXTENSION;
+        return new CardViewImpl(p.getCost(), completeImagePath);
     }
 
     private static String getName(final String completePackage) {
