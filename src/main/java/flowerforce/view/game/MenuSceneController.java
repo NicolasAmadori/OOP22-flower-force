@@ -1,6 +1,7 @@
 package flowerforce.view.game;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 /**
@@ -25,6 +26,15 @@ public class MenuSceneController {
     @FXML
     void start(final MouseEvent event) {
         final int levelId = Integer.parseInt(((ImageView) event.getSource()).getAccessibleText());
-        this.application.game(levelId);
+        if (levelId <= this.application.getController().getLastUnlockedLevelId()) {
+            this.application.game(levelId);
+        } else  {
+            final Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Level not unlocked");
+            alert.setHeaderText("Level " + levelId + " is not unlocked");
+            alert.setContentText("This level has not been unlocked yet, right now you can play up to Level "
+                                  + this.application.getController().getLastUnlockedLevelId() + ".");
+            alert.showAndWait();
+        }
     }
 }
