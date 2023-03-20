@@ -116,7 +116,7 @@ public final class ControllerImpl implements Controller {
         if(game != null) {
             final Set<Plant> plants = this.game.getPlants();
             final List<CardView> cards = new ArrayList<>();
-            //plants.forEach(p -> cards.add(new CardViewImpl(p.getPlantType().getCost(), )));
+            plants.forEach(p -> cards.add(EntityConverter.getCardView(p)));
             return cards;
         }
         return new ArrayList<>();
