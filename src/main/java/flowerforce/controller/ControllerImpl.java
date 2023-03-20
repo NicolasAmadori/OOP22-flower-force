@@ -63,11 +63,8 @@ public final class ControllerImpl implements Controller {
     @Override
     public int getSunCounter() {
         if (this.game != null) {
-
             return this.game.getSun();
         }
-        //return this.game.getSun();
-
         return 0;
     }
 
@@ -76,7 +73,9 @@ public final class ControllerImpl implements Controller {
      */
     @Override
     public void placePlant(final int plantId, final int row, final int col) {
-        //this.game.placePlant();//implement this when game is corrected
+        if(this.game != null) {
+            this.game.placePlant(plantId, row, col);//implement this when game is corrected
+        }
     }
 
     /**
@@ -114,18 +113,21 @@ public final class ControllerImpl implements Controller {
 
     @Override
     public Map<Integer, Integer> getPlantCosts() {
-        final Map<Integer, Integer> output = new HashMap<>();
-        final Set<Plant> plants = this.game.getPlants();
-        plants.forEach(p -> output.put(p.getPlantType().ordinal(), p.getPlantType().getCost()));
-        return output;
+        if(game != null) {
+            final Map<Integer, Integer> output = new HashMap<>();
+            final Set<Plant> plants = this.game.getPlants();
+            plants.forEach(p -> output.put(p.getPlantType().ordinal(), p.getPlantType().getCost()));
+            return output;
+        }
+        return new HashMap<>();
     }
 
     @Override
     public Set<Integer> getEnabledCards() {
-        return this.game.availablePlants().stream()
-                    .map(e -> e.ordinal())
-                    .collect(Collectors.toSet());
-//        return this.game.availablePlants();//uncomment this when game is corrected
+        if(this.game != null) {
+            return this.game.availablePlants();//uncomment this when game is corrected
+        }
+        return Set.of();
     }
 
     @Override
