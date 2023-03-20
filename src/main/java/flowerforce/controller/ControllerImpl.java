@@ -2,19 +2,18 @@ package flowerforce.controller;
 
 import flowerforce.common.WorldSavingManager;
 import flowerforce.model.entities.Bullet;
+import flowerforce.model.entities.IdConverter;
 import flowerforce.model.entities.Plant;
 import flowerforce.model.entities.Zombie;
 import flowerforce.model.game.Game;
 import flowerforce.model.game.World;
 import flowerforce.model.game.Yard;
 import flowerforce.view.entities.CardView;
-import flowerforce.view.entities.CardViewImpl;
 import flowerforce.view.entities.EntityConverter;
 import flowerforce.view.entities.EntityView;
 import flowerforce.view.game.GameEngine;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * This is an implementation of {@link Controller}.
@@ -99,7 +98,7 @@ public final class ControllerImpl implements Controller {
 
     @Override
     public Set<EntityView> getPlacedEntities() {
-        final Set<Plant> plants = this.game.getPlants();
+        final Set<Plant> plants = this.game.getPlacedPlants();
         final Set<Zombie> zombies = this.game.getZombies();
         final Set<Bullet> bullets = this.game.getBullet();
 
@@ -114,7 +113,7 @@ public final class ControllerImpl implements Controller {
     @Override
     public List<CardView> getCards() {
         if(game != null) {
-            final Set<Plant> plants = this.game.getPlants();
+            final List<IdConverter.Plants> plants = this.game.getAllPlantIDs();
             final List<CardView> cards = new ArrayList<>();
             //plants.forEach(p -> cards.add(new CardViewImpl(p.getPlantType().getCost(), )));
             return cards;
@@ -125,7 +124,7 @@ public final class ControllerImpl implements Controller {
     @Override
     public Set<Integer> getEnabledCards() {
         if(this.game != null) {
-            return this.game.availablePlants();//uncomment this when game is corrected
+            return this.game.getAvailablePlantsIDs();//uncomment this when game is corrected
         }
         return Set.of();
     }
