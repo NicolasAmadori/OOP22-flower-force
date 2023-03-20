@@ -6,6 +6,7 @@ import flowerforce.model.entities.Plant;
 import flowerforce.model.entities.Zombie;
 import flowerforce.model.game.Game;
 import flowerforce.model.game.World;
+import flowerforce.model.game.Yard;
 import flowerforce.view.entities.EntityConverter;
 import flowerforce.view.entities.EntityView;
 import flowerforce.view.game.GameEngine;
@@ -129,11 +130,11 @@ public final class ControllerImpl implements Controller {
 
     @Override
     public int getTotalRows() {
-        return 0;
+        return Yard.getRowsNum();
     }
 
     @Override
     public int getTotalColumns() {
-        return 0;
+        return Yard.getColsNum();
     }
 }
