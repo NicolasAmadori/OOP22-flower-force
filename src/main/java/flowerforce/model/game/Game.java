@@ -54,7 +54,7 @@ public interface Game {
      * @param position Coordinates of the plant to be placed
      * @return True if the plant has been placed
      */
-    boolean placePlant(IdConverter.Plants idPlant, Point2D position);
+    boolean placePlant(int idPlant, Point2D position);
 
     /**
      * Determine if the game has ended.
@@ -66,7 +66,7 @@ public interface Game {
      * Identify which plants can be selected to be placed on the playing field.
      * @return the types of plants that can be selected
      */
-    Set<IdConverter.Plants> availablePlants();
+    Set<Integer> availablePlants();
 
     /**
      *
