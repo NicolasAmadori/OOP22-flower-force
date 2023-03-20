@@ -88,11 +88,7 @@ public class PlayerImpl implements Player {
      * {@inheritDoc}
      */
     @Override
-    public boolean setNewLastUnlockedLevelId(final int levelId) {
-        if (levelId < 0) {
-            return false;
-        }
-        this.lastUnlockedLevelId = levelId;
-        return true;
+    public void unlockedNextLevel() {
+        this.lastUnlockedLevelId++;
     }
 }
