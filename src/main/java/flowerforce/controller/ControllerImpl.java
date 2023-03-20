@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * This is an implementation of {@link Controller}.
@@ -77,8 +78,8 @@ public final class ControllerImpl implements Controller {
      * {@inheritDoc}
      */
     @Override
-    public void placePlant(final IdConverter.Plants p, final int row, final int col) {
-        //this.world.placePlant(row, col);
+    public void placePlant(final int plantId, final int row, final int col) {
+        //this.game.placePlant();//implement this when game is correctedg
     }
 
     /**
@@ -115,16 +116,19 @@ public final class ControllerImpl implements Controller {
     }
 
     @Override
-    public Map<IdConverter.Plants, Integer> getPlantCosts() {
-        Map<IdConverter.Plants, Integer> output = new HashMap<>();
+    public Map<Integer, Integer> getPlantCosts() {
+        Map<Integer, Integer> output = new HashMap<>();
         Set<Plant> plants = this.game.getPlants();
-        plants.forEach(p -> output.put(p.getPlantType(), p.getPlantType().getCost()));
+        plants.forEach(p -> output.put(p.getPlantType().ordinal(), p.getPlantType().getCost()));
         return output;
     }
 
     @Override
-    public Set<IdConverter.Plants> getEnabledCards() {
-        return this.game.availablePlants();
+    public Set<Integer> getEnabledCards() {
+        return this.game.availablePlants().stream()
+                    .map(e -> e.ordinal())
+                    .collect(Collectors.toSet());
+//        return this.game.availablePlants();//uncomment this when game is corrected
     }
 
     @Override

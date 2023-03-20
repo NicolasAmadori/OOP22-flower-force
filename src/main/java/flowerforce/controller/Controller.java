@@ -52,13 +52,13 @@ public interface Controller {
      * @param row The row index in which to place the plant
      * @param col The column index in which to place the plant
      */
-    void placePlant(IdConverter.Plants p, int row, int col);
+    void placePlant(int plantId, int row, int col);
 
     Set<EntityView> getPlacedEntities();
 
-    Map<IdConverter.Plants, Integer> getPlantCosts();
+    Map<Integer, Integer> getPlantCosts();
 
-    Set<IdConverter.Plants> getEnabledCards();
+    Set<Integer> getEnabledCards();
 
     int getTotalRows();
 
