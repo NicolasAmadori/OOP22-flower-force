@@ -1,31 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.canvas.Canvas?>
-<?import javafx.scene.control.Button?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="gamePane" maxHeight="-Infinity" maxWidth="-Infinity" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="gamePane" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fx:id="imgBackground" fitHeight="782.0" fitWidth="1252.0" layoutY="-14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="14.75" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-14.0">
+      <ImageView fx:id="imgBackground" onMouseClicked="#yardClicked" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
             <Image url="@../images/Garden.png" />
          </image>
       </ImageView>
-      <Canvas fx:id="sideCanvas" layoutX="383.0" layoutY="84.0" onMouseClicked="#canvasClicked" />
-       <ImageView layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+       <ImageView fitWidth="200.0" layoutX="37.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
            <image>
                <Image url="@../images/bar.jpeg" />
            </image>
        </ImageView>
-       <Button fx:id="btnSunflower" layoutX="3.0" layoutY="140.0" mnemonicParsing="false" onAction="#selectSunflower" prefHeight="52.0" prefWidth="96.0" text="Sunflower" />
-       <Button fx:id="btnPeashooter" layoutX="4.0" layoutY="206.0" mnemonicParsing="false" onAction="#selectPeashooter" prefHeight="52.0" prefWidth="96.0" text="Peashooter" />
-       <Label fx:id="lblSunCounter" alignment="CENTER" layoutX="26.0" layoutY="91.0" prefHeight="25.0" prefWidth="64.0" text="500">
+       <Label fx:id="lblSunCounter" alignment="CENTER" layoutX="58.0" layoutY="201.0" prefHeight="64.0" prefWidth="151.0" text="500">
            <font>
-               <Font size="18.0" />
+               <Font size="40.0" />
            </font>
        </Label>
       <ImageView fx:id="imageResult" fitHeight="346.0" fitWidth="513.0" layoutX="370.0" layoutY="118.0" pickOnBounds="true" preserveRatio="true" visible="false">
@@ -38,5 +35,94 @@
             <Image url="@../images/returnToMainMenu.png" />
          </image>
       </ImageView>
+      <FlowPane columnHalignment="CENTER" layoutX="38.0" layoutY="298.0" prefWidth="200.0" vgap="18.0">
+         <children>
+            <AnchorPane>
+               <children>
+                  <ImageView fx:id="imgSunflower" fitWidth="200.0" onMouseClicked="#selectSunflower" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/sunflower.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+                  <Label fx:id="lblSunflower" layoutX="125.0" layoutY="70.0">
+                     <font>
+                        <Font size="38.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane>
+               <children>
+                  <ImageView fx:id="imgPeashooter" fitWidth="200.0" onMouseClicked="#selectPeashooter" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/peashooter.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+                  <Label fx:id="lblPeashooter" layoutX="125.0" layoutY="70.0" textAlignment="RIGHT">
+                     <font>
+                        <Font size="38.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane>
+               <children>
+                  <ImageView fx:id="imgSnowshooter" fitWidth="200.0" onMouseClicked="#selectSnowshooter" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/snowshooter.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+                  <Label fx:id="lblSnowshooter" layoutX="125.0" layoutY="70.0" textAlignment="RIGHT">
+                     <font>
+                        <Font size="38.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane>
+               <children>
+                  <ImageView fx:id="imgFastshooter" fitWidth="200.0" onMouseClicked="#selectFastshooter" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/fastshooter.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+                  <Label fx:id="lblFastshooter" layoutX="125.0" layoutY="70.0" textAlignment="RIGHT">
+                     <font>
+                        <Font size="38.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane>
+               <children>
+                  <ImageView fx:id="imgFireshooter" fitWidth="200.0" onMouseClicked="#selectFireshooter" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/fireshooter.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+                  <Label fx:id="lblFireshooter" layoutX="125.0" layoutY="70.0" textAlignment="RIGHT">
+                     <font>
+                        <Font size="38.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </children>
+      </FlowPane>
    </children>
 </AnchorPane>

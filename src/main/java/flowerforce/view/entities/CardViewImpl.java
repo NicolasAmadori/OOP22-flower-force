@@ -7,7 +7,7 @@ import java.util.Optional;
 /**
  * This is an implementation of {@link EntityView}.
  */
-public class PlantIconViewImpl implements PlantIconView {
+public class CardViewImpl implements CardView {
     private final int cost;
     private final String pathMenuImage;
 
@@ -15,7 +15,7 @@ public class PlantIconViewImpl implements PlantIconView {
      * @param cost of the plant to place
      * @param pathMenuImage of the entity to show in the menu
      */
-    public PlantIconViewImpl(final int cost, final String pathMenuImage) {
+    public CardViewImpl(final int cost, final String pathMenuImage) {
         this.pathMenuImage = pathMenuImage;
         this.cost = cost;
     }
@@ -24,8 +24,8 @@ public class PlantIconViewImpl implements PlantIconView {
      * {@inheritDoc}
      */
     @Override
-    public Optional<Integer> getCost() {
-        return Optional.of(cost).filter(x -> x != 0);
+    public int getCost() {
+        return cost;
     }
 
     /**

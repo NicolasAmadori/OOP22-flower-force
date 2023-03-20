@@ -27,7 +27,7 @@ public final class SaveManager<T> {
     public SaveManager(final Class<T> genericClass, final String fileName) {
         this.genericClass = genericClass;
         this.savingFilePath = System.getProperty("user.dir") + File.separator
-                + SAVING_FOLDER_PATH + File.separator + fileName + ".json";
+                + SAVING_FOLDER_PATH + File.separator + fileName + ".json"; //TODO: maybe move getProperty to constant like EntityConverter
     }
 
     /**

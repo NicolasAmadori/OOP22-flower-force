@@ -32,9 +32,9 @@ public interface GameEngine {
 
     /**
      * 
-     * @return the dimensions of the game field
+     * @return the dimensions of the yard view
      */
-    Dimension2D getFieldSize();
+    Dimension2D getYardSize();
 
     /**
      * This method can be called to show the outcome of the game.

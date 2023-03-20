@@ -44,9 +44,7 @@ public interface Player {
     int getLastUnlockedLevelId();
 
     /**
-     * Set the new id for the last level the player has unlocked.
-     * @param levelId The integer representing the level id
-     * @return True if the operation was successful, false otherwise
+     * Unlock the next level.
      */
-    boolean setNewLastUnlockedLevelId(int levelId);
+    void unlockedNextLevel();
 }

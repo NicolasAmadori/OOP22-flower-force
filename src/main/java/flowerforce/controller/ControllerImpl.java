@@ -1,11 +1,20 @@
 package flowerforce.controller;
 
 import flowerforce.common.WorldSavingManager;
+import flowerforce.model.entities.Bullet;
+import flowerforce.model.entities.Plant;
+import flowerforce.model.entities.Zombie;
 import flowerforce.model.game.Game;
 import flowerforce.model.game.World;
+import flowerforce.model.game.Yard;
+import flowerforce.view.entities.CardView;
+import flowerforce.view.entities.CardViewImpl;
+import flowerforce.view.entities.EntityConverter;
+import flowerforce.view.entities.EntityView;
 import flowerforce.view.game.GameEngine;
 
-import javafx.geometry.Dimension2D;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * This is an implementation of {@link Controller}.
@@ -20,16 +29,8 @@ public final class ControllerImpl implements Controller {
     /**
      * Create a new instance of Controller.
      */
-    public ControllerImpl() throws InstantiationException{
+    public ControllerImpl() throws InstantiationException {
         this.world = WorldSavingManager.load();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setGameEngine(final GameEngine gameEngine) {
-        this.gameEngine = gameEngine;
     }
 
     /**
@@ -44,20 +45,6 @@ public final class ControllerImpl implements Controller {
      * {@inheritDoc}
      */
     @Override
-    public int getSunCounter() {
-        if(this.game != null) {
-
-            return this.game.getSun();
-        }
-        //return this.game.getSun();
-
-        return 0;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public int getLastUnlockedLevelId() {
         return this.world.getPlayer().getLastUnlockedLevelId();
     }
@@ -66,8 +53,29 @@ public final class ControllerImpl implements Controller {
      * {@inheritDoc}
      */
     @Override
+    public void setGameEngine(final GameEngine gameEngine) {
+        this.gameEngine = gameEngine;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getSunCounter() {
+        if (this.game != null) {
+            return this.game.getSun();
+        }
+        return 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void placePlant(final int plantId, final int row, final int col) {
-        //this.world.placePlant(row, col);
+        if(this.game != null) {
+            this.game.placePlant(plantId, row, col);//implement this when game is corrected
+        }
     }
 
     /**
@@ -87,5 +95,48 @@ public final class ControllerImpl implements Controller {
     public void startNewInfiniteGame() {
         //final GameLoop gameLoop = new GameLoopImpl(GameEngine, this.world.StartNewGame());
         //new Thread((Runnable) gameLoop).start();
+    }
+
+    @Override
+    public Set<EntityView> getPlacedEntities() {
+        final Set<Plant> plants = this.game.getPlants();
+        final Set<Zombie> zombies = this.game.getZombies();
+        final Set<Bullet> bullets = this.game.getBullet();
+
+        final Set<EntityView> output = new HashSet<>();
+        plants.forEach(p -> output.add(EntityConverter.getEntityView(p)));
+        zombies.forEach(z -> output.add(EntityConverter.getEntityView(z)));
+        bullets.forEach(z -> output.add(EntityConverter.getEntityView(z)));
+
+        return output;
+    }
+
+    @Override
+    public List<CardView> getCards() {
+        if(game != null) {
+            final Set<Plant> plants = this.game.getPlants();
+            final List<CardView> cards = new ArrayList<>();
+            //plants.forEach(p -> cards.add(new CardViewImpl(p.getPlantType().getCost(), )));
+            return cards;
+        }
+        return new ArrayList<>();
+    }
+
+    @Override
+    public Set<Integer> getEnabledCards() {
+        if(this.game != null) {
+            return this.game.availablePlants();//uncomment this when game is corrected
+        }
+        return Set.of();
+    }
+
+    @Override
+    public int getTotalRows() {
+        return Yard.getRowsNum();
+    }
+
+    @Override
+    public int getTotalColumns() {
+        return Yard.getColsNum();
     }
 }

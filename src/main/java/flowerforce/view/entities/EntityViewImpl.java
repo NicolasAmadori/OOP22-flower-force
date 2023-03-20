@@ -25,7 +25,7 @@ public class EntityViewImpl implements EntityView {
      * {@inheritDoc}
      */
     @Override
-    public Image getPlacableImage() {
+    public Image getPlaceableImage() {
         return new Image(pathPlaceableImage);
     }
 
