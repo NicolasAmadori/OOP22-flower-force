@@ -7,13 +7,13 @@ import flowerforce.model.entities.Zombie;
 import flowerforce.model.game.Game;
 import flowerforce.model.game.World;
 import flowerforce.model.game.Yard;
+import flowerforce.view.entities.CardView;
+import flowerforce.view.entities.CardViewImpl;
 import flowerforce.view.entities.EntityConverter;
 import flowerforce.view.entities.EntityView;
 import flowerforce.view.game.GameEngine;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -112,14 +112,14 @@ public final class ControllerImpl implements Controller {
     }
 
     @Override
-    public Map<Integer, Integer> getPlantCosts() {
+    public List<CardView> getCards() {
         if(game != null) {
-            final Map<Integer, Integer> output = new HashMap<>();
             final Set<Plant> plants = this.game.getPlants();
-            plants.forEach(p -> output.put(p.getPlantType().ordinal(), p.getPlantType().getCost()));
-            return output;
+            final List<CardView> cards = new ArrayList<>();
+            //plants.forEach(p -> cards.add(new CardViewImpl(p.getPlantType().getCost(), )));
+            return cards;
         }
-        return new HashMap<>();
+        return new ArrayList<>();
     }
 
     @Override
