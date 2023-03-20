@@ -18,6 +18,8 @@ public final class EntityConverter {
 
     private static final String IMAGES_EXTENSION = ".gif";
 
+    private static final String CARD_EXTENSION = ".png";
+
     private EntityConverter() {
 
     }
@@ -28,10 +30,10 @@ public final class EntityConverter {
      * @return The entityView representing the plant
      */
     public static EntityView getEntityView(final Plant p) {
-        final String completeimagePath = IMAGES_FOLDER_PATH + File.separator
+        final String completeImagePath = IMAGES_FOLDER_PATH + File.separator
                 + p.getPlantType().name().toLowerCase(Locale.getDefault()) + IMAGES_EXTENSION;
-        final Point2D newPosition = convertPlantPosition(p.getPosition(), completeimagePath);
-        return new EntityViewImpl(newPosition, completeimagePath);
+        final Point2D newPosition = convertPlantPosition(p.getPosition(), completeImagePath);
+        return new EntityViewImpl(newPosition, completeImagePath);
     }
 
     /**
@@ -57,6 +59,12 @@ public final class EntityConverter {
                 + bulletName + IMAGES_EXTENSION;
         final Point2D newPosition = convertBulletPosition(b.getPosition(), completeImagePath);
         return new EntityViewImpl(newPosition, completeImagePath);
+    }
+
+    public static CardView getCardView(final Plant p) {
+        final String completeImagePath = IMAGES_FOLDER_PATH + File.separator
+                + p.getPlantType().name().toLowerCase(Locale.getDefault()) + CARD_EXTENSION;
+        return new CardViewImpl(p.getPlantType().getCost(), completeImagePath);
     }
 
     private static String getName(final String completePackage) {
