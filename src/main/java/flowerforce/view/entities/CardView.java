@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 
 import java.util.Optional;
 
-public interface PlantIconView {
+public interface CardView {
 
     /**
      * @return the image of the entity to show in the menu
@@ -14,5 +14,5 @@ public interface PlantIconView {
     /**
      * @return if it's present, return the cost of entity
      */
-    Optional<Integer> getCost();
+    int getCost();
 }
