@@ -1,6 +1,5 @@
 package flowerforce.view.game;
 
-import flowerforce.view.entities.EntityView;
 import javafx.geometry.Dimension2D;
 
 /**

@@ -6,11 +6,15 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="gamePane" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fx:id="imgBackground" onMouseClicked="#yardClicked" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ImageView fx:id="imgBackground" onMouseClicked="#yardClicked" onMouseMoved="#mouseMoved" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
             <Image url="@../images/Garden.png" />
          </image>
@@ -25,12 +29,12 @@
                <Font size="40.0" />
            </font>
        </Label>
-      <ImageView fx:id="imageResult" fitHeight="346.0" fitWidth="513.0" layoutX="370.0" layoutY="118.0" pickOnBounds="true" preserveRatio="true" visible="false">
+      <ImageView fx:id="imageResult" disable="true" fitHeight="608.0" fitWidth="525.0" layoutX="818.0" layoutY="163.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@../images/LevelWin.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="imageMenu" disable="true" fitHeight="150.0" fitWidth="200.0" layoutX="526.0" layoutY="493.0" onMouseClicked="#selectMenu" pickOnBounds="true" preserveRatio="true" visible="false">
+      <ImageView fx:id="imageMenu" disable="true" fitHeight="153.0" fitWidth="282.0" layoutX="937.0" layoutY="785.0" onMouseClicked="#selectMenu" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@../images/returnToMainMenu.png" />
          </image>
@@ -124,5 +128,28 @@
             </AnchorPane>
          </children>
       </FlowPane>
+      <Rectangle fx:id="coloredCell" arcHeight="5.0" arcWidth="5.0" cache="true" height="162.0" layoutX="606.0" layoutY="152.0" mouseTransparent="true" opacity="0.5" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="131.0">
+         <fill>
+            <RadialGradient centerX="0.5" centerY="0.514218009478673" radius="0.528735632183908">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.9333333373069763" green="1.0" />
+                     </color>
+                  </Stop>
+                  <Stop offset="0.6040268456375839">
+                     <color>
+                        <Color red="0.9333333373069763" green="1.0" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" opacity="0.0" />
+                     </color>
+                  </Stop>
+               </stops>
+            </RadialGradient>
+         </fill>
+      </Rectangle>
    </children>
 </AnchorPane>
