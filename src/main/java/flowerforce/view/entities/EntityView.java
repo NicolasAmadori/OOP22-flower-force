@@ -18,5 +18,5 @@ public interface EntityView {
     /**
      * @return the image of the entity to show in the field
      */
-    Image getPlacableImage();
+    Image getPlaceableImage();
 }

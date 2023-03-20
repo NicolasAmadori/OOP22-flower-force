@@ -31,14 +31,6 @@ public class YardImpl implements Yard {
      * {@inheritDoc}
      */
     @Override
-    public Point2D getLeftEntityPosition(int row, int col) {
-        return getLeftUpCorner(row, col).add(0, (int) (this.cellDimension.getHeight() / 2));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public Point2D getRightEntityPosition(int row, int col) {
         return getLeftUpCorner(row, col).add(this.cellDimension.getWidth(), (int) (this.cellDimension.getHeight() / 2));
     }

@@ -2,22 +2,26 @@ package flowerforce.view.game;
 
 import java.awt.*;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.List;
+import java.util.Map;
 
 import flowerforce.view.entities.EntityTypeView;
 import flowerforce.view.entities.EntityView;
+import flowerforce.view.entities.EntityViewId;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.Bloom;
+import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -32,14 +36,28 @@ public final class GameSceneController implements Initializable, GameEngine {
 
     @FXML private GridPane griglia;
 
-    @FXML private Button btnSunflower;
-
-    @FXML private Button btnPeashooter;
-
     @FXML private Label lblSunCounter;
 
-    @FXML private Canvas sideCanvas;
-    
+    @FXML private ImageView imgSunflower;
+
+    @FXML private ImageView imgPeashooter;
+
+    @FXML private ImageView imgSnowshooter;
+
+    @FXML private ImageView imgFastshooter;
+
+    @FXML private ImageView imgFireshooter;
+
+    @FXML private Label lblSunflower;
+
+    @FXML private Label lblPeashooter;
+
+    @FXML private Label lblSnowshooter;
+
+    @FXML private Label lblFastshooter;
+
+    @FXML private Label lblFireshooter;
+
     @FXML private ImageView imageMenu;
 
     @FXML private ImageView imageResult;
@@ -51,18 +69,24 @@ public final class GameSceneController implements Initializable, GameEngine {
     private static final double HEIGHT_RATIO = 880.0 / 1080.0;
     private static final double IMAGE_RATIO_WIDTH = 148.0 / 1920.0;
     private static final double IMAGE_RATIO_HEIGHT = 146.0 / 1080.0;
+    private static final double BLOOM_EFFECT_VALUE = 0.65;
     //TODO: place MAX_TYPE_PLANTS_NUM imageviews on scenebuilder, fill it correcly (or with canvas)
 
     private final FlowerForceApplication application;
     private final Dimension2D size;
     private final Set<EntityView> entities = new HashSet<>();
     private final Set<ImageView> entityImages = new HashSet<>();
+    private final Map<EntityViewId, ImageView> cards = new HashMap<>();
+    private final Map<EntityViewId, Label> cardLabels = new HashMap<>();
     private final Point2D firstYardPoint;
     private final Dimension2D yardDimension;
     private final Dimension2D imageDimension;
+    private final Effect bloomEffect = new Bloom(BLOOM_EFFECT_VALUE);
+    private EntityViewId cardSelected = EntityViewId.SUNFLOWER;
 
     public GameSceneController(final FlowerForceApplication application) {
         this.application = application;
+        //TODO: getAppDimensionFromImage but with path
         this.size = new Dimension2D(Toolkit.getDefaultToolkit().getScreenSize().getWidth(), Toolkit.getDefaultToolkit().getScreenSize().getHeight());
         this.firstYardPoint = new Point2D((int) (size.getWidth() * RIGHTSHIFT_RATIO), (int) (size.getHeight() * DOWNSHIFT_RATIO));
         this.yardDimension = new Dimension2D((int) (size.getWidth() * WIDTH_RATIO), (int) (size.getHeight() * HEIGHT_RATIO));
@@ -71,20 +95,63 @@ public final class GameSceneController implements Initializable, GameEngine {
         this.application.getController().setGameEngine(this);
     }
 
-    @FXML
-    void selectPeashooter(final ActionEvent event) {
-        System.out.println("Peashooter selected"); //TODO: remove
+    private void loadEntityCards() {
+        this.cardLabels.putAll(Map.of(EntityViewId.SUNFLOWER, lblSunflower, EntityViewId.PEASHOOTER, lblPeashooter, 
+            EntityViewId.SNOWSHOOTER, lblSnowshooter, EntityViewId.FASTSHOOTER, lblFastshooter, EntityViewId.FIRESHOOTER, lblFireshooter));
+        this.cards.putAll(Map.of(EntityViewId.SUNFLOWER, imgSunflower, EntityViewId.PEASHOOTER, imgPeashooter, EntityViewId.SNOWSHOOTER, imgSnowshooter,
+            EntityViewId.FASTSHOOTER, imgFastshooter, EntityViewId.FIRESHOOTER, imgFireshooter));
+        this.cardLabels.values().forEach(l -> l.setText(Integer.toString(100)));
+    }
+
+    private void addBloomEffect() {
+        this.cards.get(this.cardSelected).setEffect(bloomEffect);
+    }
+
+    private void removeBloomEffect() {
+        this.cards.get(this.cardSelected).setEffect(null);
     }
 
     @FXML
-    void selectSunflower(final ActionEvent event) {
-        System.out.println("Sunflower selected"); //TODO: remove
+    void selectSunflower(final MouseEvent event) {
+        this.removeBloomEffect();
+        this.cardSelected = EntityViewId.SUNFLOWER;
+        this.addBloomEffect();
     }
 
     @FXML
-    void canvasClicked(final MouseEvent event) {
-        System.out.println(getRow(event.getY()) + " " + getColumn(event.getX()));
-        //this.application.getController().placePlant(getRow(event.getY()), getColumn(event.getX()));
+    void selectPeashooter(final MouseEvent event) {
+        this.removeBloomEffect();
+        this.cardSelected = EntityViewId.PEASHOOTER;
+        this.addBloomEffect();
+    }
+
+    @FXML
+    void selectSnowshooter(final MouseEvent event) {
+        this.removeBloomEffect();
+        this.cardSelected = EntityViewId.SNOWSHOOTER;
+        this.addBloomEffect();
+    }
+
+    @FXML
+    void selectFastshooter(final MouseEvent event) {
+        this.removeBloomEffect();
+        this.cardSelected = EntityViewId.FASTSHOOTER;
+        this.addBloomEffect();
+    }
+
+    @FXML
+    void selectFireshooter(final MouseEvent event) {
+        this.removeBloomEffect();
+        this.cardSelected = EntityViewId.FIRESHOOTER;
+        this.addBloomEffect();
+    }
+
+    @FXML
+    void yardClicked(final MouseEvent event) {
+        if (event.getX() > this.firstYardPoint.getX() && event.getY() > this.firstYardPoint.getY()) {
+            System.out.println(getRow(event.getY()) + " " + getColumn(event.getX()));
+            //this.application.getController().placePlant(getRow(event.getY()), getColumn(event.getX()));
+        }
     }
 
     @FXML
@@ -97,11 +164,11 @@ public final class GameSceneController implements Initializable, GameEngine {
     }
 
     private int getRow(final double y) {
-        return getGridIndex(y, sideCanvas.getHeight(), 5); //TODO: remove magic number
+        return getGridIndex(y, this.yardDimension.getHeight(), 5); //TODO: remove magic number
     }
 
     private int getColumn(final double x) {
-        return getGridIndex(x, sideCanvas.getWidth(), 9); //TODO: remove magic number
+        return getGridIndex(x, this.yardDimension.getWidth(), 9); //TODO: remove magic number
     }
 
     private int getGridIndex(final double val, final double totalLength, final int nSlices) {
@@ -123,10 +190,13 @@ public final class GameSceneController implements Initializable, GameEngine {
      * @param resources The resources used to localize the root object, or {@code null} if
      *                  the root object was not localized.
      */
+
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
         this.updateSunCounter();
+        this.loadEntityCards();
     }
+
     @Override
     public void addEntity(EntityView entity) {
         entities.add(entity);
@@ -144,28 +214,14 @@ public final class GameSceneController implements Initializable, GameEngine {
 
     @Override
     public void render() {
-        int sunNumber = this.application.getController().getSunCounter();
-        //
-        //System.out.println(sunNumber);
-        //this.lblSunCounter.setText(String.valueOf(sunNumber));
-        if(!this.lblSunCounter.getText().equals(String.valueOf(sunNumber))) {
-            Platform.runLater(() -> {
-                System.out.println(sunNumber + " " + Thread.currentThread().getName());
-                lblSunCounter.setText(String.valueOf(sunNumber));
-            });
-        }
-
-        //
-        //this.clearCanvas();
-        //entities.forEach(e -> this.draw(e.getEntityType().getImage(), e.getPlacingPosition()));
-//        this.gamePane.getChildren().stream().filter(n -> this.entityImages.contains(n)).forEach(n -> this.gamePane.getChildren().remove(n));
-//        this.entityImages.clear();
-        //entities.forEach(e -> this.drawEntity(e.getEntityType().getImage(), e.getPlacingPosition()));
-//        this.updateSunCounter();
+        this.gamePane.getChildren().stream().filter(n -> this.entityImages.contains(n)).forEach(n -> this.gamePane.getChildren().remove(n));
+        this.entityImages.clear();
+        entities.forEach(e -> this.drawEntity(e.getPlaceableImage(), e.getPlacingPosition()));
+        this.updateSunCounter();
     }
 
     private void updateSunCounter() {
-        this.lblSunCounter.setText(Integer.toString(this.application.getController().getSunCounter()));
+        //this.lblSunCounter.setText(Integer.toString(this.application.getController().getSunCounter()));
     }
 
     private void drawEntity(final Image image, final Point2D pos) {
@@ -179,7 +235,7 @@ public final class GameSceneController implements Initializable, GameEngine {
     }
 
     @Override
-    public Dimension2D getFieldSize() {
+    public Dimension2D getYardSize() {
         return this.yardDimension;
     }
 
