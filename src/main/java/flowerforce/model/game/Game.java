@@ -4,7 +4,6 @@ import flowerforce.model.entities.Bullet;
 import flowerforce.model.entities.IdConverter;
 import flowerforce.model.entities.Plant;
 import flowerforce.model.entities.Zombie;
-import javafx.geometry.Point2D;
 
 import java.util.List;
 import java.util.Set;
@@ -25,10 +24,10 @@ public interface Game {
     Set<Zombie> getZombies();
 
     /**
-     * Call to know which zombies are still alive.
+     * Call to know which plants are in the field.
      * @return the set of plants still alive
      */
-    Set<Plant> getPlants();
+    Set<Plant> getPlacedPlants();
 
     /**
      * Call to know which zombies are eating.
@@ -43,7 +42,6 @@ public interface Game {
     Set<Bullet> getBullet();
 
     /**
-     *
      * @return The number of suns the player has in the game
      */
     Integer getSun();
@@ -51,7 +49,8 @@ public interface Game {
     /**
      * If possible, place a plant in the field.
      * @param idPlant Plant type ID to place
-     * @param position Coordinates of the plant to be placed
+     * @param row of the plant to be placed
+     * @param col of the plant to be placed
      * @return True if the plant has been placed
      */
     boolean placePlant(int idPlant, int row, int col);
@@ -66,11 +65,15 @@ public interface Game {
      * Identify which plants can be selected to be placed on the playing field.
      * @return the types of plants that can be selected
      */
-    Set<Integer> availablePlants();
+    Set<Integer> getAvailablePlantsIDs();
 
     /**
-     *
      * @return true if the player won the level.
      */
     boolean result();
+
+    /**
+     * @return the list of plants IDS of the level.
+     */
+    List<IdConverter.Plants> getAllPlantIDs();
 }

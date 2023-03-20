@@ -72,7 +72,7 @@ public class World {
                                 .filter(x -> x.getLevelId() == levelId)
                                 .findAny()
                                 .get();
-        return new GameImpl(level);
+        return new GameImpl(level, this);
     }
 
     /**
@@ -80,6 +80,6 @@ public class World {
      * @return the game to be played
      */
     public Game createInfiniteGame() {
-        return new GameImpl(infiniteModeLevel);
+        return new GameImpl(infiniteModeLevel, this);
     }
 }

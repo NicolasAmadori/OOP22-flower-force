@@ -12,7 +12,6 @@ public class LevelImpl implements Level {
     private final List<IdConverter.Zombies> availableZombies;
     private final List<IdConverter.Plants> availablePlants;
     private final int coins;
-    private final int row;
     private final int nZombie;
     private final int iDLevel;
 
@@ -25,12 +24,11 @@ public class LevelImpl implements Level {
      * @param row Number of rows that can be used in the game field
      * @param iD ID of the level
      */
-    public LevelImpl(final List<IdConverter.Zombies> availableZombies, final List<IdConverter.Plants> availablePlants,
-                     final int coins, final int nZombie, final int row, final int iD) {
+    public LevelImpl(final int iD, final List<IdConverter.Zombies> availableZombies, final List<IdConverter.Plants> availablePlants,
+                     final int coins, final int nZombie, final int row) {
         this.coins = coins;
         this.availablePlants = availablePlants;
         this.availableZombies = availableZombies;
-        this.row = row;
         this.nZombie = nZombie;
         this.iDLevel = iD;
     }
@@ -59,14 +57,6 @@ public class LevelImpl implements Level {
     @Override
     public List<IdConverter.Zombies> getZombiesId() {
         return this.availableZombies;
-    }
-
-    /**
-     * {@inheritDoc}.
-     */
-    @Override
-    public Integer getNumberOfRowAvailable() {
-        return this.row;
     }
 
     /**
