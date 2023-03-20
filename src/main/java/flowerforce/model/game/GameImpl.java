@@ -97,15 +97,15 @@ public class GameImpl implements Game {
      * {@inheritDoc}
      */
     @Override
-    public boolean placePlant(final int idPlant, final Point2D position) {
+    public boolean placePlant(final int idPlant, final int row, final int col ) {
         final var plantType = IdConverter.Plants.values()[idPlant];
+        final Point2D position = Yard.getRightEntityPosition(row, col);
         for (final var plant : plants) {
             if (plant.getPosition().equals(position)) {
                 return false;
             }
         }
-        final var plant = IdConverter.createPlant(plantType,
-                Yard.getRightEntityPosition((int) position.getX(), (int) position.getY()));
+        final var plant = IdConverter.createPlant(plantType, position);
         sun -= plantType.getCost();
         plants.add(plant);
         return true;
@@ -118,7 +118,12 @@ public class GameImpl implements Game {
     public boolean isOver() {
         final int nZombie = zombies.stream().filter(zombie -> zombie.getPosition().getX() <= 0)
                 .collect(Collectors.toSet()).size();
-        return (remainingZombie == 0 && zombies.isEmpty()) || nZombie > 0;
+        if (this.result()
+                && world.getPlayer().getLastUnlockedLevelId() == level.getLevelId()) {
+                world.getPlayer().unlockedNextLevel();
+                world.getPlayer().addCoins(level.getLevelCoins());
+        }
+        return nZombie > 0 || this.result();
     }
 
     /**
