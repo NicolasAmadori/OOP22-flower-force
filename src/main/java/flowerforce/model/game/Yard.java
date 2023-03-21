@@ -18,17 +18,13 @@ public final class Yard {
     private Yard() {
     }
 
-    private static Point2D getLeftUpCorner(int r, int c) {
-        return new Point2D(r * CELL.getWidth(), c * CELL.getHeight());
-    }
-
     /**
      * @param row of the cell
      * @param col of the cell
-     * @return the point on the right side of the cell, vertically centered
+     * @return the lower right corner of the cell, where the entity will be placed
      */
-    public static Point2D getRightEntityPosition(int row, int col) {
-        return getLeftUpCorner(row, col).add(CELL.getWidth(), (int) (CELL.getHeight() / 2));
+    public static Point2D getEntityPosition(int row, int col) {
+        return new Point2D((col + 1) * CELL.getWidth(), (row + 1) * CELL.getHeight());
     }
 
     /**

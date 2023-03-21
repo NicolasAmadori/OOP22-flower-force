@@ -1,6 +1,8 @@
 package flowerforce.view.entities;
 
+import flowerforce.common.ResourceFinder;
 import flowerforce.model.entities.Bullet;
+import flowerforce.model.entities.IdConverter;
 import flowerforce.model.entities.Plant;
 import flowerforce.model.entities.Zombie;
 import javafx.geometry.Point2D;
@@ -12,12 +14,8 @@ import java.util.Locale;
  * This utility class convert an entity given from the model into an entity that can be drawn in the view.
  */
 public final class EntityConverter {
-    private static final String IMAGES_FOLDER_PATH = System.getProperty("user.dir") + File.separator
-            + "src" + File.separator + "main" + File.separator + "resources"
-            + File.separator + "flowerforce" + File.separator + "game" + File.separator + "images";
-
     private static final String IMAGES_EXTENSION = ".gif";
-
+    private static final String CARD_EXTENSION = ".png";
     private EntityConverter() {
 
     }
@@ -28,10 +26,10 @@ public final class EntityConverter {
      * @return The entityView representing the plant
      */
     public static EntityView getEntityView(final Plant p) {
-        final String completeimagePath = IMAGES_FOLDER_PATH + File.separator
-                + p.getPlantType().name().toLowerCase(Locale.getDefault()) + IMAGES_EXTENSION;
-        final Point2D newPosition = convertPlantPosition(p.getPosition(), completeimagePath);
-        return new EntityViewImpl(newPosition, completeimagePath);
+        final String completeImagePath = ResourceFinder.getImagePath(
+                p.getPlantType().name().toLowerCase(Locale.getDefault()).concat(IMAGES_EXTENSION));
+        final Point2D newPosition = convertPlantPosition(p.getPosition(), completeImagePath);
+        return new EntityViewImpl(newPosition, completeImagePath);
     }
 
     /**
@@ -40,8 +38,8 @@ public final class EntityConverter {
      * @return The entityView representing the zombie
      */
     public static EntityView getEntityView(final Zombie z) {
-        final String completeImagePath = IMAGES_FOLDER_PATH + File.separator
-                + z.getZombieType().name().toLowerCase(Locale.getDefault()) + IMAGES_EXTENSION;
+        final String completeImagePath = ResourceFinder.getImagePath(
+                z.getZombieType().name().toLowerCase(Locale.getDefault()).concat(IMAGES_EXTENSION));
         final Point2D newPosition = convertZombiePosition(z.getPosition(), completeImagePath);
         return new EntityViewImpl(newPosition, completeImagePath);
     }
@@ -53,10 +51,15 @@ public final class EntityConverter {
      */
     public static EntityView getEntityView(final Bullet b) {
         final String bulletName = getName(b.getClass().getName().toLowerCase(Locale.getDefault()));
-        final String completeImagePath = IMAGES_FOLDER_PATH + File.separator
-                + bulletName + IMAGES_EXTENSION;
+        final String completeImagePath = ResourceFinder.getImagePath(bulletName.concat(IMAGES_EXTENSION));
         final Point2D newPosition = convertBulletPosition(b.getPosition(), completeImagePath);
         return new EntityViewImpl(newPosition, completeImagePath);
+    }
+
+    public static CardView getCardView(final IdConverter.Plants p) {
+        final String completeImagePath = ResourceFinder.getImagePath(
+                p.name().toLowerCase(Locale.getDefault()).concat(CARD_EXTENSION));
+        return new CardViewImpl(p.getCost(), completeImagePath);
     }
 
     private static String getName(final String completePackage) {

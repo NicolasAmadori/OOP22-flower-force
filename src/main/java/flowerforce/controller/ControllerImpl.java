@@ -1,5 +1,6 @@
 package flowerforce.controller;
 
+import flowerforce.common.ResourceFinder;
 import flowerforce.common.WorldSavingManager;
 import flowerforce.model.entities.Bullet;
 import flowerforce.model.entities.IdConverter;
@@ -82,7 +83,7 @@ public final class ControllerImpl implements Controller {
      */
     @Override
     public void startNewLevelGame(final int levelId) {
-        this.game = this.world.createLevelGame(1);
+        this.game = this.world.createLevelGame(levelId);
         final GameLoop gameLoop = new GameLoopImpl(this.gameEngine, this.game); //TODO: update
         new Thread((Runnable) gameLoop).start();
     }
@@ -115,7 +116,7 @@ public final class ControllerImpl implements Controller {
         if(game != null) {
             final List<IdConverter.Plants> plants = this.game.getAllPlantIDs();
             final List<CardView> cards = new ArrayList<>();
-            //plants.forEach(p -> cards.add(new CardViewImpl(p.getPlantType().getCost(), )));
+            plants.forEach(p -> cards.add(EntityConverter.getCardView(p)));
             return cards;
         }
         return new ArrayList<>();
@@ -123,6 +124,7 @@ public final class ControllerImpl implements Controller {
 
     @Override
     public Set<Integer> getEnabledCards() {
+        ResourceFinder.getImagePath("prova");
         if(this.game != null) {
             return this.game.getAvailablePlantsIDs();//uncomment this when game is corrected
         }
