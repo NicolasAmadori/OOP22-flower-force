@@ -1,5 +1,6 @@
 package flowerforce.controller;
 
+import flowerforce.common.ResourceFinder;
 import flowerforce.common.WorldSavingManager;
 import flowerforce.model.entities.Bullet;
 import flowerforce.model.entities.IdConverter;
@@ -123,6 +124,7 @@ public final class ControllerImpl implements Controller {
 
     @Override
     public Set<Integer> getEnabledCards() {
+        ResourceFinder.getImagePath("prova");
         if(this.game != null) {
             return this.game.getAvailablePlantsIDs();//uncomment this when game is corrected
         }

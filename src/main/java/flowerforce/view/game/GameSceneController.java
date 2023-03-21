@@ -1,20 +1,15 @@
 package flowerforce.view.game;
 
-import java.awt.*;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.List;
-import java.util.Map;
 
-import flowerforce.view.entities.EntityTypeView;
-import flowerforce.view.entities.EntityView;
-import flowerforce.view.entities.EntityViewId;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
+import flowerforce.view.entities.CardView;
+import flowerforce.view.entities.CardViewImpl;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Dimension2D;
@@ -26,7 +21,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.shape.Rectangle;
 
 public final class GameSceneController implements Initializable, GameEngine {
 
@@ -34,141 +29,136 @@ public final class GameSceneController implements Initializable, GameEngine {
 
     @FXML private ImageView imgBackground;
 
-    @FXML private GridPane griglia;
-
     @FXML private Label lblSunCounter;
 
-    @FXML private ImageView imgSunflower;
+    @FXML private ImageView card0;
 
-    @FXML private ImageView imgPeashooter;
+    @FXML private ImageView card1;
 
-    @FXML private ImageView imgSnowshooter;
+    @FXML private ImageView card2;
 
-    @FXML private ImageView imgFastshooter;
+    @FXML private ImageView card3;
 
-    @FXML private ImageView imgFireshooter;
+    @FXML private ImageView card4;
 
-    @FXML private Label lblSunflower;
+    @FXML private Label lbl0;
 
-    @FXML private Label lblPeashooter;
+    @FXML private Label lbl1;
 
-    @FXML private Label lblSnowshooter;
+    @FXML private Label lbl2;
 
-    @FXML private Label lblFastshooter;
+    @FXML private Label lbl3;
 
-    @FXML private Label lblFireshooter;
+    @FXML private Label lbl4;
 
     @FXML private ImageView imageMenu;
 
     @FXML private ImageView imageResult;
 
+    @FXML private Rectangle coloredCell;
+
     //Garden size: 1920x1080, yard size: 1320x880. Down-shift: 150px, right-shift: 600px.
+    private static final int WIDTH = 1920;
+    private static final int HEIGHT = 1080;
     private static final double RIGHTSHIFT_RATIO = 600.0 / 1920.0;
     private static final double DOWNSHIFT_RATIO = 150.0 / 1080.0;
-    private static final double WIDTH_RATIO = 1320.0 / 1920.0;
-    private static final double HEIGHT_RATIO = 880.0 / 1080.0;
-    private static final double IMAGE_RATIO_WIDTH = 148.0 / 1920.0;
-    private static final double IMAGE_RATIO_HEIGHT = 146.0 / 1080.0;
+    private static final double YARDWIDTH_RATIO = 1320.0 / 1920.0;
+    private static final double YARDHEIGHT_RATIO = 880.0 / 1080.0;
+    private static final double IMG_RESIZE_FACTOR = 2.0;
     private static final double BLOOM_EFFECT_VALUE = 0.65;
-    //TODO: place MAX_TYPE_PLANTS_NUM imageviews on scenebuilder, fill it correcly (or with canvas)
-
+    private final int rows;
+    private final int cols;
+    private final Dimension2D stdSize = new Dimension2D(WIDTH, HEIGHT);
     private final FlowerForceApplication application;
-    private final Dimension2D size;
-    private final Set<EntityView> entities = new HashSet<>();
     private final Set<ImageView> entityImages = new HashSet<>();
-    private final Map<EntityViewId, ImageView> cards = new HashMap<>();
-    private final Map<EntityViewId, Label> cardLabels = new HashMap<>();
+    private final List<ImageView> cards = new LinkedList<>();
+    private final List<Label> cardLabels = new LinkedList<>();
     private final Point2D firstYardPoint;
     private final Dimension2D yardDimension;
-    private final Dimension2D imageDimension;
+    private final Dimension2D cellDimension;
     private final Effect bloomEffect = new Bloom(BLOOM_EFFECT_VALUE);
-    private EntityViewId cardSelected = EntityViewId.SUNFLOWER;
+    private Optional<Integer> cardSelected = Optional.empty();
 
     public GameSceneController(final FlowerForceApplication application) {
         this.application = application;
-        //TODO: getAppDimensionFromImage but with path
-        this.size = new Dimension2D(Toolkit.getDefaultToolkit().getScreenSize().getWidth(), Toolkit.getDefaultToolkit().getScreenSize().getHeight());
-        this.firstYardPoint = new Point2D((int) (size.getWidth() * RIGHTSHIFT_RATIO), (int) (size.getHeight() * DOWNSHIFT_RATIO));
-        this.yardDimension = new Dimension2D((int) (size.getWidth() * WIDTH_RATIO), (int) (size.getHeight() * HEIGHT_RATIO));
-        System.out.println(this.firstYardPoint + " " + this.yardDimension); //TODO: remove
-        this.imageDimension = new Dimension2D((int) (size.getWidth() * IMAGE_RATIO_WIDTH), (int) (size.getHeight() * IMAGE_RATIO_HEIGHT));
+        this.firstYardPoint = new Point2D((int) (this.stdSize.getWidth() * RIGHTSHIFT_RATIO), (int) (this.stdSize.getHeight() * DOWNSHIFT_RATIO));
+        this.yardDimension = new Dimension2D((int) (this.stdSize.getWidth() * YARDWIDTH_RATIO), (int) (this.stdSize.getHeight() * YARDHEIGHT_RATIO));
         this.application.getController().setGameEngine(this);
+        this.rows = this.application.getController().getTotalRows();
+        this.cols = this.application.getController().getTotalColumns();
+        this.cellDimension = new Dimension2D(this.yardDimension.getWidth() / this.cols, this.yardDimension.getHeight() / this.rows);
     }
 
-    private void loadEntityCards() {
-        this.cardLabels.putAll(Map.of(EntityViewId.SUNFLOWER, lblSunflower, EntityViewId.PEASHOOTER, lblPeashooter, 
-            EntityViewId.SNOWSHOOTER, lblSnowshooter, EntityViewId.FASTSHOOTER, lblFastshooter, EntityViewId.FIRESHOOTER, lblFireshooter));
-        this.cards.putAll(Map.of(EntityViewId.SUNFLOWER, imgSunflower, EntityViewId.PEASHOOTER, imgPeashooter, EntityViewId.SNOWSHOOTER, imgSnowshooter,
-            EntityViewId.FASTSHOOTER, imgFastshooter, EntityViewId.FIRESHOOTER, imgFireshooter));
-        this.cardLabels.values().forEach(l -> l.setText(Integer.toString(100)));
+    public void loadCards(final List<CardView> cardViews) {
+        //List<CardView> cardViews = this.application.getController().getCards();
+        //List<CardView> cardViews = List.of(new CardViewImpl(50, "flowerforce/game/images/sunflower.png")); //TODO:remove
+        
+        this.cardLabels.addAll(List.of(lbl0, lbl1, lbl2, lbl3, lbl4));
+        this.cards.addAll(List.of(card0, card1, card2, card3, card4));
+        for (int i = 0; i < cardLabels.size() && i < cards.size(); i++) {
+            if (i < cardViews.size()) {
+                this.cards.get(i).setImage(cardViews.get(i).getMenuImage());
+                this.cardLabels.get(i).setText(String.valueOf(cardViews.get(i).getCost()));
+            } else {
+                this.cards.get(i).setVisible(false);
+                this.cardLabels.get(i).setVisible(false);
+            }
+        }
     }
 
     private void addBloomEffect() {
-        this.cards.get(this.cardSelected).setEffect(bloomEffect);
+        this.cardSelected.ifPresent(i -> this.cards.get(i).setEffect(this.bloomEffect));
     }
 
     private void removeBloomEffect() {
-        this.cards.get(this.cardSelected).setEffect(null);
+        this.cardSelected.ifPresent(i -> this.cards.get(i).setEffect(null));
     }
 
     @FXML
-    void selectSunflower(final MouseEvent event) {
+    void selectCard(final MouseEvent event) {
         this.removeBloomEffect();
-        this.cardSelected = EntityViewId.SUNFLOWER;
+        this.cardSelected = Optional.of(cards.indexOf((ImageView) (event.getSource())));
         this.addBloomEffect();
     }
 
-    @FXML
-    void selectPeashooter(final MouseEvent event) {
-        this.removeBloomEffect();
-        this.cardSelected = EntityViewId.PEASHOOTER;
-        this.addBloomEffect();
-    }
-
-    @FXML
-    void selectSnowshooter(final MouseEvent event) {
-        this.removeBloomEffect();
-        this.cardSelected = EntityViewId.SNOWSHOOTER;
-        this.addBloomEffect();
-    }
-
-    @FXML
-    void selectFastshooter(final MouseEvent event) {
-        this.removeBloomEffect();
-        this.cardSelected = EntityViewId.FASTSHOOTER;
-        this.addBloomEffect();
-    }
-
-    @FXML
-    void selectFireshooter(final MouseEvent event) {
-        this.removeBloomEffect();
-        this.cardSelected = EntityViewId.FIRESHOOTER;
-        this.addBloomEffect();
+    private boolean isInsideYard(double x, double y) {
+        return x >= this.firstYardPoint.getX() && y >= this.firstYardPoint.getY()
+                && x < this.firstYardPoint.getX() + this.yardDimension.getWidth() 
+                && y < this.firstYardPoint.getY() + this.yardDimension.getHeight();
     }
 
     @FXML
     void yardClicked(final MouseEvent event) {
-        if (event.getX() > this.firstYardPoint.getX() && event.getY() > this.firstYardPoint.getY()) {
-            System.out.println(getRow(event.getY()) + " " + getColumn(event.getX()));
-            //this.application.getController().placePlant(getRow(event.getY()), getColumn(event.getX()));
+        if (this.cardSelected.isPresent() && isInsideYard(event.getX(), event.getY())) {
+            System.out.println(getRow(event.getY() - this.firstYardPoint.getY()) + " " + getColumn(event.getX() - this.firstYardPoint.getX())); //TODO: remove
+            this.application.getController().placePlant(this.cardSelected.get(), this.getRow(event.getY()), getColumn(event.getX()));
+        }
+        this.removeBloomEffect();
+        this.cardSelected = Optional.empty();
+    }
+
+    @FXML
+    void mouseMoved(final MouseEvent event) {
+        if (this.cardSelected.isPresent() && isInsideYard(event.getX(), event.getY())) {
+            this.coloredCell.relocate(this.firstYardPoint.getX() + (getColumn(event.getX() - this.firstYardPoint.getX()) * this.cellDimension.getWidth()),
+                    this.firstYardPoint.getY() + getRow(event.getY() - this.firstYardPoint.getY()) * this.cellDimension.getHeight());
+            this.coloredCell.setVisible(true);
+        } else {
+            this.coloredCell.setVisible(false);
         }
     }
 
     @FXML
-    void selectMenu( final MouseEvent event) {
-        imageResult.setVisible(false);
-        imageMenu.setVisible(false);
-        imageResult.setDisable(true);
-        System.out.println("prova");
-        application.menu();
+    void selectMenu(final MouseEvent event) {
+        this.application.menu();
     }
 
     private int getRow(final double y) {
-        return getGridIndex(y, this.yardDimension.getHeight(), 5); //TODO: remove magic number
+        return getGridIndex(y, this.yardDimension.getHeight(), this.rows);
     }
 
     private int getColumn(final double x) {
-        return getGridIndex(x, this.yardDimension.getWidth(), 9); //TODO: remove magic number
+        return getGridIndex(x, this.yardDimension.getWidth(), this.cols);
     }
 
     private int getGridIndex(final double val, final double totalLength, final int nSlices) {
@@ -193,31 +183,30 @@ public final class GameSceneController implements Initializable, GameEngine {
 
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
-        this.updateSunCounter();
-        this.loadEntityCards();
-    }
-
-    @Override
-    public void addEntity(EntityView entity) {
-        entities.add(entity);
-    }
-
-    @Override
-    public void removeEntity(EntityView entity) {
-        entities.remove(entity);
-    }
-
-    @Override
-    public void clearEntities() {
-        entities.clear();
+        this.updateSunCounter(); //TODO: put it only in render?
     }
 
     @Override
     public void render() {
+        //TODO: decomment
+        //this.enableCards();
+        this.clearDrawnEntities();
+        this.application.getController().getPlacedEntities().forEach(e -> this.drawEntity(e.getPlaceableImage(), e.getPlacingPosition()));
+        this.updateSunCounter();
+    }
+
+    private void enableCards() {
+        this.cards.forEach(c -> c.setDisable(true));
+        this.application.getController().getEnabledCards().forEach(i -> {
+            if (i < this.cards.size()) {
+                this.cards.get(i).setDisable(false);
+            }
+        });
+    }
+
+    private void clearDrawnEntities() {
         this.gamePane.getChildren().stream().filter(n -> this.entityImages.contains(n)).forEach(n -> this.gamePane.getChildren().remove(n));
         this.entityImages.clear();
-        entities.forEach(e -> this.drawEntity(e.getPlaceableImage(), e.getPlacingPosition()));
-        this.updateSunCounter();
     }
 
     private void updateSunCounter() {
@@ -228,8 +217,8 @@ public final class GameSceneController implements Initializable, GameEngine {
         ImageView iv = new ImageView(image);
         iv.relocate(this.firstYardPoint.getX() + pos.getX(), this.firstYardPoint.getY() + pos.getY());
         iv.setPreserveRatio(true);
-        iv.setFitWidth(this.imageDimension.getWidth());
-        iv.setFitHeight(this.imageDimension.getHeight());
+        iv.setFitWidth(image.getWidth() * IMG_RESIZE_FACTOR);
+        iv.setFitHeight(image.getHeight() * IMG_RESIZE_FACTOR);
         this.entityImages.add(iv);
         this.gamePane.getChildren().add(iv);
     }
@@ -243,14 +232,19 @@ public final class GameSceneController implements Initializable, GameEngine {
     public void over( final boolean isWon) {
         // TODO Auto-generated method stub
         //throw new UnsupportedOperationException("Unimplemented method 'over'");
-        imageResult.setVisible(true);
-        imageMenu.setVisible(true);
-        imageMenu.setDisable(false);
-        if ( isWon) {
-            imageResult.setImage(new Image("..\\images\\LevelWin.png"));
+        this.imageResult.setVisible(true);
+        this.imageMenu.setVisible(true);
+        this.imageMenu.setDisable(false);
+        if (isWon) {
+            imageResult.setImage(new Image("../images/victory.png"));
         }
         else {
-            imageResult.setImage(new Image("..\\images\\ZombiesAteYourBrains.png"));
+            imageResult.setImage(new Image("../images/loss.png"));
         }
+    }
+
+    @Override
+    public double getImageResizeFactor() {
+        return IMG_RESIZE_FACTOR;
     }
 }
