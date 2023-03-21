@@ -57,6 +57,7 @@ public class GameLoopImpl implements GameLoop, Runnable {
                 updated = false;
             }
         }
+        this.gameEngine.over(this.model.result());
     }
 
     private void updateView() {
