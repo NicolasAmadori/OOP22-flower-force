@@ -99,6 +99,8 @@ public final class GameSceneController implements Initializable, GameEngine {
             if (i < cardViews.size()) {
                 this.cards.get(i).setImage(cardViews.get(i).getMenuImage());
                 this.cardLabels.get(i).setText(String.valueOf(cardViews.get(i).getCost()));
+                this.cards.get(i).setVisible(true);
+                this.cardLabels.get(i).setVisible(true);
             } else {
                 this.cards.get(i).setVisible(false);
                 this.cardLabels.get(i).setVisible(false);
