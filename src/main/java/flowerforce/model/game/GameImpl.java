@@ -31,6 +31,8 @@ public class GameImpl implements Game {
      * @param world the instance of the world starting the game.
      */
     public GameImpl(final Level level, final World world) {
+        final ShootingPlantFactory factory = new ShootingPlantFactoryImpl();
+        final ZombieFactory factoryZ = new ZombieFactoryImpl();
         this.sun = INITIAL_SUN * SUN_VALUE;
         this.level = level;
         this.zombieTimer = new TimerImpl(level.getTotalZombies());
@@ -38,6 +40,9 @@ public class GameImpl implements Game {
         this.remainingZombie = level.getTotalZombies();
         this.level.getPlantsId().forEach(p -> plantsTimer.put(p, new TimerImpl(p.getUnlockTime())));
         this.world = world;
+        this.plants.add(new SunflowerImpl(Yard.getRightEntityPosition(1,1),IdConverter.Plants.SUNFLOWER));
+        this.plants.add(factory.common(Yard.getRightEntityPosition(2,5),IdConverter.Plants.COMMONSHOOTER));
+        this.zombies.add(factoryZ.basic(Yard.getRightEntityPosition(2,8),IdConverter.Zombies.BASIC));
     }
 
     /**
