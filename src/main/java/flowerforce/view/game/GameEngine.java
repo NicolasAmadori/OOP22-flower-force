@@ -1,6 +1,9 @@
 package flowerforce.view.game;
 
+import flowerforce.view.entities.CardView;
 import javafx.geometry.Dimension2D;
+
+import java.util.List;
 
 /**
  * Interface of the engine of the game view.
@@ -28,4 +31,10 @@ public interface GameEngine {
      * @return the factor to resize correctly the entity images
      */
     double getImageResizeFactor();
+
+    /**
+     * This method should be called as soon as the controller starts a new game.
+     * @param cardViews to be loaded into the game
+     */
+    void loadCards(List<CardView> cardViews);
 }

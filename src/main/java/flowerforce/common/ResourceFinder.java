@@ -1,7 +1,7 @@
 package flowerforce.common;
 
 import java.io.File;
-import java.util.Optional;
+import java.util.NoSuchElementException;
 
 /**
  * Utility class to get resources complete path.
@@ -27,8 +27,10 @@ public final class ResourceFinder {
      * @param filename The complete name of the image requested
      * @return An optional of the image path, empty if the requested image do not exist in the images folder
      */
-    public static Optional<String> getImagePath(final String filename) {
-        return returnOptional(RESOURCES_FOLDER_ABSOLUTE_PATH + File.separator + IMAGES_FOLDER_NAME + File.separator + filename);
+    public static String getImagePath(final String filename) {
+        final String completePath = getImagesFolderPath() + File.separator + filename;
+        checkPath(completePath);
+        return completePath;
     }
 
     /**
@@ -36,8 +38,10 @@ public final class ResourceFinder {
      * @param filename The complete name of the fxml file requested
      * @return An optional of the fxml file path, empty if the requested fxml file do not exist in the fxml folder
      */
-    public static Optional<String> getFXMLPath(final String filename) {
-        return returnOptional(RESOURCES_FOLDER_ABSOLUTE_PATH + File.separator + FXML_FOLDER_NAME + File.separator + filename);
+    public static String getFXMLPath(final String filename) {
+        final String completePath = getFXMLFolderPath() + File.separator + filename;
+        checkPath(completePath);
+        return completePath;
     }
 
     /**
@@ -45,12 +49,40 @@ public final class ResourceFinder {
      * @param filename The complete name of the saving file requested
      * @return An optional of the saving file path, empty if the requested saving file do not exist in the savings folder
      */
-    public static Optional<String> getSavingFilePath(final String filename) {
-        return returnOptional(RESOURCES_FOLDER_ABSOLUTE_PATH + File.separator + SAVING_FOLDER_NAME + File.separator + filename);
+    public static String getSavingFilePath(final String filename) {
+        final String completePath = getSavingFolderPath() + File.separator + filename;
+        checkPath(completePath);
+        return completePath;
     }
 
-    private static Optional<String> returnOptional(final String path) {
+    /**
+     * Get the path of the images' folder.
+     * @return the absolute path
+     */
+    public static String getImagesFolderPath() {
+        return RESOURCES_FOLDER_ABSOLUTE_PATH + File.separator + IMAGES_FOLDER_NAME;
+    }
+
+    /**
+     * Get the path of the fxml folder.
+     * @return the absolute path
+     */
+    public static String getFXMLFolderPath() {
+        return RESOURCES_FOLDER_ABSOLUTE_PATH + File.separator + FXML_FOLDER_NAME;
+    }
+
+    /**
+     * Get the path of the savings folder.
+     * @return the absolute path
+     */
+    public static String getSavingFolderPath() {
+        return RESOURCES_FOLDER_ABSOLUTE_PATH + File.separator + SAVING_FOLDER_NAME;
+    }
+
+    private static void checkPath(final String path) {
         final File file = new File(path);
-        return file.exists() ? Optional.of(path) : Optional.empty();
+        if (!file.exists()) {
+            throw new NoSuchElementException("The requested resource does not exists.");
+        }
     }
 }

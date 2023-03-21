@@ -1,21 +1,19 @@
 package flowerforce.view.game;
 
-import java.net.URL;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import java.util.ResourceBundle;
 import java.util.Set;
 
+import flowerforce.common.ResourceFinder;
 import flowerforce.view.entities.CardView;
-import flowerforce.view.entities.CardViewImpl;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
 import javafx.scene.control.Label;
 import javafx.scene.effect.Bloom;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -23,7 +21,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
 
-public final class GameSceneController implements Initializable, GameEngine {
+public final class GameSceneController implements GameEngine {
 
     @FXML private AnchorPane gamePane;
 
@@ -65,10 +63,12 @@ public final class GameSceneController implements Initializable, GameEngine {
     private static final double YARDWIDTH_RATIO = 1320.0 / 1920.0;
     private static final double YARDHEIGHT_RATIO = 880.0 / 1080.0;
     private static final double IMG_RESIZE_FACTOR = 2.0;
-    private static final double BLOOM_EFFECT_VALUE = 0.65;
+    private static final Effect BLOOM_EFFECT = new Bloom(0.65);
+    private static final Effect RESET_BLOOM = new Bloom(1);
+    private static final Effect BLACK_WHITE = new ColorAdjust(0,-1,0,0);
+    private static final Effect RESET_COLORS = new ColorAdjust(0,0,0,0);
     private final int rows;
     private final int cols;
-    private final Dimension2D stdSize = new Dimension2D(WIDTH, HEIGHT);
     private final FlowerForceApplication application;
     private final Set<ImageView> entityImages = new HashSet<>();
     private final List<ImageView> cards = new LinkedList<>();
@@ -76,22 +76,21 @@ public final class GameSceneController implements Initializable, GameEngine {
     private final Point2D firstYardPoint;
     private final Dimension2D yardDimension;
     private final Dimension2D cellDimension;
-    private final Effect bloomEffect = new Bloom(BLOOM_EFFECT_VALUE);
     private Optional<Integer> cardSelected = Optional.empty();
 
     public GameSceneController(final FlowerForceApplication application) {
         this.application = application;
-        this.firstYardPoint = new Point2D((int) (this.stdSize.getWidth() * RIGHTSHIFT_RATIO), (int) (this.stdSize.getHeight() * DOWNSHIFT_RATIO));
-        this.yardDimension = new Dimension2D((int) (this.stdSize.getWidth() * YARDWIDTH_RATIO), (int) (this.stdSize.getHeight() * YARDHEIGHT_RATIO));
+        this.firstYardPoint = new Point2D((int) (WIDTH * RIGHTSHIFT_RATIO), (int) (HEIGHT * DOWNSHIFT_RATIO));
+        this.yardDimension = new Dimension2D((int) (WIDTH * YARDWIDTH_RATIO), (int) (HEIGHT * YARDHEIGHT_RATIO));
         this.application.getController().setGameEngine(this);
         this.rows = this.application.getController().getTotalRows();
         this.cols = this.application.getController().getTotalColumns();
         this.cellDimension = new Dimension2D(this.yardDimension.getWidth() / this.cols, this.yardDimension.getHeight() / this.rows);
     }
 
-    private void loadEntityCards() {
+    public void loadCards(final List<CardView> cardViews) {
         //List<CardView> cardViews = this.application.getController().getCards();
-        List<CardView> cardViews = List.of(new CardViewImpl(50, "flowerforce/game/images/sunflower.png")); //TODO:remove
+        //List<CardView> cardViews = List.of(new CardViewImpl(50, "flowerforce/game/images/sunflower.png")); //TODO:remove
         
         this.cardLabels.addAll(List.of(lbl0, lbl1, lbl2, lbl3, lbl4));
         this.cards.addAll(List.of(card0, card1, card2, card3, card4));
@@ -99,6 +98,8 @@ public final class GameSceneController implements Initializable, GameEngine {
             if (i < cardViews.size()) {
                 this.cards.get(i).setImage(cardViews.get(i).getMenuImage());
                 this.cardLabels.get(i).setText(String.valueOf(cardViews.get(i).getCost()));
+                this.cards.get(i).setVisible(true);
+                this.cardLabels.get(i).setVisible(true);
             } else {
                 this.cards.get(i).setVisible(false);
                 this.cardLabels.get(i).setVisible(false);
@@ -107,11 +108,11 @@ public final class GameSceneController implements Initializable, GameEngine {
     }
 
     private void addBloomEffect() {
-        this.cardSelected.ifPresent(i -> this.cards.get(i).setEffect(this.bloomEffect));
+        this.cardSelected.ifPresent(i -> this.cards.get(i).setEffect(BLOOM_EFFECT));
     }
 
     private void removeBloomEffect() {
-        this.cardSelected.ifPresent(i -> this.cards.get(i).setEffect(null));
+        this.cardSelected.ifPresent(i -> this.cards.get(i).setEffect(RESET_BLOOM));
     }
 
     @FXML
@@ -139,7 +140,7 @@ public final class GameSceneController implements Initializable, GameEngine {
 
     @FXML
     void mouseMoved(final MouseEvent event) {
-        if (isInsideYard(event.getX(), event.getY())) {
+        if (this.cardSelected.isPresent() && isInsideYard(event.getX(), event.getY())) {
             this.coloredCell.relocate(this.firstYardPoint.getX() + (getColumn(event.getX() - this.firstYardPoint.getX()) * this.cellDimension.getWidth()),
                     this.firstYardPoint.getY() + getRow(event.getY() - this.firstYardPoint.getY()) * this.cellDimension.getHeight());
             this.coloredCell.setVisible(true);
@@ -171,36 +172,23 @@ public final class GameSceneController implements Initializable, GameEngine {
         return 0;
     }
 
-    /**
-     * Called to initialize a controller after its root element has been
-     * completely processed.
-     *
-     * @param location  The location used to resolve relative paths for the root object, or
-     *                  {@code null} if the location is not known.
-     * @param resources The resources used to localize the root object, or {@code null} if
-     *                  the root object was not localized.
-     */
-
-    @Override
-    public void initialize(final URL location, final ResourceBundle resources) {
-        this.updateSunCounter();
-        this.loadEntityCards();
-    }
-
     @Override
     public void render() {
-        //TODO: decomment
-        //this.enableCards();
+        this.enableCards();
         this.clearDrawnEntities();
         this.application.getController().getPlacedEntities().forEach(e -> this.drawEntity(e.getPlaceableImage(), e.getPlacingPosition()));
         this.updateSunCounter();
     }
 
     private void enableCards() {
-        this.cards.forEach(c -> c.setDisable(true));
+        this.cards.forEach(c -> {
+            c.setDisable(true);
+            c.setEffect(BLACK_WHITE);
+        });
         this.application.getController().getEnabledCards().forEach(i -> {
             if (i < this.cards.size()) {
                 this.cards.get(i).setDisable(false);
+                this.cards.get(i).setEffect(RESET_COLORS);
             }
         });
     }
@@ -237,10 +225,10 @@ public final class GameSceneController implements Initializable, GameEngine {
         this.imageMenu.setVisible(true);
         this.imageMenu.setDisable(false);
         if (isWon) {
-            imageResult.setImage(new Image("..//images//LevelWin.png"));
+            imageResult.setImage(new Image(ResourceFinder.getImagePath("victory.png")));
         }
         else {
-            imageResult.setImage(new Image("..//images//ZombiesAteYourBrains.png"));
+            imageResult.setImage(new Image(ResourceFinder.getImagePath("loss.png")));
         }
     }
 

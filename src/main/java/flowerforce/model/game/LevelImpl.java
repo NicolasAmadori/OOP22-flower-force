@@ -21,11 +21,10 @@ public class LevelImpl implements Level {
      * @param availablePlants Plants that can be used in this level
      * @param coins Coins that are awarded once the level is completed
      * @param nZombie Number of zombies that must be spawned in the level
-     * @param row Number of rows that can be used in the game field
      * @param iD ID of the level
      */
-    public LevelImpl(final int iD, final List<IdConverter.Zombies> availableZombies, final List<IdConverter.Plants> availablePlants,
-                     final int coins, final int nZombie, final int row) {
+    public LevelImpl(final int iD, final List<IdConverter.Zombies> availableZombies,
+                     final List<IdConverter.Plants> availablePlants, final int coins, final int nZombie) {
         this.coins = coins;
         this.availablePlants = availablePlants;
         this.availableZombies = availableZombies;

@@ -58,7 +58,7 @@ public interface Controller {
 
     Set<EntityView> getPlacedEntities();
 
-    List<CardView> getCards();
+    //List<CardView> getCards();//TODO: remove
 
     Set<Integer> getEnabledCards();
 

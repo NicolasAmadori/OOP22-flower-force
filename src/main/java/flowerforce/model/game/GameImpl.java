@@ -28,8 +28,11 @@ public class GameImpl implements Game {
 
     /**
      * @param level level of the game that has started.
+     * @param world the instance of the world starting the game.
      */
     public GameImpl(final Level level, final World world) {
+        final ShootingPlantFactory factory = new ShootingPlantFactoryImpl();
+        final ZombieFactory factoryZ = new ZombieFactoryImpl();
         this.sun = INITIAL_SUN * SUN_VALUE;
         this.level = level;
         this.zombieTimer = new TimerImpl(level.getTotalZombies());
@@ -37,6 +40,9 @@ public class GameImpl implements Game {
         this.remainingZombie = level.getTotalZombies();
         this.level.getPlantsId().forEach(p -> plantsTimer.put(p, new TimerImpl(p.getUnlockTime())));
         this.world = world;
+        this.plants.add(new SunflowerImpl(Yard.getEntityPosition(1,1),IdConverter.Plants.SUNFLOWER));
+        this.plants.add(factory.common(Yard.getEntityPosition(2,5),IdConverter.Plants.PEASHOOTER));
+        this.zombies.add(factoryZ.basic(Yard.getEntityPosition(2,8),IdConverter.Zombies.BASIC));
     }
 
     /**
@@ -97,15 +103,16 @@ public class GameImpl implements Game {
      * {@inheritDoc}
      */
     @Override
-    public boolean placePlant(final int idPlant, final int row, final int col ) {
-        final var plantType = IdConverter.Plants.values()[idPlant];
-        final Point2D position = Yard.getRightEntityPosition(row, col);
+    public boolean placePlant(final int idPlant, final int row, final int col) {
+        final Point2D position = Yard.getEntityPosition(row, col);
         for (final var plant : this.plants) {
             if (plant.getPosition().equals(position)) {
                 return false;
             }
         }
+        final var plantType = IdConverter.Plants.values()[idPlant];
         final var plant = IdConverter.createPlant(plantType, position);
+        this.plantsTimer.get(plantType).reset();
         this.sun -= plantType.getCost();
         this.plants.add(plant);
         return true;
@@ -185,13 +192,13 @@ public class GameImpl implements Game {
      * Check which zombies are eating and update which plants are still alive.
      */
     private void eatingPlant() {
-        Map<Zombie,Plant> zombieEating = new HashMap<>();
-        this.plants.forEach(plant -> zombies.stream()
+        final Map<Zombie, Plant> zombieEating = new HashMap<>();
+        this.plants.forEach(plant -> this.zombies.stream()
                 .filter(zombie -> zombie.getPosition().getY() == plant.getPosition().getY())
                 .filter(zombie -> zombie.getPosition().getX() <= plant.getPosition().getX())
                 .filter(zombie -> zombie.getPosition().getX() > plant.getPosition().getX()
                         + Yard.getCellDimension().getWidth())
-                .forEach(zombie -> zombieEating.put(zombie,plant)));
+                .forEach(zombie -> zombieEating.put(zombie, plant)));
 
         this.zombies.forEach(zombie -> {
                     if (zombieEating.containsKey(zombie)) {
@@ -219,6 +226,11 @@ public class GameImpl implements Game {
             }
             plant.updateState();
         }
+        plantsTimer.keySet().forEach(plantType -> {
+            if (!plantsTimer.get(plantType).isReady()) {
+                plantsTimer.get(plantType).updateState();
+            }
+        });
     }
 
     /**
@@ -231,7 +243,7 @@ public class GameImpl implements Game {
             zombieTimer = new TimerImpl(remainingZombie);
             remainingZombie--;
             zombies.add(IdConverter.createZombie(IdConverter.Zombies.BASIC,
-                    Yard.getRightEntityPosition(
+                    Yard.getEntityPosition(
                             randomZombiePosition.nextInt(Yard.getRowsNum()),
                             Yard.getColsNum()
                     )));
