@@ -82,7 +82,7 @@ public final class ResourceFinder {
     private static void checkPath(final String path) {
         final File file = new File(path);
         if (!file.exists()) {
-            throw new NoSuchElementException("The requested resource does not exists.");
+            throw new NoSuchElementException("The requested resource does not exists (" + path + ").");
         }
     }
 }
