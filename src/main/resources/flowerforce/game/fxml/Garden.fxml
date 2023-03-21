@@ -29,11 +29,7 @@
                <Font size="40.0" />
            </font>
        </Label>
-      <ImageView fx:id="imageResult" disable="true" fitHeight="608.0" fitWidth="525.0" layoutX="818.0" layoutY="163.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" visible="false">
-         <image>
-            <Image url="@../images/victory.png" />
-         </image>
-      </ImageView>
+      <ImageView fx:id="imageResult" disable="true" fitHeight="608.0" fitWidth="525.0" layoutX="818.0" layoutY="163.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" visible="false" />
       <ImageView fx:id="imageMenu" disable="true" fitHeight="153.0" fitWidth="282.0" layoutX="937.0" layoutY="785.0" onMouseClicked="#selectMenu" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@../images/returnToMainMenu.png" />

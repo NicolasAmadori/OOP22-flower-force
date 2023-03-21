@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import flowerforce.common.ResourceFinder;
 import flowerforce.view.entities.CardView;
 import javafx.fxml.FXML;
 import javafx.geometry.Dimension2D;
@@ -224,10 +225,10 @@ public final class GameSceneController implements GameEngine {
         this.imageMenu.setVisible(true);
         this.imageMenu.setDisable(false);
         if (isWon) {
-            imageResult.setImage(new Image("../images/victory.png"));
+            imageResult.setImage(new Image(ResourceFinder.getImagePath("victory.png")));
         }
         else {
-            imageResult.setImage(new Image("../images/loss.png"));
+            imageResult.setImage(new Image(ResourceFinder.getImagePath("loss.png")));
         }
     }
 
