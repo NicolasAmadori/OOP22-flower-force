@@ -54,7 +54,7 @@ public class GameLoopImpl implements GameLoop, Runnable {
 
             if (updated) {
                 updateView();
-                updated = false;g
+                updated = false;
             }
         }
     }
