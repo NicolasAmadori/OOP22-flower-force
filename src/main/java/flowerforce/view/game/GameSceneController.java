@@ -5,12 +5,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import flowerforce.common.ResourceFinder;
 import flowerforce.view.entities.CardView;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.effect.Bloom;
 import javafx.scene.effect.ColorAdjust;
@@ -103,6 +107,8 @@ public final class GameSceneController implements GameEngine {
             } else {
                 this.cards.get(i).setVisible(false);
                 this.cardLabels.get(i).setVisible(false);
+                this.cards.remove(i);
+                this.cardLabels.remove(i);
             }
         }
     }
@@ -181,25 +187,38 @@ public final class GameSceneController implements GameEngine {
     }
 
     private void enableCards() {
+        final Set<Integer> enabledCards = this.application.getController().getEnabledCards();
         this.cards.forEach(c -> {
-            c.setDisable(true);
-            c.setEffect(BLACK_WHITE);
-        });
-        this.application.getController().getEnabledCards().forEach(i -> {
-            if (i < this.cards.size()) {
-                this.cards.get(i).setDisable(false);
-                this.cards.get(i).setEffect(RESET_COLORS);
+            if (enabledCards.contains(cards.indexOf(c))) {
+                if (c.isDisable()) {
+                    Platform.runLater(() -> {
+                        c.setEffect(RESET_COLORS);
+                        c.setDisable(false);
+                    });                    
+                }
+            } else {
+                Platform.runLater(() -> {
+                    c.setEffect(BLACK_WHITE);
+                    c.setDisable(true);
+                });                
             }
         });
     }
 
     private void clearDrawnEntities() {
-        this.gamePane.getChildren().stream().filter(n -> this.entityImages.contains(n)).forEach(n -> this.gamePane.getChildren().remove(n));
-        this.entityImages.clear();
+        Platform.runLater(() -> {
+            final Set<Node> toRemove = this.gamePane.getChildren().stream()
+                .filter(n -> this.entityImages.contains(n))
+                .collect(Collectors.toSet());
+            toRemove.forEach(n -> this.gamePane.getChildren().remove(n));
+            this.entityImages.clear();
+        });
     }
 
     private void updateSunCounter() {
-        //this.lblSunCounter.setText(Integer.toString(this.application.getController().getSunCounter()));
+        Platform.runLater(() -> {
+            this.lblSunCounter.setText(Integer.toString(this.application.getController().getSunCounter()));
+        });        
     }
 
     private void drawEntity(final Image image, final Point2D pos) {
@@ -208,8 +227,11 @@ public final class GameSceneController implements GameEngine {
         iv.setPreserveRatio(true);
         iv.setFitWidth(image.getWidth() * IMG_RESIZE_FACTOR);
         iv.setFitHeight(image.getHeight() * IMG_RESIZE_FACTOR);
-        this.entityImages.add(iv);
-        this.gamePane.getChildren().add(iv);
+        Platform.runLater(() -> {
+            this.entityImages.add(iv);
+            this.gamePane.getChildren().add(iv);
+        });
+        
     }
 
     @Override
