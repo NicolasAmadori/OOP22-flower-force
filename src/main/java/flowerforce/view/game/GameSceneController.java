@@ -237,10 +237,10 @@ public final class GameSceneController implements Initializable, GameEngine {
         this.imageMenu.setVisible(true);
         this.imageMenu.setDisable(false);
         if (isWon) {
-            imageResult.setImage(new Image("..//images//LevelWin.png"));
+            imageResult.setImage(new Image("../images/victory.png"));
         }
         else {
-            imageResult.setImage(new Image("..//images//ZombiesAteYourBrains.png"));
+            imageResult.setImage(new Image("../images/loss.png"));
         }
     }
 
