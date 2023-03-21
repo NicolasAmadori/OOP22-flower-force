@@ -38,6 +38,7 @@ public class GameLoopImpl implements GameLoop, Runnable {
     public void run() {
         long lastUpdateTime = System.nanoTime();
         long timeAccumulator = 0;
+        Boolean updated = false;
 
         while (!model.isOver()) {
             final long actualTime = System.nanoTime();
@@ -47,10 +48,14 @@ public class GameLoopImpl implements GameLoop, Runnable {
 
             while (timeAccumulator > TIME_SLICE) {
                 model.update();
+                updated = true;
                 timeAccumulator -= TIME_SLICE;
             }
 
-            updateView();
+            if (updated) {
+                updateView();
+                updated = false;
+            }
         }
     }
 
