@@ -43,7 +43,7 @@
          <children>
             <AnchorPane>
                <children>
-                  <ImageView fx:id="card0" fitWidth="200.0" onMouseClicked="#selectCard" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="card0" disable="true" fitWidth="200.0" onMouseClicked="#selectCard" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@../images/sunflower.png" />
                      </image>
@@ -60,7 +60,7 @@
             </AnchorPane>
             <AnchorPane>
                <children>
-                  <ImageView fx:id="card1" fitWidth="200.0" onMouseClicked="#selectCard" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="card1" disable="true" fitWidth="200.0" onMouseClicked="#selectCard" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@../images/peashooter.png" />
                      </image>
@@ -77,7 +77,7 @@
             </AnchorPane>
             <AnchorPane>
                <children>
-                  <ImageView fx:id="card2" fitWidth="200.0" onMouseClicked="#selectCard" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="card2" disable="true" fitWidth="200.0" onMouseClicked="#selectCard" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@../images/snowshooter.png" />
                      </image>
@@ -94,7 +94,7 @@
             </AnchorPane>
             <AnchorPane>
                <children>
-                  <ImageView fx:id="card3" fitWidth="200.0" onMouseClicked="#selectCard" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="card3" disable="true" fitWidth="200.0" onMouseClicked="#selectCard" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@../images/fastshooter.png" />
                      </image>
@@ -111,7 +111,7 @@
             </AnchorPane>
             <AnchorPane>
                <children>
-                  <ImageView fx:id="card4" fitWidth="200.0" onMouseClicked="#selectCard" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="card4" disable="true" fitWidth="200.0" onMouseClicked="#selectCard" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
                         <Image url="@../images/fireshooter.png" />
                      </image>

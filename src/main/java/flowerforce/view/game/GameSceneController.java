@@ -89,9 +89,9 @@ public final class GameSceneController implements Initializable, GameEngine {
         this.cellDimension = new Dimension2D(this.yardDimension.getWidth() / this.cols, this.yardDimension.getHeight() / this.rows);
     }
 
-    private void loadEntityCards() {
+    public void loadCards(final List<CardView> cardViews) {
         //List<CardView> cardViews = this.application.getController().getCards();
-        List<CardView> cardViews = List.of(new CardViewImpl(50, "flowerforce/game/images/sunflower.png")); //TODO:remove
+        //List<CardView> cardViews = List.of(new CardViewImpl(50, "flowerforce/game/images/sunflower.png")); //TODO:remove
         
         this.cardLabels.addAll(List.of(lbl0, lbl1, lbl2, lbl3, lbl4));
         this.cards.addAll(List.of(card0, card1, card2, card3, card4));
@@ -139,7 +139,7 @@ public final class GameSceneController implements Initializable, GameEngine {
 
     @FXML
     void mouseMoved(final MouseEvent event) {
-        if (isInsideYard(event.getX(), event.getY())) {
+        if (this.cardSelected.isPresent() && isInsideYard(event.getX(), event.getY())) {
             this.coloredCell.relocate(this.firstYardPoint.getX() + (getColumn(event.getX() - this.firstYardPoint.getX()) * this.cellDimension.getWidth()),
                     this.firstYardPoint.getY() + getRow(event.getY() - this.firstYardPoint.getY()) * this.cellDimension.getHeight());
             this.coloredCell.setVisible(true);
@@ -183,8 +183,7 @@ public final class GameSceneController implements Initializable, GameEngine {
 
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
-        this.updateSunCounter();
-        this.loadEntityCards();
+        this.updateSunCounter(); //TODO: put it only in render?
     }
 
     @Override
