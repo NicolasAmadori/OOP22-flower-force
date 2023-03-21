@@ -40,9 +40,9 @@ public class GameImpl implements Game {
         this.remainingZombie = level.getTotalZombies();
         this.level.getPlantsId().forEach(p -> plantsTimer.put(p, new TimerImpl(p.getUnlockTime())));
         this.world = world;
-        this.plants.add(new SunflowerImpl(Yard.getRightEntityPosition(1,1),IdConverter.Plants.SUNFLOWER));
-        this.plants.add(factory.common(Yard.getRightEntityPosition(2,5),IdConverter.Plants.COMMONSHOOTER));
-        this.zombies.add(factoryZ.basic(Yard.getRightEntityPosition(2,8),IdConverter.Zombies.BASIC));
+        this.plants.add(new SunflowerImpl(Yard.getEntityPosition(1,1),IdConverter.Plants.SUNFLOWER));
+        this.plants.add(factory.common(Yard.getEntityPosition(2,5),IdConverter.Plants.PEASHOOTER));
+        this.zombies.add(factoryZ.basic(Yard.getEntityPosition(2,8),IdConverter.Zombies.BASIC));
     }
 
     /**
@@ -104,7 +104,7 @@ public class GameImpl implements Game {
      */
     @Override
     public boolean placePlant(final int idPlant, final int row, final int col) {
-        final Point2D position = Yard.getRightEntityPosition(row, col);
+        final Point2D position = Yard.getEntityPosition(row, col);
         for (final var plant : this.plants) {
             if (plant.getPosition().equals(position)) {
                 return false;
@@ -243,7 +243,7 @@ public class GameImpl implements Game {
             zombieTimer = new TimerImpl(remainingZombie);
             remainingZombie--;
             zombies.add(IdConverter.createZombie(IdConverter.Zombies.BASIC,
-                    Yard.getRightEntityPosition(
+                    Yard.getEntityPosition(
                             randomZombiePosition.nextInt(Yard.getRowsNum()),
                             Yard.getColsNum()
                     )));
