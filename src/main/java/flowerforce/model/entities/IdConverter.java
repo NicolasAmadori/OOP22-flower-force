@@ -25,7 +25,7 @@ public final class IdConverter {
         /**
          * Shoots standard bullets.
          */
-        COMMONSHOOTER(100, SHORT_TIME),
+        PEASHOOTER(100, SHORT_TIME),
         /**
          * Shoots special bullets that freeze zombies.
          */
@@ -113,7 +113,7 @@ public final class IdConverter {
         switch (plantType) {
             case SUNFLOWER:
                 return new SunflowerImpl(pos, plantType);
-            case COMMONSHOOTER:
+            case PEASHOOTER:
                 return SHOOTING_PLANT_FACTORY.common(pos, plantType);
             case SNOWSHOOTER:
                 return SHOOTING_PLANT_FACTORY.snow(pos, plantType);

@@ -12,10 +12,8 @@ import java.util.Optional;
  * A utility class that manages saving information to a JSON file or loading information from it.
  * @param <T> The type of the file to save on the file or to load from it
  */
-public final class GameSaveManager<T> {
-
+public final class SaveManager<T> {
     private static final Gson GSON = new Gson(); //Instance to json text converter
-
     private final Class<T> genericClass; //class of the type to deserialize
     private final String savingFilePath; //path of the savingFile
 
@@ -24,9 +22,9 @@ public final class GameSaveManager<T> {
      * @param genericClass the class of the generic type
      * @param fileName the name for the saving file
      */
-    public GameSaveManager(final Class<T> genericClass, final String fileName) {
+    public SaveManager(final Class<T> genericClass, final String fileName) {
         this.genericClass = genericClass;
-        this.savingFilePath = System.getProperty("user.dir") + File.separator + fileName + ".json";
+        this.savingFilePath = ResourceFinder.getSavingFilePath(fileName + ".json"); //TODO: maybe move getProperty to constant like EntityConverter
     }
 
     /**
@@ -46,7 +44,7 @@ public final class GameSaveManager<T> {
 
     /**
      * Reads the player's information save file, if it exists and returns an optional with the object of the generic type.
-     * @return An optional containing the instance of the saved player read from file, 
+     * @return An optional containing the instance of the saved player read from file,
      *  empty if the file does not exist or in case of an error during the read operation.
      */
     public Optional<T> load() {

@@ -10,5 +10,7 @@ bin/
 
 .settings
 
+.metals
+
 #ignore json saving file
 .json

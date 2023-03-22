@@ -1,14 +1,22 @@
 package flowerforce;
 
-import flowerforce.view.GameViewImpl;
+import flowerforce.view.game.FlowerForceApplication;
 
 import static javafx.application.Application.launch;
 
+/**
+ * Program's main class.
+ */
 public final class FlowerForce {
 
-    public final static void main(final String[] args) {
-        launch(GameViewImpl.class, args);
+    private FlowerForce() {
     }
 
-
+    /**
+     * Program's entry point.
+     * @param args
+     */
+    public static void main(final String[] args) {
+        launch(FlowerForceApplication.class, args);
+    }
 }
