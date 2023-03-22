@@ -43,7 +43,7 @@ public class ShootingPlantImpl extends AbstractPlant implements ShootingPlant {
         Bullet bullet;
         try {
             final Constructor<?> constr = this.bulletClass.getConstructor(Point2D.class);
-            bullet = (Bullet) constr.newInstance(new Point2D(this.getPosition().getX(), this.getPosition().getY() + 1));
+            bullet = (Bullet) constr.newInstance(new Point2D(this.getPosition().getX() + 1, this.getPosition().getY()));
         } catch (
             InvocationTargetException
             | SecurityException
@@ -56,7 +56,6 @@ public class ShootingPlantImpl extends AbstractPlant implements ShootingPlant {
         }
         final Optional<Bullet> optBullet = Optional.of(bullet).filter(e -> this.canShoot);
         this.canShoot = false;
-        this.getTimer().reset();
         return optBullet;
     }
 
@@ -65,10 +64,10 @@ public class ShootingPlantImpl extends AbstractPlant implements ShootingPlant {
      */
     @Override
     public void updateState() {
+        super.updateState();
         if (this.getTimer().isReady()) {
             this.canShoot = true;
         }
-        super.updateState();
     }
 
 }

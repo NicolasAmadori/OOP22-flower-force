@@ -4,45 +4,59 @@ import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
 
 /**
- * Models the yard of the game, in which entities can move.
+ * Models the yard of the game, in which the entities are placed.
  */
-public interface Yard {
+public final class Yard {
+
+    private static final int ROWS = 5;
+    private static final int COLS = 9;
+    private static final int HEIGHT = 880;
+    private static final int WIDTH = 1314;
+    private static final Dimension2D YARD = new Dimension2D(WIDTH, HEIGHT);
+    private static final Dimension2D CELL = new Dimension2D((int) (WIDTH / COLS), (int) (HEIGHT / ROWS));;
+
+    private Yard() {
+    }
 
     /**
      * @param row of the cell
      * @param col of the cell
-     * @return the point on the left side of the cell, vertically centered
+     * @return the lower right corner of the cell, where the entity will be placed
      */
-    Point2D getLeftEntityPosition(int row, int col);
-
-    /**
-     * @param row of the cell
-     * @param col of the cell
-     * @return the point on the right side of the cell, vertically centered
-     */
-    Point2D getRightEntityPosition(int row, int col);
+    public static Point2D getEntityPosition(int row, int col) {
+        return new Point2D((col + 1) * CELL.getWidth(), (row + 1) * CELL.getHeight());
+    }
 
     /**
      * 
-     * @return the cell dimensions
+     * @return the dimension of a single cell
      */
-    Dimension2D getCellDimension();
+    public static Dimension2D getCellDimension() {
+        return CELL;
+    }
 
     /**
      * 
      * @return the dimension of the entire yard
      */
-    Dimension2D getYardDimension();
+    public static Dimension2D getYardDimension() {
+        return YARD;
+    }
 
     /**
      * 
-     * @return the number of rows of yard's cells matrix
+     * @return the rows number of yard's cells matrix
      */
-    int getRowsNum();
+    public static int getRowsNum() {
+        return ROWS;
+    }
 
     /**
      *
-     * @return the number of columns of yard's cells matrix
+     * @return the columns number of yard's cells matrix
      */
-    int getColsNum();
+    public static int getColsNum() {
+        return COLS;
+    }
+
 }

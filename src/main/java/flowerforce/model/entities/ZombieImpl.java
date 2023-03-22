@@ -106,4 +106,9 @@ public class ZombieImpl extends AbstractLivingEntity implements Zombie {
         return this.zombieType;
     }
 
+    @Override
+    public int getDeltaMovement() {
+        return this.delta;
+    }
+
 }

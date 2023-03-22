@@ -1,5 +1,6 @@
 package flowerforce.view.entities;
 
+import flowerforce.view.game.GameEngine;
 import javafx.scene.image.Image;
 
 public interface EntityTypeView {

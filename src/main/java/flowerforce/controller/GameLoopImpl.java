@@ -38,20 +38,26 @@ public class GameLoopImpl implements GameLoop, Runnable {
     public void run() {
         long lastUpdateTime = System.nanoTime();
         long timeAccumulator = 0;
+        Boolean updated = false;
 
-        while (!model.isOver()) {
+        while (!this.model.isOver()) {
             final long actualTime = System.nanoTime();
             final long elapsedTime = actualTime - lastUpdateTime;
             lastUpdateTime += elapsedTime;
             timeAccumulator += elapsedTime;
 
             while (timeAccumulator > TIME_SLICE) {
-                model.update();
+                this.model.update();
+                updated = true;
                 timeAccumulator -= TIME_SLICE;
             }
 
-            updateView();
+            if (updated) {
+                updateView();
+                updated = false;
+            }
         }
+        this.gameEngine.over(this.model.result());
     }
 
     private void updateView() {
