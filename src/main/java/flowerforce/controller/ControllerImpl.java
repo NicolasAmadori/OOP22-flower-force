@@ -84,6 +84,7 @@ public final class ControllerImpl implements Controller {
     @Override
     public void startNewLevelGame(final int levelId) {
         this.game = this.world.createLevelGame(levelId);
+        this.gameEngine.loadCards(this.getCards());
         final GameLoop gameLoop = new GameLoopImpl(this.gameEngine, this.game); //TODO: update
         new Thread((Runnable) gameLoop).start();
     }
@@ -110,9 +111,8 @@ public final class ControllerImpl implements Controller {
 
         return output;
     }
-
-    @Override
-    public List<CardView> getCards() {
+    
+    private List<CardView> getCards() {
         if(game != null) {
             final List<IdConverter.Plants> plants = this.game.getAllPlantIDs();
             final List<CardView> cards = new ArrayList<>();
@@ -124,7 +124,6 @@ public final class ControllerImpl implements Controller {
 
     @Override
     public Set<Integer> getEnabledCards() {
-        ResourceFinder.getImagePath("prova");
         if(this.game != null) {
             return this.game.getAvailablePlantsIDs();//uncomment this when game is corrected
         }

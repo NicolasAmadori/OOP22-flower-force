@@ -1,29 +1,14 @@
 package flowerforce.view.game;
 
-import flowerforce.view.entities.EntityView;
+import flowerforce.view.entities.CardView;
 import javafx.geometry.Dimension2D;
+
+import java.util.List;
 
 /**
  * Interface of the engine of the game view.
  */
 public interface GameEngine {
-
-    /**
-     * 
-     * @param entity to be added to entities buffer
-     */
-    void addEntity(EntityView entity);
-
-    /**
-     * 
-     * @param entity to be removed from entities buffer
-     */
-    void removeEntity(EntityView entity);
-
-    /**
-     * This method clears the entities buffer.
-     */
-    void clearEntities();
 
     /**
      * This method can be called to refresh the view.
@@ -40,4 +25,16 @@ public interface GameEngine {
      * This method can be called to show the outcome of the game.
      */
     void over(boolean isWon);
+
+    /**
+     *
+     * @return the factor to resize correctly the entity images
+     */
+    double getImageResizeFactor();
+
+    /**
+     * This method should be called as soon as the controller starts a new game.
+     * @param cardViews to be loaded into the game
+     */
+    void loadCards(List<CardView> cardViews);
 }
