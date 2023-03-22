@@ -51,11 +51,10 @@ public class GameImpl implements Game {
     @Override
     public void update() {
         this.generateSun();
-        //this.generateZombie();
-        this.collidingBullet();
+        this.generateZombie();
         this.updateBullet();
         this.eatingPlant();
-        this.collidingZombie();
+        this.collidingBullet();
         this.updatePlant();
     }
 
@@ -188,29 +187,14 @@ public class GameImpl implements Game {
     private void collidingBullet() {
          this.bullets.forEach(bullet -> zombies.stream()
                  .filter(zombie -> zombie.getPosition().getY() == bullet.getPosition().getY())
-                 .filter(zombie -> zombie.getPosition().getX() >= bullet.getPosition().getX())
-                 .filter(zombie -> zombie.getPosition().getX() <= bullet.getPosition().getX()
-                         + bullet.getDeltaMovement())
+                 .filter(zombie -> zombie.getPosition().getX() <= bullet.getPosition().getX())
+                 .filter(zombie -> zombie.getPosition().getX() >= bullet.getPosition().getX()
+                         - bullet.getDeltaMovement() - zombie.getDeltaMovement())
                  .filter(zombie -> !zombie.isOver())
                  .min(Comparator.comparing(zombie -> zombie.getPosition().getX()))
                  .ifPresent(bullet::hit));
          this.zombies = this.zombies.stream().filter(z -> !z.isOver()).collect(Collectors.toSet());
          this.bullets = this.bullets.stream().filter(b -> !b.isOver()).collect(Collectors.toSet());
-    }
-
-    private void collidingZombie() {
-        this.bullets.forEach(bullet -> zombies.stream()
-                .filter(zombie -> bullet.getPosition().getY() == zombie.getPosition().getY())
-                .filter(zombie -> bullet.getPosition().getX() <= zombie.getPosition().getX())
-                .filter(zombie -> bullet.getPosition().getX() >= zombie.getPosition().getX()
-                    - zombie.getHealth())
-                .filter(zombie -> !zombie.isOver())
-                .min(Comparator.comparing(zombie -> zombie.getPosition().getX()))
-                .ifPresent(bullet::hit));
-        this.zombies = this.zombies.stream().filter(z -> !z.isOver()).collect(Collectors.toSet());
-        this.bullets = this.bullets.stream().filter(b -> !b.isOver()).collect(Collectors.toSet());
-        System.out.println(plants.size());
-        System.out.println("b" +bullets.size());
     }
 
     /**
