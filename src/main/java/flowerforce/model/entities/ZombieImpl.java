@@ -11,8 +11,8 @@ import javafx.geometry.Point2D;
 public class ZombieImpl extends AbstractLivingEntity implements Zombie {
 
     private static final double FREEZE_FACTOR = 0.5;
-    private static final int FREEZE_TIME_UNIT = 10; //updates for each delta unit
-    private static final int EATING_TIME_UNIT = 2;
+    private static final int FREEZE_TIME_UNIT = 135; //updates for each delta unit
+    private static final int EATING_TIME_UNIT = 15;
     private final int delta;
     private final int eatingTime;
     private final double damage;
