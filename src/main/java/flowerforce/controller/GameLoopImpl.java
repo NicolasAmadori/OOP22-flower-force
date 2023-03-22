@@ -13,6 +13,12 @@ public class GameLoopImpl implements GameLoop, Runnable {
     private static final int FPS = 30;
     private static final long TIME_SLICE = 1_000_000_000 / FPS;
 
+    private long lastUpdateTime = System.nanoTime();
+    private long timeAccumulator = 0;
+    private Boolean updated = false;
+
+    private Boolean isRunning;
+
     /**
      * Instantiate a new GameLoop giving it the model and the GameEngine it will communicate with.
      * @param gameEngine The gameEngine to render on the view
@@ -21,6 +27,7 @@ public class GameLoopImpl implements GameLoop, Runnable {
     public GameLoopImpl(final GameEngine gameEngine, final Game model) {
         this.gameEngine = gameEngine;
         this.model = model;
+        this.isRunning = true;
     }
 
     /**
@@ -28,7 +35,32 @@ public class GameLoopImpl implements GameLoop, Runnable {
      */
     @Override
     public void start() {
+        this.run();
+    }
 
+    @Override
+    public void singleTick() {
+        if (!this.model.isOver()) {
+            final long actualTime = System.nanoTime();
+            final long elapsedTime = actualTime - lastUpdateTime;
+            lastUpdateTime += elapsedTime;
+            timeAccumulator += elapsedTime;
+
+            while (timeAccumulator > TIME_SLICE) {
+                this.model.update();
+                updated = true;
+                timeAccumulator -= TIME_SLICE;
+            }
+
+            if (updated) {
+                updateView();
+                updated = false;
+            }
+        }
+        else {
+            this.isRunning = false;
+            this.gameEngine.over(this.model.result());
+        }
     }
 
     /**
@@ -36,6 +68,7 @@ public class GameLoopImpl implements GameLoop, Runnable {
      */
     @Override
     public void run() {
+
         long lastUpdateTime = System.nanoTime();
         long timeAccumulator = 0;
         Boolean updated = false;
@@ -62,5 +95,10 @@ public class GameLoopImpl implements GameLoop, Runnable {
 
     private void updateView() {
         this.gameEngine.render();
+    }
+
+    @Override
+    public boolean isRunning() {
+        return this.isRunning;
     }
 }

@@ -82,11 +82,12 @@ public final class ControllerImpl implements Controller {
      * {@inheritDoc}
      */
     @Override
-    public void startNewLevelGame(final int levelId) {
+    public Game startNewLevelGame(final int levelId) {
         this.game = this.world.createLevelGame(levelId);
         this.gameEngine.loadCards(this.getCards());
-        final GameLoop gameLoop = new GameLoopImpl(this.gameEngine, this.game); //TODO: update
-        new Thread((Runnable) gameLoop).start();
+//        final GameLoop gameLoop = new GameLoopImpl(this.gameEngine, this.game); //TODO: update
+//        new Thread((Runnable) gameLoop).start();
+        return this.game;
     }
 
     /**
@@ -138,5 +139,10 @@ public final class ControllerImpl implements Controller {
     @Override
     public int getTotalColumns() {
         return Yard.getColsNum();
+    }
+
+    @Override
+    public GameEngine getGameEngine() {
+        return this.gameEngine;
     }
 }

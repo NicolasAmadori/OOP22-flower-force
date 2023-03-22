@@ -9,4 +9,8 @@ public interface GameLoop {
      * Start the game loop.
      */
     void start();
+
+    void singleTick();
+
+    boolean isRunning();
 }

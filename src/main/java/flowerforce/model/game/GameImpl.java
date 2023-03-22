@@ -51,7 +51,7 @@ public class GameImpl implements Game {
     @Override
     public void update() {
         this.generateSun();
-        //this.generateZombie();
+        this.generateZombie();
         this.collidingBullet();
         this.updateBullet();
         this.eatingPlant();
