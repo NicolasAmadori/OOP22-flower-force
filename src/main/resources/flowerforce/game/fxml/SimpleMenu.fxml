@@ -30,6 +30,11 @@
                   <Image url="@../images/L3.png" />
                </image>
             </ImageView>
+            <ImageView fx:id="Lvl31" accessibleText="3" fitHeight="500.0" fitWidth="500.0" onMouseClicked="#start" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/L4.png" />
+               </image>
+            </ImageView>
             <ImageView fx:id="InfiniteMode" accessibleText="0" fitHeight="500.0" fitWidth="500.0" onMouseClicked="#start" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/Ladventure.png" />
