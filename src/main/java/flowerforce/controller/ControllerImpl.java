@@ -82,16 +82,18 @@ public final class ControllerImpl implements Controller {
      * {@inheritDoc}
      */
     @Override
-    public void startNewLevelGame(final int levelId) {
+    public Game startNewLevelGame(final int levelId) {
         this.game = this.world.createLevelGame(levelId);
         this.gameEngine.loadCards(this.getCards());
+        return this.game;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void startNewInfiniteGame() {
+    public Game startNewInfiniteGame() {
+        return null;//TODO:
     }
 
     @Override
