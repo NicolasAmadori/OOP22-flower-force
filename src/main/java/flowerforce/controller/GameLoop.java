@@ -4,7 +4,7 @@ import flowerforce.model.game.Game;
 import flowerforce.view.game.GameEngine;
 import javafx.animation.AnimationTimer;
 
-public class GameLoop extends AnimationTimer {
+public final class GameLoop extends AnimationTimer {
 
     private final GameEngine gameEngine;
     private final Game model;
