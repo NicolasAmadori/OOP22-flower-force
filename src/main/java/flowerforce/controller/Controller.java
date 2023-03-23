@@ -43,6 +43,8 @@ public interface Controller {
      */
     void setGameEngine(GameEngine gameEngine);
 
+    GameEngine getGameEngine();
+
     /**
      * Get the number of currently present suns in the game.
      * @return the integer representing the number of suns.

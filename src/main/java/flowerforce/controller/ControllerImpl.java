@@ -57,6 +57,11 @@ public final class ControllerImpl implements Controller {
         this.gameEngine = gameEngine;
     }
 
+    @Override
+    public GameEngine getGameEngine() {
+        return this.gameEngine;//TODO: add controll
+    }
+
     /**
      * {@inheritDoc}
      */
