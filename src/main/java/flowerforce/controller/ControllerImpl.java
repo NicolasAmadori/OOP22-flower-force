@@ -85,8 +85,6 @@ public final class ControllerImpl implements Controller {
     public void startNewLevelGame(final int levelId) {
         this.game = this.world.createLevelGame(levelId);
         this.gameEngine.loadCards(this.getCards());
-        final GameLoop gameLoop = new GameLoopImpl(this.gameEngine, this.game); //TODO: update
-        new Thread((Runnable) gameLoop).start();
     }
 
     /**
@@ -94,8 +92,6 @@ public final class ControllerImpl implements Controller {
      */
     @Override
     public void startNewInfiniteGame() {
-        //final GameLoop gameLoop = new GameLoopImpl(GameEngine, this.world.StartNewGame());
-        //new Thread((Runnable) gameLoop).start();
     }
 
     @Override
