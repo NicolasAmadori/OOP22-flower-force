@@ -6,7 +6,6 @@ import java.io.IOException;
 import flowerforce.controller.Controller;
 import flowerforce.controller.ControllerImpl;
 import flowerforce.controller.GameLoop;
-import flowerforce.controller.GameLoopImpl;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.geometry.Dimension2D;
@@ -64,21 +63,8 @@ public final class FlowerForceApplication extends Application implements FlowerF
         try {
             this.sceneClass = new GameScene(this);
             this.setScene(this.sceneClass.getScene());
-            final GameLoop gameLoop = new GameLoopImpl(this.controller.getGameEngine(), this.controller.startNewLevelGame(levelId));
 
-            AnimationTimer animationTimer = new AnimationTimer()
-            {
-                public void handle(long currentNanoTime)
-                {
-                    System.out.print(currentNanoTime + " : ");
-                    if(gameLoop.isRunning()) {
-                        gameLoop.singleTick();
-                    }
-                    else {
-                        this.stop();
-                    }
-                }
-            };
+            AnimationTimer animationTimer = new GameLoop(this.controller.getGameEngine(), this.controller.startNewLevelGame(levelId));
             animationTimer.start();
         } catch (Exception e) {
             System.out.println(e);
