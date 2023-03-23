@@ -70,6 +70,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
             {
                 public void handle(long currentNanoTime)
                 {
+                    System.out.print(currentNanoTime + " : ");
                     if(gameLoop.isRunning()) {
                         gameLoop.singleTick();
                     }

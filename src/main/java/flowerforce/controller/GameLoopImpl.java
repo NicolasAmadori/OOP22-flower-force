@@ -6,11 +6,11 @@ import flowerforce.view.game.GameEngine;
 /**
  * This is an implementation of {@link GameLoop}.
  */
-public class GameLoopImpl implements GameLoop, Runnable {
+public class GameLoopImpl implements GameLoop, Runnable{
 
     private final GameEngine gameEngine;
     private final Game model;
-    private static final int FPS = 30;
+    private static final int FPS = 60;
     private static final long TIME_SLICE = 1_000_000_000 / FPS;
 
     private long lastUpdateTime = System.nanoTime();
@@ -42,6 +42,7 @@ public class GameLoopImpl implements GameLoop, Runnable {
     public void singleTick() {
         if (!this.model.isOver()) {
             final long actualTime = System.nanoTime();
+            System.out.print(actualTime);
             final long elapsedTime = actualTime - lastUpdateTime;
             lastUpdateTime += elapsedTime;
             timeAccumulator += elapsedTime;

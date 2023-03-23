@@ -56,7 +56,6 @@ public class ShootingPlantImpl extends AbstractPlant implements ShootingPlant {
         }
         final Optional<Bullet> optBullet = Optional.of(bullet).filter(e -> this.canShoot);
         this.canShoot = false;
-        this.getTimer().reset();
         return optBullet;
     }
 
@@ -65,10 +64,10 @@ public class ShootingPlantImpl extends AbstractPlant implements ShootingPlant {
      */
     @Override
     public void updateState() {
+        super.updateState();
         if (this.getTimer().isReady()) {
             this.canShoot = true;
         }
-        super.updateState();
     }
 
 }
