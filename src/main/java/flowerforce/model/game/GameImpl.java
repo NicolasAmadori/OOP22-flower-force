@@ -52,8 +52,7 @@ public class GameImpl implements Game {
     public void update() {
         this.generateSun();
         this.generateZombie();
-        this.bullets.forEach(Bullet::move);
-        this.collidingBullet();
+        this.updateBullet();
         this.eatingPlant();
         this.collidingBullet();
         this.updatePlant();
@@ -172,18 +171,28 @@ public class GameImpl implements Game {
     }
 
     /**
+     * Check which bullets are still in the field
+     */
+    private void updateBullet() {
+        this.bullets.forEach(Bullet::move);
+        bullets = bullets.stream()
+                .filter(bullet -> bullet.getPosition().getX() <
+                        Yard.getCellDimension().getWidth() * Yard.getColsNum())
+                .collect(Collectors.toSet());
+    }
+
+    /**
      * Checks which bullets hit the zombies and updates which zombies and bullets are still alive.
      */
     private void collidingBullet() {
          this.bullets.forEach(bullet -> zombies.stream()
                  .filter(zombie -> zombie.getPosition().getY() == bullet.getPosition().getY())
-                 .filter(zombie -> zombie.getPosition().getX() >= bullet.getPosition().getX())
-                 .filter(zombie -> zombie.getPosition().getX() <= bullet.getPosition().getX()
-                         + bullet.getDeltaMovement())
+                 .filter(zombie -> zombie.getPosition().getX() <= bullet.getPosition().getX())
+                 .filter(zombie -> zombie.getPosition().getX() >= bullet.getPosition().getX()
+                         - bullet.getDeltaMovement() - zombie.getDeltaMovement())
                  .filter(zombie -> !zombie.isOver())
                  .min(Comparator.comparing(zombie -> zombie.getPosition().getX()))
                  .ifPresent(bullet::hit));
-
          this.zombies = this.zombies.stream().filter(z -> !z.isOver()).collect(Collectors.toSet());
          this.bullets = this.bullets.stream().filter(b -> !b.isOver()).collect(Collectors.toSet());
     }
@@ -197,7 +206,7 @@ public class GameImpl implements Game {
                 .filter(zombie -> zombie.getPosition().getY() == plant.getPosition().getY())
                 .filter(zombie -> zombie.getPosition().getX() <= plant.getPosition().getX())
                 .filter(zombie -> zombie.getPosition().getX() > plant.getPosition().getX()
-                        + Yard.getCellDimension().getWidth())
+                        - Yard.getCellDimension().getWidth())
                 .forEach(zombie -> zombieEating.put(zombie, plant)));
 
         this.zombies.forEach(zombie -> {
@@ -207,7 +216,7 @@ public class GameImpl implements Game {
                         zombie.move();
                     }
                 });
-
+        this.zombies.forEach(LivingEntity::updateState);
         this.plants = this.plants.stream().filter(p -> !p.isOver()).collect(Collectors.toSet());
     }
 
@@ -221,8 +230,14 @@ public class GameImpl implements Game {
                     this.sun += SUN_VALUE;
                 }
             } else {
-                final var bullet = ((ShootingPlant) plant).nextBullet();
-                bullet.ifPresent(b -> bullets.add(b));
+                int nZombieOnRow = zombies.stream()
+                        .filter(zombie -> plant.getPosition().getY() == zombie.getPosition().getY())
+                        .filter(zombie -> plant.getPosition().getX() - Yard.getCellDimension().getWidth() <= zombie.getPosition().getX() )
+                        .toList().size();
+                if (nZombieOnRow > 0) {
+                    final var bullet = ((ShootingPlant) plant).nextBullet();
+                    bullet.ifPresent(b -> bullets.add(b));
+                }
             }
             plant.updateState();
         }

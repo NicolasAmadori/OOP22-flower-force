@@ -67,15 +67,18 @@ public final class EntityConverter {
         return splitted[splitted.length - 1];
     }
     private static Point2D convertPlantPosition(final Point2D originalPosition, final String imagePath) {
-        return originalPosition.subtract(getImageWidth(imagePath), getImageHeight(imagePath) / 2);
+        return originalPosition;
+//        return originalPosition.subtract(getImageWidth(imagePath), getImageHeight(imagePath) / 2);
     }
 
     private static Point2D convertZombiePosition(final Point2D originalPosition, final String imagePath) {
-        return originalPosition.subtract(0, getImageHeight(imagePath) / 2);
+        return originalPosition;
+//        return originalPosition.subtract(0, getImageHeight(imagePath) / 2);
     }
 
     private static Point2D convertBulletPosition(final Point2D originalPosition, final String imagePath) {
-        return originalPosition.subtract(getImageWidth(imagePath), getImageHeight(imagePath) / 2);
+        return originalPosition;
+//        return originalPosition.subtract(getImageWidth(imagePath), getImageHeight(imagePath) / 2);
     }
 
     private static double getImageWidth(final String path) {

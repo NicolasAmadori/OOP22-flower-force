@@ -66,7 +66,6 @@ public final class FlowerForceApplication extends Application implements FlowerF
 
             AnimationTimer gameLoop = new GameLoop(this.controller.getGameEngine(), this.controller.startNewLevelGame(levelId));
             gameLoop.start();
-
         } catch (Exception e) {
             System.out.println(e);
         }

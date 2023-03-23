@@ -142,4 +142,5 @@ public final class ControllerImpl implements Controller {
     public int getTotalColumns() {
         return Yard.getColsNum();
     }
+
 }

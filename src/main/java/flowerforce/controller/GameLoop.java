@@ -43,7 +43,7 @@ public final class GameLoop extends AnimationTimer {
             }
 
             if (updated) {
-                updateView();
+                this.gameEngine.render();
                 updated = false;
             }
         }
@@ -51,9 +51,5 @@ public final class GameLoop extends AnimationTimer {
             this.gameEngine.over(this.model.result());
             this.stop();
         }
-    }
-
-    private void updateView() {
-        this.gameEngine.render();
     }
 }
