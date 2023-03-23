@@ -7,14 +7,16 @@ import javafx.geometry.Point2D;
  */
 public abstract class AbstractEntity implements Entity {
 
+    private final long ordinal;
     private Point2D pos;
 
     /**
      * 
      * @param pos the position of the entity
      */
-    protected AbstractEntity(final Point2D pos) {
+    protected AbstractEntity(final Point2D pos, final long ordinal) {
         this.pos = pos;
+        this.ordinal = ordinal;
     }
 
     /**
@@ -33,4 +35,11 @@ public abstract class AbstractEntity implements Entity {
         this.pos = newPos;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public long getOrdinal() {
+        return this.ordinal;
+    }
 }
