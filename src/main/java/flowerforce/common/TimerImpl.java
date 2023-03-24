@@ -42,6 +42,9 @@ public class TimerImpl implements Timer {
 
     @Override
     public void setNumCycles(final int numCycles) {
+        if (this.timerCyclesCount >= numCycles) {
+            this.timerCyclesCount = numCycles - 1;
+        }
         this.nCycles = numCycles;
     }
 
