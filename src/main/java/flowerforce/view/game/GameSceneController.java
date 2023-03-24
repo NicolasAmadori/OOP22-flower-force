@@ -237,14 +237,16 @@ public final class GameSceneController implements GameEngine, Initializable {
      * {@inheritDoc}
      */
     @Override
-    public void over( final boolean isWon) {
+    public void over(final boolean isWon) {
         this.imageResult.setVisible(true);
         this.imageMenu.setVisible(true);
         this.imageMenu.setDisable(false);
+        this.imageMenu.toFront();
+        this.imageResult.toFront();
+        this.cards.forEach(card -> card.setDisable(true));
         if (isWon) {
             imageResult.setImage(new Image(ResourceFinder.getImagePath("victory.png")));
-        }
-        else {
+        } else {
             imageResult.setImage(new Image(ResourceFinder.getImagePath("loss.png")));
         }
     }
