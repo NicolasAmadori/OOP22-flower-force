@@ -63,7 +63,7 @@ public final class GameSceneController implements GameEngine {
     private static final int HEIGHT = 1080;
     private static final double RIGHTSHIFT_RATIO = 600.0 / 1920.0;
     private static final double DOWNSHIFT_RATIO = 150.0 / 1080.0;
-    private static final double YARDWIDTH_RATIO = 1320.0 / 1920.0;
+    private static final double YARDWIDTH_RATIO = 1314.0 / 1920.0;
     private static final double YARDHEIGHT_RATIO = 880.0 / 1080.0;
     private static final double IMG_RESIZE_FACTOR = 2.0;
     private static final Effect BLOOM_EFFECT = new Bloom(0.65);
@@ -138,7 +138,8 @@ public final class GameSceneController implements GameEngine {
     void yardClicked(final MouseEvent event) {
         if (this.cardSelected.isPresent() && isInsideYard(event.getX(), event.getY())) {
             System.out.println(getRow(event.getY() - this.firstYardPoint.getY()) + " " + getColumn(event.getX() - this.firstYardPoint.getX())); //TODO: remove
-            this.application.getController().placePlant(this.cardSelected.get(), this.getRow(event.getY()), getColumn(event.getX()));
+            this.application.getController().placePlant(this.cardSelected.get(), this.getRow(event.getY() - this.firstYardPoint.getY()),
+                    getColumn(event.getX() - this.firstYardPoint.getX()));
         }
         this.removeBloomEffect();
         this.cardSelected = Optional.empty();
