@@ -9,7 +9,7 @@ import javafx.geometry.Point2D;
 public class ZombieFactoryImpl implements ZombieFactory {
 
     private static final int BASIC_HEALTH = 181;
-    private static final int BASIC_DAMAGE = 100;
+    private static final int BASIC_DAMAGE = 10;
     private static final int BASIC_DELTA = 2;
     private static final int CONE_HEALTH = 370;
     private static final int BUCKET_HEALTH = 1100;
