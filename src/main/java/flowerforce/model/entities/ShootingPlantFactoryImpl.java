@@ -2,6 +2,7 @@ package flowerforce.model.entities;
 
 import flowerforce.common.TimerImpl;
 import flowerforce.model.entities.IdConverter.Plants;
+import flowerforce.model.utilities.RenderingInformation;
 import javafx.geometry.Point2D;
 
 /**
@@ -9,8 +10,9 @@ import javafx.geometry.Point2D;
  */
 public class ShootingPlantFactoryImpl implements ShootingPlantFactory {
 
-    private static final int STANDARD_SHOOTING_TIME = 60;
-    private static final double STANDARD_SHOOTER_HEALTH = 100.0;
+    private static final double STANDARD_SECS_SHOOTING_TIME = 1.425;
+    private static final int STANDARD_SHOOTING_TIME = (int) (STANDARD_SECS_SHOOTING_TIME * RenderingInformation.getFramesPerSecond());
+    private static final double STANDARD_SHOOTER_HEALTH = 300.0;
 
     /**
      * {@inheritDoc}
