@@ -3,10 +3,9 @@ package flowerforce.model.entities;
 import javafx.geometry.Point2D;
 
 /**
- * Represents a generical entity.
+ * Represents a generic entity.
  */
 public abstract class AbstractEntity implements Entity {
-
     private Point2D pos;
 
     /**
@@ -32,5 +31,4 @@ public abstract class AbstractEntity implements Entity {
     protected void setPosition(final Point2D newPos) {
         this.pos = newPos;
     }
-
 }
