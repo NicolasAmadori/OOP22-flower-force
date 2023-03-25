@@ -19,10 +19,4 @@ public interface Entity {
      */
     boolean isOver();
 
-    /**
-     * 
-     * @return the unique ordinal number of a generic entity
-     */
-    long getOrdinal();
-
 }

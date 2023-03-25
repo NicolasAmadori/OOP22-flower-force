@@ -3,20 +3,17 @@ package flowerforce.model.entities;
 import javafx.geometry.Point2D;
 
 /**
- * Represents a generical entity.
+ * Represents a generic entity.
  */
 public abstract class AbstractEntity implements Entity {
-
-    private final long ordinal;
     private Point2D pos;
 
     /**
      * 
      * @param pos the position of the entity
      */
-    protected AbstractEntity(final Point2D pos, final long ordinal) {
+    protected AbstractEntity(final Point2D pos) {
         this.pos = pos;
-        this.ordinal = ordinal;
     }
 
     /**
@@ -33,13 +30,5 @@ public abstract class AbstractEntity implements Entity {
      */
     protected void setPosition(final Point2D newPos) {
         this.pos = newPos;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public long getOrdinal() {
-        return this.ordinal;
     }
 }
