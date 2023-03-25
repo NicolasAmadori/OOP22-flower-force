@@ -1,5 +1,6 @@
 package flowerforce.controller;
 
+import flowerforce.model.game.Game;
 import flowerforce.view.entities.CardView;
 import flowerforce.view.entities.EntityView;
 import flowerforce.view.game.GameEngine;
@@ -29,18 +30,20 @@ public interface Controller {
      * Start a new game for a specified level.
      * @param levelId The id of the level to play
      */
-    void startNewLevelGame(int levelId);
+    Game startNewLevelGame(int levelId);
 
     /**
      * Start a new game in infinite mode.
      */
-    void startNewInfiniteGame();
+    Game startNewInfiniteGame();
 
     /**
      * Set up the GameEngine that the controller will communicate with.
      * @param gameEngine The GameEngine of the GameScene
      */
     void setGameEngine(GameEngine gameEngine);
+
+    GameEngine getGameEngine();
 
     /**
      * Get the number of currently present suns in the game.

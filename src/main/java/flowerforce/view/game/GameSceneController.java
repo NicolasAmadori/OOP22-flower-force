@@ -5,13 +5,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
+import java.net.URL;
+import java.util.*;
 
 import flowerforce.common.ResourceFinder;
 import flowerforce.view.entities.CardView;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -25,7 +25,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
 
-public final class GameSceneController implements GameEngine {
+public final class GameSceneController implements GameEngine, Initializable {
 
     @FXML private AnchorPane gamePane;
 
@@ -74,7 +74,7 @@ public final class GameSceneController implements GameEngine {
     private final int rows;
     private final int cols;
     private final FlowerForceApplication application;
-    private final Set<ImageView> entityImages = new HashSet<>();
+    private final Set<ImageView> drawnEntities = new HashSet<>();
     private final List<ImageView> cards = new LinkedList<>();
     private final List<Label> cardLabels = new LinkedList<>();
     private final Point2D firstYardPoint;
@@ -90,12 +90,14 @@ public final class GameSceneController implements GameEngine {
         this.rows = this.application.getController().getTotalRows();
         this.cols = this.application.getController().getTotalColumns();
         this.cellDimension = new Dimension2D(this.yardDimension.getWidth() / this.cols, this.yardDimension.getHeight() / this.rows);
+
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void loadCards(final List<CardView> cardViews) {
-        //List<CardView> cardViews = this.application.getController().getCards();
-        //List<CardView> cardViews = List.of(new CardViewImpl(50, "flowerforce/game/images/sunflower.png")); //TODO:remove
-        
         this.cardLabels.addAll(List.of(lbl0, lbl1, lbl2, lbl3, lbl4));
         this.cards.addAll(List.of(card0, card1, card2, card3, card4));
         for (int i = 0; i < cardLabels.size() && i < cards.size(); i++) {
@@ -178,6 +180,9 @@ public final class GameSceneController implements GameEngine {
         return 0;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void render() {
         this.enableCards();
@@ -191,34 +196,23 @@ public final class GameSceneController implements GameEngine {
         this.cards.forEach(c -> {
             if (enabledCards.contains(cards.indexOf(c))) {
                 if (c.isDisable()) {
-                    Platform.runLater(() -> {
-                        c.setEffect(RESET_COLORS);
-                        c.setDisable(false);
-                    });                    
+                    c.setEffect(RESET_COLORS);
+                    c.setDisable(false);                  
                 }
             } else {
-                Platform.runLater(() -> {
-                    c.setEffect(BLACK_WHITE);
-                    c.setDisable(true);
-                });                
+                c.setEffect(BLACK_WHITE);
+                c.setDisable(true);
             }
         });
     }
 
     private void clearDrawnEntities() {
-        Platform.runLater(() -> {
-            final Set<Node> toRemove = this.gamePane.getChildren().stream()
-                .filter(n -> this.entityImages.contains(n))
-                .collect(Collectors.toSet());
-            toRemove.forEach(n -> this.gamePane.getChildren().remove(n));
-            this.entityImages.clear();
-        });
+        this.drawnEntities.forEach(iv -> this.gamePane.getChildren().remove(iv));
+        this.drawnEntities.clear();
     }
 
     private void updateSunCounter() {
-        Platform.runLater(() -> {
-            this.lblSunCounter.setText(Integer.toString(this.application.getController().getSunCounter()));
-        });        
+        this.lblSunCounter.setText(Integer.toString(this.application.getController().getSunCounter()));
     }
 
     private void drawEntity(final Image image, final Point2D pos) {
@@ -227,22 +221,23 @@ public final class GameSceneController implements GameEngine {
         iv.setPreserveRatio(true);
         iv.setFitWidth(image.getWidth() * IMG_RESIZE_FACTOR);
         iv.setFitHeight(image.getHeight() * IMG_RESIZE_FACTOR);
-        Platform.runLater(() -> {
-            this.entityImages.add(iv);
-            this.gamePane.getChildren().add(iv);
-        });
-        
+        this.drawnEntities.add(iv);
+        this.gamePane.getChildren().add(iv);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Dimension2D getYardSize() {
         return this.yardDimension;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void over( final boolean isWon) {
-        // TODO Auto-generated method stub
-        //throw new UnsupportedOperationException("Unimplemented method 'over'");
         this.imageResult.setVisible(true);
         this.imageMenu.setVisible(true);
         this.imageMenu.setDisable(false);
@@ -254,8 +249,26 @@ public final class GameSceneController implements GameEngine {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public double getImageResizeFactor() {
         return IMG_RESIZE_FACTOR;
+    }
+
+    /**
+     * Called to initialize a controller after its root element has been
+     * completely processed.
+     *
+     * @param location  The location used to resolve relative paths for the root object, or
+     *                  {@code null} if the location is not known.
+     * @param resources The resources used to localize the root object, or {@code null} if
+     *                  the root object was not localized.
+     */
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        this.card0.setDisable(false);
+        this.card1.setDisable(false);
     }
 }

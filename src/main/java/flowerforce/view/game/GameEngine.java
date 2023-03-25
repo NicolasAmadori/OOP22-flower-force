@@ -23,6 +23,7 @@ public interface GameEngine {
 
     /**
      * This method can be called to show the outcome of the game.
+     * @param isWon true if the game is won, false otherwise
      */
     void over(boolean isWon);
 
