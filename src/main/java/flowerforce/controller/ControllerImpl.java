@@ -1,7 +1,6 @@
 package flowerforce.controller;
 
-import flowerforce.common.ResourceFinder;
-import flowerforce.common.WorldSavingManager;
+import flowerforce.controller.utilities.WorldSavingManager;
 import flowerforce.model.entities.Bullet;
 import flowerforce.model.entities.IdConverter;
 import flowerforce.model.entities.Plant;
@@ -24,6 +23,7 @@ public final class ControllerImpl implements Controller {
     private GameEngine gameEngine;
     private final World world;
 
+    private EntityConverter entityConverter;
     private Game game;
 
     /**
@@ -55,6 +55,7 @@ public final class ControllerImpl implements Controller {
     @Override
     public void setGameEngine(final GameEngine gameEngine) {
         this.gameEngine = gameEngine;
+        this.entityConverter = new EntityConverter(this.gameEngine.getYardSize(), this.gameEngine.getImageResizeFactor());
     }
 
     @Override
@@ -108,9 +109,9 @@ public final class ControllerImpl implements Controller {
         final Set<Bullet> bullets = this.game.getBullet();
 
         final Set<EntityView> output = new HashSet<>();
-        plants.forEach(p -> output.add(EntityConverter.getEntityView(p)));
-        zombies.forEach(z -> output.add(EntityConverter.getEntityView(z)));
-        bullets.forEach(z -> output.add(EntityConverter.getEntityView(z)));
+        plants.forEach(p -> output.add(entityConverter.getEntityView(p)));
+        zombies.forEach(z -> output.add(entityConverter.getEntityView(z)));
+        bullets.forEach(z -> output.add(entityConverter.getEntityView(z)));
 
         return output;
     }
@@ -119,7 +120,7 @@ public final class ControllerImpl implements Controller {
         if(game != null) {
             final List<IdConverter.Plants> plants = this.game.getAllPlantIDs();
             final List<CardView> cards = new ArrayList<>();
-            plants.forEach(p -> cards.add(EntityConverter.getCardView(p)));
+            plants.forEach(p -> cards.add(entityConverter.getCardView(p)));
             return cards;
         }
         return new ArrayList<>();

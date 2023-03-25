@@ -1,5 +1,6 @@
-package flowerforce.common;
+package flowerforce.controller.utilities;
 
+import flowerforce.common.ResourceFinder;
 import flowerforce.model.game.World;
 import flowerforce.model.game.Player;
 import flowerforce.model.game.PlayerImpl;
