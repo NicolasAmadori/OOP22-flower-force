@@ -1,5 +1,6 @@
 package flowerforce.controller;
 
+import flowerforce.common.RenderingInformation;
 import flowerforce.model.game.Game;
 import flowerforce.view.game.GameEngine;
 import javafx.animation.AnimationTimer;
@@ -8,8 +9,7 @@ public final class GameLoop extends AnimationTimer {
 
     private final GameEngine gameEngine;
     private final Game model;
-    private static final int FPS = 60;
-    private static final long TIME_SLICE = 1_000_000_000 / FPS;
+    private static final long TIME_SLICE = 1_000_000_000 / RenderingInformation.getFramesPerSecond();
 
     private long lastUpdateTime;
     private long timeAccumulator = 0;
