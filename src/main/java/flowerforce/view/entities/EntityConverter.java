@@ -9,8 +9,6 @@ import flowerforce.model.game.Yard;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
-
-import java.awt.*;
 import java.util.Locale;
 
 /**
@@ -20,18 +18,22 @@ public final class EntityConverter {
     private static final String ANIMATED_IMAGE_EXTENSION = ".gif";
     private static final String STATIC_IMAGE_EXTENSION = ".png";
 
-    private final Dimension2D viewYardDimension;
 
     private final double yardRatioHeight;
 
     private final double yardRatioWidth;
     private final double imageResizeFactor;
-    public EntityConverter(Dimension2D viewYardDimension, double imageResizeFactor) {
-        this.viewYardDimension = viewYardDimension;
+
+    /**
+     * Create a new instance of EntityConverter, setting all the information.
+     * @param viewYardDimension The dimension of the yard of the view
+     * @param imageResizeFactor The resize factor to convert entities position
+     */
+    public EntityConverter(final Dimension2D viewYardDimension, final double imageResizeFactor) {
         this.imageResizeFactor = imageResizeFactor;
 
-        this.yardRatioHeight = Yard.getYardDimension().getHeight() / this.viewYardDimension.getHeight();
-        this.yardRatioWidth = Yard.getYardDimension().getWidth() / this.viewYardDimension.getWidth();
+        this.yardRatioHeight = Yard.getYardDimension().getHeight() / viewYardDimension.getHeight();
+        this.yardRatioWidth = Yard.getYardDimension().getWidth() / viewYardDimension.getWidth();
     }
 
     /**
@@ -70,6 +72,11 @@ public final class EntityConverter {
         return new EntityViewImpl(newPosition, completeImagePath);
     }
 
+    /**
+     * Get the CardView to draw plants cards.
+     * @param p the type of the plant
+     * @return The CardView instance with image and cost
+     */
     public CardView getCardView(final IdConverter.Plants p) {
         final String completeImagePath = ResourceFinder.getImagePath(
                 p.name().toLowerCase(Locale.getDefault()).concat(STATIC_IMAGE_EXTENSION));
@@ -81,23 +88,44 @@ public final class EntityConverter {
         return splitted[splitted.length - 1];
     }
     private Point2D convertPlantPosition(final Point2D originalPosition, final String imagePath) {
-        Point2D outputPosition = new Point2D(originalPosition.getX() * this.yardRatioWidth, originalPosition.getY() * this.yardRatioHeight);//Convert the model position multiplying for the yardSizeFactor
-        outputPosition = outputPosition.subtract(getImageWidth(imagePath) * this.imageResizeFactor, getImageHeight(imagePath) * this.imageResizeFactor);//Get the placing position
+        //Convert the model position multiplying for the yardSizeFactor
+        Point2D outputPosition = new Point2D(
+                originalPosition.getX() * this.yardRatioWidth,
+                originalPosition.getY() * this.yardRatioHeight);
+
+        //Get the placing position
+        outputPosition = outputPosition.subtract(
+                getImageWidth(imagePath) * this.imageResizeFactor,
+                getImageHeight(imagePath) * this.imageResizeFactor);
 
         return outputPosition;
     }
 
     private Point2D convertZombiePosition(final Point2D originalPosition, final String imagePath) {
-        Point2D outputPosition = new Point2D(originalPosition.getX() * this.yardRatioWidth, originalPosition.getY() * this.yardRatioHeight);//Convert the model position multiplying for the yardSizeFactor
-        outputPosition = outputPosition.subtract(0, getImageHeight(imagePath) * this.imageResizeFactor);//Get the placing position
+        //Convert the model position multiplying for the yardSizeFactor
+        Point2D outputPosition = new Point2D(
+                originalPosition.getX() * this.yardRatioWidth,
+                originalPosition.getY() * this.yardRatioHeight);
+
+        //Get the placing position
+        outputPosition = outputPosition.subtract(
+                0,
+                getImageHeight(imagePath) * this.imageResizeFactor);
 
         return outputPosition;
     }
 
     private Point2D convertBulletPosition(final Point2D originalPosition, final String imagePath) {
-        Point2D outputPosition = new Point2D(originalPosition.getX() * this.yardRatioWidth, originalPosition.getY() * this.yardRatioHeight);//Convert the model position multiplying for the yardSizeFactor
-        outputPosition = outputPosition.subtract(getImageWidth(imagePath) * this.imageResizeFactor, getImageHeight(imagePath) * this.imageResizeFactor);//Get the placing position
-        return outputPosition.subtract(0, 80);//TODO: modify
+        //Convert the model position multiplying for the yardSizeFactor
+        Point2D outputPosition = new Point2D(
+                originalPosition.getX() * this.yardRatioWidth,
+                originalPosition.getY() * this.yardRatioHeight);
+
+        //Get the placing position
+        outputPosition = outputPosition.subtract(
+                getImageWidth(imagePath) * this.imageResizeFactor,
+                getImageHeight(imagePath) * this.imageResizeFactor);
+        return outputPosition.subtract(0, 80); //TODO: modify
 //        return outputPosition;
     }
 
@@ -110,7 +138,7 @@ public final class EntityConverter {
     }
 
     private static double getImageDimension(final String path, final boolean isWidth) {
-        if(path == null) {
+        if (path == null) {
             return -1;
         }
         try {
