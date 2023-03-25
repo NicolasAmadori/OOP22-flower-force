@@ -1,6 +1,5 @@
 package flowerforce.controller;
 
-import flowerforce.common.RenderingInformation;
 import flowerforce.model.game.Game;
 import flowerforce.view.game.GameEngine;
 import javafx.animation.AnimationTimer;
