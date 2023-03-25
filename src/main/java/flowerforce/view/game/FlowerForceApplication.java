@@ -2,6 +2,7 @@ package flowerforce.view.game;
 
 import java.io.IOException;
 
+import flowerforce.common.RenderingInformation;
 import flowerforce.common.ResourceFinder;
 import flowerforce.controller.Controller;
 import flowerforce.controller.ControllerImpl;
@@ -63,7 +64,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
             this.sceneClass = new GameScene(this);
             this.setScene(this.sceneClass.getScene());
 
-            AnimationTimer gameLoop = new GameLoop(this.controller.getGameEngine(), this.controller.startNewLevelGame(levelId));
+            AnimationTimer gameLoop = new GameLoop(this.controller.getGameEngine(), this.controller.startNewLevelGame(levelId), RenderingInformation.getFramesPerSecond());
             gameLoop.start();
         } catch (Exception e) {
             System.out.println(e);
