@@ -71,23 +71,27 @@ public final class IdConverter {
         /**
          * Basic zombie, with default health and velocity.
          */
-        BASIC(0),
+        BASIC(1),
         /**
          * Medium resistance zombie.
          */
-        CONEHEAD(1),
+        CONEHEAD(2),
         /**
          * High resistance zombie.
          */
-        BUCKETHEAD(2),
+        BUCKETHEAD(3),
         /**
          * High velocity zombie.
          */
-        RUNNER(1),
+        RUNNER(2),
         /**
          * High resistance and running zombie.
          */
-        QUARTERBACK(3);
+        QUARTERBACK(4),
+        /**
+         * Medium resistance zombie, starts running after its newspaper gets destroyed.
+         */
+        NEWSPAPER(2);
 
         private final int difficulty;
 
