@@ -1,6 +1,7 @@
-package flowerforce.common;
+package flowerforce.controller.utilities;
 
 import com.google.gson.Gson;
+import flowerforce.common.ResourceFinder;
 
 import java.io.File;
 import java.io.FileReader;

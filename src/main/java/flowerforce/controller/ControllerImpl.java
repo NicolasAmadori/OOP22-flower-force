@@ -1,7 +1,6 @@
 package flowerforce.controller;
 
-import flowerforce.common.ResourceFinder;
-import flowerforce.common.WorldSavingManager;
+import flowerforce.controller.utilities.WorldSavingManager;
 import flowerforce.model.entities.Bullet;
 import flowerforce.model.entities.IdConverter;
 import flowerforce.model.entities.Plant;
