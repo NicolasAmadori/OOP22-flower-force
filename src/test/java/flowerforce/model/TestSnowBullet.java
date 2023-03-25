@@ -23,10 +23,10 @@ import javafx.geometry.Point2D;
 
 final class TestSnowBullet {
 
-    private static final double STARTING_BULLET_POS_X = 1.0;
-    private static final double STARTING_BULLET_POS_Y = 0.0;
-    private static final double STARTING_PLANT_POS_X = 0.0;
-    private static final double STARTING_PLANT_POS_Y = 0.0;
+    private static final double STARTING_BULLET_POS_X = 101.0;
+    private static final double STARTING_BULLET_POS_Y = 100.0;
+    private static final double STARTING_PLANT_POS_X = 100.0;
+    private static final double STARTING_PLANT_POS_Y = 100.0;
 
     private final ShootingPlantFactory plantFactory = new ShootingPlantFactoryImpl();
     private final ZombieFactory zombieFactory = new ZombieFactoryImpl();
@@ -82,5 +82,16 @@ final class TestSnowBullet {
         this.bullet.get().hit(this.zombie);
         assertNotEquals(startingZombieHealth, this.zombie.getHealth());
         assertTrue(this.bullet.get().isOver());
+    }
+
+    @Test
+    void testFreeze() {
+        final double startingPos = this.zombie.getPosition().getX();
+        this.zombie.move();
+        final double beforeHitPos = this.zombie.getPosition().getX();
+        this.bullet.get().hit(this.zombie);
+        this.zombie.move();
+        final double afterHitPos = this.zombie.getPosition().getX();
+        assertTrue(Math.abs(startingPos - beforeHitPos) > Math.abs(afterHitPos - beforeHitPos));
     }
 }
