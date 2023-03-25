@@ -1,4 +1,4 @@
-package flowerforce.common;
+package flowerforce.model.utilities;
 
 /**
  * Utility class to get the rendering information.
