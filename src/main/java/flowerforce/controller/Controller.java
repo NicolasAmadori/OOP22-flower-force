@@ -49,6 +49,10 @@ public interface Controller {
      */
     void setGameEngine(GameEngine gameEngine);
 
+    /**
+     * Get the game engine instance to call rendering methods.
+     * @return The gameEngine instance
+     */
     GameEngine getGameEngine();
 
     /**

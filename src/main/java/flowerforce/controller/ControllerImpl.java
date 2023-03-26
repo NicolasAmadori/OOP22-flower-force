@@ -45,9 +45,7 @@ public final class ControllerImpl implements Controller {
     }
 
     /**
-     * Get the score record the player has obtained.
-     *
-     * @return The integer representing the score record
+     * {@inheritDoc}
      */
     @Override
     public int getPlayerScoreRecord() {
@@ -72,6 +70,9 @@ public final class ControllerImpl implements Controller {
         this.entityConverter = new EntityConverter(this.world.getYardDimension(), this.gameEngine.get().getYardSize(), this.gameEngine.get().getImageResizeFactor());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public GameEngine getGameEngine() {
         checkGameEngine();
