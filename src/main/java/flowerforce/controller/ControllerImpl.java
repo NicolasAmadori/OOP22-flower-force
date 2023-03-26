@@ -7,20 +7,23 @@ import flowerforce.model.entities.Plant;
 import flowerforce.model.entities.Zombie;
 import flowerforce.model.game.Game;
 import flowerforce.model.game.World;
-import flowerforce.model.game.Yard;
 import flowerforce.view.entities.CardView;
 import flowerforce.view.entities.EntityConverter;
 import flowerforce.view.entities.EntityView;
 import flowerforce.view.game.GameEngine;
-
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
 /**
  * This is an implementation of {@link Controller}.
  */
 public final class ControllerImpl implements Controller {
 
-    private GameEngine gameEngine;
+    private Optional<GameEngine> gameEngine;
     private final World world;
 
     private EntityConverter entityConverter;
@@ -54,13 +57,14 @@ public final class ControllerImpl implements Controller {
      */
     @Override
     public void setGameEngine(final GameEngine gameEngine) {
-        this.gameEngine = gameEngine;
-        this.entityConverter = new EntityConverter(this.gameEngine.getYardSize(), this.gameEngine.getImageResizeFactor());
+        this.gameEngine = Optional.ofNullable(gameEngine);
+        this.entityConverter = new EntityConverter(this.world.getYardDimension(), this.gameEngine.get().getYardSize(), this.gameEngine.get().getImageResizeFactor());
     }
 
     @Override
     public GameEngine getGameEngine() {
-        return this.gameEngine;//TODO: add controll
+        checkGameEngine();
+        return this.gameEngine.get();
     }
 
     /**
@@ -68,20 +72,17 @@ public final class ControllerImpl implements Controller {
      */
     @Override
     public int getSunCounter() {
-        if (this.game != null) {
-            return this.game.getSun();
-        }
-        return 0;
+        checkGameEngine();
+        return this.game.getSun();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void placePlant(final int plantId, final int row, final int col) {
-        if(this.game != null) {
-            this.game.placePlant(plantId, row, col);//implement this when game is corrected
-        }
+    public boolean placePlant(final int plantId, final int row, final int col) {
+        checkGameEngine();
+        return this.game.placePlant(plantId, row, col);//implement this when game is corrected
     }
 
     /**
@@ -89,8 +90,9 @@ public final class ControllerImpl implements Controller {
      */
     @Override
     public Game startNewLevelGame(final int levelId) {
+        checkGameEngine();
         this.game = this.world.createLevelGame(levelId);
-        this.gameEngine.loadCards(this.getCards());
+        this.gameEngine.get().loadCards(this.getCards());
         return this.game;
     }
 
@@ -117,31 +119,32 @@ public final class ControllerImpl implements Controller {
     }
     
     private List<CardView> getCards() {
-        if(game != null) {
-            final List<IdConverter.Plants> plants = this.game.getAllPlantIDs();
-            final List<CardView> cards = new ArrayList<>();
-            plants.forEach(p -> cards.add(entityConverter.getCardView(p)));
-            return cards;
-        }
-        return new ArrayList<>();
+        checkGameEngine();
+        final List<IdConverter.Plants> plants = this.game.getAllPlantIDs();
+        final List<CardView> cards = new ArrayList<>();
+        plants.forEach(p -> cards.add(entityConverter.getCardView(p)));
+        return cards;
     }
 
     @Override
     public Set<Integer> getEnabledCards() {
-        if(this.game != null) {
-            return this.game.getAvailablePlantsIDs();//uncomment this when game is corrected
-        }
-        return Set.of();
+        checkGameEngine();
+        return this.game.getAvailablePlantsIDs();//uncomment this when game is corrected
     }
 
     @Override
     public int getTotalRows() {
-        return Yard.getRowsNum();
+        return this.world.getRowsNum();
     }
 
     @Override
     public int getTotalColumns() {
-        return Yard.getColsNum();
+        return this.world.getColsNum();
     }
 
+    private void checkGameEngine() {
+        if (this.gameEngine.isEmpty()) {
+            throw new NoSuchElementException("GameEngine has not been set.");
+        }
+    }
 }

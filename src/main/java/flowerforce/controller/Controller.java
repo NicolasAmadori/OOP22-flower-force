@@ -57,7 +57,7 @@ public interface Controller {
      * @param row The row index in which to place the plant
      * @param col The column index in which to place the plant
      */
-    void placePlant(int plantId, int row, int col);
+    boolean placePlant(int plantId, int row, int col);
 
     Set<EntityView> getPlacedEntities();
 
