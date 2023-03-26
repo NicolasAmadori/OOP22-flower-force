@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.net.URL;
 import java.util.*;
 
@@ -166,24 +167,28 @@ public final class GameSceneController implements GameEngine, Initializable {
     void yardClicked(final MouseEvent event) {
         if (isInsideYard(event.getX(), event.getY())) {
             if (this.cardSelected.isPresent()) {
-                System.out.println(getRow(event.getY() - this.firstYardPoint.getY()) + " " + getColumn(event.getX() - this.firstYardPoint.getX())); //TODO: remove
-                /*if (this.application.getController().placePlant(this.cardSelected.get(), this.getRow(event.getY()), this.getColumn(event.getX()))) {
+                if (this.application.getController().placePlant(this.cardSelected.get(), this.getRow(event.getY() - this.firstYardPoint.getY()),
+                        this.getColumn(event.getX() - this.firstYardPoint.getX()))) {
                     this.removeBloomEffect();
                     this.cardSelected = Optional.empty();
-                }*/
+                }
             } else if (this.isShovelSelected) {
-                /*if (this.application.getController().removePlant(this.getRow(event.getY()), this.getColumn(event.getX()))) {
+                if (this.application.getController().removePlant(this.getRow(event.getY() - this.firstYardPoint.getY()), this.getColumn(event.getX() - this.firstYardPoint.getX()))) {
                     this.removeBloomEffect();
                     this.isShovelSelected = false;
-                }*/
+                }
             }            
+        } else {
+            this.removeBloomEffect();
+            this.cardSelected = Optional.empty();
+            this.isShovelSelected = false;
         }
         
     }
 
     @FXML
     void mouseMoved(final MouseEvent event) {
-        if (this.cardSelected.isPresent() && isInsideYard(event.getX(), event.getY())) {
+        if ((this.isShovelSelected || this.cardSelected.isPresent()) && isInsideYard(event.getX(), event.getY())) {
             this.coloredCell.relocate(this.firstYardPoint.getX() + getColumn(event.getX() - this.firstYardPoint.getX()) * this.cellDimension.getWidth(),
                     this.firstYardPoint.getY() + getRow(event.getY() - this.firstYardPoint.getY()) * this.cellDimension.getHeight());
             this.coloredCell.setVisible(true);
@@ -241,12 +246,13 @@ public final class GameSceneController implements GameEngine, Initializable {
     }
 
     private void updateEntities(final Set<EntityView> newEntities) {
-        this.drawnEntities.keySet().stream()
+        final Set<EntityView> toRemove =  this.drawnEntities.keySet().stream()
                 .filter(e -> !newEntities.contains(e))
-                .forEach(e -> {
-                    this.gamePane.getChildren().remove(this.drawnEntities.get(e));
-                    this.drawnEntities.remove(e);
-                });
+                .collect(Collectors.toSet());
+        toRemove.forEach(e -> {
+            this.gamePane.getChildren().remove(this.drawnEntities.get(e));
+            this.drawnEntities.remove(e);
+        });
         newEntities.stream()
                 .filter(e -> this.drawnEntities.containsKey(e))
                 .forEach(e -> this.drawnEntities.get(e).relocate(e.getPlacingPosition().getX(), e.getPlacingPosition().getY()));
@@ -272,6 +278,7 @@ public final class GameSceneController implements GameEngine, Initializable {
         iv.setPreserveRatio(true);
         iv.setFitWidth(image.getWidth() * IMG_RESIZE_FACTOR);
         iv.setFitHeight(image.getHeight() * IMG_RESIZE_FACTOR);
+        iv.setMouseTransparent(true);
         return iv;
     }
 
