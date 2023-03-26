@@ -1,4 +1,4 @@
-package flowerforce.common;
+package flowerforce.model.utilities;
 
 /**
  * Models a timer based on game loop's cycles, used by entities for synchronization.

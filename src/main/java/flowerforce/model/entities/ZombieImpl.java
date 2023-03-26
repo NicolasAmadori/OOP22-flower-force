@@ -1,9 +1,9 @@
 package flowerforce.model.entities;
 
-import flowerforce.common.Timer;
-import flowerforce.common.TimerImpl;
 import flowerforce.model.entities.IdConverter.Zombies;
 import flowerforce.model.utilities.RenderingInformation;
+import flowerforce.model.utilities.Timer;
+import flowerforce.model.utilities.TimerImpl;
 import javafx.geometry.Point2D;
 
 /**
