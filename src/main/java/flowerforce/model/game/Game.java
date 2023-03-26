@@ -76,4 +76,12 @@ public interface Game {
      * @return the list of plants IDS of the level.
      */
     List<IdConverter.Plants> getAllPlantIDs();
+
+    /**
+     * If there is a plant in that location, it will be removed.
+     * @param row of the plant to be placed
+     * @param col of the plant to be placed
+     * @return true if the plant has been removed
+     */
+    boolean removePlant(int row, int col);
 }

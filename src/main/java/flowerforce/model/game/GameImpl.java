@@ -166,6 +166,21 @@ public class GameImpl implements Game {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean removePlant(int row, int col) {
+        final var positionPlant = Yard.getEntityPosition(row,col);
+        for (var plant : plants) {
+            if (plant.getPosition().equals(positionPlant)) {
+                plants.remove(plant);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * decides whether to generate a sun.
      */
     private void generateSun() {
@@ -235,7 +250,7 @@ public class GameImpl implements Game {
                 if (((Sunflower) plant).isSunGenerated()) {
                     this.sun += SUN_VALUE;
                 }
-            } else {
+            } else if (plant instanceof ShootingPlant){
                 int nZombieOnRow = zombies.stream()
                         .filter(zombie -> plant.getPosition().getY() == zombie.getPosition().getY())
                         .filter(zombie -> plant.getPosition().getX() - Yard.getCellDimension().getWidth() <= zombie.getPosition().getX() )
