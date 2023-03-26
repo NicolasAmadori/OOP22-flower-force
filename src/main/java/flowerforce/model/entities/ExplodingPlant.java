@@ -18,4 +18,10 @@ public interface ExplodingPlant extends Plant {
      * @return the radius of the explosion
      */
     int getRadius();
+
+    /**
+     * 
+     * @return if the plant has exploded
+     */
+    boolean hasExploded();
 }

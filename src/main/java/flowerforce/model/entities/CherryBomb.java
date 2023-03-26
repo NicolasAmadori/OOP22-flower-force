@@ -34,6 +34,7 @@ public class CherryBomb extends AbstractPlant implements ExplodingPlant {
     @Override
     public void explodeOver(List<Zombie> zombieList) {
         zombieList.stream().peek(z -> z.receiveDamage(DAMAGE));
+        this.receiveDamage(this.getHealth());
     }
 
     /**
@@ -42,6 +43,14 @@ public class CherryBomb extends AbstractPlant implements ExplodingPlant {
     @Override
     public int getRadius() {
         return CHERRY_RADIUS;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean hasExploded() {
+        return this.getTimer().isReady();
     }
 
 }
