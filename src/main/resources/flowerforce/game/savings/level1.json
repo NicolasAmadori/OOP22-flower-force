@@ -1,1 +1,1 @@
-{"availableZombies":[],"availablePlants":["SUNFLOWER", "PEASHOOTER"],"coins":150,"row":5,"nZombie":70,"iDLevel":1}
+{"availableZombies":["BASIC", "CONEHEAD"],"availablePlants":["SUNFLOWER", "PEASHOOTER"],"coins":100,"row":5,"nZombie":10,"iDLevel":1, "zombieBoss": "BASIC"}

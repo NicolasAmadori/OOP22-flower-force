@@ -1,4 +1,4 @@
-package flowerforce.common;
+package flowerforce.model.utilities;
 
 /**
  * Represents a generic Timer implementation.

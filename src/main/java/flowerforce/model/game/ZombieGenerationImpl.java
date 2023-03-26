@@ -1,9 +1,9 @@
 package flowerforce.model.game;
 
-import flowerforce.common.TimerImpl;
 import flowerforce.model.entities.IdConverter;
 import flowerforce.model.entities.Zombie;
 import flowerforce.model.entities.ZombieImpl;
+import flowerforce.model.utilities.TimerImpl;
 
 import java.util.*;
 import java.util.stream.Collectors;

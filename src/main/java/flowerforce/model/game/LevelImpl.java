@@ -3,6 +3,7 @@ package flowerforce.model.game;
 import flowerforce.model.entities.IdConverter;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * This is an implementation of {@link Level}.
@@ -14,6 +15,7 @@ public class LevelImpl implements Level {
     private final int coins;
     private final int nZombie;
     private final int iDLevel;
+    private final Optional<IdConverter.Zombies> zombieBoss;
 
     /**
      *
@@ -24,11 +26,13 @@ public class LevelImpl implements Level {
      * @param iD ID of the level
      */
     public LevelImpl(final int iD, final List<IdConverter.Zombies> availableZombies,
-                     final List<IdConverter.Plants> availablePlants, final int coins, final int nZombie) {
+                     final List<IdConverter.Plants> availablePlants, final int coins,
+                     final Optional<IdConverter.Zombies> zombieBoss, final int nZombie) {
         this.coins = coins;
         this.availablePlants = availablePlants;
         this.availableZombies = availableZombies;
         this.nZombie = nZombie;
+        this.zombieBoss = zombieBoss;
         this.iDLevel = iD;
     }
 
@@ -72,5 +76,13 @@ public class LevelImpl implements Level {
     @Override
     public Integer getLevelId() {
         return this.iDLevel;
+    }
+
+    /**
+     * {@inheritDoc}.
+     */
+    @Override
+    public Optional<IdConverter.Zombies> getBossId() {
+        return this.zombieBoss;
     }
 }

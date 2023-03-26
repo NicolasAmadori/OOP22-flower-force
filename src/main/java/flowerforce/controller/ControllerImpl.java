@@ -8,7 +8,7 @@ import flowerforce.model.entities.Zombie;
 import flowerforce.model.game.Game;
 import flowerforce.model.game.World;
 import flowerforce.view.entities.CardView;
-import flowerforce.view.entities.EntityConverter;
+import flowerforce.model.utilities.EntityConverter;
 import flowerforce.view.entities.EntityView;
 import flowerforce.view.game.GameEngine;
 import java.util.HashSet;
