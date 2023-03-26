@@ -1,7 +1,7 @@
 package flowerforce.model.game;
 
-import flowerforce.common.TimerImpl;
 import flowerforce.model.entities.*;
+import flowerforce.model.utilities.TimerImpl;
 import javafx.geometry.Point2D;
 
 import java.util.*;
