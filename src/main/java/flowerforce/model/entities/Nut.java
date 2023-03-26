@@ -9,8 +9,8 @@ import javafx.geometry.Point2D;
  */
 public class Nut extends AbstractPlant {
 
-    private static final int NUT_HEALTH = 5000;
-    private static final int AUTO_DAMAGE = 5;
+    private static final double NUT_HEALTH = 5000.0;
+    private static final double AUTO_DAMAGE = NUT_HEALTH / 1000;
 
     /**
      * 
