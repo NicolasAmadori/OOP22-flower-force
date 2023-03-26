@@ -1,7 +1,7 @@
 package flowerforce.model.entities;
 
-import flowerforce.common.Timer;
 import flowerforce.model.entities.IdConverter.Plants;
+import flowerforce.model.utilities.Timer;
 import javafx.geometry.Point2D;
 
 /**

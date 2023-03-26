@@ -2,9 +2,9 @@ package flowerforce.model.entities;
 
 import java.util.List;
 
-import flowerforce.common.TimerImpl;
 import flowerforce.model.entities.IdConverter.Plants;
 import flowerforce.model.utilities.RenderingInformation;
+import flowerforce.model.utilities.TimerImpl;
 import javafx.geometry.Point2D;
 
 public class CherryBomb extends AbstractPlant implements ExplodingPlant {
