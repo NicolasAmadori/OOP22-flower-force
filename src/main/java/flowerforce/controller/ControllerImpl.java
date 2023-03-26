@@ -109,7 +109,11 @@ public final class ControllerImpl implements Controller {
      */
     @Override
     public Game startNewInfiniteGame() {
-        return null;//TODO:
+        this.game = Optional.of(this.world.createInfiniteGame());
+        checkGame();
+        checkGameEngine();
+        this.gameEngine.get().loadCards(this.getCards());
+        return this.game.get();
     }
 
     @Override
