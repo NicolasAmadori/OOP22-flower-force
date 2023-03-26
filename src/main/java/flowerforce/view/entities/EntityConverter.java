@@ -5,7 +5,6 @@ import flowerforce.model.entities.Bullet;
 import flowerforce.model.entities.IdConverter;
 import flowerforce.model.entities.Plant;
 import flowerforce.model.entities.Zombie;
-import flowerforce.model.game.Yard;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
@@ -29,11 +28,11 @@ public final class EntityConverter {
      * @param viewYardDimension The dimension of the yard of the view
      * @param imageResizeFactor The resize factor to convert entities position
      */
-    public EntityConverter(final Dimension2D viewYardDimension, final double imageResizeFactor) {
+    public EntityConverter(final Dimension2D modelYardDimension, final Dimension2D viewYardDimension, final double imageResizeFactor) {
         this.imageResizeFactor = imageResizeFactor;
 
-        this.yardRatioHeight = Yard.getYardDimension().getHeight() / viewYardDimension.getHeight();
-        this.yardRatioWidth = Yard.getYardDimension().getWidth() / viewYardDimension.getWidth();
+        this.yardRatioHeight = modelYardDimension.getHeight() / viewYardDimension.getHeight();
+        this.yardRatioWidth = modelYardDimension.getWidth() / viewYardDimension.getWidth();
     }
 
     /**
