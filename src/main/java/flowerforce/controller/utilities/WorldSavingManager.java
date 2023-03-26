@@ -2,6 +2,7 @@ package flowerforce.controller.utilities;
 
 import flowerforce.common.ResourceFinder;
 import flowerforce.model.game.World;
+import flowerforce.model.game.WorldImpl;
 import flowerforce.model.game.Player;
 import flowerforce.model.game.PlayerImpl;
 import flowerforce.model.game.Level;
@@ -36,7 +37,7 @@ public final class WorldSavingManager {
 
         final List<Level> levels = loadLevels();
 
-        return new World(p, levels, infiniteLevel);
+        return new WorldImpl(p, levels, infiniteLevel);
     }
 
     /**
