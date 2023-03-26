@@ -23,11 +23,11 @@ import java.util.NoSuchElementException;
  */
 public final class ControllerImpl implements Controller {
 
-    private Optional<GameEngine> gameEngine;
+    private Optional<GameEngine> gameEngine = Optional.empty();
     private final World world;
 
     private EntityConverter entityConverter;
-    private Game game;
+    private Optional<Game> game;
 
     /**
      * Create a new instance of Controller.
@@ -58,6 +58,7 @@ public final class ControllerImpl implements Controller {
     @Override
     public void setGameEngine(final GameEngine gameEngine) {
         this.gameEngine = Optional.ofNullable(gameEngine);
+        checkGameEngine();
         this.entityConverter = new EntityConverter(this.world.getYardDimension(), this.gameEngine.get().getYardSize(), this.gameEngine.get().getImageResizeFactor());
     }
 
@@ -72,8 +73,8 @@ public final class ControllerImpl implements Controller {
      */
     @Override
     public int getSunCounter() {
-        checkGameEngine();
-        return this.game.getSun();
+        checkGame();
+        return this.game.get().getSun();
     }
 
     /**
@@ -81,8 +82,14 @@ public final class ControllerImpl implements Controller {
      */
     @Override
     public boolean placePlant(final int plantId, final int row, final int col) {
-        checkGameEngine();
-        return this.game.placePlant(plantId, row, col);//implement this when game is corrected
+        checkGame();
+        return this.game.get().placePlant(plantId, row, col);
+    }
+
+    @Override
+    public boolean removePlant(int row, int col) {
+        checkGame();
+        return this.game.get().removePlant(row, col);
     }
 
     /**
@@ -90,10 +97,11 @@ public final class ControllerImpl implements Controller {
      */
     @Override
     public Game startNewLevelGame(final int levelId) {
+        this.game = Optional.of(this.world.createLevelGame(levelId));
+        checkGame();
         checkGameEngine();
-        this.game = this.world.createLevelGame(levelId);
         this.gameEngine.get().loadCards(this.getCards());
-        return this.game;
+        return this.game.get();
     }
 
     /**
@@ -106,9 +114,10 @@ public final class ControllerImpl implements Controller {
 
     @Override
     public Set<EntityView> getPlacedEntities() {
-        final Set<Plant> plants = this.game.getPlacedPlants();
-        final Set<Zombie> zombies = this.game.getZombies();
-        final Set<Bullet> bullets = this.game.getBullet();
+        checkGame();
+        final Set<Plant> plants = this.game.get().getPlacedPlants();
+        final Set<Zombie> zombies = this.game.get().getZombies();
+        final Set<Bullet> bullets = this.game.get().getBullet();
 
         final Set<EntityView> output = new HashSet<>();
         plants.forEach(p -> output.add(entityConverter.getEntityView(p)));
@@ -119,8 +128,8 @@ public final class ControllerImpl implements Controller {
     }
     
     private List<CardView> getCards() {
-        checkGameEngine();
-        final List<IdConverter.Plants> plants = this.game.getAllPlantIDs();
+        checkGame();
+        final List<IdConverter.Plants> plants = this.game.get().getAllPlantIDs();
         final List<CardView> cards = new ArrayList<>();
         plants.forEach(p -> cards.add(entityConverter.getCardView(p)));
         return cards;
@@ -128,8 +137,8 @@ public final class ControllerImpl implements Controller {
 
     @Override
     public Set<Integer> getEnabledCards() {
-        checkGameEngine();
-        return this.game.getAvailablePlantsIDs();//uncomment this when game is corrected
+        checkGame();
+        return this.game.get().getAvailablePlantsIDs();//uncomment this when game is corrected
     }
 
     @Override
@@ -145,6 +154,12 @@ public final class ControllerImpl implements Controller {
     private void checkGameEngine() {
         if (this.gameEngine.isEmpty()) {
             throw new NoSuchElementException("GameEngine has not been set.");
+        }
+    }
+
+    private void checkGame() {
+        if (this.game.isEmpty()) {
+            throw new NoSuchElementException("Game has not been started.");
         }
     }
 }

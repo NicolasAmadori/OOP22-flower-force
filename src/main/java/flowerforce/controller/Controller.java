@@ -59,6 +59,8 @@ public interface Controller {
      */
     boolean placePlant(int plantId, int row, int col);
 
+    boolean removePlant(int row, int col);
+
     Set<EntityView> getPlacedEntities();
 
     //List<CardView> getCards();//TODO: remove
