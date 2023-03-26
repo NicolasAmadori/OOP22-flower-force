@@ -1,10 +1,14 @@
-package flowerforce.view.entities;
+package flowerforce.model.utilities;
 
 import flowerforce.common.ResourceFinder;
 import flowerforce.model.entities.Bullet;
 import flowerforce.model.entities.IdConverter;
 import flowerforce.model.entities.Plant;
 import flowerforce.model.entities.Zombie;
+import flowerforce.view.entities.CardView;
+import flowerforce.view.entities.CardViewImpl;
+import flowerforce.view.entities.EntityView;
+import flowerforce.view.entities.EntityViewImpl;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
