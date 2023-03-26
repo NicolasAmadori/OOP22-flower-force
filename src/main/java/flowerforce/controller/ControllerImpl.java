@@ -45,6 +45,16 @@ public final class ControllerImpl implements Controller {
     }
 
     /**
+     * Get the score record the player has obtained.
+     *
+     * @return The integer representing the score record
+     */
+    @Override
+    public int getPlayerScoreRecord() {
+        return this.world.getPlayer().getScoreRecord();
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override

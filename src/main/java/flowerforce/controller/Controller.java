@@ -21,6 +21,12 @@ public interface Controller {
     int getPlayerCoins();
 
     /**
+     * Get the score record the player has obtained.
+     * @return The integer representing the score record
+     */
+    int getPlayerScoreRecord();
+
+    /**
      * Get the id of the last level the player has unlocked.
      * @return The id of the last level unlocked
      */
