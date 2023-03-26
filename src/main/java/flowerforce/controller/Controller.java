@@ -80,4 +80,6 @@ public interface Controller {
     int getTotalRows();
 
     int getTotalColumns();
+
+    void save();
 }

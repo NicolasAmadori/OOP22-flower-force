@@ -166,6 +166,11 @@ public final class ControllerImpl implements Controller {
         return this.world.getColsNum();
     }
 
+    @Override
+    public void save() {
+        WorldSavingManager.save(this.world);
+    }
+
     private void checkGameEngine() {
         if (this.gameEngine.isEmpty()) {
             throw new NoSuchElementException("GameEngine has not been set.");
