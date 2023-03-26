@@ -7,13 +7,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
+import java.net.URL;
+import java.util.*;
 
 import flowerforce.common.ResourceFinder;
 import flowerforce.view.entities.CardView;
 import flowerforce.view.entities.EntityView;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -27,7 +29,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
 
-public final class GameSceneController implements GameEngine {
+public final class GameSceneController implements GameEngine, Initializable {
 
     @FXML private AnchorPane gamePane;
 
@@ -70,7 +72,7 @@ public final class GameSceneController implements GameEngine {
     private static final int HEIGHT = 1080;
     private static final double RIGHTSHIFT_RATIO = 600.0 / 1920.0;
     private static final double DOWNSHIFT_RATIO = 150.0 / 1080.0;
-    private static final double YARDWIDTH_RATIO = 1320.0 / 1920.0;
+    private static final double YARDWIDTH_RATIO = 1314.0 / 1920.0;
     private static final double YARDHEIGHT_RATIO = 880.0 / 1080.0;
     private static final double IMG_RESIZE_FACTOR = 2.0;
     private static final Effect BLOOM_EFFECT = new Bloom(0.65);
@@ -97,6 +99,7 @@ public final class GameSceneController implements GameEngine {
         this.rows = this.application.getController().getTotalRows();
         this.cols = this.application.getController().getTotalColumns();
         this.cellDimension = new Dimension2D(this.yardDimension.getWidth() / this.cols, this.yardDimension.getHeight() / this.rows);
+
     }
 
     /**
@@ -232,7 +235,7 @@ public final class GameSceneController implements GameEngine {
                 }
             } else {
                 c.setEffect(BLACK_WHITE);
-                c.setDisable(true);                
+                c.setDisable(true);
             }
         });
     }
@@ -285,8 +288,6 @@ public final class GameSceneController implements GameEngine {
      */
     @Override
     public void over( final boolean isWon) {
-        // TODO Auto-generated method stub
-        //throw new UnsupportedOperationException("Unimplemented method 'over'");
         this.imageResult.setVisible(true);
         this.imageMenu.setVisible(true);
         this.imageMenu.setDisable(false);
@@ -304,5 +305,20 @@ public final class GameSceneController implements GameEngine {
     @Override
     public double getImageResizeFactor() {
         return IMG_RESIZE_FACTOR;
+    }
+
+    /**
+     * Called to initialize a controller after its root element has been
+     * completely processed.
+     *
+     * @param location  The location used to resolve relative paths for the root object, or
+     *                  {@code null} if the location is not known.
+     * @param resources The resources used to localize the root object, or {@code null} if
+     *                  the root object was not localized.
+     */
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        this.card0.setDisable(false);
+        this.card1.setDisable(false);
     }
 }

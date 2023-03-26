@@ -43,4 +43,17 @@ public interface ZombieFactory {
      */
     Zombie quarterback(Point2D position, Zombies zombieType);
 
+    /**
+     * @param position where it is initially placed
+     * @param zombieType the type of zombie
+     * @return a medium resistance zombie, that starts running after its newspaper gets destroyed
+     */
+    Zombie newspaper(Point2D position, Zombies zombieType);
+
+    /**
+     * @param position where it is initially placed
+     * @param zombieType the type of zombie
+     * @return an enormous zombie, with enormous damage and resistance
+     */
+    Zombie gargantuar(Point2D position, Zombies zombieType);
 }

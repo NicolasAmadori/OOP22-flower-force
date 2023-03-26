@@ -1,8 +1,9 @@
 package flowerforce.model.entities;
 
-import flowerforce.common.Timer;
-import flowerforce.common.TimerImpl;
 import flowerforce.model.entities.IdConverter.Zombies;
+import flowerforce.model.utilities.RenderingInformation;
+import flowerforce.model.utilities.Timer;
+import flowerforce.model.utilities.TimerImpl;
 import javafx.geometry.Point2D;
 
 /**
@@ -10,34 +11,36 @@ import javafx.geometry.Point2D;
  */
 public class ZombieImpl extends AbstractLivingEntity implements Zombie {
 
-    private static final double FREEZE_FACTOR = 0.5;
-    private static final int FREEZE_TIME_UNIT = 10; //updates for each delta unit
-    private static final int EATING_TIME_UNIT = 2;
-    private final int delta;
-    private final int eatingTime;
+    private static final int FREEZE_FACTOR = 2;
+    private static final int FREEZE_WAITING_SECS = 9;
+    private static final int EAT_WAITING_SECS = 1;
+    private static final int FREEZE_WAITING_TICKS = FREEZE_WAITING_SECS * RenderingInformation.getFramesPerSecond();
+    private static final int EAT_WAITING_TICKS = EAT_WAITING_SECS * RenderingInformation.getFramesPerSecond();
     private final double damage;
     private final Timer freezeTimer;
     private final Zombies zombieType;
     private boolean isFrozen;
     private boolean canBite;
+    private int defaultDelta;
+    private int delta;
 
     /** 
-     * @param delta is the space traveled by the zombie every move update
+     * @param defaultDelta is the space traveled by the zombie every move update
      * @param damage given by the zombie
      * @param health of the zombie
      * @param position of the zombie
      * @param zombieType the type of zombie
      */
-    protected ZombieImpl(final int delta, final double damage, final double health, final Point2D position,
+    protected ZombieImpl(final int defaultDelta, final double damage, final double health, final Point2D position,
             final Zombies zombieType) {                
-        super(position, new TimerImpl(delta * EATING_TIME_UNIT), health);
-        this.eatingTime = delta * EATING_TIME_UNIT;
-        this.delta = delta;
+        super(position, new TimerImpl(EAT_WAITING_TICKS), health);
+        this.defaultDelta = defaultDelta;
         this.damage = damage;
-        this.freezeTimer = new TimerImpl(this.delta * FREEZE_TIME_UNIT);
+        this.freezeTimer = new TimerImpl(FREEZE_WAITING_TICKS);
         this.zombieType = zombieType;
         this.isFrozen = false;
         this.canBite = true;
+        this.delta = defaultDelta;
     }
 
     /**
@@ -45,7 +48,7 @@ public class ZombieImpl extends AbstractLivingEntity implements Zombie {
      */
     @Override
     public void move() {
-        super.setPosition(super.getPosition().subtract(this.isFrozen ? (int) (this.delta * FREEZE_FACTOR) : this.delta, 0));
+        super.setPosition(super.getPosition().subtract(this.delta, 0));
     }
 
     /**
@@ -72,8 +75,11 @@ public class ZombieImpl extends AbstractLivingEntity implements Zombie {
      */
     @Override
     public void freeze() {
-        this.isFrozen = true;
-        super.getTimer().setNumCycles((int) (this.eatingTime * FREEZE_FACTOR));
+        if (!this.isFrozen) {
+            this.delta = this.delta <= 1 ? 1 : (int) (this.delta / FREEZE_FACTOR);
+            super.getTimer().setNumCycles(EAT_WAITING_TICKS * FREEZE_FACTOR);
+            this.isFrozen = true;
+        }
     }
 
     /**
@@ -81,9 +87,12 @@ public class ZombieImpl extends AbstractLivingEntity implements Zombie {
      */
     @Override
     public void warmUp() {
-        this.freezeTimer.reset();
-        this.isFrozen = false;
-        super.getTimer().setNumCycles(this.eatingTime);
+        if (this.isFrozen) {
+            this.freezeTimer.reset();
+            this.delta = this.defaultDelta;
+            super.getTimer().setNumCycles(EAT_WAITING_TICKS);
+            this.isFrozen = false;
+        }
     }
 
     /**
@@ -104,6 +113,25 @@ public class ZombieImpl extends AbstractLivingEntity implements Zombie {
     @Override
     public Zombies getZombieType() {
         return this.zombieType;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getDeltaMovement() {
+        return this.delta;
+    }
+
+    /**
+     * This method can be called by subtypes to change the delta (so the velocity) of the zombie
+     * @param newDelta to be set
+     */
+    protected void setDelta(final int newDelta) {
+        if (newDelta >= 1) {
+            this.delta = this.isFrozen ? (int) (newDelta / FREEZE_FACTOR) : newDelta;
+            this.defaultDelta = newDelta;
+        }
     }
 
 }
