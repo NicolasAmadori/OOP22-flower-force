@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 import flowerforce.model.utilities.RenderingInformation;
+import javafx.geometry.Dimension2D;
 
 
 /**
@@ -82,5 +83,29 @@ public class WorldImpl implements World {
     @Override
     public int getRenderingInformations() {
         return RenderingInformation.getFramesPerSecond();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Dimension2D getYardDimension() {
+        return Yard.getYardDimension();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getRowsNum() {
+        return Yard.getRowsNum();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getColsNum() {
+        return Yard.getColsNum();
     }
 }
