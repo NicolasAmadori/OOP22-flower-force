@@ -7,7 +7,7 @@ import flowerforce.model.game.Yard;
  */
 public final class RenderingInformation {
 
-    private static final int FRAMES_PER_SECOND = 15;
+    private static final int FRAMES_PER_SECOND = 30;
 
     private RenderingInformation() {
 
