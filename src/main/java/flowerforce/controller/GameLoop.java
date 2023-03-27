@@ -30,8 +30,7 @@ public final class GameLoop extends AnimationTimer {
     @Override
     public void handle(long now) {
         if (!this.model.isOver()) {
-            final long actualTime = now;
-            final long elapsedTime = actualTime - lastUpdateTime;
+            final long elapsedTime = now - lastUpdateTime;
 
             lastUpdateTime += elapsedTime;
             timeAccumulator += elapsedTime;
