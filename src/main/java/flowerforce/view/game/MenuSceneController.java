@@ -27,8 +27,8 @@ public class MenuSceneController {
      * Sets Player's score in the Menu.
      */
     public void initialize() {
-        final int coins = this.application.getController().getPlayerScoreRecord();
-        this.scoreText.setText(this.scoreText.getText().concat(Integer.toString(coins)));
+        final int score = this.application.getController().getPlayerScoreRecord();
+        this.scoreText.setText(this.scoreText.getText().concat(Integer.toString(score)));
     }
 
     /**
