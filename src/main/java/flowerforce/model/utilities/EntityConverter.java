@@ -86,6 +86,18 @@ public final class EntityConverter {
         return new CardViewImpl(p.getCost(), completeImagePath);
     }
 
+    public void changePlantViewPosition(final EntityView entityView, final Point2D newPosition) {
+        entityView.setPosition(convertPlantPosition(newPosition, entityView.getPlaceableImage().getUrl()));
+    }
+
+    public void changeZombieViewPosition(final EntityView entityView, final Point2D newPosition) {
+        entityView.setPosition(convertZombiePosition(newPosition, entityView.getPlaceableImage().getUrl()));
+    }
+
+    public void changeBulletViewPosition(final EntityView entityView, final Point2D newPosition) {
+        entityView.setPosition(convertBulletPosition(newPosition, entityView.getPlaceableImage().getUrl()));
+    }
+
     private String getName(final String completePackage) {
         final String[] splitted = completePackage.split("\\.");
         return splitted[splitted.length - 1];
