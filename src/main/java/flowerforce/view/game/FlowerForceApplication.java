@@ -50,6 +50,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
     @Override
     public void menu() {
         try {
+            this.controller.save();
             FlowerForceScene sceneClass = new MenuScene(this);
             this.setScene(sceneClass.getScene());
         } catch (Exception e) {
