@@ -42,7 +42,7 @@ public final class EntityConverter {
      * @return The entityView representing the plant
      */
     public EntityView getEntityView(final Plant p) {
-        final String completeImagePath = ResourceFinder.getImagePath(
+        final String completeImagePath = ResourceFinder.getPlantImagePath(
                 p.getPlantType().name().toLowerCase(Locale.getDefault()).concat(IMAGES_EXTENSION));
         final Point2D newPosition = convertPlantPosition(p.getPosition(), completeImagePath);
         return new EntityViewImpl(newPosition, completeImagePath);
@@ -54,7 +54,7 @@ public final class EntityConverter {
      * @return The entityView representing the zombie
      */
     public EntityView getEntityView(final Zombie z) {
-        final String completeImagePath = ResourceFinder.getImagePath(
+        final String completeImagePath = ResourceFinder.getZombieImagePath(
                 z.getZombieType().name().toLowerCase(Locale.getDefault()).concat(IMAGES_EXTENSION));
         final Point2D newPosition = convertZombiePosition(z.getPosition(), completeImagePath);
         return new EntityViewImpl(newPosition, completeImagePath);
@@ -67,7 +67,7 @@ public final class EntityConverter {
      */
     public EntityView getEntityView(final Bullet b) {
         final String bulletName = getName(b.getClass().getName().toLowerCase(Locale.getDefault()));
-        final String completeImagePath = ResourceFinder.getImagePath(bulletName.concat(IMAGES_EXTENSION));
+        final String completeImagePath = ResourceFinder.getBulletImagePath(bulletName.concat(IMAGES_EXTENSION));
         final Point2D newPosition = convertBulletPosition(b.getPosition(), completeImagePath);
         return new EntityViewImpl(newPosition, completeImagePath);
     }
