@@ -144,7 +144,7 @@ public final class ControllerImpl implements Controller {
         plantsToRemove.forEach(p -> this.previousPlant.remove(p));
         plants.forEach(p -> {
             if(this.previousPlant.containsKey(p)) {
-                this.previousPlant.get(p).setPosition(p.getPosition());//TODO: wait for implementationg
+                this.previousPlant.get(p).setPosition(p.getPosition());
             }
             else {
                 this.previousPlant.put(p, this.entityConverter.getEntityView(p));
@@ -162,7 +162,7 @@ public final class ControllerImpl implements Controller {
         zombiesToRemove.forEach(z -> this.previousZombie.remove(z));
         zombies.forEach(z -> {
             if(this.previousZombie.containsKey(z)) {
-                this.previousZombie.get(z).setPosition(z.getPosition());//TODO: wait for implementationg
+                this.previousZombie.get(z).setPosition(z.getPosition());
             }
             else {
                 this.previousZombie.put(z, this.entityConverter.getEntityView(z));
@@ -180,7 +180,7 @@ public final class ControllerImpl implements Controller {
         bulletToRemove.forEach(b -> this.previousBullet.remove(b));
         bullets.forEach(b -> {
             if(this.previousBullet.containsKey(b)) {
-                this.previousBullet.get(b).setPosition(b.getPosition());//TODO: wait for implementationg
+                this.previousBullet.get(b).setPosition(b.getPosition());
             }
             else {
                 this.previousBullet.put(b, this.entityConverter.getEntityView(b));
