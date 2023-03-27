@@ -160,9 +160,9 @@ public class GameImpl implements Game {
      * {@inheritDoc}
      */
     @Override
-    public boolean removePlant(int row, int col) {
+    public boolean removePlant(final int row,final int col) {
         final var positionPlant = Yard.getEntityPosition(row,col);
-        for (var plant : plants) {
+        for (final var plant : plants) {
             if (plant.getPosition().equals(positionPlant)) {
                 plants.remove(plant);
                 return true;
@@ -242,7 +242,7 @@ public class GameImpl implements Game {
                     this.sun += SUN_VALUE;
                 }
             } else if (plant instanceof ShootingPlant){
-                int nZombieOnRow = zombies.stream()
+                final int nZombieOnRow = zombies.stream()
                         .filter(zombie -> plant.getPosition().getY() == zombie.getPosition().getY())
                         .filter(zombie -> plant.getPosition().getX() - Yard.getCellDimension().getWidth() <= zombie.getPosition().getX() )
                         .toList().size();
@@ -265,13 +265,13 @@ public class GameImpl implements Game {
     private void generateZombie() {
         if(remainingZombie != 0 ) {
             if (remainingZombie == 5 && this.level.getBossId().isPresent()) {
-                var boss = this.generateZombie.bossGeneration();
+                final var boss = this.generateZombie.bossGeneration();
                 if (boss.isPresent()) {
                     remainingZombie--;
                     zombies.add(boss.get());
                 }
             }
-            var zombie = generateZombie.zombieGeneration();
+            final var zombie = generateZombie.zombieGeneration();
             if (zombie.isPresent()) {
                 remainingZombie--;
                 zombies.add(zombie.get());
