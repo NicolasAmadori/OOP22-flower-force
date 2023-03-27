@@ -40,6 +40,9 @@ public class TimerImpl implements Timer {
         this.timerCyclesCount = 0;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setNumCycles(final int numCycles) {
         if (this.timerCyclesCount >= numCycles) {
