@@ -75,7 +75,7 @@ public final class EntityConverter {
      * @return The CardView instance with image and cost
      */
     public CardView getCardView(final IdConverter.Plants p) {
-        final String completeImagePath = ResourceFinder.getImagePath(
+        final String completeImagePath = ResourceFinder.getPlantImagePath(
                 p.name().toLowerCase(Locale.getDefault()).concat(CARD_SUFFIX).concat(IMAGES_EXTENSION));
         return new CardViewImpl(p.getCost(), completeImagePath);
     }
