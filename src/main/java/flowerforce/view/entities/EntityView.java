@@ -10,17 +10,17 @@ import javafx.scene.image.Image;
  */
 public interface EntityView {
     /**
-     * @return the position to correctly draw the entity on the {@link GameEngine}
+     * @return the position to correctly draw the entity on the {@link GameEngine}.
      */
     Point2D getPlacingPosition();
 
     /**
-     * @return the image of the entity to show in the field
+     * @return the image of the entity to show in the field.
      */
     Image getPlaceableImage();
 
     /**
-     * @return the ordinal of the entity to show in the field
+     * Set a new position for the entityView.
      */
-    long getOrdinal();
+    void setPosition(Point2D position);
 }

@@ -10,17 +10,15 @@ import java.util.Objects;
  */
 public class EntityViewImpl implements EntityView {
     private final String pathPlaceableImage;
-    private final Point2D position;
-    private final long ordinal;
+    private Point2D position;
 
     /**
      * @param placingPosition position of the entity in the field
      * @param pathPlaceableImage of the entity to show in the field
      */
-    public EntityViewImpl ( final Point2D placingPosition, final String pathPlaceableImage, final long ordinal) {
+    public EntityViewImpl ( final Point2D placingPosition, final String pathPlaceableImage) {
         this.pathPlaceableImage = pathPlaceableImage;
         this.position = placingPosition;
-        this.ordinal = ordinal;
     }
 
     /**
@@ -32,11 +30,11 @@ public class EntityViewImpl implements EntityView {
     }
 
     /**
-     * @return {@inheritDoc}
+     * {@inheritDoc}
      */
     @Override
-    public long getOrdinal() {
-        return this.ordinal;
+    public void setPosition(final Point2D position) {
+        this.position = position;
     }
 
     /**
@@ -45,22 +43,5 @@ public class EntityViewImpl implements EntityView {
     @Override
     public Point2D getPlacingPosition() {
         return this.position;
-    }
-
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || o instanceof EntityViewImpl) {
-            return false;
-        }
-        final EntityViewImpl that = (EntityViewImpl) o;
-        return ordinal == that.ordinal;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(ordinal);
     }
 }
