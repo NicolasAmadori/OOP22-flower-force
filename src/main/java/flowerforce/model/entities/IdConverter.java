@@ -166,6 +166,10 @@ public final class IdConverter {
                 return ZOMBIE_FACTORY.running(pos, zombieType);
             case QUARTERBACK:
                 return ZOMBIE_FACTORY.quarterback(pos, zombieType);
+            case NEWSPAPER:
+                return ZOMBIE_FACTORY.newspaper(pos, zombieType);
+            case GARGANTUAR:
+                return ZOMBIE_FACTORY.gargantuar(pos, zombieType);
             default:
                 throw new IllegalStateException("ERROR: zombie type has not been identified");
         }
