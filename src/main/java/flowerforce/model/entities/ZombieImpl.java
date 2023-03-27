@@ -14,8 +14,8 @@ public class ZombieImpl extends AbstractLivingEntity implements Zombie {
     private static final int FREEZE_FACTOR = 2;
     private static final int FREEZE_WAITING_SECS = 9;
     private static final int EAT_WAITING_SECS = 1;
-    private static final int FREEZE_WAITING_TICKS = FREEZE_WAITING_SECS * RenderingInformation.getFramesPerSecond();
-    private static final int EAT_WAITING_TICKS = EAT_WAITING_SECS * RenderingInformation.getFramesPerSecond();
+    private static final int FREEZE_WAITING_TICKS = RenderingInformation.convertSecondsToCycles(FREEZE_WAITING_SECS);
+    private static final int EAT_WAITING_TICKS = RenderingInformation.convertSecondsToCycles(EAT_WAITING_SECS);
     private final double damage;
     private final Timer freezeTimer;
     private final Zombies zombieType;
@@ -70,13 +70,18 @@ public class ZombieImpl extends AbstractLivingEntity implements Zombie {
         }
     }
 
+    private void freezeDelta() {
+        final int freezeDelta = (int) (this.delta / FREEZE_FACTOR);
+        this.delta = freezeDelta < 1 ? 1 : freezeDelta;
+    }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void freeze() {
         if (!this.isFrozen) {
-            this.delta = this.delta <= 1 ? 1 : (int) (this.delta / FREEZE_FACTOR);
+            this.freezeDelta();
             super.getTimer().setNumCycles(EAT_WAITING_TICKS * FREEZE_FACTOR);
             this.isFrozen = true;
         }
@@ -129,7 +134,10 @@ public class ZombieImpl extends AbstractLivingEntity implements Zombie {
      */
     protected void setDelta(final int newDelta) {
         if (newDelta >= 1) {
-            this.delta = this.isFrozen ? (int) (newDelta / FREEZE_FACTOR) : newDelta;
+            this.delta = newDelta;
+            if (this.isFrozen) {
+                this.freezeDelta();
+            }
             this.defaultDelta = newDelta;
         }
     }

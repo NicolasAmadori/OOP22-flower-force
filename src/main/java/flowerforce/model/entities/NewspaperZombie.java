@@ -8,7 +8,7 @@ import javafx.geometry.Point2D;
  */
 public class NewspaperZombie extends ZombieImpl {
 
-    private static final int ACCELERATE_FACTOR = 4; //4x
+    private static final int ACCELERATE_FACTOR = 3; //3x
     private final int newspaperHealth;
     private final double initialHealth;
     private boolean isRunning;
@@ -23,9 +23,9 @@ public class NewspaperZombie extends ZombieImpl {
      */
     public NewspaperZombie(final int defaultDelta, final double damage, final double health, final Point2D position,
             final Zombies zombieType, final int newspaperHealth) {
-        super(defaultDelta, damage, health, position, zombieType);
+        super(defaultDelta, damage, health + newspaperHealth, position, zombieType);
         this.newspaperHealth = newspaperHealth;
-        this.initialHealth = health;
+        this.initialHealth = health + newspaperHealth;
         this.isRunning = false;
     }
 
