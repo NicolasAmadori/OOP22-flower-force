@@ -42,6 +42,10 @@ public final class GameSceneController implements GameEngine {
 
     @FXML private ImageView card4;
 
+    @FXML private ImageView card5;
+
+    @FXML private ImageView card6;
+
     @FXML private Label lbl0;
 
     @FXML private Label lbl1;
@@ -51,6 +55,10 @@ public final class GameSceneController implements GameEngine {
     @FXML private Label lbl3;
 
     @FXML private Label lbl4;
+
+    @FXML private Label lbl5;
+
+    @FXML private Label lbl6;
 
     @FXML private ImageView imageMenu;
 
@@ -63,8 +71,6 @@ public final class GameSceneController implements GameEngine {
     @FXML private ImageView transparentShovel;
 
     //Garden size: 1920x1080, yard size: 1320x880. Down-shift: 150px, right-shift: 600px.
-    private static final int WIDTH = 1920;
-    private static final int HEIGHT = 1080;
     private static final int YARD_FIRST_X = 600;
     private static final int YARD_FIRST_Y = 150;
     private static final int YARD_WIDTH = 1314;
@@ -96,8 +102,8 @@ public final class GameSceneController implements GameEngine {
      */
     @Override
     public void loadCards(final List<CardView> cardViews) {
-        this.cardLabels.addAll(List.of(lbl0, lbl1, lbl2, lbl3, lbl4));
-        this.cards.addAll(List.of(card0, card1, card2, card3, card4));
+        this.cardLabels.addAll(List.of(lbl0, lbl1, lbl2, lbl3, lbl4, lbl5, lbl6));
+        this.cards.addAll(List.of(card0, card1, card2, card3, card4, card5, card6));
         for (int i = 0; i < cardLabels.size() && i < cards.size(); i++) {
             if (i < cardViews.size()) {
                 this.cards.get(i).setImage(cardViews.get(i).getMenuImage());
