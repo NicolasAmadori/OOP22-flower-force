@@ -35,7 +35,8 @@ public interface World {
     Game createInfiniteGame();
 
     /**
-     * Returns the maximum number of frames per second the game must be set to.
+     * 
+     * @return the maximum number of frames per second the game must be set to.
      */
     int getRenderingInformations();
 
