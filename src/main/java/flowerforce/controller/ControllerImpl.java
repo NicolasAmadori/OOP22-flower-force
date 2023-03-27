@@ -63,6 +63,14 @@ public final class ControllerImpl implements Controller {
      * {@inheritDoc}
      */
     @Override
+    public int getFramesPerSecond() {
+        return this.world.getRenderingInformations();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setGameEngine(final GameEngine gameEngine) {
         this.gameEngine = Optional.ofNullable(gameEngine);
         checkGameEngine();
