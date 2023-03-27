@@ -48,6 +48,14 @@ public final class ControllerImpl implements Controller {
      * {@inheritDoc}
      */
     @Override
+    public int getPlayerScoreRecord() {
+        return this.world.getPlayer().getScoreRecord();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public int getLastUnlockedLevelId() {
         return this.world.getPlayer().getLastUnlockedLevelId();
     }
@@ -62,6 +70,9 @@ public final class ControllerImpl implements Controller {
         this.entityConverter = new EntityConverter(this.world.getYardDimension(), this.gameEngine.get().getYardDimension(), this.gameEngine.get().getImageResizeFactor());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public GameEngine getGameEngine() {
         checkGameEngine();
@@ -153,6 +164,11 @@ public final class ControllerImpl implements Controller {
     @Override
     public int getTotalColumns() {
         return this.world.getColsNum();
+    }
+
+    @Override
+    public void save() {
+        WorldSavingManager.save(this.world);
     }
 
     private void checkGameEngine() {
