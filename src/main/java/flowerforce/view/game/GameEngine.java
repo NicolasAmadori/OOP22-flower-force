@@ -28,12 +28,6 @@ public interface GameEngine {
     void over(boolean isWon);
 
     /**
-     *
-     * @return the factor to resize correctly the entity images
-     */
-    double getImageResizeFactor();
-
-    /**
      * This method should be called as soon as the controller starts a new game.
      * @param cardViews to be loaded into the game
      */
