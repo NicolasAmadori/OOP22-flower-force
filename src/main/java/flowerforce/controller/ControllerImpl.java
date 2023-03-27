@@ -66,7 +66,7 @@ public final class ControllerImpl implements Controller {
     public void setGameEngine(final GameEngine gameEngine) {
         this.gameEngine = Optional.ofNullable(gameEngine);
         checkGameEngine();
-        this.entityConverter = new EntityConverter(this.world.getYardDimension(), this.gameEngine.get().getYardSize(), this.gameEngine.get().getImageResizeFactor());
+        this.entityConverter = new EntityConverter(this.world.getYardDimension(), this.gameEngine.get().getYardDimension(), this.gameEngine.get().getImageResizeFactor());
     }
 
     /**
@@ -136,15 +136,17 @@ public final class ControllerImpl implements Controller {
 
         //region Plants
         final Set<Plant> plantsToRemove = new HashSet<>();
+        //Remove the entities that are no longer there
         this.previousPlant.keySet().forEach(p -> {
             if(!plants.contains(p)) {
                 plantsToRemove.add(p);
             }
         });
         plantsToRemove.forEach(p -> this.previousPlant.remove(p));
+        //Update the position of the EntityView if presents, otherwise EntityView is created
         plants.forEach(p -> {
             if(this.previousPlant.containsKey(p)) {
-                this.previousPlant.get(p).setPosition(p.getPosition());
+                this.entityConverter.changePlantViewPosition(this.previousPlant.get(p), p.getPosition());
             }
             else {
                 this.previousPlant.put(p, this.entityConverter.getEntityView(p));
@@ -162,7 +164,7 @@ public final class ControllerImpl implements Controller {
         zombiesToRemove.forEach(z -> this.previousZombie.remove(z));
         zombies.forEach(z -> {
             if(this.previousZombie.containsKey(z)) {
-                this.previousZombie.get(z).setPosition(z.getPosition());
+                this.entityConverter.changeZombieViewPosition(this.previousZombie.get(z), z.getPosition());
             }
             else {
                 this.previousZombie.put(z, this.entityConverter.getEntityView(z));
@@ -180,7 +182,7 @@ public final class ControllerImpl implements Controller {
         bulletToRemove.forEach(b -> this.previousBullet.remove(b));
         bullets.forEach(b -> {
             if(this.previousBullet.containsKey(b)) {
-                this.previousBullet.get(b).setPosition(b.getPosition());
+                this.entityConverter.changeBulletViewPosition(this.previousBullet.get(b), b.getPosition());
             }
             else {
                 this.previousBullet.put(b, this.entityConverter.getEntityView(b));
@@ -195,7 +197,7 @@ public final class ControllerImpl implements Controller {
 
         return output;
     }
-    
+
     private List<CardView> getCards() {
         checkGame();
         final List<IdConverter.Plants> plants = this.game.get().getAllPlantIDs();
