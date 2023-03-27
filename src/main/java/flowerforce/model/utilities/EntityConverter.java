@@ -19,6 +19,7 @@ import java.util.Locale;
  */
 public final class EntityConverter {
     private static final String IMAGES_EXTENSION = ".png";
+    private static final String CARD_SUFFIX = "_card";
     private final double yardRatioHeight;
 
     private final double yardRatioWidth;
@@ -79,7 +80,7 @@ public final class EntityConverter {
      */
     public CardView getCardView(final IdConverter.Plants p) {
         final String completeImagePath = ResourceFinder.getImagePath(
-                p.name().toLowerCase(Locale.getDefault()).concat(IMAGES_EXTENSION));
+                p.name().toLowerCase(Locale.getDefault()).concat(CARD_SUFFIX).concat(IMAGES_EXTENSION));
         return new CardViewImpl(p.getCost(), completeImagePath);
     }
 
