@@ -11,12 +11,8 @@ import flowerforce.view.entities.CardView;
 import flowerforce.model.utilities.EntityConverter;
 import flowerforce.view.entities.EntityView;
 import flowerforce.view.game.GameEngine;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
+
+import java.util.*;
 
 /**
  * This is an implementation of {@link Controller}.
@@ -28,6 +24,8 @@ public final class ControllerImpl implements Controller {
 
     private EntityConverter entityConverter;
     private Optional<Game> game;
+
+    private Map<Plant, EntityView> previousPlant = new HashMap<>();
 
     /**
      * Create a new instance of Controller.
@@ -134,8 +132,24 @@ public final class ControllerImpl implements Controller {
         final Set<Zombie> zombies = this.game.get().getZombies();
         final Set<Bullet> bullets = this.game.get().getBullet();
 
+        final Set<Plant> plantsToRemove = new HashSet<>();
+        this.previousPlant.keySet().forEach(p -> {
+            if(!plants.contains(p)) {
+                plantsToRemove.add(p);
+            }
+        });
+        plantsToRemove.forEach(p -> this.previousPlant.remove(p));
+        plants.forEach(p -> {
+            if(this.previousPlant.containsKey(p)) {
+                this.previousPlant.get(p).setPosition(p.getPosition());//TODO: wait for implementationg
+            }
+            else {
+                this.previousPlant.put(p, this.entityConverter.getEntityView(p));
+            }
+        });
+        
         final Set<EntityView> output = new HashSet<>();
-        plants.forEach(p -> output.add(entityConverter.getEntityView(p)));
+        this.previousPlant.forEach(p -> output.add(entityConverter.getEntityView(p)));
         zombies.forEach(z -> output.add(entityConverter.getEntityView(z)));
         bullets.forEach(z -> output.add(entityConverter.getEntityView(z)));
 
