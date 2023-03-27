@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public class GameScene extends AbstractFlowerForceScene {
 
-    private static final String FXML_PATH = "flowerforce/game/fxml/Garden.fxml";
+    private static final String FXML_PATH = "flowerforce/game/fxml/Game.fxml";
     private static final String IMAGE_NAME = "Garden.png";
 
     /**

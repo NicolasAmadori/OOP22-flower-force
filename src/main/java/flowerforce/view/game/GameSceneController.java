@@ -1,25 +1,19 @@
 package flowerforce.view.game;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.net.URL;
-import java.util.*;
 
 import flowerforce.common.ResourceFinder;
 import flowerforce.view.entities.CardView;
 import flowerforce.view.entities.EntityView;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.effect.Bloom;
 import javafx.scene.effect.ColorAdjust;
@@ -30,7 +24,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
 
-public final class GameSceneController implements GameEngine, Initializable {
+public final class GameSceneController implements GameEngine {
 
     @FXML private AnchorPane gamePane;
 
@@ -48,6 +42,10 @@ public final class GameSceneController implements GameEngine, Initializable {
 
     @FXML private ImageView card4;
 
+    @FXML private ImageView card5;
+
+    @FXML private ImageView card6;
+
     @FXML private Label lbl0;
 
     @FXML private Label lbl1;
@@ -57,6 +55,10 @@ public final class GameSceneController implements GameEngine, Initializable {
     @FXML private Label lbl3;
 
     @FXML private Label lbl4;
+
+    @FXML private Label lbl5;
+
+    @FXML private Label lbl6;
 
     @FXML private ImageView imageMenu;
 
@@ -69,13 +71,10 @@ public final class GameSceneController implements GameEngine, Initializable {
     @FXML private ImageView transparentShovel;
 
     //Garden size: 1920x1080, yard size: 1320x880. Down-shift: 150px, right-shift: 600px.
-    private static final int WIDTH = 1920;
-    private static final int HEIGHT = 1080;
-    private static final double RIGHTSHIFT_RATIO = 600.0 / 1920.0;
-    private static final double DOWNSHIFT_RATIO = 150.0 / 1080.0;
-    private static final double YARDWIDTH_RATIO = 1314.0 / 1920.0;
-    private static final double YARDHEIGHT_RATIO = 880.0 / 1080.0;
-    private static final double IMG_RESIZE_FACTOR = 2.0;
+    private static final int YARD_FIRST_X = 600;
+    private static final int YARD_FIRST_Y = 150;
+    private static final int YARD_WIDTH = 1314;
+    private static final int YARD_HEIGHT = 880;
     private static final Effect BLOOM_EFFECT = new Bloom(0.65);
     private static final Effect RESET_BLOOM = new Bloom(1);
     private static final Effect BLACK_WHITE = new ColorAdjust(0,-1,0,0);
@@ -86,21 +85,16 @@ public final class GameSceneController implements GameEngine, Initializable {
     private final Map<EntityView, ImageView> drawnEntities = new HashMap<>();
     private final List<ImageView> cards = new LinkedList<>();
     private final List<Label> cardLabels = new LinkedList<>();
-    private final Point2D firstYardPoint;
-    private final Dimension2D yardDimension;
     private final Dimension2D cellDimension;
     private Optional<Integer> cardSelected = Optional.empty();
     private boolean isShovelSelected = false;
 
     public GameSceneController(final FlowerForceApplication application) {
         this.application = application;
-        this.firstYardPoint = new Point2D((int) (WIDTH * RIGHTSHIFT_RATIO), (int) (HEIGHT * DOWNSHIFT_RATIO));
-        this.yardDimension = new Dimension2D((int) (WIDTH * YARDWIDTH_RATIO), (int) (HEIGHT * YARDHEIGHT_RATIO));
         this.application.getController().setGameEngine(this);
         this.rows = this.application.getController().getTotalRows();
         this.cols = this.application.getController().getTotalColumns();
-        this.cellDimension = new Dimension2D(this.yardDimension.getWidth() / this.cols, this.yardDimension.getHeight() / this.rows);
-
+        this.cellDimension = new Dimension2D(YARD_WIDTH / this.cols, YARD_HEIGHT / this.rows);
     }
 
     /**
@@ -108,8 +102,8 @@ public final class GameSceneController implements GameEngine, Initializable {
      */
     @Override
     public void loadCards(final List<CardView> cardViews) {
-        this.cardLabels.addAll(List.of(lbl0, lbl1, lbl2, lbl3, lbl4));
-        this.cards.addAll(List.of(card0, card1, card2, card3, card4));
+        this.cardLabels.addAll(List.of(lbl0, lbl1, lbl2, lbl3, lbl4, lbl5, lbl6));
+        this.cards.addAll(List.of(card0, card1, card2, card3, card4, card5, card6));
         for (int i = 0; i < cardLabels.size() && i < cards.size(); i++) {
             if (i < cardViews.size()) {
                 this.cards.get(i).setImage(cardViews.get(i).getMenuImage());
@@ -158,22 +152,23 @@ public final class GameSceneController implements GameEngine, Initializable {
     }
 
     private boolean isInsideYard(double x, double y) {
-        return x >= this.firstYardPoint.getX() && y >= this.firstYardPoint.getY()
-                && x < this.firstYardPoint.getX() + this.yardDimension.getWidth() 
-                && y < this.firstYardPoint.getY() + this.yardDimension.getHeight();
+        return x >= YARD_FIRST_X && y >= YARD_FIRST_Y
+                && x < YARD_FIRST_X + YARD_WIDTH 
+                && y < YARD_FIRST_Y + YARD_HEIGHT;
     }
 
     @FXML
     void yardClicked(final MouseEvent event) {
         if (isInsideYard(event.getX(), event.getY())) {
+            final int row = this.getRow(event.getY() - YARD_FIRST_Y);
+            final int col = this.getColumn(event.getX() - YARD_FIRST_X);
             if (this.cardSelected.isPresent()) {
-                if (this.application.getController().placePlant(this.cardSelected.get(), this.getRow(event.getY() - this.firstYardPoint.getY()),
-                        this.getColumn(event.getX() - this.firstYardPoint.getX()))) {
+                if (this.application.getController().placePlant(this.cardSelected.get(), row, col)) {
                     this.removeBloomEffect();
                     this.cardSelected = Optional.empty();
                 }
             } else if (this.isShovelSelected) {
-                if (this.application.getController().removePlant(this.getRow(event.getY() - this.firstYardPoint.getY()), this.getColumn(event.getX() - this.firstYardPoint.getX()))) {
+                if (this.application.getController().removePlant(row, col)) {
                     this.removeBloomEffect();
                     this.isShovelSelected = false;
                 }
@@ -189,8 +184,8 @@ public final class GameSceneController implements GameEngine, Initializable {
     @FXML
     void mouseMoved(final MouseEvent event) {
         if ((this.isShovelSelected || this.cardSelected.isPresent()) && isInsideYard(event.getX(), event.getY())) {
-            this.coloredCell.relocate(this.firstYardPoint.getX() + getColumn(event.getX() - this.firstYardPoint.getX()) * this.cellDimension.getWidth(),
-                    this.firstYardPoint.getY() + getRow(event.getY() - this.firstYardPoint.getY()) * this.cellDimension.getHeight());
+            this.coloredCell.relocate(YARD_FIRST_X + getColumn(event.getX() - YARD_FIRST_X) * this.cellDimension.getWidth(),
+                    YARD_FIRST_Y + getRow(event.getY() - YARD_FIRST_Y) * this.cellDimension.getHeight());
             this.coloredCell.setVisible(true);
         } else {
             this.coloredCell.setVisible(false);
@@ -203,11 +198,11 @@ public final class GameSceneController implements GameEngine, Initializable {
     }
 
     private int getRow(final double y) {
-        return getGridIndex(y, this.yardDimension.getHeight(), this.rows);
+        return getGridIndex(y, YARD_HEIGHT, this.rows);
     }
 
     private int getColumn(final double x) {
-        return getGridIndex(x, this.yardDimension.getWidth(), this.cols);
+        return getGridIndex(x, YARD_WIDTH, this.cols);
     }
 
     private int getGridIndex(final double val, final double totalLength, final int nSlices) {
@@ -255,7 +250,10 @@ public final class GameSceneController implements GameEngine, Initializable {
         });
         newEntities.stream()
                 .filter(e -> this.drawnEntities.containsKey(e))
-                .forEach(e -> this.drawnEntities.get(e).relocate(e.getPlacingPosition().getX() + this.firstYardPoint.getX(), e.getPlacingPosition().getY() + this.firstYardPoint.getY()));
+                .forEach(e -> {
+                    this.drawnEntities.get(e).relocate(e.getPlacingPosition().getX() + YARD_FIRST_X, e.getPlacingPosition().getY() + YARD_FIRST_Y);
+                    this.drawnEntities.get(e).setImage(e.getPlaceableImage());
+                });
         newEntities.stream()
                 .filter(e -> !this.drawnEntities.containsKey(e))
                 .forEach(e -> {
@@ -273,11 +271,11 @@ public final class GameSceneController implements GameEngine, Initializable {
     }
 
     private ImageView toImageView(final Image image, final Point2D pos) {
-        ImageView iv = new ImageView(image);
-        iv.relocate(this.firstYardPoint.getX() + pos.getX(), this.firstYardPoint.getY() + pos.getY());
+        final ImageView iv = new ImageView(image);
+        iv.relocate(YARD_FIRST_X + pos.getX(), YARD_FIRST_Y + pos.getY());
         iv.setPreserveRatio(true);
-        iv.setFitWidth(image.getWidth() * IMG_RESIZE_FACTOR);
-        iv.setFitHeight(image.getHeight() * IMG_RESIZE_FACTOR);
+        iv.setFitWidth(image.getWidth());
+        iv.setFitHeight(image.getHeight());
         iv.setMouseTransparent(true);
         return iv;
     }
@@ -287,7 +285,7 @@ public final class GameSceneController implements GameEngine, Initializable {
      */
     @Override
     public Dimension2D getYardDimension() {
-        return this.yardDimension;
+        return new Dimension2D(YARD_WIDTH, YARD_HEIGHT);
     }
 
     /**
@@ -306,28 +304,5 @@ public final class GameSceneController implements GameEngine, Initializable {
         } else {
             imageResult.setImage(new Image(ResourceFinder.getImagePath("loss.png")));
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public double getImageResizeFactor() {
-        return IMG_RESIZE_FACTOR;
-    }
-
-    /**
-     * Called to initialize a controller after its root element has been
-     * completely processed.
-     *
-     * @param location  The location used to resolve relative paths for the root object, or
-     *                  {@code null} if the location is not known.
-     * @param resources The resources used to localize the root object, or {@code null} if
-     *                  the root object was not localized.
-     */
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        this.card0.setDisable(false);
-        this.card1.setDisable(false);
     }
 }
