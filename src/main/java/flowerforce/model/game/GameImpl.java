@@ -31,22 +31,13 @@ public class GameImpl implements Game {
      * @param world the instance of the world starting the game.
      */
     public GameImpl(final Level level, final World world) {
-        final ShootingPlantFactory factory = new ShootingPlantFactoryImpl();
-        final ZombieFactory factoryZ = new ZombieFactoryImpl();
         this.sun = INITIAL_SUN * SUN_VALUE;
         this.level = level;
         this.sunTimer = new TimerImpl(TIME_TO_SPAWN_SUN);
         this.remainingZombie = level.getTotalZombies();
         this.level.getPlantsId().forEach(p -> plantsTimer.put(p, new TimerImpl(p.getUnlockTime())));
         this.world = world;
-        this.generateZombie = new ZombieGenerationImpl(List.of(IdConverter.Zombies.BASIC,IdConverter.Zombies.BUCKETHEAD));
-        this.plants.add(new SunflowerImpl(Yard.getEntityPosition(1,1),IdConverter.Plants.SUNFLOWER));
-        this.plants.add(factory.common(Yard.getEntityPosition(2,0),IdConverter.Plants.PEASHOOTER));
-        this.plants.add(factory.common(Yard.getEntityPosition(1,0),IdConverter.Plants.PEASHOOTER));
-        this.plants.add(factory.common(Yard.getEntityPosition(0,0),IdConverter.Plants.PEASHOOTER));
-        this.plants.add(factory.common(Yard.getEntityPosition(3,0),IdConverter.Plants.PEASHOOTER));
-        this.plants.add(factory.common(Yard.getEntityPosition(4,0),IdConverter.Plants.PEASHOOTER));
-        this.zombies.add(factoryZ.basic(Yard.getEntityPosition(2,8),IdConverter.Zombies.BASIC));
+        this.generateZombie = new ZombieGenerationImpl(this.level);
     }
 
     /**
@@ -272,10 +263,19 @@ public class GameImpl implements Game {
      *
      */
     private void generateZombie() {
-        var zombie = generateZombie.zombieGeneration();
-        if (zombie.isPresent()) {
-            remainingZombie--;
-            zombies.add(zombie.get());
+        if(remainingZombie != 0 ) {
+            if (remainingZombie == 5 && this.level.getBossId().isPresent()) {
+                var boss = this.generateZombie.bossGeneration();
+                if (boss.isPresent()) {
+                    remainingZombie--;
+                    zombies.add(boss.get());
+                }
+            }
+            var zombie = generateZombie.zombieGeneration();
+            if (zombie.isPresent()) {
+                remainingZombie--;
+                zombies.add(zombie.get());
+            }
         }
     }
 
