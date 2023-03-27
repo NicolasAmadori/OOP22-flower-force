@@ -25,20 +25,35 @@ public final class ResourceFinder {
 
     }
 
+    /**
+     * Get the image for a Plant
+     * @param filename the name of the file
+     * @return the absolute path of the plant image
+     */
     public static String getPlantImagePath(final String filename) {
         return getImagePath(PLANTS_FOLDER_NAME + File.separator + filename);
     }
 
+    /**
+     * Get the image for a Zombie
+     * @param filename the name of the file
+     * @return the absolute path of the zombie image
+     */
     public static String getZombieImagePath(final String filename) {
         return getImagePath(ZOMBIES_FOLDER_NAME + File.separator + filename);
     }
 
+    /**
+     * Get the image for a Bullet
+     * @param filename the name of the file
+     * @return the absolute path of the bullet image
+     */
     public static String getBulletImagePath(final String filename) {
         return getImagePath(BULLETS_FOLDER_NAME + File.separator + filename);
     }
 
     /**
-     * Get the complete path of an image.
+     * Get the complete path of a generic image (not plant, zombie or bullet).
      * @param filename The complete name of the image requested
      * @return An optional of the image path, empty if the requested image do not exist in the images folder
      */
