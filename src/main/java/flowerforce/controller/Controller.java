@@ -33,6 +33,12 @@ public interface Controller {
     int getLastUnlockedLevelId();
 
     /**
+     * Get the number of frames per second the game must run.
+     * @return the integer representing the fps number
+     */
+    int getFramesPerSecond();
+
+    /**
      * Start a new game for a specified level.
      * @param levelId The id of the level to play
      */
