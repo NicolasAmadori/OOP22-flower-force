@@ -1,10 +1,7 @@
 package flowerforce.controller;
 
 import flowerforce.controller.utilities.WorldSavingManager;
-import flowerforce.model.entities.Bullet;
-import flowerforce.model.entities.IdConverter;
-import flowerforce.model.entities.Plant;
-import flowerforce.model.entities.Zombie;
+import flowerforce.model.entities.*;
 import flowerforce.model.game.Game;
 import flowerforce.model.game.World;
 import flowerforce.view.entities.CardView;
@@ -26,6 +23,10 @@ public final class ControllerImpl implements Controller {
     private Optional<Game> game;
 
     private Map<Plant, EntityView> previousPlant = new HashMap<>();
+
+    private Map<Zombie, EntityView> previousZombie = new HashMap<>();
+
+    private Map<Bullet, EntityView> previousBullet = new HashMap<>();
 
     /**
      * Create a new instance of Controller.
@@ -132,6 +133,8 @@ public final class ControllerImpl implements Controller {
         final Set<Zombie> zombies = this.game.get().getZombies();
         final Set<Bullet> bullets = this.game.get().getBullet();
 
+
+        //region Plants
         final Set<Plant> plantsToRemove = new HashSet<>();
         this.previousPlant.keySet().forEach(p -> {
             if(!plants.contains(p)) {
@@ -147,11 +150,48 @@ public final class ControllerImpl implements Controller {
                 this.previousPlant.put(p, this.entityConverter.getEntityView(p));
             }
         });
-        
+        //endregion
+
+        //region Zombies
+        final Set<Zombie> zombiesToRemove = new HashSet<>();
+        this.previousZombie.keySet().forEach(z -> {
+            if(!zombies.contains(z)) {
+                zombiesToRemove.add(z);
+            }
+        });
+        zombiesToRemove.forEach(z -> this.previousZombie.remove(z));
+        zombies.forEach(z -> {
+            if(this.previousZombie.containsKey(z)) {
+                this.previousZombie.get(z).setPosition(z.getPosition());//TODO: wait for implementationg
+            }
+            else {
+                this.previousZombie.put(z, this.entityConverter.getEntityView(z));
+            }
+        });
+        //endregion
+
+        //region Bullets
+        final Set<Bullet> bulletToRemove = new HashSet<>();
+        this.previousBullet.keySet().forEach(b -> {
+            if(!bullets.contains(b)) {
+                bulletToRemove.add(b);
+            }
+        });
+        bulletToRemove.forEach(b -> this.previousBullet.remove(b));
+        bullets.forEach(b -> {
+            if(this.previousBullet.containsKey(b)) {
+                this.previousBullet.get(b).setPosition(b.getPosition());//TODO: wait for implementationg
+            }
+            else {
+                this.previousBullet.put(b, this.entityConverter.getEntityView(b));
+            }
+        });
+        //endregion
+
         final Set<EntityView> output = new HashSet<>();
-        this.previousPlant.forEach(p -> output.add(entityConverter.getEntityView(p)));
-        zombies.forEach(z -> output.add(entityConverter.getEntityView(z)));
-        bullets.forEach(z -> output.add(entityConverter.getEntityView(z)));
+        output.addAll(this.previousPlant.values());
+        output.addAll(this.previousZombie.values());
+        output.addAll(this.previousBullet.values());
 
         return output;
     }
