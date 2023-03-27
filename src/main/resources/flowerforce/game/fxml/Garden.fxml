@@ -147,5 +147,10 @@
             </RadialGradient>
          </fill>
       </Rectangle>
+      <ImageView fx:id="imageShovel" fitHeight="142.0" fitWidth="108.0" layoutX="269.0" layoutY="28.0" onMouseClicked="#shovelSelected" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/shovel.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

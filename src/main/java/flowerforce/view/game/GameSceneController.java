@@ -1,15 +1,20 @@
 package flowerforce.view.game;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.net.URL;
 import java.util.*;
 
 import flowerforce.common.ResourceFinder;
 import flowerforce.view.entities.CardView;
+import flowerforce.view.entities.EntityView;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Dimension2D;
@@ -59,6 +64,10 @@ public final class GameSceneController implements GameEngine, Initializable {
 
     @FXML private Rectangle coloredCell;
 
+    @FXML private ImageView imageShovel;
+
+    @FXML private ImageView transparentShovel;
+
     //Garden size: 1920x1080, yard size: 1320x880. Down-shift: 150px, right-shift: 600px.
     private static final int WIDTH = 1920;
     private static final int HEIGHT = 1080;
@@ -74,13 +83,14 @@ public final class GameSceneController implements GameEngine, Initializable {
     private final int rows;
     private final int cols;
     private final FlowerForceApplication application;
-    private final Set<ImageView> drawnEntities = new HashSet<>();
+    private final Map<EntityView, ImageView> drawnEntities = new HashMap<>();
     private final List<ImageView> cards = new LinkedList<>();
     private final List<Label> cardLabels = new LinkedList<>();
     private final Point2D firstYardPoint;
     private final Dimension2D yardDimension;
     private final Dimension2D cellDimension;
     private Optional<Integer> cardSelected = Optional.empty();
+    private boolean isShovelSelected = false;
 
     public GameSceneController(final FlowerForceApplication application) {
         this.application = application;
@@ -116,16 +126,33 @@ public final class GameSceneController implements GameEngine, Initializable {
     }
 
     private void addBloomEffect() {
-        this.cardSelected.ifPresent(i -> this.cards.get(i).setEffect(BLOOM_EFFECT));
+        if (this.isShovelSelected) {
+            this.imageShovel.setEffect(BLOOM_EFFECT);
+        } else {
+            this.cardSelected.ifPresent(i -> this.cards.get(i).setEffect(BLOOM_EFFECT));
+        }
     }
 
     private void removeBloomEffect() {
-        this.cardSelected.ifPresent(i -> this.cards.get(i).setEffect(RESET_BLOOM));
+        if (this.isShovelSelected) {
+            this.imageShovel.setEffect(RESET_BLOOM);
+        } else {
+            this.cardSelected.ifPresent(i -> this.cards.get(i).setEffect(RESET_BLOOM));
+        }
+    }
+
+    @FXML
+    void shovelSelected(final MouseEvent event) {
+        this.removeBloomEffect();
+        this.cardSelected = Optional.empty();
+        this.isShovelSelected = true;
+        this.addBloomEffect();        
     }
 
     @FXML
     void selectCard(final MouseEvent event) {
         this.removeBloomEffect();
+        this.isShovelSelected = false;
         this.cardSelected = Optional.of(cards.indexOf((ImageView) (event.getSource())));
         this.addBloomEffect();
     }
@@ -138,19 +165,31 @@ public final class GameSceneController implements GameEngine, Initializable {
 
     @FXML
     void yardClicked(final MouseEvent event) {
-        if (this.cardSelected.isPresent() && isInsideYard(event.getX(), event.getY())) {
-            System.out.println(getRow(event.getY() - this.firstYardPoint.getY()) + " " + getColumn(event.getX() - this.firstYardPoint.getX())); //TODO: remove
-            this.application.getController().placePlant(this.cardSelected.get(), this.getRow(event.getY() - this.firstYardPoint.getY()),
-                    getColumn(event.getX() - this.firstYardPoint.getX()));
+        if (isInsideYard(event.getX(), event.getY())) {
+            if (this.cardSelected.isPresent()) {
+                if (this.application.getController().placePlant(this.cardSelected.get(), this.getRow(event.getY() - this.firstYardPoint.getY()),
+                        this.getColumn(event.getX() - this.firstYardPoint.getX()))) {
+                    this.removeBloomEffect();
+                    this.cardSelected = Optional.empty();
+                }
+            } else if (this.isShovelSelected) {
+                if (this.application.getController().removePlant(this.getRow(event.getY() - this.firstYardPoint.getY()), this.getColumn(event.getX() - this.firstYardPoint.getX()))) {
+                    this.removeBloomEffect();
+                    this.isShovelSelected = false;
+                }
+            }            
+        } else {
+            this.removeBloomEffect();
+            this.cardSelected = Optional.empty();
+            this.isShovelSelected = false;
         }
-        this.removeBloomEffect();
-        this.cardSelected = Optional.empty();
+        
     }
 
     @FXML
     void mouseMoved(final MouseEvent event) {
-        if (this.cardSelected.isPresent() && isInsideYard(event.getX(), event.getY())) {
-            this.coloredCell.relocate(this.firstYardPoint.getX() + (getColumn(event.getX() - this.firstYardPoint.getX()) * this.cellDimension.getWidth()),
+        if ((this.isShovelSelected || this.cardSelected.isPresent()) && isInsideYard(event.getX(), event.getY())) {
+            this.coloredCell.relocate(this.firstYardPoint.getX() + getColumn(event.getX() - this.firstYardPoint.getX()) * this.cellDimension.getWidth(),
                     this.firstYardPoint.getY() + getRow(event.getY() - this.firstYardPoint.getY()) * this.cellDimension.getHeight());
             this.coloredCell.setVisible(true);
         } else {
@@ -187,8 +226,7 @@ public final class GameSceneController implements GameEngine, Initializable {
     @Override
     public void render() {
         this.enableCards();
-        this.clearDrawnEntities();
-        this.application.getController().getPlacedEntities().forEach(e -> this.drawEntity(e.getPlaceableImage(), e.getPlacingPosition()));
+        this.updateEntities(this.application.getController().getPlacedEntities());        
         this.updateSunCounter();
     }
 
@@ -207,30 +245,48 @@ public final class GameSceneController implements GameEngine, Initializable {
         });
     }
 
-    private void clearDrawnEntities() {
-        this.drawnEntities.forEach(iv -> this.gamePane.getChildren().remove(iv));
-        this.drawnEntities.clear();
+    private void updateEntities(final Set<EntityView> newEntities) {
+        final Set<EntityView> toRemove =  this.drawnEntities.keySet().stream()
+                .filter(e -> !newEntities.contains(e))
+                .collect(Collectors.toSet());
+        toRemove.forEach(e -> {
+            this.gamePane.getChildren().remove(this.drawnEntities.get(e));
+            this.drawnEntities.remove(e);
+        });
+        newEntities.stream()
+                .filter(e -> this.drawnEntities.containsKey(e))
+                .forEach(e -> this.drawnEntities.get(e).relocate(e.getPlacingPosition().getX() + this.firstYardPoint.getX(), e.getPlacingPosition().getY() + this.firstYardPoint.getY()));
+        newEntities.stream()
+                .filter(e -> !this.drawnEntities.containsKey(e))
+                .forEach(e -> {
+                    ImageView iv = toImageView(e.getPlaceableImage(), e.getPlacingPosition());
+                    this.drawnEntities.put(e, iv);
+                    this.gamePane.getChildren().add(iv);
+                });
     }
 
     private void updateSunCounter() {
-        this.lblSunCounter.setText(Integer.toString(this.application.getController().getSunCounter()));
+        final int newSunCounter = this.application.getController().getSunCounter();
+        if (newSunCounter != Integer.parseInt(this.lblSunCounter.getText())) {
+            this.lblSunCounter.setText(Integer.toString(newSunCounter));
+        }
     }
 
-    private void drawEntity(final Image image, final Point2D pos) {
+    private ImageView toImageView(final Image image, final Point2D pos) {
         ImageView iv = new ImageView(image);
         iv.relocate(this.firstYardPoint.getX() + pos.getX(), this.firstYardPoint.getY() + pos.getY());
         iv.setPreserveRatio(true);
         iv.setFitWidth(image.getWidth() * IMG_RESIZE_FACTOR);
         iv.setFitHeight(image.getHeight() * IMG_RESIZE_FACTOR);
-        this.drawnEntities.add(iv);
-        this.gamePane.getChildren().add(iv);
+        iv.setMouseTransparent(true);
+        return iv;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Dimension2D getYardSize() {
+    public Dimension2D getYardDimension() {
         return this.yardDimension;
     }
 
@@ -238,14 +294,16 @@ public final class GameSceneController implements GameEngine, Initializable {
      * {@inheritDoc}
      */
     @Override
-    public void over( final boolean isWon) {
+    public void over(final boolean isWon) {
         this.imageResult.setVisible(true);
         this.imageMenu.setVisible(true);
         this.imageMenu.setDisable(false);
+        this.imageMenu.toFront();
+        this.imageResult.toFront();
+        this.cards.forEach(card -> card.setDisable(true));
         if (isWon) {
             imageResult.setImage(new Image(ResourceFinder.getImagePath("victory.png")));
-        }
-        else {
+        } else {
             imageResult.setImage(new Image(ResourceFinder.getImagePath("loss.png")));
         }
     }
