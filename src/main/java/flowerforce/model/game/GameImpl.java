@@ -160,8 +160,8 @@ public class GameImpl implements Game {
      * {@inheritDoc}
      */
     @Override
-    public boolean removePlant(final int row,final int col) {
-        final var positionPlant = Yard.getEntityPosition(row,col);
+    public boolean removePlant(final int row, final int col) {
+        final var positionPlant = Yard.getEntityPosition(row, col);
         for (final var plant : plants) {
             if (plant.getPosition().equals(positionPlant)) {
                 plants.remove(plant);
@@ -182,13 +182,13 @@ public class GameImpl implements Game {
     }
 
     /**
-     * Check which bullets are still in the field
+     * Check which bullets are still in the field.
      */
     private void updateBullet() {
         this.bullets.forEach(Bullet::move);
         bullets = bullets.stream()
-                .filter(bullet -> bullet.getPosition().getX() <
-                        Yard.getCellDimension().getWidth() * Yard.getColsNum())
+                .filter(bullet -> bullet.getPosition().getX()
+                        < Yard.getCellDimension().getWidth() * Yard.getColsNum())
                 .collect(Collectors.toSet());
     }
 
@@ -241,10 +241,11 @@ public class GameImpl implements Game {
                 if (((Sunflower) plant).isSunGenerated()) {
                     this.sun += SUN_VALUE;
                 }
-            } else if (plant instanceof ShootingPlant){
+            } else if (plant instanceof ShootingPlant) {
                 final int nZombieOnRow = zombies.stream()
                         .filter(zombie -> plant.getPosition().getY() == zombie.getPosition().getY())
-                        .filter(zombie -> plant.getPosition().getX() - Yard.getCellDimension().getWidth() <= zombie.getPosition().getX() )
+                        .filter(zombie -> plant.getPosition().getX()
+                                - Yard.getCellDimension().getWidth() <= zombie.getPosition().getX())
                         .toList().size();
                 if (nZombieOnRow > 0) {
                     final var bullet = ((ShootingPlant) plant).nextBullet();
@@ -263,8 +264,8 @@ public class GameImpl implements Game {
      *
      */
     private void generateZombie() {
-        if(remainingZombie != 0 ) {
-            if (remainingZombie == 5 && this.level.getBossId().isPresent()) {
+        if (remainingZombie != 0) {
+            if (this.level.getBossId().isPresent()) {
                 final var boss = this.generateZombie.bossGeneration();
                 if (boss.isPresent()) {
                     remainingZombie--;
