@@ -6,6 +6,7 @@ import flowerforce.common.ResourceFinder;
 import flowerforce.controller.Controller;
 import flowerforce.controller.ControllerImpl;
 import flowerforce.controller.GameLoop;
+import flowerforce.model.game.Game;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.geometry.Dimension2D;
@@ -64,7 +65,8 @@ public final class FlowerForceApplication extends Application implements FlowerF
             this.sceneClass = new GameScene(this);
             this.setScene(this.sceneClass.getScene());
 
-            AnimationTimer gameLoop = new GameLoop(this.controller.getGameEngine(), this.controller.startNewLevelGame(levelId), this.controller.getFramesPerSecond());
+            Game game = levelId == 0 ? this.controller.startNewInfiniteGame() : this.controller.startNewLevelGame(levelId);
+            AnimationTimer gameLoop = new GameLoop(this.controller.getGameEngine(), game, this.controller.getFramesPerSecond());
             gameLoop.start();
         } catch (Exception e) {
             System.out.println(e);
