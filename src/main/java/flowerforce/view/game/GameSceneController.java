@@ -255,7 +255,7 @@ public final class GameSceneController implements GameEngine, Initializable {
         });
         newEntities.stream()
                 .filter(e -> this.drawnEntities.containsKey(e))
-                .forEach(e -> this.drawnEntities.get(e).relocate(e.getPlacingPosition().getX(), e.getPlacingPosition().getY()));
+                .forEach(e -> this.drawnEntities.get(e).relocate(e.getPlacingPosition().getX() + this.firstYardPoint.getX(), e.getPlacingPosition().getY() + this.firstYardPoint.getY()));
         newEntities.stream()
                 .filter(e -> !this.drawnEntities.containsKey(e))
                 .forEach(e -> {
