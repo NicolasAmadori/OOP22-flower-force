@@ -21,6 +21,12 @@ public interface Controller {
     int getPlayerCoins();
 
     /**
+     * Get the score record the player has obtained.
+     * @return The integer representing the score record
+     */
+    int getPlayerScoreRecord();
+
+    /**
      * Get the id of the last level the player has unlocked.
      * @return The id of the last level unlocked
      */
@@ -43,6 +49,10 @@ public interface Controller {
      */
     void setGameEngine(GameEngine gameEngine);
 
+    /**
+     * Get the game engine instance to call rendering methods.
+     * @return The gameEngine instance
+     */
     GameEngine getGameEngine();
 
     /**
@@ -57,7 +67,9 @@ public interface Controller {
      * @param row The row index in which to place the plant
      * @param col The column index in which to place the plant
      */
-    void placePlant(int plantId, int row, int col);
+    boolean placePlant(int plantId, int row, int col);
+
+    boolean removePlant(int row, int col);
 
     Set<EntityView> getPlacedEntities();
 
@@ -68,4 +80,6 @@ public interface Controller {
     int getTotalRows();
 
     int getTotalColumns();
+
+    void save();
 }

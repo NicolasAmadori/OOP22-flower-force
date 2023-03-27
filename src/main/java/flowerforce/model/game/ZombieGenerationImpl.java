@@ -2,7 +2,6 @@ package flowerforce.model.game;
 
 import flowerforce.model.entities.IdConverter;
 import flowerforce.model.entities.Zombie;
-import flowerforce.model.entities.ZombieImpl;
 import flowerforce.model.utilities.TimerImpl;
 
 import java.util.*;
@@ -21,11 +20,13 @@ public class ZombieGenerationImpl implements ZombieGeneration {
     private int hordeGeneratedZombie = 0;
     private final int zombieMaxDifficulty;
     private final List<IdConverter.Zombies> zombies;
+    private final Optional<IdConverter.Zombies> boss;
     private int levelZombieToSpawn;
     private int prevRow = -1;
-    public ZombieGenerationImpl(final List<IdConverter.Zombies> zombies) {
+    public ZombieGenerationImpl(final Level level) {
         this.zombieTimer = new TimerImpl(timeZombie);
-        this.zombies = zombies;
+        this.zombies = level.getZombiesId();
+        this.boss = level.getBossId();
         this.zombieMaxDifficulty = zombies.stream()
                 .mapToInt(IdConverter.Zombies::getDifficulty)
                 .max()
@@ -35,6 +36,7 @@ public class ZombieGenerationImpl implements ZombieGeneration {
                 .min()
                 .orElse(0);
     }
+
     @Override
     public Optional<Zombie> zombieGeneration() {
         this.zombieTimer.updateState();
@@ -65,6 +67,18 @@ public class ZombieGenerationImpl implements ZombieGeneration {
         return Optional.empty();
     }
 
+    @Override
+    public Optional<Zombie> bossGeneration() {
+        if (zombieTimer.isReady() && boss.isPresent()) {
+            return Optional.of(IdConverter.createZombie(this.boss.get(),
+                    Yard.getEntityPosition(
+                            new Random().nextInt(Yard.getRowsNum()),
+                            Yard.getColsNum()-1
+                    )));
+        }
+        return Optional.empty();
+    }
+
     private Zombie creationZombie() {
         var zombieToSpawn = zombies.stream()
                 .filter(zombie -> zombie.getDifficulty() <= levelZombieToSpawn)
@@ -86,7 +100,7 @@ public class ZombieGenerationImpl implements ZombieGeneration {
                 return IdConverter.createZombie(zombie,
                         Yard.getEntityPosition(
                                 row,
-                                Yard.getColsNum()
+                                Yard.getColsNum()-1
                         ));
             }
         }
