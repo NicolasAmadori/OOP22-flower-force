@@ -66,7 +66,7 @@ public final class ControllerImpl implements Controller {
     public void setGameEngine(final GameEngine gameEngine) {
         this.gameEngine = Optional.ofNullable(gameEngine);
         checkGameEngine();
-        this.entityConverter = new EntityConverter(this.world.getYardDimension(), this.gameEngine.get().getYardDimension(), this.gameEngine.get().getImageResizeFactor());
+        this.entityConverter = new EntityConverter(this.world.getYardDimension(), this.gameEngine.get().getYardDimension());
     }
 
     /**

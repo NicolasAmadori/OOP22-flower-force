@@ -23,16 +23,12 @@ public final class EntityConverter {
     private final double yardRatioHeight;
 
     private final double yardRatioWidth;
-    private final double imageResizeFactor;
 
     /**
      * Create a new instance of EntityConverter, setting all the information.
      * @param viewYardDimension The dimension of the yard of the view
-     * @param imageResizeFactor The resize factor to convert entities position
      */
-    public EntityConverter(final Dimension2D modelYardDimension, final Dimension2D viewYardDimension, final double imageResizeFactor) {
-        this.imageResizeFactor = imageResizeFactor;
-
+    public EntityConverter(final Dimension2D modelYardDimension, final Dimension2D viewYardDimension) {
         this.yardRatioHeight = modelYardDimension.getHeight() / viewYardDimension.getHeight();
         this.yardRatioWidth = modelYardDimension.getWidth() / viewYardDimension.getWidth();
     }
@@ -108,8 +104,8 @@ public final class EntityConverter {
 
         //Get the placing position
         outputPosition = outputPosition.subtract(
-                getImageWidth(imagePath) * this.imageResizeFactor,
-                getImageHeight(imagePath) * this.imageResizeFactor);
+                getImageWidth(imagePath),
+                getImageHeight(imagePath));
 
         return outputPosition;
     }
@@ -123,7 +119,7 @@ public final class EntityConverter {
         //Get the placing position
         outputPosition = outputPosition.subtract(
                 0,
-                getImageHeight(imagePath) * this.imageResizeFactor);
+                getImageHeight(imagePath));
 
         return outputPosition;
     }
@@ -136,8 +132,8 @@ public final class EntityConverter {
 
         //Get the placing position
         outputPosition = outputPosition.subtract(
-                getImageWidth(imagePath) * this.imageResizeFactor,
-                getImageHeight(imagePath) * this.imageResizeFactor);
+                getImageWidth(imagePath),
+                getImageHeight(imagePath));
         return outputPosition.subtract(0, 80); //TODO: modify
 //        return outputPosition;
     }
