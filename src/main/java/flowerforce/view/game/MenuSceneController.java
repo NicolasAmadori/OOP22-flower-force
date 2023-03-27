@@ -4,10 +4,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 /**
  * Manages JavaFX Menu scene.
  */
 public class MenuSceneController {
+
+    @FXML
+    private Text scoreText;
 
     private final FlowerForceApplication application;
 
@@ -17,6 +21,14 @@ public class MenuSceneController {
      */
     public MenuSceneController(final FlowerForceApplication application) {
         this.application = application;
+    }
+
+    /**
+     * Sets Player's score in the Menu
+     */
+    public void initialize() {
+        final int coins = this.application.getController().getPlayerCoins();
+        this.scoreText.setText(this.scoreText.getText().concat(Integer.toString(coins)));
     }
 
     /**

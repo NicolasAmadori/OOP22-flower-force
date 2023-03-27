@@ -1,31 +1,33 @@
 package flowerforce.controller;
 
-import flowerforce.common.ResourceFinder;
-import flowerforce.common.WorldSavingManager;
+import flowerforce.controller.utilities.WorldSavingManager;
 import flowerforce.model.entities.Bullet;
 import flowerforce.model.entities.IdConverter;
 import flowerforce.model.entities.Plant;
 import flowerforce.model.entities.Zombie;
 import flowerforce.model.game.Game;
 import flowerforce.model.game.World;
-import flowerforce.model.game.Yard;
 import flowerforce.view.entities.CardView;
-import flowerforce.view.entities.EntityConverter;
+import flowerforce.model.utilities.EntityConverter;
 import flowerforce.view.entities.EntityView;
 import flowerforce.view.game.GameEngine;
-
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
 /**
  * This is an implementation of {@link Controller}.
  */
 public final class ControllerImpl implements Controller {
 
-    private GameEngine gameEngine;
+    private Optional<GameEngine> gameEngine = Optional.empty();
     private final World world;
 
     private EntityConverter entityConverter;
-    private Game game;
+    private Optional<Game> game;
 
     /**
      * Create a new instance of Controller.
@@ -46,6 +48,14 @@ public final class ControllerImpl implements Controller {
      * {@inheritDoc}
      */
     @Override
+    public int getPlayerScoreRecord() {
+        return this.world.getPlayer().getScoreRecord();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public int getLastUnlockedLevelId() {
         return this.world.getPlayer().getLastUnlockedLevelId();
     }
@@ -55,13 +65,18 @@ public final class ControllerImpl implements Controller {
      */
     @Override
     public void setGameEngine(final GameEngine gameEngine) {
-        this.gameEngine = gameEngine;
-        this.entityConverter = new EntityConverter(this.gameEngine.getYardSize(), this.gameEngine.getImageResizeFactor());
+        this.gameEngine = Optional.ofNullable(gameEngine);
+        checkGameEngine();
+        this.entityConverter = new EntityConverter(this.world.getYardDimension(), this.gameEngine.get().getYardSize(), this.gameEngine.get().getImageResizeFactor());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public GameEngine getGameEngine() {
-        return this.gameEngine;//TODO: add controll
+        checkGameEngine();
+        return this.gameEngine.get();
     }
 
     /**
@@ -69,20 +84,23 @@ public final class ControllerImpl implements Controller {
      */
     @Override
     public int getSunCounter() {
-        if (this.game != null) {
-            return this.game.getSun();
-        }
-        return 0;
+        checkGame();
+        return this.game.get().getSun();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void placePlant(final int plantId, final int row, final int col) {
-        if(this.game != null) {
-            this.game.placePlant(plantId, row, col);//implement this when game is corrected
-        }
+    public boolean placePlant(final int plantId, final int row, final int col) {
+        checkGame();
+        return this.game.get().placePlant(plantId, row, col);
+    }
+
+    @Override
+    public boolean removePlant(int row, int col) {
+        checkGame();
+        return this.game.get().removePlant(row, col);
     }
 
     /**
@@ -90,9 +108,11 @@ public final class ControllerImpl implements Controller {
      */
     @Override
     public Game startNewLevelGame(final int levelId) {
-        this.game = this.world.createLevelGame(levelId);
-        this.gameEngine.loadCards(this.getCards());
-        return this.game;
+        this.game = Optional.of(this.world.createLevelGame(levelId));
+        checkGame();
+        checkGameEngine();
+        this.gameEngine.get().loadCards(this.getCards());
+        return this.game.get();
     }
 
     /**
@@ -100,14 +120,19 @@ public final class ControllerImpl implements Controller {
      */
     @Override
     public Game startNewInfiniteGame() {
-        return null;//TODO:
+        this.game = Optional.of(this.world.createInfiniteGame());
+        checkGame();
+        checkGameEngine();
+        this.gameEngine.get().loadCards(this.getCards());
+        return this.game.get();
     }
 
     @Override
     public Set<EntityView> getPlacedEntities() {
-        final Set<Plant> plants = this.game.getPlacedPlants();
-        final Set<Zombie> zombies = this.game.getZombies();
-        final Set<Bullet> bullets = this.game.getBullet();
+        checkGame();
+        final Set<Plant> plants = this.game.get().getPlacedPlants();
+        final Set<Zombie> zombies = this.game.get().getZombies();
+        final Set<Bullet> bullets = this.game.get().getBullet();
 
         final Set<EntityView> output = new HashSet<>();
         plants.forEach(p -> output.add(entityConverter.getEntityView(p)));
@@ -118,31 +143,43 @@ public final class ControllerImpl implements Controller {
     }
     
     private List<CardView> getCards() {
-        if(game != null) {
-            final List<IdConverter.Plants> plants = this.game.getAllPlantIDs();
-            final List<CardView> cards = new ArrayList<>();
-            plants.forEach(p -> cards.add(entityConverter.getCardView(p)));
-            return cards;
-        }
-        return new ArrayList<>();
+        checkGame();
+        final List<IdConverter.Plants> plants = this.game.get().getAllPlantIDs();
+        final List<CardView> cards = new ArrayList<>();
+        plants.forEach(p -> cards.add(entityConverter.getCardView(p)));
+        return cards;
     }
 
     @Override
     public Set<Integer> getEnabledCards() {
-        if(this.game != null) {
-            return this.game.getAvailablePlantsIDs();//uncomment this when game is corrected
-        }
-        return Set.of();
+        checkGame();
+        return this.game.get().getAvailablePlantsIDs();//uncomment this when game is corrected
     }
 
     @Override
     public int getTotalRows() {
-        return Yard.getRowsNum();
+        return this.world.getRowsNum();
     }
 
     @Override
     public int getTotalColumns() {
-        return Yard.getColsNum();
+        return this.world.getColsNum();
     }
 
+    @Override
+    public void save() {
+        WorldSavingManager.save(this.world);
+    }
+
+    private void checkGameEngine() {
+        if (this.gameEngine.isEmpty()) {
+            throw new NoSuchElementException("GameEngine has not been set.");
+        }
+    }
+
+    private void checkGame() {
+        if (this.game.isEmpty()) {
+            throw new NoSuchElementException("Game has not been started.");
+        }
+    }
 }

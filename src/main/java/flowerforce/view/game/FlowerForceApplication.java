@@ -1,8 +1,8 @@
 package flowerforce.view.game;
 
-import java.io.File;
 import java.io.IOException;
 
+import flowerforce.common.ResourceFinder;
 import flowerforce.controller.Controller;
 import flowerforce.controller.ControllerImpl;
 import flowerforce.controller.GameLoop;
@@ -27,8 +27,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
 
     private Controller controller;//The controller of the game
 
-    //TODO: use generic separators "/" "\"
-    private static final String GAMEICON_PATH = "flowerforce/icon.png";
+    private static final String GAMEICON_NAME = "icon.png";
     private Stage stage;
     private FlowerForceScene sceneClass; 
 
@@ -40,7 +39,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
         //this.stage.setFullScreen(true);
         this.stage.setResizable(false);
         this.stage.setTitle("Flower Force");
-        this.stage.getIcons().add(new Image(GAMEICON_PATH));
+        this.stage.getIcons().add(new Image(ResourceFinder.getImagePath(GAMEICON_NAME)));
         this.stage.setOnCloseRequest(e -> {
             Platform.exit();
             System.exit(0);
@@ -51,6 +50,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
     @Override
     public void menu() {
         try {
+            this.controller.save();
             FlowerForceScene sceneClass = new MenuScene(this);
             this.setScene(sceneClass.getScene());
         } catch (Exception e) {
@@ -64,7 +64,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
             this.sceneClass = new GameScene(this);
             this.setScene(this.sceneClass.getScene());
 
-            AnimationTimer gameLoop = new GameLoop(this.controller.getGameEngine(), this.controller.startNewLevelGame(levelId));
+            AnimationTimer gameLoop = new GameLoop(this.controller.getGameEngine(), this.controller.startNewLevelGame(levelId), 30);//TODO: use world method instead of 30
             gameLoop.start();
         } catch (Exception e) {
             System.out.println(e);
@@ -127,8 +127,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
      * @return a Dimension2D contaning image's dimensions
      */
     public static Dimension2D getImgDimensions(final String imgName) {
-        final String imgPath = "flowerforce" + File.separator + "game" + File.separator + "images" + File.separator + imgName;
-        final Image image = new Image(imgPath);
+        final Image image = new Image(ResourceFinder.getImagePath(imgName));
         //image's dimensions
         return new Dimension2D(image.getWidth(), image.getHeight());
     }

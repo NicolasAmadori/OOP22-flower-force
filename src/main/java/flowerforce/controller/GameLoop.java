@@ -6,11 +6,10 @@ import javafx.animation.AnimationTimer;
 
 public final class GameLoop extends AnimationTimer {
 
+    private static final long SECOND_IN_MILLISECOND = 1_000_000_000;
     private final GameEngine gameEngine;
     private final Game model;
-    private static final int FPS = 60;
-    private static final long TIME_SLICE = 1_000_000_000 / FPS;
-
+    private final long timeSlice;
     private long lastUpdateTime;
     private long timeAccumulator = 0;
     private Boolean updated = false;
@@ -20,10 +19,11 @@ public final class GameLoop extends AnimationTimer {
      * @param gameEngine The gameEngine to render on the view
      * @param model The GameModel to get the game information
      */
-    public GameLoop(final GameEngine gameEngine, final Game model) {
+    public GameLoop(final GameEngine gameEngine, final Game model, final int framesPerSecond) {
         super();
         this.gameEngine = gameEngine;
         this.model = model;
+        this.timeSlice = SECOND_IN_MILLISECOND / framesPerSecond;
         lastUpdateTime = System.nanoTime();
     }
 
@@ -36,10 +36,10 @@ public final class GameLoop extends AnimationTimer {
             lastUpdateTime += elapsedTime;
             timeAccumulator += elapsedTime;
 
-            while (timeAccumulator > TIME_SLICE) {
+            while (timeAccumulator > timeSlice) {
                 this.model.update();
                 updated = true;
-                timeAccumulator -= TIME_SLICE;
+                timeAccumulator -= timeSlice;
             }
 
             if (updated) {

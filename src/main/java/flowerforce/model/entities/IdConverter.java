@@ -1,5 +1,6 @@
 package flowerforce.model.entities;
 
+import flowerforce.model.utilities.RenderingInformation;
 import javafx.geometry.Point2D;
 
 /**
@@ -7,7 +8,12 @@ import javafx.geometry.Point2D;
  */
 public final class IdConverter {
 
-    private static final int SHORT_TIME = 300;
+    private static final double FAST_RECHARGE_SECS = 7.5;
+    private static final double SLOW_RECHARGE_SECS = 30;
+    private static final double VERY_SLOW_RECHARGE_SECS = 30;
+    private static final int FAST_RECHARGE_TICKS = (int) (FAST_RECHARGE_SECS * RenderingInformation.getFramesPerSecond());
+    private static final int SLOW_RECHARGE_TICKS = (int) (SLOW_RECHARGE_SECS * RenderingInformation.getFramesPerSecond());
+    private static final int VERY_SLOW_RECHARGE_TICKS = (int) (VERY_SLOW_RECHARGE_SECS * RenderingInformation.getFramesPerSecond());
     private static final ZombieFactory ZOMBIE_FACTORY = new ZombieFactoryImpl();
     private static final ShootingPlantFactory SHOOTING_PLANT_FACTORY = new ShootingPlantFactoryImpl();
 
@@ -21,23 +27,31 @@ public final class IdConverter {
         /**
          * Produces suns.
          */
-        SUNFLOWER(50, SHORT_TIME),
+        SUNFLOWER(50, FAST_RECHARGE_TICKS),
         /**
          * Shoots standard bullets.
          */
-        PEASHOOTER(100, SHORT_TIME),
+        PEASHOOTER(100, FAST_RECHARGE_TICKS),
         /**
          * Shoots special bullets that freeze zombies.
          */
-        SNOWSHOOTER(175, SHORT_TIME),
+        SNOWSHOOTER(175, FAST_RECHARGE_TICKS),
         /**
          * Shoots standard bullets with a high firing rate.
          */
-        FASTSHOOTER(225, SHORT_TIME),
+        FASTSHOOTER(225, FAST_RECHARGE_TICKS),
         /**
          * Shoots special bullets that unfreeze zombies but gives them higher damage. 
          */
-        FIRESHOOTER(175, SHORT_TIME);
+        FIRESHOOTER(175, FAST_RECHARGE_TICKS),
+        /**
+         * Takes damage protecting other plants.
+         */
+        WALLNUT(50, SLOW_RECHARGE_TICKS),
+        /**
+         * Explodes giving a very high damage to all zombies inside a certain range.
+         */
+        CHERRYBOMB(150, VERY_SLOW_RECHARGE_TICKS);
 
         private final int cost;
         private final int unlockTime;
@@ -71,23 +85,31 @@ public final class IdConverter {
         /**
          * Basic zombie, with default health and velocity.
          */
-        BASIC(0),
+        BASIC(1),
         /**
          * Medium resistance zombie.
          */
-        CONEHEAD(1),
+        CONEHEAD(2),
         /**
          * High resistance zombie.
          */
-        BUCKETHEAD(2),
+        BUCKETHEAD(4),
         /**
          * High velocity zombie.
          */
-        RUNNER(1),
+        RUNNER(3),
         /**
          * High resistance and running zombie.
          */
-        QUARTERBACK(3);
+        QUARTERBACK(5),
+        /**
+         * Medium resistance zombie, starts running after its newspaper gets destroyed.
+         */
+        NEWSPAPER(3),
+        /**
+         * Enormous resistance zombie, with an enormous damage.
+         */
+        GARGANTUAR(10);
 
         private final int difficulty;
 

@@ -7,14 +7,14 @@ import javafx.geometry.Point2D;
  */
 public class FireBullet extends AbstractBullet {
 
-    private static final double ADDITIONAL_DAMAGE = 10.0;
+    private static final double ADDITIONAL_DAMAGE = AbstractBullet.getStandardDamage() / 2;
 
     /**
      * 
      * @param pos the position to place the bullet in
      */
     public FireBullet(final Point2D pos) {
-        super(pos, getStandardDamage() + ADDITIONAL_DAMAGE);
+        super(pos, AbstractBullet.getStandardDamage() + ADDITIONAL_DAMAGE);
     }
 
     /**
