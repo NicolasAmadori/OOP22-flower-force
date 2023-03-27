@@ -245,11 +245,21 @@ public class GameImpl implements Game {
                 final int nZombieOnRow = zombies.stream()
                         .filter(zombie -> plant.getPosition().getY() == zombie.getPosition().getY())
                         .filter(zombie -> plant.getPosition().getX()
-                                - Yard.getCellDimension().getWidth() <= zombie.getPosition().getX())
+                                - Yard.getCellDimension().getWidth() / 2 <= zombie.getPosition().getX())
                         .toList().size();
                 if (nZombieOnRow > 0) {
                     final var bullet = ((ShootingPlant) plant).nextBullet();
                     bullet.ifPresent(b -> bullets.add(b));
+                }
+            } else if (plant instanceof ExplodingPlant) {
+                if (((ExplodingPlant) plant).hasExploded()) {
+                    ((ExplodingPlant) plant).explodeOver(zombies.stream()
+                            .filter(zombie -> zombie.getPosition().getY() == plant.getPosition().getY())
+                            .filter(zombie -> zombie.getPosition().getX() - ((ExplodingPlant) plant).getRadius()
+                            > plant.getPosition().getX())
+                            .filter(zombie -> zombie.getPosition().getX() - ((ExplodingPlant) plant).getRadius()
+                                    > plant.getPosition().getX())
+                            .toList());
                 }
             }
         }
@@ -265,19 +275,19 @@ public class GameImpl implements Game {
      */
     private void generateZombie() {
         if (remainingZombie != 0) {
-            if (this.level.getBossId().isPresent()) {
+            final var zombie = generateZombie.zombieGeneration();
+            if (zombie.isPresent()) {
+                remainingZombie--;
+                zombies.add(zombie.get());
+            }
+            if (this.level.getBossId().isPresent() && remainingZombie == 0) {
                 final var boss = this.generateZombie.bossGeneration();
                 if (boss.isPresent()) {
                     remainingZombie--;
                     zombies.add(boss.get());
                 }
             }
-            final var zombie = generateZombie.zombieGeneration();
-            if (zombie.isPresent()) {
-                remainingZombie--;
-                zombies.add(zombie.get());
-            }
         }
-    }
 
+    }
 }

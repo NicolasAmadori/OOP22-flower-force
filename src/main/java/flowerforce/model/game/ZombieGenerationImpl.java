@@ -14,7 +14,7 @@ public class ZombieGenerationImpl implements ZombieGeneration {
     private static final int MIN_TIME_TO_SPAWN_ZOMBIE = 150;
     private static final int TIME_TO_SPAWN_HORDE_ZOMBIE = 30;
     private static final int START_TIME_TO_SPAWN_ZOMBIE = 300;
-    private static final int START_NUMBER_ZOMBIE_IN_HORDE = 300;
+    private static final int START_NUMBER_ZOMBIE_IN_HORDE = 5;
     private final TimerImpl zombieTimer;
     private int timeZombie = START_TIME_TO_SPAWN_ZOMBIE;
     private int hordeZombie = START_NUMBER_ZOMBIE_IN_HORDE;
@@ -48,7 +48,7 @@ public class ZombieGenerationImpl implements ZombieGeneration {
                 if (hordeGeneratedZombie == hordeZombie) {
                     hordeGeneratedZombie = 0;
                     if (levelZombieToSpawn < zombieMaxDifficulty) {
-                        levelZombieToSpawn++;
+                        levelZombieToSpawn += levelZombieToSpawn;
                     }
                     if (hordeZombie + INC_ZOMBIE_HORDE < MAX_ZOMBIE_TO_SPAWN_HORDE) {
                         hordeZombie += INC_ZOMBIE_HORDE;
@@ -71,7 +71,7 @@ public class ZombieGenerationImpl implements ZombieGeneration {
 
     @Override
     public Optional<Zombie> bossGeneration() {
-        if (zombieTimer.isReady() && boss.isPresent()) {
+        if (boss.isPresent()) {
             return Optional.of(IdConverter.createZombie(this.boss.get(),
                     Yard.getEntityPosition(
                             new Random().nextInt(Yard.getRowsNum()),
@@ -87,7 +87,7 @@ public class ZombieGenerationImpl implements ZombieGeneration {
                 .collect(Collectors.toSet());
 
         int randomValue = new Random().nextInt(zombieToSpawn.stream()
-                .mapToInt(IdConverter.Zombies::getDifficulty)
+                .mapToInt(z -> zombieMaxDifficulty - z.getDifficulty() + 1 )
                 .sum() + 1);
 
         int row;
