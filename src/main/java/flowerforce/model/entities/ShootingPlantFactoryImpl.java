@@ -16,6 +16,8 @@ public class ShootingPlantFactoryImpl implements ShootingPlantFactory {
     );
     private static final double STANDARD_SHOOTER_HEALTH = 300.0;
 
+    private final BulletFactory bulletFactory = new BulletFactoryImpl();
+
     /**
      * {@inheritDoc}
      */
@@ -25,7 +27,7 @@ public class ShootingPlantFactoryImpl implements ShootingPlantFactory {
             pos,
             new TimerImpl(STANDARD_SHOOTING_TIME),
             STANDARD_SHOOTER_HEALTH,
-            StandardBullet.class,
+            () -> this.bulletFactory.createStandardBullet(getBulletPos(pos)),
             plantType
         );
     }
@@ -39,7 +41,7 @@ public class ShootingPlantFactoryImpl implements ShootingPlantFactory {
             pos,
             new TimerImpl(STANDARD_SHOOTING_TIME),
             STANDARD_SHOOTER_HEALTH,
-            SnowBullet.class,
+            () -> this.bulletFactory.createSnowdBullet(getBulletPos(pos)),
             plantType
         );
     }
@@ -53,7 +55,7 @@ public class ShootingPlantFactoryImpl implements ShootingPlantFactory {
             pos,
             new TimerImpl(STANDARD_SHOOTING_TIME),
             STANDARD_SHOOTER_HEALTH,
-            FireBullet.class,
+            () -> this.bulletFactory.createFireBullet(getBulletPos(pos)),
             plantType
         );
     }
@@ -67,9 +69,13 @@ public class ShootingPlantFactoryImpl implements ShootingPlantFactory {
             pos,
             new TimerImpl(STANDARD_SHOOTING_TIME / 2),
             STANDARD_SHOOTER_HEALTH,
-            StandardBullet.class,
+            () -> this.bulletFactory.createStandardBullet(getBulletPos(pos)),
             plantType
         );
+    }
+
+    private static Point2D getBulletPos(final Point2D plantPos) {
+        return new Point2D(plantPos.getX() + 1, plantPos.getY());
     }
 
 }
