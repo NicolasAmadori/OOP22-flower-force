@@ -90,7 +90,7 @@ public final class EntityConverter {
         final String[] splitted = completePackage.split("\\.");
         return splitted[splitted.length - 1];
     }
-    private Point2D convertPlantPosition(final Point2D originalPosition, final String imagePath) {
+    public Point2D convertPlantPosition(final Point2D originalPosition, final String imagePath) {
         //Convert the model position multiplying for the yardSizeFactor
         Point2D outputPosition = new Point2D(
                 originalPosition.getX() * this.yardRatioWidth,
@@ -104,7 +104,7 @@ public final class EntityConverter {
         return outputPosition;
     }
 
-    private Point2D convertZombiePosition(final Point2D originalPosition, final String imagePath) {
+    public Point2D convertZombiePosition(final Point2D originalPosition, final String imagePath) {
         //Convert the model position multiplying for the yardSizeFactor
         Point2D outputPosition = new Point2D(
                 originalPosition.getX() * this.yardRatioWidth,
@@ -118,7 +118,7 @@ public final class EntityConverter {
         return outputPosition;
     }
 
-    private Point2D convertBulletPosition(final Point2D originalPosition, final String imagePath) {
+    public Point2D convertBulletPosition(final Point2D originalPosition, final String imagePath) {
         //Convert the model position multiplying for the yardSizeFactor
         Point2D outputPosition = new Point2D(
                 originalPosition.getX() * this.yardRatioWidth,
