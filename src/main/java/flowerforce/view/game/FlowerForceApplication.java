@@ -36,15 +36,14 @@ public final class FlowerForceApplication extends Application implements FlowerF
     public void start(final Stage primaryStage) throws Exception {
         this.stage = primaryStage;
         this.controller = new ControllerImpl();//Instantiate the Controller
-        //TODO: setStageSize()
-        //this.stage.setFullScreen(true);
         this.stage.setResizable(false);
         this.stage.getIcons().add(new Image(ResourceFinder.getImagePath(GAMEICON_NAME)));
         this.stage.setOnCloseRequest(e -> {
             Platform.exit();
             System.exit(0);
         });
-        this.menu();
+//        this.menu();
+        this.howToPlay();
     }
 
     @Override
