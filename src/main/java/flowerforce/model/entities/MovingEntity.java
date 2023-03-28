@@ -12,8 +12,8 @@ public interface MovingEntity extends Entity {
 
     /**
      * 
-     * @return the number of cells each entity moves every game loop cycle.
+     * @return the number of positions each entity moves every game loop cycle.
      */
-    int getDeltaMovement();
+    double getDeltaMovement();
 
 }
