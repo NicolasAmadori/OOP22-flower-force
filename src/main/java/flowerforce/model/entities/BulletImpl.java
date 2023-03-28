@@ -1,30 +1,39 @@
 package flowerforce.model.entities;
 
-import flowerforce.model.game.Yard;
+import java.util.Optional;
+import java.util.function.Consumer;
+
 import flowerforce.model.utilities.RenderingInformation;
 import javafx.geometry.Point2D;
 
 /**
  * Models a generic bullet.
  */
-public abstract class AbstractBullet extends AbstractEntity implements Bullet {
+public class BulletImpl extends AbstractEntity implements Bullet {
 
-    private static final double STANDARD_DAMAGE = 20.0;
-    private static final double SECS_PER_CELL = 0.5;
-    private static final int TICKS_PER_CELL = (int) (SECS_PER_CELL * RenderingInformation.getFramesPerSecond());
-    private static final int DELTA = (int) (Yard.getCellDimension().getWidth() / TICKS_PER_CELL);
+    private static final double SECS_PER_CELL = 0.2;
+    private static final double DELTA = RenderingInformation.getDeltaFromSecondsPerCell(SECS_PER_CELL);
+
+    private final int damage;
     private boolean hasHit;
-    private final double damage;
+    private Optional<Consumer<Zombie>> actionOverZombie = Optional.empty();
 
     /**
      * 
      * @param pos the initial position to place the bullet in
      * @param damage the damage that the bullet does to zombies
      */
-    protected AbstractBullet(final Point2D pos, final double damage) {
+    public BulletImpl(final Point2D pos, final int damage) {
         super(pos);
         this.damage = damage;
     }
+
+
+    public BulletImpl(final Point2D pos, final int damage, final Consumer<Zombie> action) {
+        this(pos, damage);
+        this.actionOverZombie = Optional.of(action);
+    }
+
 
     /**
      * {@inheritDoc}
@@ -49,21 +58,14 @@ public abstract class AbstractBullet extends AbstractEntity implements Bullet {
     public void hit(final Zombie zombie) {
         this.hasHit = true;
         zombie.receiveDamage(this.damage);
-    }
-
-    /**
-     * 
-     * @return the damage that a generic bullet does to a zombie.
-     */
-    protected static double getStandardDamage() {
-        return STANDARD_DAMAGE;
+        this.actionOverZombie.ifPresent(x -> x.accept(zombie));
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public int getDeltaMovement() {
+    public double getDeltaMovement() {
         return DELTA;
     }
 

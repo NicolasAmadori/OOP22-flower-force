@@ -14,15 +14,15 @@ public class ZombieImpl extends AbstractLivingEntity implements Zombie {
     private static final int FREEZE_FACTOR = 2;
     private static final int FREEZE_WAITING_SECS = 9;
     private static final int EAT_WAITING_SECS = 1;
-    private static final int FREEZE_WAITING_TICKS = FREEZE_WAITING_SECS * RenderingInformation.getFramesPerSecond();
-    private static final int EAT_WAITING_TICKS = EAT_WAITING_SECS * RenderingInformation.getFramesPerSecond();
-    private final double damage;
+    private static final int FREEZE_WAITING_TICKS = RenderingInformation.convertSecondsToCycles(FREEZE_WAITING_SECS);
+    private static final int EAT_WAITING_TICKS = RenderingInformation.convertSecondsToCycles(EAT_WAITING_SECS);
+    private final int damage;
     private final Timer freezeTimer;
     private final Zombies zombieType;
     private boolean isFrozen;
     private boolean canBite;
-    private int defaultDelta;
-    private int delta;
+    private double defaultDelta;
+    private double delta;
 
     /** 
      * @param defaultDelta is the space traveled by the zombie every move update
@@ -31,7 +31,7 @@ public class ZombieImpl extends AbstractLivingEntity implements Zombie {
      * @param position of the zombie
      * @param zombieType the type of zombie
      */
-    protected ZombieImpl(final int defaultDelta, final double damage, final double health, final Point2D position,
+    protected ZombieImpl(final double defaultDelta, final int damage, final int health, final Point2D position,
             final Zombies zombieType) {                
         super(position, new TimerImpl(EAT_WAITING_TICKS), health);
         this.defaultDelta = defaultDelta;
@@ -76,7 +76,7 @@ public class ZombieImpl extends AbstractLivingEntity implements Zombie {
     @Override
     public void freeze() {
         if (!this.isFrozen) {
-            this.delta = this.delta <= 1 ? 1 : (int) (this.delta / FREEZE_FACTOR);
+            this.delta = this.defaultDelta / FREEZE_FACTOR;
             super.getTimer().setNumCycles(EAT_WAITING_TICKS * FREEZE_FACTOR);
             this.isFrozen = true;
         }
@@ -119,7 +119,7 @@ public class ZombieImpl extends AbstractLivingEntity implements Zombie {
      * {@inheritDoc}
      */
     @Override
-    public int getDeltaMovement() {
+    public double getDeltaMovement() {
         return this.delta;
     }
 
@@ -127,11 +127,9 @@ public class ZombieImpl extends AbstractLivingEntity implements Zombie {
      * This method can be called by subtypes to change the delta (so the velocity) of the zombie
      * @param newDelta to be set
      */
-    protected void setDelta(final int newDelta) {
-        if (newDelta >= 1) {
-            this.delta = this.isFrozen ? (int) (newDelta / FREEZE_FACTOR) : newDelta;
+    protected void setDelta(final double newDelta) {
+            this.delta = this.isFrozen ? newDelta / FREEZE_FACTOR : newDelta;
             this.defaultDelta = newDelta;
-        }
     }
 
 }
