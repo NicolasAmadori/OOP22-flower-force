@@ -27,9 +27,9 @@ public final class RenderingInformation {
      * @param secondsPerCell seconds an entity uses to cross a cell
      * @return positions it has to move each frame
      */
-    public static int getDeltaFromSecondsPerCell(final double secondsPerCell) {
-        final int ticksPerCell = (int) (secondsPerCell * RenderingInformation.getFramesPerSecond());
-        return (int) (Yard.getCellDimension().getWidth() / ticksPerCell);
+    public static double getDeltaFromSecondsPerCell(final double secondsPerCell) {
+        final int cyclesPerCell = convertSecondsToCycles(secondsPerCell);
+        return Yard.getCellDimension().getWidth() / cyclesPerCell;
     }
 
     /**
