@@ -11,9 +11,9 @@
             <Image url="@../images/howtoplay.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="imgMenu" fitHeight="665.0" fitWidth="1432.0" layoutX="2936.0" layoutY="54.0" onMouseClicked="#returnToMenu" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgMenu" fitHeight="369.0" fitWidth="1243.0" layoutX="3052.0" layoutY="63.0" onMouseClicked="#returnToMenu" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../images/returnToMainMenu.png" />
+            <Image url="@../images/main_menu.png" />
          </image>
       </ImageView>
    </children>
