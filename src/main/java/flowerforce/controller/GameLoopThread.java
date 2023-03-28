@@ -7,17 +7,19 @@ public class GameLoopThread implements Runnable{
 
     private final GameEngine gameEngine;
     private final Game model;
-    private static final int FPS = 60;
-    private static final long TIME_SLICE = 1_000_000_000 / FPS;
+    private final int fps;
+    private final long timeSlice;
 
     /**
      * Instantiate a new GameLoop giving it the model and the GameEngine it will communicate with.
      * @param gameEngine The gameEngine to render on the view
      * @param model The GameModel to get the game information
      */
-    public GameLoopThread(final GameEngine gameEngine, final Game model) {
+    public GameLoopThread(final GameEngine gameEngine, final Game model, final int fps) {
         this.gameEngine = gameEngine;
         this.model = model;
+        this.fps = fps;
+        this.timeSlice = 1_000_000_000 / this.fps;
     }
 
     /**
@@ -36,10 +38,10 @@ public class GameLoopThread implements Runnable{
             lastUpdateTime += elapsedTime;
             timeAccumulator += elapsedTime;
 
-            while (timeAccumulator > TIME_SLICE) {
+            while (timeAccumulator > timeSlice) {
                 this.model.update();
                 updated = true;
-                timeAccumulator -= TIME_SLICE;
+                timeAccumulator -= timeSlice;
             }
 
             if (updated) {
