@@ -39,7 +39,6 @@ public final class FlowerForceApplication extends Application implements FlowerF
         //TODO: setStageSize()
         //this.stage.setFullScreen(true);
         this.stage.setResizable(false);
-        this.stage.setTitle("Flower Force");
         this.stage.getIcons().add(new Image(ResourceFinder.getImagePath(GAMEICON_NAME)));
         this.stage.setOnCloseRequest(e -> {
             Platform.exit();
@@ -64,12 +63,23 @@ public final class FlowerForceApplication extends Application implements FlowerF
         try {
             this.sceneClass = new GameScene(this);
             this.setScene(this.sceneClass.getScene());
-
+            this.stage.setTitle(levelId == 0 ? "Adventure Mode" : "Level " + levelId);
             Game game = levelId == 0 ? this.controller.startNewInfiniteGame() : this.controller.startNewLevelGame(levelId);
             AnimationTimer gameLoop = new GameLoop(this.controller.getGameEngine(), game, this.controller.getFramesPerSecond());
             gameLoop.start();
         } catch (Exception e) {
             System.out.println(e);
+        }
+    }
+
+    @Override
+    public void howToPlay() {
+        try {
+            FlowerForceScene sceneClass = new HowToPlayScene(this);
+            this.setScene(sceneClass.getScene());
+            this.stage.setTitle("HowToPlay");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
