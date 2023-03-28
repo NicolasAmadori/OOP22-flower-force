@@ -63,6 +63,14 @@ public final class ControllerImpl implements Controller {
      * {@inheritDoc}
      */
     @Override
+    public int getFramesPerSecond() {
+        return this.world.getRenderingInformations();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setGameEngine(final GameEngine gameEngine) {
         this.gameEngine = Optional.ofNullable(gameEngine);
         checkGameEngine();
@@ -143,12 +151,9 @@ public final class ControllerImpl implements Controller {
             }
         });
         plantsToRemove.forEach(p -> this.previousPlant.remove(p));
-        //Update the position of the EntityView if presents, otherwise EntityView is created
+        //Create the plant EntityView if plant not already present
         plants.forEach(p -> {
-            if(this.previousPlant.containsKey(p)) {
-                this.entityConverter.changePlantViewPosition(this.previousPlant.get(p), p.getPosition());
-            }
-            else {
+            if(!this.previousPlant.containsKey(p)) {
                 this.previousPlant.put(p, this.entityConverter.getEntityView(p));
             }
         });

@@ -1,7 +1,6 @@
 package flowerforce.model.game;
 
 import flowerforce.model.entities.IdConverter;
-import flowerforce.model.entities.Zombie;
 
 import java.util.List;
 import java.util.Optional;

@@ -24,6 +24,7 @@ public class LevelImpl implements Level {
      * @param coins Coins that are awarded once the level is completed
      * @param nZombie Number of zombies that must be spawned in the level
      * @param iD ID of the level
+     * @param zombieBoss If present, it contains the level boss
      */
     public LevelImpl(final int iD, final List<IdConverter.Zombies> availableZombies,
                      final List<IdConverter.Plants> availablePlants, final int coins,
