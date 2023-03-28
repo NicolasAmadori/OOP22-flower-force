@@ -1,5 +1,6 @@
 package flowerforce.controller;
 
+import flowerforce.controller.utilities.InputHandler;
 import flowerforce.controller.utilities.WorldSavingManager;
 import flowerforce.model.entities.*;
 import flowerforce.model.game.Game;
@@ -19,6 +20,8 @@ public final class ControllerImpl implements Controller {
     private Optional<GameEngine> gameEngine = Optional.empty();
     private final World world;
 
+    private final InputHandler inputHandler;
+
     private EntityConverter entityConverter;
     private Optional<Game> game;
 
@@ -33,6 +36,7 @@ public final class ControllerImpl implements Controller {
      */
     public ControllerImpl() throws InstantiationException {
         this.world = WorldSavingManager.load();
+        this.inputHandler = new InputHandler();
     }
 
     /**
