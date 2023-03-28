@@ -8,10 +8,10 @@
    <children>
       <ImageView fx:id="background" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
-            <Image url="@../images/howtoplay.png" />
+            <Image url="@../images/howtoplay1.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="imgMenu" fitHeight="369.0" fitWidth="1243.0" layoutX="3052.0" layoutY="63.0" onMouseClicked="#returnToMenu" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgMenu" fitHeight="369.0" fitWidth="1243.0" layoutX="3084.0" layoutY="798.0" onMouseClicked="#returnToMenu" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/main_menu.png" />
          </image>
