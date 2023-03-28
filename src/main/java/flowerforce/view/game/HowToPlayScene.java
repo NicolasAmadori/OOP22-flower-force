@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public class HowToPlayScene extends AbstractFlowerForceScene {
     private static final String FXML_PATH = "flowerforce/game/fxml/HowToPlay.fxml";
-    private static final String IMAGE_NAME = "menu.png";
+    private static final String IMAGE_NAME = "howtoplay.png";
 
     /**
      * Create a How To Play View
