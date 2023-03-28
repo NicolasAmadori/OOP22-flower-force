@@ -29,7 +29,7 @@ public class ShootingPlantImpl extends AbstractPlant implements ShootingPlant {
     public ShootingPlantImpl(
         final Point2D pos,
         final Timer timer,
-        final double health,
+        final int health,
         final Supplier<Bullet> bulletProducer,
         final Plants plantType
     ) {
