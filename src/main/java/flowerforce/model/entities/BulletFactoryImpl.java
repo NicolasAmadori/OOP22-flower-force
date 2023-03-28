@@ -4,8 +4,8 @@ import javafx.geometry.Point2D;
 
 public class BulletFactoryImpl implements BulletFactory {
 
-    private static final double STANDARD_DAMAGE = 20.0;
-    private static final double FIRE_DAMAGE = STANDARD_DAMAGE * 1.5;
+    private static final int STANDARD_DAMAGE = 20;
+    private static final int FIRE_DAMAGE = STANDARD_DAMAGE * 2;
 
     @Override
     public Bullet createStandardBullet(final Point2D pos) {

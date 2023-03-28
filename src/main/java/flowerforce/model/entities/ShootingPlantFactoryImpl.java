@@ -14,7 +14,7 @@ public class ShootingPlantFactoryImpl implements ShootingPlantFactory {
     private static final int STANDARD_SHOOTING_TIME = (int) (
         STANDARD_SECS_SHOOTING_TIME * RenderingInformation.getFramesPerSecond()
     );
-    private static final double STANDARD_SHOOTER_HEALTH = 300.0;
+    private static final int STANDARD_SHOOTER_HEALTH = 300;
 
     private final BulletFactory bulletFactory = new BulletFactoryImpl();
 

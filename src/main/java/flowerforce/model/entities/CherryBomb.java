@@ -13,8 +13,8 @@ import javafx.geometry.Point2D;
  */
 public class CherryBomb extends AbstractPlant implements ExplodingPlant {
 
-    private static final double CHERRY_HEALTH = 1.0;
-    private static final double DAMAGE = 1800.0;
+    private static final int CHERRY_HEALTH = 1;
+    private static final int DAMAGE = 1800;
     private static final int CHERRY_RADIUS = 1;
     private static final double SECONDS_BEFORE_EXPLOSION = 1.2;
 

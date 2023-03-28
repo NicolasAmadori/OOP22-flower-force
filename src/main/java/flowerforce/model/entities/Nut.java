@@ -1,7 +1,9 @@
 package flowerforce.model.entities;
 
 import flowerforce.model.entities.IdConverter.Plants;
+import flowerforce.model.utilities.RenderingInformation;
 import flowerforce.model.utilities.Timer;
+import flowerforce.model.utilities.TimerImpl;
 import javafx.geometry.Point2D;
 
 /**
@@ -9,8 +11,9 @@ import javafx.geometry.Point2D;
  */
 public class Nut extends AbstractPlant {
 
-    private static final double NUT_HEALTH = 5000.0;
-    private static final double AUTO_DAMAGE = NUT_HEALTH / 1000;
+    private static final int NUT_HEALTH = 5000;
+    private static final int AUTO_DAMAGE = 30;
+    private static final int DAMAGE_PERIOD = RenderingInformation.getFramesPerSecond();
 
     /**
      * 
@@ -18,8 +21,8 @@ public class Nut extends AbstractPlant {
      * @param timer used to produce bullets/suns at the right time
      * @param plantType the type of the plant
      */
-    public Nut(final Point2D pos, final Timer timer, final Plants plantType) {
-        super(pos, timer, NUT_HEALTH, plantType);
+    public Nut(final Point2D pos, final Plants plantType) {
+        super(pos, new TimerImpl(DAMAGE_PERIOD), NUT_HEALTH, plantType);
     }
 
     /**
@@ -28,7 +31,9 @@ public class Nut extends AbstractPlant {
     @Override
     public void updateState() {
         super.updateState();
-        this.receiveDamage(AUTO_DAMAGE);
+        if (this.getTimer().isReady()) {
+            this.receiveDamage(AUTO_DAMAGE);
+        }
     }
 
 }
