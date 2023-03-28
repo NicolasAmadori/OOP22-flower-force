@@ -7,9 +7,9 @@ import javafx.geometry.Point2D;
 
 public class SunflowerFactoryImpl implements SunflowerFactory {
 
-    private static final double STANDARD_SECS_SHOOTING_TIME = 1.425;
+    private static final double STANDARD_SECS_SUNPRODUCING_TIME = 24.25;
     private static final int STANDARD_SUNPRODUCING_TIME = (int) (
-        STANDARD_SECS_SHOOTING_TIME * RenderingInformation.getFramesPerSecond()
+        STANDARD_SECS_SUNPRODUCING_TIME * RenderingInformation.getFramesPerSecond()
     );
     private static final double STANDARD_SUNFLOWER_HEALTH = 300.0;
 
