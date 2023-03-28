@@ -1,13 +1,10 @@
 package flowerforce.view.game;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 
 public class HowToPlaySceneController {
-
-    @FXML
-    private Button btnMenu;
     private final FlowerForceApplication application;
 
     /**
@@ -19,7 +16,7 @@ public class HowToPlaySceneController {
     }
 
     @FXML
-    void returnToMenu(ActionEvent event) {
+    void returnToMenu(MouseEvent event) {
         this.application.menu();
     }
 }
