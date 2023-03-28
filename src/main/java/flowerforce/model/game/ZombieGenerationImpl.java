@@ -82,12 +82,13 @@ public class ZombieGenerationImpl implements ZombieGeneration {
     }
 
     private Zombie creationZombie() {
+        final int delta = hordeZombie / START_NUMBER_ZOMBIE_IN_HORDE + 1;
         final var zombieToSpawn = zombies.stream()
                 .filter(zombie -> zombie.getDifficulty() <= levelZombieToSpawn)
                 .collect(Collectors.toSet());
 
         int randomValue = new Random().nextInt(zombieToSpawn.stream()
-                .mapToInt(z -> zombieMaxDifficulty - z.getDifficulty() + 1 )
+                .mapToInt(z -> zombieMaxDifficulty - z.getDifficulty() + delta )
                 .sum() + 1);
 
         int row;
@@ -97,7 +98,7 @@ public class ZombieGenerationImpl implements ZombieGeneration {
         prevRow = row;
 
         for (final var zombie : zombieToSpawn) {
-            randomValue = randomValue - (zombieMaxDifficulty + 1 - zombie.getDifficulty());
+            randomValue = randomValue - (zombieMaxDifficulty + delta - zombie.getDifficulty());
             if (randomValue <= 0) {
                 return IdConverter.createZombie(zombie,
                         Yard.getEntityPosition(
