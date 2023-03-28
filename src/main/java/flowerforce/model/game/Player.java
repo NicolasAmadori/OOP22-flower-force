@@ -1,5 +1,9 @@
 package flowerforce.model.game;
 
+import flowerforce.model.entities.IdConverter;
+
+import java.util.Set;
+
 /**
  * The class representing the player with all his information.
  */
@@ -47,4 +51,12 @@ public interface Player {
      * Unlock the next level.
      */
     void unlockedNextLevel();
+
+    /**
+     * Add a plant in player inventory
+     * @param plantId the id of the plant to add
+     */
+    void addPlant(IdConverter.Plants plant);
+
+    Set<IdConverter.Plants> getPlants();
 }
