@@ -11,7 +11,7 @@ import javafx.geometry.Point2D;
  */
 public class BulletImpl extends AbstractEntity implements Bullet {
 
-    private static final double SECS_PER_CELL = 0.5;
+    private static final double SECS_PER_CELL = 0.2;
     private static final int DELTA = RenderingInformation.getDeltaFromSecondsPerCell(SECS_PER_CELL);
 
     private final double damage;
