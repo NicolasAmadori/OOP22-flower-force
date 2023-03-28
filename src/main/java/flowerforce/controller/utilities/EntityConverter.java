@@ -1,4 +1,4 @@
-package flowerforce.model.utilities;
+package flowerforce.controller.utilities;
 
 import flowerforce.common.ResourceFinder;
 import flowerforce.model.entities.Bullet;
@@ -29,8 +29,8 @@ public final class EntityConverter {
      * @param viewYardDimension The dimension of the yard of the view
      */
     public EntityConverter(final Dimension2D modelYardDimension, final Dimension2D viewYardDimension) {
-        this.yardRatioHeight = modelYardDimension.getHeight() / viewYardDimension.getHeight();
-        this.yardRatioWidth = modelYardDimension.getWidth() / viewYardDimension.getWidth();
+        this.yardRatioHeight = viewYardDimension.getHeight() / modelYardDimension.getHeight();
+        this.yardRatioWidth =  viewYardDimension.getWidth() / modelYardDimension.getWidth();
     }
 
     /**
