@@ -65,21 +65,6 @@ public final class IdConverter {
             this.unlockTime = unlockTime;
         }
 
-        public enum Bullets {
-            /**
-             * A standard bullet.
-             */
-            STANDARDBULLET,
-            /**
-             * A snow bullet that slows zombies.
-             */
-            SNOWBULLET,
-            /**
-             * A fire bullet that gives more damage than a standard bullet.
-             */
-            FIREBULLET;
-        }
-
         /**
          *
          * @return the cost in suns of the plant
@@ -95,6 +80,24 @@ public final class IdConverter {
         public int getUnlockTime() {
             return this.unlockTime;
         }
+    }
+
+    /**
+     * Different bullet types.
+     */
+    public enum Bullets {
+        /**
+         * A standard bullet.
+         */
+        STANDARDBULLET,
+        /**
+         * A snow bullet that slows zombies.
+         */
+        SNOWBULLET,
+        /**
+         * A fire bullet that gives more damage than a standard bullet.
+         */
+        FIREBULLET;
     }
 
     /**

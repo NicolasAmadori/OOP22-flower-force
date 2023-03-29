@@ -63,8 +63,8 @@ public final class EntityConverter {
      * @return The entityView representing the bullet
      */
     public EntityView getEntityView(final Bullet b) {
-        final String bulletName = getName(b.getClass().getName().toLowerCase(Locale.getDefault()));
-        final String completeImagePath = ResourceFinder.getBulletImagePath(bulletName.concat(IMAGES_EXTENSION));
+        final String completeImagePath = ResourceFinder.getBulletImagePath(
+                b.getBulletType().name().toLowerCase(Locale.getDefault()).concat(IMAGES_EXTENSION));
         final Point2D newPosition = convertBulletPosition(b.getPosition(), completeImagePath);
         return new EntityViewImpl(newPosition, completeImagePath);
     }
@@ -90,11 +90,6 @@ public final class EntityConverter {
 
     public void changeBulletViewPosition(final EntityView entityView, final Point2D newPosition) {
         entityView.setPosition(convertBulletPosition(newPosition, entityView.getPlaceableImage().getUrl()));
-    }
-
-    private String getName(final String completePackage) {
-        final String[] splitted = completePackage.split("\\.");
-        return splitted[splitted.length - 1];
     }
     private Point2D convertPlantPosition(final Point2D originalPosition, final String imagePath) {
         //Convert the model position multiplying for the yardSizeFactor
