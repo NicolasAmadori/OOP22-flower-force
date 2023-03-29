@@ -105,13 +105,17 @@ public final class ControllerImpl implements Controller {
     @Override
     public boolean placePlant(final int plantId, final int row, final int col) {
         checkGame();
-        return this.game.get().placePlant(plantId, row, col);
+//        return this.game.get().placePlant(plantId, row, col);
+        this.inputHandler.placeCell(plantId, row, col);
+        return true; //TODO: of course correct
     }
 
     @Override
     public boolean removePlant(int row, int col) {
         checkGame();
-        return this.game.get().removePlant(row, col);
+//        return this.game.get().removePlant(row, col);
+        this.inputHandler.removeCell(row, col);
+        return true; //TODO: of course correct
     }
 
     /**
