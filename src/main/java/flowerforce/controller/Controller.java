@@ -1,12 +1,8 @@
 package flowerforce.controller;
 
 import flowerforce.model.game.Game;
-import flowerforce.view.entities.CardView;
 import flowerforce.view.entities.EntityView;
 import flowerforce.view.game.GameEngine;
-
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -41,11 +37,13 @@ public interface Controller {
     /**
      * Start a new game for a specified level.
      * @param levelId The id of the level to play
+     * @return the level game instance
      */
     Game startNewLevelGame(int levelId);
 
     /**
      * Start a new game in infinite mode.
+     * @return the infinite game instance
      */
     Game startNewInfiniteGame();
 
@@ -72,20 +70,44 @@ public interface Controller {
      * @param plantId The id of the plant to place
      * @param row The row index in which to place the plant
      * @param col The column index in which to place the plant
+     * @return true if the plant was placed correctly, false otherwise
      */
     boolean placePlant(int plantId, int row, int col);
 
+    /**
+     * Remove a placed plant.
+     * @param row The row of the plant
+     * @param col The column of the plant
+     * @return True if a plant was present in that position, false otherwise
+     */
     boolean removePlant(int row, int col);
 
+    /**
+     * Get all the entities to draw.
+     * @return A set of EntityView.
+     */
     Set<EntityView> getPlacedEntities();
 
-    //List<CardView> getCards();//TODO: remove
-
+    /**
+     * All the cards that are enabled to select.
+     * @return A set of integer, representing the indexes of the enable cards.
+     */
     Set<Integer> getEnabledCards();
 
+    /**
+     * Get the number of rows available.
+     * @return an integer representing the number of rows of the game
+     */
     int getTotalRows();
 
+    /**
+     * Get the number of columns available.
+     * @return an integer representing the number of columns of the game
+     */
     int getTotalColumns();
 
+    /**
+     * Save the actual state of the game.
+     */
     void save();
 }
