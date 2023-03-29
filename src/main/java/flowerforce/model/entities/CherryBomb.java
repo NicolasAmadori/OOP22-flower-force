@@ -14,6 +14,7 @@ import javafx.geometry.Point2D;
 public class CherryBomb extends AbstractPlant implements ExplodingPlant {
 
     private static final int CHERRY_HEALTH = 1;
+    private static final int CHERRY_COST = 150;
     private static final int DAMAGE = 1800;
     private static final int CHERRY_RADIUS = 1;
     private static final double SECONDS_BEFORE_EXPLOSION = 1.2;
@@ -28,6 +29,7 @@ public class CherryBomb extends AbstractPlant implements ExplodingPlant {
             pos,
             new TimerImpl(RenderingInformation.convertSecondsToCycles(SECONDS_BEFORE_EXPLOSION)), 
             CHERRY_HEALTH,
+            CHERRY_COST,
             plantType
         );
     }
