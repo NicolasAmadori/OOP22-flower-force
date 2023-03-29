@@ -1,5 +1,6 @@
 package flowerforce.controller;
 
+import flowerforce.controller.utilities.InputHandler;
 import flowerforce.model.game.Game;
 import flowerforce.view.entities.CardView;
 import flowerforce.view.entities.EntityView;
@@ -60,6 +61,8 @@ public interface Controller {
      * @return The gameEngine instance
      */
     GameEngine getGameEngine();
+
+    InputHandler getInputHandler();
 
     /**
      * Get the number of currently present suns in the game.

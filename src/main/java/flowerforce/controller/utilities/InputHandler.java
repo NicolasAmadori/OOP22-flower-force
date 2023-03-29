@@ -16,6 +16,11 @@ public class InputHandler implements Cloneable{
 
     }
 
+    public InputHandler(InputHandler inputHandler) {
+        this.placedCell = inputHandler.placedCell;
+        this.removedCell = inputHandler.removedCell;
+    }
+
     public void placeCell(final int plantId, final int row, final int col) {
         placedCell.add(new Pair<>(plantId,new Pair<>(row, col)));
     }

@@ -90,6 +90,11 @@ public final class ControllerImpl implements Controller {
         return this.gameEngine.get();
     }
 
+    @Override
+    public InputHandler getInputHandler() {
+        return this.inputHandler;
+    }
+
     /**
      * {@inheritDoc}
      */

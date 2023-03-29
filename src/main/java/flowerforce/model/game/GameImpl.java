@@ -12,9 +12,9 @@ import java.util.stream.Collectors;
  * This is an implementation of {@link Game}.
  */
 public class GameImpl implements Game {
-    private static final int TIME_TO_SPAWN_SUN = 500;
+    private static final int TIME_TO_SPAWN_SUN = 5 * 30;
     private static final int SUN_VALUE = 25;
-    private static final int INITIAL_SUN = 2;
+    private static final int INITIAL_SUN = 100;
     private Set<Plant> plants = new HashSet<>();
     private Set<Zombie> zombies = new HashSet<>();
     private Set<Bullet> bullets = new HashSet<>();
