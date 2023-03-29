@@ -32,7 +32,7 @@ public class ShootingPlantFactoryImpl implements ShootingPlantFactory {
             pos,
             new TimerImpl(STANDARD_SHOOTING_TIME),
             STANDARD_SHOOTER_HEALTH,
-            () -> this.bulletFactory.createStandardBullet(getBulletPos(pos)),
+            () -> this.bulletFactory.createStandardBullet(new Point2D(pos.getX(), pos.getY())),
             COMMON_SHOOTER_COST,
             RechargeTimes.getFastRechargeTime(),
             plantType
@@ -48,7 +48,7 @@ public class ShootingPlantFactoryImpl implements ShootingPlantFactory {
             pos,
             new TimerImpl(STANDARD_SHOOTING_TIME),
             STANDARD_SHOOTER_HEALTH,
-            () -> this.bulletFactory.createSnowdBullet(getBulletPos(pos)),
+            () -> this.bulletFactory.createSnowdBullet(new Point2D(pos.getX(), pos.getY())),
             SNOW_SHOOTER_COST,
             RechargeTimes.getFastRechargeTime(),
             plantType
@@ -64,7 +64,7 @@ public class ShootingPlantFactoryImpl implements ShootingPlantFactory {
             pos,
             new TimerImpl(STANDARD_SHOOTING_TIME),
             STANDARD_SHOOTER_HEALTH,
-            () -> this.bulletFactory.createFireBullet(getBulletPos(pos)),
+            () -> this.bulletFactory.createFireBullet(new Point2D(pos.getX(), pos.getY())),
             FIRE_SHOOTER_COST,
             RechargeTimes.getFastRechargeTime(),
             plantType
@@ -80,15 +80,11 @@ public class ShootingPlantFactoryImpl implements ShootingPlantFactory {
             pos,
             new TimerImpl(STANDARD_SHOOTING_TIME / 2),
             STANDARD_SHOOTER_HEALTH,
-            () -> this.bulletFactory.createStandardBullet(getBulletPos(pos)),
+            () -> this.bulletFactory.createStandardBullet(new Point2D(pos.getX(), pos.getY())),
             FAST_SHOOTER_COST,
             RechargeTimes.getFastRechargeTime(),
             plantType
         );
-    }
-
-    private static Point2D getBulletPos(final Point2D plantPos) {
-        return new Point2D(plantPos.getX() + 1, plantPos.getY());
     }
 
 }
