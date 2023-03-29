@@ -5,7 +5,7 @@ import flowerforce.model.entities.*;
 import flowerforce.model.game.Game;
 import flowerforce.model.game.World;
 import flowerforce.view.entities.CardView;
-import flowerforce.model.utilities.EntityConverter;
+import flowerforce.controller.utilities.EntityConverter;
 import flowerforce.view.entities.EntityView;
 import flowerforce.view.game.GameEngine;
 
