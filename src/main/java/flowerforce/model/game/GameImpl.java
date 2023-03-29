@@ -160,9 +160,9 @@ public class GameImpl implements Game {
      * {@inheritDoc}
      */
     @Override
-    public boolean removePlant(int row, int col) {
-        final var positionPlant = Yard.getEntityPosition(row,col);
-        for (var plant : plants) {
+    public boolean removePlant(final int row, final int col) {
+        final var positionPlant = Yard.getEntityPosition(row, col);
+        for (final var plant : plants) {
             if (plant.getPosition().equals(positionPlant)) {
                 plants.remove(plant);
                 return true;
@@ -182,13 +182,13 @@ public class GameImpl implements Game {
     }
 
     /**
-     * Check which bullets are still in the field
+     * Check which bullets are still in the field.
      */
     private void updateBullet() {
         this.bullets.forEach(Bullet::move);
         bullets = bullets.stream()
-                .filter(bullet -> bullet.getPosition().getX() <
-                        Yard.getCellDimension().getWidth() * Yard.getColsNum())
+                .filter(bullet -> bullet.getPosition().getX()
+                        < Yard.getCellDimension().getWidth() * Yard.getColsNum())
                 .collect(Collectors.toSet());
     }
 
@@ -241,14 +241,25 @@ public class GameImpl implements Game {
                 if (((Sunflower) plant).isSunGenerated()) {
                     this.sun += SUN_VALUE;
                 }
-            } else if (plant instanceof ShootingPlant){
-                int nZombieOnRow = zombies.stream()
+            } else if (plant instanceof ShootingPlant) {
+                final int nZombieOnRow = zombies.stream()
                         .filter(zombie -> plant.getPosition().getY() == zombie.getPosition().getY())
-                        .filter(zombie -> plant.getPosition().getX() - Yard.getCellDimension().getWidth() <= zombie.getPosition().getX() )
+                        .filter(zombie -> plant.getPosition().getX()
+                                - Yard.getCellDimension().getWidth() / 2 <= zombie.getPosition().getX())
                         .toList().size();
                 if (nZombieOnRow > 0) {
                     final var bullet = ((ShootingPlant) plant).nextBullet();
                     bullet.ifPresent(b -> bullets.add(b));
+                }
+            } else if (plant instanceof ExplodingPlant) {
+                if (((ExplodingPlant) plant).hasExploded()) {
+                    ((ExplodingPlant) plant).explodeOver(zombies.stream()
+                            .filter(zombie -> zombie.getPosition().getY() == plant.getPosition().getY())
+                            .filter(zombie -> zombie.getPosition().getX() - ((ExplodingPlant) plant).getRadius()
+                            > plant.getPosition().getX())
+                            .filter(zombie -> zombie.getPosition().getX() - ((ExplodingPlant) plant).getRadius()
+                                    > plant.getPosition().getX())
+                            .toList());
                 }
             }
         }
@@ -263,20 +274,20 @@ public class GameImpl implements Game {
      *
      */
     private void generateZombie() {
-        if(remainingZombie != 0 ) {
-            if (remainingZombie == 5 && this.level.getBossId().isPresent()) {
-                var boss = this.generateZombie.bossGeneration();
+        if (remainingZombie != 0) {
+            final var zombie = generateZombie.zombieGeneration();
+            if (zombie.isPresent()) {
+                remainingZombie--;
+                zombies.add(zombie.get());
+            }
+            if (this.level.getBossId().isPresent() && remainingZombie == 0) {
+                final var boss = this.generateZombie.bossGeneration();
                 if (boss.isPresent()) {
                     remainingZombie--;
                     zombies.add(boss.get());
                 }
             }
-            var zombie = generateZombie.zombieGeneration();
-            if (zombie.isPresent()) {
-                remainingZombie--;
-                zombies.add(zombie.get());
-            }
         }
-    }
 
+    }
 }

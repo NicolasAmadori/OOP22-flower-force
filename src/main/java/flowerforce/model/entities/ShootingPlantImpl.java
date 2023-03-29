@@ -3,6 +3,8 @@ package flowerforce.model.entities;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 import flowerforce.model.entities.IdConverter.Plants;
 import flowerforce.model.utilities.Timer;
@@ -13,7 +15,7 @@ import javafx.geometry.Point2D;
  */
 public class ShootingPlantImpl extends AbstractPlant implements ShootingPlant {
 
-    private final Class<?> bulletClass;
+    private final Supplier<Bullet> bulletProducer;
     private boolean canShoot;
 
     /**
@@ -27,12 +29,13 @@ public class ShootingPlantImpl extends AbstractPlant implements ShootingPlant {
     public ShootingPlantImpl(
         final Point2D pos,
         final Timer timer,
-        final double health,
-        final Class<?> bulletClass,
+        final int health,
+        final Supplier<Bullet> bulletProducer,
+        final int cost,
         final Plants plantType
     ) {
-        super(pos, timer, health, plantType);
-        this.bulletClass = bulletClass;
+        super(pos, timer, health, cost, plantType);
+        this.bulletProducer = bulletProducer;
     }
 
     /**
@@ -40,21 +43,7 @@ public class ShootingPlantImpl extends AbstractPlant implements ShootingPlant {
      */
     @Override
     public Optional<Bullet> nextBullet() {
-        Bullet bullet;
-        try {
-            final Constructor<?> constr = this.bulletClass.getConstructor(Point2D.class);
-            bullet = (Bullet) constr.newInstance(new Point2D(this.getPosition().getX() + 1, this.getPosition().getY()));
-        } catch (
-            InvocationTargetException
-            | SecurityException
-            | NoSuchMethodException
-            | InstantiationException 
-            | IllegalAccessException 
-            | IllegalArgumentException e
-        ) {
-            return Optional.empty();
-        }
-        final Optional<Bullet> optBullet = Optional.of(bullet).filter(e -> this.canShoot);
+        final Optional<Bullet> optBullet = Optional.of(this.bulletProducer.get()).filter(e -> this.canShoot);
         if (this.canShoot) {
             this.canShoot = false;
             this.getTimer().reset();
