@@ -32,9 +32,19 @@
                   <Image url="@../images/L3.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="Lvl4" accessibleText="3" fitHeight="500.0" fitWidth="500.0" onMouseClicked="#start" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="Lvl4" accessibleText="4" fitHeight="500.0" fitWidth="500.0" onMouseClicked="#start" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/L4.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="Lvl5" accessibleText="5" fitHeight="500.0" fitWidth="500.0" onMouseClicked="#start" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/L5.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="Lvl6" accessibleText="6" fitHeight="500.0" fitWidth="500.0" onMouseClicked="#start" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/L6.png" />
                </image>
             </ImageView>
             <ImageView fx:id="InfiniteMode" accessibleText="0" fitHeight="500.0" fitWidth="500.0" onMouseClicked="#start" pickOnBounds="true" preserveRatio="true">
@@ -42,12 +52,22 @@
                   <Image url="@../images/Ladventure.png" />
                </image>
             </ImageView>
+            <ImageView fx:id="howToPlay" fitHeight="500.0" fitWidth="500.0" onMouseClicked="#howToPlay" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icon.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="shop" accessibleText="2" fitHeight="500.0" fitWidth="500.0" onMouseClicked="#shop" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/shopicon.png" />
+               </image>
+            </ImageView>
          </children>
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
       </FlowPane>
-      <Text fx:id="scoreText" fill="#00bf73" layoutX="2991.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score: " wrappingWidth="1187.736572265625">
+      <Text fx:id="scoreText" fill="WHITE" layoutX="2322.0" layoutY="258.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score: " wrappingWidth="1851.73681640625">
          <font>
             <Font name="Eras Bold ITC" size="200.0" />
          </font>
