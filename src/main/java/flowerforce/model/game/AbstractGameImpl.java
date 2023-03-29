@@ -1,6 +1,7 @@
 package flowerforce.model.game;
 
 import flowerforce.model.entities.*;
+import flowerforce.model.utilities.RenderingInformation;
 import flowerforce.model.utilities.TimerImpl;
 import javafx.geometry.Point2D;
 
@@ -11,33 +12,34 @@ import java.util.stream.Collectors;
 /**
  * This is an implementation of {@link Game}.
  */
-public class GameImpl implements Game {
-    private static final int TIME_TO_SPAWN_SUN = 500;
+public abstract class AbstractGameImpl implements Game {
+    private static final double STANDARD_SECS_SPAWN_SUN = 5.0;
+    private static final int TIME_TO_SPAWN_SUN = (int) (STANDARD_SECS_SPAWN_SUN * RenderingInformation.getFramesPerSecond());
     private static final int SUN_VALUE = 25;
     private static final int INITIAL_SUN = 2;
     private Set<Plant> plants = new HashSet<>();
-    private Set<Zombie> zombies = new HashSet<>();
     private Set<Bullet> bullets = new HashSet<>();
     private final TimerImpl sunTimer;
     private final Map<IdConverter.Plants, TimerImpl> plantsTimer = new HashMap<>();
-    private final Level level;
     private int sun;
-    private int remainingZombie;
-    private final World world;
-    private final ZombieGeneration generateZombie;
+    protected final ZombieGeneration generateZombie;
+    protected final Level level;
+    protected Set<Zombie> zombies = new HashSet<>();
+    protected final World world;
+    protected final int score;
 
     /**
      * @param level level of the game that has started.
      * @param world the instance of the world starting the game.
      */
-    public GameImpl(final Level level, final World world) {
+    public AbstractGameImpl(final Level level, final World world) {
         this.sun = INITIAL_SUN * SUN_VALUE;
         this.level = level;
         this.sunTimer = new TimerImpl(TIME_TO_SPAWN_SUN);
-        this.remainingZombie = level.getTotalZombies();
         this.level.getPlantsId().forEach(p -> plantsTimer.put(p, new TimerImpl(p.getUnlockTime())));
         this.world = world;
-        this.generateZombie = new ZombieGenerationImpl(this.level);
+        this.score = 0;
+        this.generateZombie = new ZombieGenerationImpl(level);
     }
 
     /**
@@ -49,8 +51,8 @@ public class GameImpl implements Game {
         this.generateZombie();
         this.updateBullet();
         this.eatingPlant();
-        this.collidingBullet();
         this.updatePlant();
+        this.collidingBullet();
     }
 
     /**
@@ -67,14 +69,6 @@ public class GameImpl implements Game {
     @Override
     public Set<Plant> getPlacedPlants() {
         return this.plants;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<Zombie> getZombieEating() {
-        return Collections.emptyList();
     }
 
     /**
@@ -118,14 +112,9 @@ public class GameImpl implements Game {
      */
     @Override
     public boolean isOver() {
-        final int nZombie = this.zombies.stream().filter(zombie -> zombie.getPosition().getX() <= 0)
-                .collect(Collectors.toSet()).size();
-        if (this.result()
-                && this.world.getPlayer().getLastUnlockedLevelId() == this.level.getLevelId()) {
-                this.world.getPlayer().unlockedNextLevel();
-                this.world.getPlayer().addCoins(this.level.getLevelCoins());
-        }
-        return nZombie > 0 || this.result();
+        final boolean zombieArrived = this.zombies.stream().filter(zombie -> zombie.getPosition().getX() <= 0)
+                .collect(Collectors.toSet()).size() > 0 ;
+        return zombieArrived || this.result();
     }
 
     /**
@@ -138,14 +127,6 @@ public class GameImpl implements Game {
                 .filter(plantType -> plantsTimer.get(plantType).isReady())
                 .map(Enum::ordinal)
                 .collect(Collectors.toSet());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean result() {
-        return this.remainingZombie == 0 && this.zombies.isEmpty();
     }
 
     /**
@@ -270,24 +251,6 @@ public class GameImpl implements Game {
         });
     }
 
-    /**
-     *
-     */
-    private void generateZombie() {
-        if (remainingZombie != 0) {
-            final var zombie = generateZombie.zombieGeneration();
-            if (zombie.isPresent()) {
-                remainingZombie--;
-                zombies.add(zombie.get());
-            }
-            if (this.level.getBossId().isPresent() && remainingZombie == 0) {
-                final var boss = this.generateZombie.bossGeneration();
-                if (boss.isPresent()) {
-                    remainingZombie--;
-                    zombies.add(boss.get());
-                }
-            }
-        }
+    protected abstract void generateZombie();
 
-    }
 }

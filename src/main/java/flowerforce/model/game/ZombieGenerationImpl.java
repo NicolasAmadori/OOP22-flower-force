@@ -2,18 +2,28 @@ package flowerforce.model.game;
 
 import flowerforce.model.entities.IdConverter;
 import flowerforce.model.entities.Zombie;
+import flowerforce.model.utilities.RenderingInformation;
 import flowerforce.model.utilities.TimerImpl;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class ZombieGenerationImpl implements ZombieGeneration {
+    private static final double MIN_SECS_SPAWN_ZOMBIE = 5.0;
+    private static final double MAX_SECS_SPAWN_ZOMBIE = 15.0;
+    private static final double STANDARD_SECS_SPAWN_ZOMBIE_IN_HORDE = 1.0;
+    private static final double STANDARD_SECS_DEC_TIME_ZOMBIE_SPAWN = 3.0;
+    private static final int MIN_TIME_TO_SPAWN_ZOMBIE = (int)
+            (MIN_SECS_SPAWN_ZOMBIE * RenderingInformation.getFramesPerSecond());
+    private static final int START_TIME_TO_SPAWN_ZOMBIE = (int)
+            (MAX_SECS_SPAWN_ZOMBIE * RenderingInformation.getFramesPerSecond());
+    private static final int TIME_TO_SPAWN_HORDE_ZOMBIE = (int)
+            (STANDARD_SECS_SPAWN_ZOMBIE_IN_HORDE * RenderingInformation.getFramesPerSecond());
+    private static final int DEC_TIME_ZOMBIE = (int)
+            (STANDARD_SECS_DEC_TIME_ZOMBIE_SPAWN * RenderingInformation.getFramesPerSecond());
+
     private static final int MAX_ZOMBIE_TO_SPAWN_HORDE = 30;
     private static final int INC_ZOMBIE_HORDE = 5;
-    private static final int DEC_TIME_ZOMBIE = 50;
-    private static final int MIN_TIME_TO_SPAWN_ZOMBIE = 150;
-    private static final int TIME_TO_SPAWN_HORDE_ZOMBIE = 30;
-    private static final int START_TIME_TO_SPAWN_ZOMBIE = 300;
     private static final int START_NUMBER_ZOMBIE_IN_HORDE = 5;
     private final TimerImpl zombieTimer;
     private int timeZombie = START_TIME_TO_SPAWN_ZOMBIE;
@@ -25,6 +35,7 @@ public class ZombieGenerationImpl implements ZombieGeneration {
     private final Optional<IdConverter.Zombies> boss;
     private int levelZombieToSpawn;
     private int prevRow = -1;
+
     public ZombieGenerationImpl(final Level level) {
         this.zombieTimer = new TimerImpl(timeZombie);
         this.zombies = level.getZombiesId();
