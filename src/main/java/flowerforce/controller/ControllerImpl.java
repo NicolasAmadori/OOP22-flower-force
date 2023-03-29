@@ -29,8 +29,6 @@ public final class ControllerImpl implements Controller {
     private Optional<GameEngine> gameEngine = Optional.empty();
     private final World world;
 
-    private final InputHandler inputHandler;
-
     private EntityConverter entityConverter;
     private Optional<Game> game;
 
@@ -45,7 +43,6 @@ public final class ControllerImpl implements Controller {
      */
     public ControllerImpl() throws InstantiationException {
         this.world = WorldSavingManager.load();
-        this.inputHandler = new InputHandler();
     }
 
     /**
@@ -114,17 +111,13 @@ public final class ControllerImpl implements Controller {
     @Override
     public boolean placePlant(final int plantId, final int row, final int col) {
         checkGame();
-//        return this.game.get().placePlant(plantId, row, col);
-        this.inputHandler.placeCell(plantId, row, col);
-        return true; //TODO: of course correct
+        return this.game.get().placePlant(plantId, row, col);
     }
 
     @Override
     public boolean removePlant(final int row, final int col) {
         checkGame();
-//        return this.game.get().removePlant(row, col);
-        this.inputHandler.removeCell(row, col);
-        return true; //TODO: of course correct
+        return this.game.get().removePlant(row, col);
     }
 
     /**
