@@ -12,16 +12,12 @@ public class InputHandler implements Cloneable{
 
     private Set<Pair<Integer,Pair<Integer, Integer>>> placedCell = new HashSet<>();
     private Set<Pair<Integer, Integer>> removedCell = new HashSet<>();
-    private Optional<Integer> clickedCardId = Optional.empty();
     public InputHandler() {
 
     }
 
-    public void placeCell(final int row, final int col) {
-        if(clickedCardId.isPresent()) {
-            placedCell.add(new Pair<>(clickedCardId.get(),new Pair<>(row, col)));
-            clickedCardId = Optional.empty();
-        }
+    public void placeCell(final int plantId, final int row, final int col) {
+        placedCell.add(new Pair<>(plantId,new Pair<>(row, col)));
     }
 
     public Pair<Integer,Pair<Integer, Integer>> getNextPlacedCell() {
@@ -52,8 +48,5 @@ public class InputHandler implements Cloneable{
 
     public boolean hasNextRemovedCell() {
         return this.removedCell.size() > 0;
-    }
-    public void clickCard(final int id) {
-        this.clickedCardId = Optional.of(id);
     }
 }
