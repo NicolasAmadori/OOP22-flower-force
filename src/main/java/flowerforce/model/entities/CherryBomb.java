@@ -7,10 +7,15 @@ import flowerforce.model.utilities.RenderingInformation;
 import flowerforce.model.utilities.TimerImpl;
 import javafx.geometry.Point2D;
 
+/**
+ * Models a CherryBomb, an exploding plant that explodes after a certain time
+ * and damages enemies in its and adjacent cells.
+ */
 public class CherryBomb extends AbstractPlant implements ExplodingPlant {
-    
-    private static final double CHERRY_HEALTH = 1.0;
-    private static final double DAMAGE = 1800.0;
+
+    private static final int CHERRY_HEALTH = 1;
+    private static final int CHERRY_COST = 150;
+    private static final int DAMAGE = 1800;
     private static final int CHERRY_RADIUS = 1;
     private static final double SECONDS_BEFORE_EXPLOSION = 1.2;
 
@@ -24,6 +29,7 @@ public class CherryBomb extends AbstractPlant implements ExplodingPlant {
             pos,
             new TimerImpl(RenderingInformation.convertSecondsToCycles(SECONDS_BEFORE_EXPLOSION)), 
             CHERRY_HEALTH,
+            CHERRY_COST,
             plantType
         );
     }
@@ -32,7 +38,7 @@ public class CherryBomb extends AbstractPlant implements ExplodingPlant {
      * {@inheritDoc}
      */
     @Override
-    public void explodeOver(List<Zombie> zombieList) {
+    public void explodeOver(final List<Zombie> zombieList) {
         zombieList.stream().peek(z -> z.receiveDamage(DAMAGE));
         this.receiveDamage(this.getHealth());
     }
