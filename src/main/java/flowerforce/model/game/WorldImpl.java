@@ -22,6 +22,7 @@ public class WorldImpl implements World {
     private final Player player;
     private final List<Level> levelList;
     private final Level infiniteModeLevel;
+    private final Shop shop;
 
     /**
      * Generates a world.
@@ -33,7 +34,7 @@ public class WorldImpl implements World {
         this.player = player.orElse(new PlayerImpl(NEW_PLAYER_COINS, NEW_PLAYER_RECORD, NEW_PLAYER_LAST_UNLOCKED_LEVEL));
         this.levelList = levelList;
         this.infiniteModeLevel = infiniteModeLevel;
-
+        this.shop = new ShopImpl(this.player);
     }
 
     /**
@@ -107,5 +108,10 @@ public class WorldImpl implements World {
     @Override
     public int getColsNum() {
         return Yard.getColsNum();
+    }
+
+    @Override
+    public Shop getShop() {
+        return this.shop;
     }
 }
