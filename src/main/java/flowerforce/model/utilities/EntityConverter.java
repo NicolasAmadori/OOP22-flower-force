@@ -18,23 +18,17 @@ import java.util.Locale;
  * This utility class convert an entity given from the model into an entity that can be drawn in the view.
  */
 public final class EntityConverter {
-    private static final String ANIMATED_IMAGE_EXTENSION = ".gif";
-    private static final String STATIC_IMAGE_EXTENSION = ".png";
-
-
+    private static final String IMAGES_EXTENSION = ".png";
+    private static final String CARD_SUFFIX = "_card";
     private final double yardRatioHeight;
 
     private final double yardRatioWidth;
-    private final double imageResizeFactor;
 
     /**
      * Create a new instance of EntityConverter, setting all the information.
      * @param viewYardDimension The dimension of the yard of the view
-     * @param imageResizeFactor The resize factor to convert entities position
      */
-    public EntityConverter(final Dimension2D modelYardDimension, final Dimension2D viewYardDimension, final double imageResizeFactor) {
-        this.imageResizeFactor = imageResizeFactor;
-
+    public EntityConverter(final Dimension2D modelYardDimension, final Dimension2D viewYardDimension) {
         this.yardRatioHeight = modelYardDimension.getHeight() / viewYardDimension.getHeight();
         this.yardRatioWidth = modelYardDimension.getWidth() / viewYardDimension.getWidth();
     }
@@ -45,8 +39,8 @@ public final class EntityConverter {
      * @return The entityView representing the plant
      */
     public EntityView getEntityView(final Plant p) {
-        final String completeImagePath = ResourceFinder.getImagePath(
-                p.getPlantType().name().toLowerCase(Locale.getDefault()).concat(ANIMATED_IMAGE_EXTENSION));
+        final String completeImagePath = ResourceFinder.getPlantImagePath(
+                p.getPlantType().name().toLowerCase(Locale.getDefault()).concat(IMAGES_EXTENSION));
         final Point2D newPosition = convertPlantPosition(p.getPosition(), completeImagePath);
         return new EntityViewImpl(newPosition, completeImagePath);
     }
@@ -57,8 +51,8 @@ public final class EntityConverter {
      * @return The entityView representing the zombie
      */
     public EntityView getEntityView(final Zombie z) {
-        final String completeImagePath = ResourceFinder.getImagePath(
-                z.getZombieType().name().toLowerCase(Locale.getDefault()).concat(ANIMATED_IMAGE_EXTENSION));
+        final String completeImagePath = ResourceFinder.getZombieImagePath(
+                z.getZombieType().name().toLowerCase(Locale.getDefault()).concat(IMAGES_EXTENSION));
         final Point2D newPosition = convertZombiePosition(z.getPosition(), completeImagePath);
         return new EntityViewImpl(newPosition, completeImagePath);
     }
@@ -70,7 +64,7 @@ public final class EntityConverter {
      */
     public EntityView getEntityView(final Bullet b) {
         final String bulletName = getName(b.getClass().getName().toLowerCase(Locale.getDefault()));
-        final String completeImagePath = ResourceFinder.getImagePath(bulletName.concat(STATIC_IMAGE_EXTENSION));
+        final String completeImagePath = ResourceFinder.getBulletImagePath(bulletName.concat(IMAGES_EXTENSION));
         final Point2D newPosition = convertBulletPosition(b.getPosition(), completeImagePath);
         return new EntityViewImpl(newPosition, completeImagePath);
     }
@@ -81,9 +75,21 @@ public final class EntityConverter {
      * @return The CardView instance with image and cost
      */
     public CardView getCardView(final IdConverter.Plants p) {
-        final String completeImagePath = ResourceFinder.getImagePath(
-                p.name().toLowerCase(Locale.getDefault()).concat(STATIC_IMAGE_EXTENSION));
+        final String completeImagePath = ResourceFinder.getPlantImagePath(
+                p.name().toLowerCase(Locale.getDefault()).concat(CARD_SUFFIX).concat(IMAGES_EXTENSION));
         return new CardViewImpl(p.getCost(), completeImagePath);
+    }
+
+    public void changePlantViewPosition(final EntityView entityView, final Point2D newPosition) {
+        entityView.setPosition(convertPlantPosition(newPosition, entityView.getPlaceableImage().getUrl()));
+    }
+
+    public void changeZombieViewPosition(final EntityView entityView, final Point2D newPosition) {
+        entityView.setPosition(convertZombiePosition(newPosition, entityView.getPlaceableImage().getUrl()));
+    }
+
+    public void changeBulletViewPosition(final EntityView entityView, final Point2D newPosition) {
+        entityView.setPosition(convertBulletPosition(newPosition, entityView.getPlaceableImage().getUrl()));
     }
 
     private String getName(final String completePackage) {
@@ -98,8 +104,8 @@ public final class EntityConverter {
 
         //Get the placing position
         outputPosition = outputPosition.subtract(
-                getImageWidth(imagePath) * this.imageResizeFactor,
-                getImageHeight(imagePath) * this.imageResizeFactor);
+                getImageWidth(imagePath),
+                getImageHeight(imagePath));
 
         return outputPosition;
     }
@@ -113,7 +119,7 @@ public final class EntityConverter {
         //Get the placing position
         outputPosition = outputPosition.subtract(
                 0,
-                getImageHeight(imagePath) * this.imageResizeFactor);
+                getImageHeight(imagePath));
 
         return outputPosition;
     }
@@ -126,8 +132,8 @@ public final class EntityConverter {
 
         //Get the placing position
         outputPosition = outputPosition.subtract(
-                getImageWidth(imagePath) * this.imageResizeFactor,
-                getImageHeight(imagePath) * this.imageResizeFactor);
+                getImageWidth(imagePath),
+                getImageHeight(imagePath));
         return outputPosition.subtract(0, 80); //TODO: modify
 //        return outputPosition;
     }

@@ -15,6 +15,11 @@ public interface FlowerForceView {
     void game(int levelId);
 
     /**
+     * This method is called to set the how to play scene in the application.
+     */
+    void howToPlay();
+
+    /**
      * 
      * @return the controller of the application
      */

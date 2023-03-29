@@ -19,12 +19,12 @@
             <Image url="@../images/Garden.png" />
          </image>
       </ImageView>
-       <ImageView fitWidth="200.0" layoutX="37.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+       <ImageView fitHeight="210.0" fitWidth="173.0" layoutX="37.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
            <image>
                <Image url="@../images/bar.jpeg" />
            </image>
        </ImageView>
-       <Label fx:id="lblSunCounter" alignment="CENTER" layoutX="58.0" layoutY="201.0" prefHeight="64.0" prefWidth="151.0" text="500">
+       <Label fx:id="lblSunCounter" alignment="CENTER" layoutX="52.0" layoutY="174.0" prefHeight="55.0" prefWidth="139.0" text="500">
            <font>
                <Font size="40.0" />
            </font>
@@ -35,89 +35,123 @@
             <Image url="@../images/returnToMainMenu.png" />
          </image>
       </ImageView>
-      <FlowPane columnHalignment="CENTER" layoutX="38.0" layoutY="298.0" prefWidth="200.0" vgap="18.0">
+      <FlowPane columnHalignment="CENTER" layoutX="50.0" layoutY="250.0" prefHeight="767.0" prefWidth="130.0" vgap="15.0">
          <children>
             <AnchorPane>
                <children>
-                  <ImageView fx:id="card0" disable="true" fitWidth="200.0" onMouseClicked="#selectCard" pickOnBounds="true" preserveRatio="true" visible="false">
-                     <image>
-                        <Image url="@../images/sunflower.png" />
-                     </image>
+                  <ImageView fx:id="card0" disable="true" fitWidth="150.0" onMouseClicked="#selectCard" pickOnBounds="true" preserveRatio="true" visible="false">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
+                     <image>
+                        <Image url="@../images/plants/sunflower_card.png" />
+                     </image>
                   </ImageView>
-                  <Label fx:id="lbl0" layoutX="125.0" layoutY="70.0" mouseTransparent="true" visible="false">
+                  <Label fx:id="lbl0" layoutX="98.0" layoutY="55.0" mouseTransparent="true" visible="false">
                      <font>
-                        <Font size="38.0" />
+                        <Font size="25.0" />
                      </font>
                   </Label>
                </children>
             </AnchorPane>
             <AnchorPane>
                <children>
-                  <ImageView fx:id="card1" disable="true" fitWidth="200.0" onMouseClicked="#selectCard" pickOnBounds="true" preserveRatio="true" visible="false">
-                     <image>
-                        <Image url="@../images/peashooter.png" />
-                     </image>
+                  <ImageView fx:id="card1" disable="true" fitWidth="150.0" onMouseClicked="#selectCard" pickOnBounds="true" preserveRatio="true" visible="false">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
+                     <image>
+                        <Image url="@../images/plants/peashooter_card.png" />
+                     </image>
                   </ImageView>
-                  <Label fx:id="lbl1" layoutX="125.0" layoutY="70.0" mouseTransparent="true" textAlignment="RIGHT" visible="false">
+                  <Label fx:id="lbl1" layoutX="98.0" layoutY="55.0" mouseTransparent="true" textAlignment="RIGHT" visible="false">
                      <font>
-                        <Font size="38.0" />
+                        <Font size="25.0" />
                      </font>
                   </Label>
                </children>
             </AnchorPane>
             <AnchorPane>
                <children>
-                  <ImageView fx:id="card2" disable="true" fitWidth="200.0" onMouseClicked="#selectCard" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fx:id="card2" disable="true" fitWidth="150.0" onMouseClicked="#selectCard" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
-                        <Image url="@../images/snowshooter.png" />
+                        <Image url="@../images/plants/snowshooter_card.png" />
                      </image>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Label fx:id="lbl2" layoutX="125.0" layoutY="70.0" mouseTransparent="true" textAlignment="RIGHT" visible="false">
+                  <Label fx:id="lbl2" layoutX="98.0" layoutY="55.0" mouseTransparent="true" textAlignment="RIGHT" visible="false">
                      <font>
-                        <Font size="38.0" />
+                        <Font size="25.0" />
                      </font>
                   </Label>
                </children>
             </AnchorPane>
             <AnchorPane>
                <children>
-                  <ImageView fx:id="card3" disable="true" fitWidth="200.0" onMouseClicked="#selectCard" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fx:id="card3" disable="true" fitWidth="150.0" onMouseClicked="#selectCard" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
-                        <Image url="@../images/fastshooter.png" />
+                        <Image url="@../images/plants/fastshooter_card.png" />
                      </image>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Label fx:id="lbl3" layoutX="125.0" layoutY="70.0" mouseTransparent="true" textAlignment="RIGHT" visible="false">
+                  <Label fx:id="lbl3" layoutX="98.0" layoutY="55.0" mouseTransparent="true" textAlignment="RIGHT" visible="false">
                      <font>
-                        <Font size="38.0" />
+                        <Font size="25.0" />
                      </font>
                   </Label>
                </children>
             </AnchorPane>
             <AnchorPane>
                <children>
-                  <ImageView fx:id="card4" disable="true" fitWidth="200.0" onMouseClicked="#selectCard" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <ImageView fx:id="card4" disable="true" fitWidth="150.0" onMouseClicked="#selectCard" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
-                        <Image url="@../images/fireshooter.png" />
+                        <Image url="@../images/plants/fireshooter_card.png" />
                      </image>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Label fx:id="lbl4" layoutX="125.0" layoutY="70.0" mouseTransparent="true" textAlignment="RIGHT" visible="false">
+                  <Label fx:id="lbl4" layoutX="98.0" layoutY="55.0" mouseTransparent="true" textAlignment="RIGHT" visible="false">
                      <font>
-                        <Font size="38.0" />
+                        <Font size="25.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="10.0" layoutY="467.0">
+               <children>
+                  <ImageView fx:id="card5" disable="true" fitWidth="150.0" onMouseClicked="#selectCard" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@../images/plants/wallnut_card.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+                  <Label fx:id="lbl5" layoutX="98.0" layoutY="55.0" mouseTransparent="true" textAlignment="RIGHT" visible="false">
+                     <font>
+                        <Font size="25.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="10.0" layoutY="582.0">
+               <children>
+                  <ImageView fx:id="card6" disable="true" fitWidth="150.0" onMouseClicked="#selectCard" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@../images/plants/cherrybomb_card.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+                  <Label fx:id="lbl6" layoutX="98.0" layoutY="55.0" mouseTransparent="true" textAlignment="RIGHT" visible="false">
+                     <font>
+                        <Font size="25.0" />
                      </font>
                   </Label>
                </children>
@@ -147,5 +181,10 @@
             </RadialGradient>
          </fill>
       </Rectangle>
+      <ImageView fx:id="imageShovel" fitHeight="102.0" fitWidth="98.0" layoutX="239.0" layoutY="26.0" onMouseClicked="#shovelSelected" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/shovel.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

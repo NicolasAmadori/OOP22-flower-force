@@ -6,6 +6,7 @@ import flowerforce.common.ResourceFinder;
 import flowerforce.controller.Controller;
 import flowerforce.controller.ControllerImpl;
 import flowerforce.controller.GameLoop;
+import flowerforce.model.game.Game;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.geometry.Dimension2D;
@@ -35,16 +36,14 @@ public final class FlowerForceApplication extends Application implements FlowerF
     public void start(final Stage primaryStage) throws Exception {
         this.stage = primaryStage;
         this.controller = new ControllerImpl();//Instantiate the Controller
-        //TODO: setStageSize()
-        //this.stage.setFullScreen(true);
         this.stage.setResizable(false);
-        this.stage.setTitle("Flower Force");
         this.stage.getIcons().add(new Image(ResourceFinder.getImagePath(GAMEICON_NAME)));
         this.stage.setOnCloseRequest(e -> {
             Platform.exit();
             System.exit(0);
         });
-        this.menu();
+//        this.menu();
+        this.howToPlay();
     }
 
     @Override
@@ -63,11 +62,23 @@ public final class FlowerForceApplication extends Application implements FlowerF
         try {
             this.sceneClass = new GameScene(this);
             this.setScene(this.sceneClass.getScene());
-
-            AnimationTimer gameLoop = new GameLoop(this.controller.getGameEngine(), this.controller.startNewLevelGame(levelId), 30);//TODO: use world method instead of 30
+            this.stage.setTitle(levelId == 0 ? "Adventure Mode" : "Level " + levelId);
+            Game game = levelId == 0 ? this.controller.startNewInfiniteGame() : this.controller.startNewLevelGame(levelId);
+            AnimationTimer gameLoop = new GameLoop(this.controller.getGameEngine(), game, this.controller.getFramesPerSecond());
             gameLoop.start();
         } catch (Exception e) {
             System.out.println(e);
+        }
+    }
+
+    @Override
+    public void howToPlay() {
+        try {
+            FlowerForceScene sceneClass = new HowToPlayScene(this);
+            this.setScene(sceneClass.getScene());
+            this.stage.setTitle("HowToPlay");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
