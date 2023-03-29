@@ -45,6 +45,7 @@ public final class GameSceneController implements GameEngine {
     @FXML private ImageView card5;
 
     @FXML private ImageView card6;
+    @FXML private ImageView card7;
 
     @FXML private Label lbl0;
 
@@ -59,6 +60,7 @@ public final class GameSceneController implements GameEngine {
     @FXML private Label lbl5;
 
     @FXML private Label lbl6;
+    @FXML private Label lbl7;
 
     @FXML private ImageView imageMenu;
 
@@ -101,9 +103,9 @@ public final class GameSceneController implements GameEngine {
      * {@inheritDoc}
      */
     @Override
-    public void loadCards(final List<CardView> cardViews) {
-        this.cardLabels.addAll(List.of(lbl0, lbl1, lbl2, lbl3, lbl4, lbl5, lbl6));
-        this.cards.addAll(List.of(card0, card1, card2, card3, card4, card5, card6));
+    public void loadCards(List<CardView> cardViews) {
+        this.cardLabels.addAll(List.of(lbl0, lbl1, lbl2, lbl3, lbl4, lbl5, lbl6, lbl7));
+        this.cards.addAll(List.of(card0, card1, card2, card3, card4, card5, card6, card7));
         for (int i = 0; i < cardLabels.size() && i < cards.size(); i++) {
             if (i < cardViews.size()) {
                 this.cards.get(i).setImage(cardViews.get(i).getMenuImage());
