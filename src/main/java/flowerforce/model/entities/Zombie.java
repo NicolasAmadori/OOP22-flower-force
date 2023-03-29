@@ -28,4 +28,10 @@ public interface Zombie extends MovingEntity, LivingEntity {
      * @return the type of zombie
      */
     Zombies getZombieType();
+
+    /**
+     * 
+     * @return the generic difficulty of the zombie
+     */
+    int getDifficulty();
 }
