@@ -11,6 +11,7 @@ public abstract class AbstractPlant extends AbstractLivingEntity implements Plan
 
     private final Plants plantType;
     private final int cost;
+    private final int rechargeTime;
 
     /**
      * 
@@ -19,10 +20,11 @@ public abstract class AbstractPlant extends AbstractLivingEntity implements Plan
      * @param health the starting health of the entity
      * @param plantType the type of the plant
      */
-    public AbstractPlant(final Point2D pos, final Timer timer, final int health, final int cost, final Plants plantType) {
+    public AbstractPlant(final Point2D pos, final Timer timer, final int health, final int cost, final int rechargeTime, final Plants plantType) {
         super(pos, timer, health);
         this.plantType = plantType;
         this.cost = cost;
+        this.rechargeTime = rechargeTime;
     }
 
     /**
@@ -36,6 +38,11 @@ public abstract class AbstractPlant extends AbstractLivingEntity implements Plan
     @Override
     public int getCost() {
         return this.cost;
+    }
+
+    @Override
+    public int getRechargeTime() {
+        return this.rechargeTime;
     }
 
 }

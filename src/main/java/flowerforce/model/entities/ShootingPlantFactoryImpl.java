@@ -34,6 +34,7 @@ public class ShootingPlantFactoryImpl implements ShootingPlantFactory {
             STANDARD_SHOOTER_HEALTH,
             () -> this.bulletFactory.createStandardBullet(getBulletPos(pos)),
             COMMON_SHOOTER_COST,
+            RechargeTimes.getFastRechargeTime(),
             plantType
         );
     }
@@ -49,6 +50,7 @@ public class ShootingPlantFactoryImpl implements ShootingPlantFactory {
             STANDARD_SHOOTER_HEALTH,
             () -> this.bulletFactory.createSnowdBullet(getBulletPos(pos)),
             SNOW_SHOOTER_COST,
+            RechargeTimes.getFastRechargeTime(),
             plantType
         );
     }
@@ -64,6 +66,7 @@ public class ShootingPlantFactoryImpl implements ShootingPlantFactory {
             STANDARD_SHOOTER_HEALTH,
             () -> this.bulletFactory.createFireBullet(getBulletPos(pos)),
             FIRE_SHOOTER_COST,
+            RechargeTimes.getFastRechargeTime(),
             plantType
         );
     }
@@ -79,6 +82,7 @@ public class ShootingPlantFactoryImpl implements ShootingPlantFactory {
             STANDARD_SHOOTER_HEALTH,
             () -> this.bulletFactory.createStandardBullet(getBulletPos(pos)),
             FAST_SHOOTER_COST,
+            RechargeTimes.getFastRechargeTime(),
             plantType
         );
     }

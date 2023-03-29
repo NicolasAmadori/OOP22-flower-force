@@ -30,6 +30,7 @@ public class CherryBomb extends AbstractPlant implements ExplodingPlant {
             new TimerImpl(RenderingInformation.convertSecondsToCycles(SECONDS_BEFORE_EXPLOSION)), 
             CHERRY_HEALTH,
             CHERRY_COST,
+            RechargeTimes.getVerySlowRechargeTime(),
             plantType
         );
     }

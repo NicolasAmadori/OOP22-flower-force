@@ -14,4 +14,6 @@ public interface Plant extends LivingEntity {
     Plants getPlantType();
 
     int getCost();
+
+    int getRechargeTime();
 }

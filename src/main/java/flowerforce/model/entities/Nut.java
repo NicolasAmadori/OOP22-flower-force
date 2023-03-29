@@ -23,7 +23,7 @@ public class Nut extends AbstractPlant {
      * @param plantType the type of the plant
      */
     public Nut(final Point2D pos, final Plants plantType) {
-        super(pos, new TimerImpl(DAMAGE_PERIOD), NUT_HEALTH, NUT_COST, plantType);
+        super(pos, new TimerImpl(DAMAGE_PERIOD), NUT_HEALTH, NUT_COST,  RechargeTimes.getSlowRechargeTime(), plantType);
     }
 
     /**
