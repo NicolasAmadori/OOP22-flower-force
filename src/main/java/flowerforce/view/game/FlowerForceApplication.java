@@ -42,8 +42,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
             Platform.exit();
             System.exit(0);
         });
-//        this.menu();
-        this.howToPlay();
+        this.menu();
     }
 
     @Override
@@ -70,7 +69,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
             System.out.println(e);
         }
     }
-
+    
     @Override
     public void howToPlay() {
         try {
@@ -80,6 +79,11 @@ public final class FlowerForceApplication extends Application implements FlowerF
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    @Override
+    public void shop() {
+        // TODO Auto-generated method stub
     }
 
     @Override
@@ -91,7 +95,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
         this.stage.setScene(scene);
         this.stage.show();
     }
-
+    
     /**
      * Produces a scene scaled on screen's dimensions.
      * @param root the root element to resize
@@ -142,4 +146,5 @@ public final class FlowerForceApplication extends Application implements FlowerF
         //image's dimensions
         return new Dimension2D(image.getWidth(), image.getHeight());
     }
+
 }

@@ -20,6 +20,11 @@ public interface FlowerForceView {
     void howToPlay();
 
     /**
+     * This method is called to set shop scene in the application.
+     */
+    void shop();
+
+    /**
      * 
      * @return the controller of the application
      */

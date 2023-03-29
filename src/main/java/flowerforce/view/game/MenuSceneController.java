@@ -49,4 +49,14 @@ public class MenuSceneController {
             alert.showAndWait();
         }
     }
+
+    @FXML
+    void howToPlay(final MouseEvent event) {
+        this.application.howToPlay();
+    }
+
+    @FXML
+    void shop(final MouseEvent event) {
+        this.application.shop();
+    }
 }
