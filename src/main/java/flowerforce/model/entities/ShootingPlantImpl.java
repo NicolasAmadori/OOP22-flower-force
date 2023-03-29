@@ -31,9 +31,10 @@ public class ShootingPlantImpl extends AbstractPlant implements ShootingPlant {
         final Timer timer,
         final int health,
         final Supplier<Bullet> bulletProducer,
+        final int cost,
         final Plants plantType
     ) {
-        super(pos, timer, health, plantType);
+        super(pos, timer, health, cost, plantType);
         this.bulletProducer = bulletProducer;
     }
 
