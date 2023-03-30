@@ -19,18 +19,19 @@ public abstract class AbstractGameImpl implements Game {
     private static final int INITIAL_SUN = 2;
     private Set<Plant> plants = new HashSet<>();
     private Set<Bullet> bullets = new HashSet<>();
+    private Set<Zombie> zombies = new HashSet<>();
     private final TimerImpl sunTimer;
     private final Map<IdConverter.Plants, TimerImpl> plantsTimer = new HashMap<>();
     private int sun;
-    protected final ZombieGeneration generateZombie;
-    protected final Level level;
-    protected Set<Zombie> zombies = new HashSet<>();
-    protected final World world;
-    protected final int score;
+    private final ZombieGeneration generateZombie;
+    private final Level level;
+    private final World world;
+    private int score;
 
     /**
-     * @param level level of the game that has started.
-     * @param world the instance of the world starting the game.
+     * Constructor to instantiate an infinite game.
+     * @param level of the game started
+     * @param world an instance of the world that started the game
      */
     public AbstractGameImpl(final Level level, final World world) {
         this.sun = INITIAL_SUN * SUN_VALUE;
@@ -53,6 +54,41 @@ public abstract class AbstractGameImpl implements Game {
         this.eatingPlant();
         this.updatePlant();
         this.collidingBullet();
+    }
+
+    /**
+     * @param zombie to add to the list of spawned zombie
+     */
+    protected void addZombie(final Zombie zombie) {
+        this.zombies.add(zombie);
+    }
+
+    /**
+     * @return
+     */
+    protected ZombieGeneration getGenerateZombie() {
+        return this.generateZombie;
+    }
+
+    /**
+     * @return the actual value of the game score.
+     */
+    protected int getScore() {
+        return this.score;
+    }
+
+    /**
+     * @return the actual level of the game
+     */
+    protected Level getLevel() {
+        return this.level;
+    }
+
+    /**
+     * @return the instance of the World
+     */
+    protected World getWorld() {
+        return this.world;
     }
 
     /**
@@ -113,8 +149,8 @@ public abstract class AbstractGameImpl implements Game {
     @Override
     public boolean isOver() {
         final boolean zombieArrived = this.zombies.stream().filter(zombie -> zombie.getPosition().getX() <= 0)
-                .collect(Collectors.toSet()).size() > 0 ;
-        return zombieArrived || this.result();
+                .collect(Collectors.toSet()).isEmpty();
+        return !zombieArrived || this.result();
     }
 
     /**
@@ -153,7 +189,7 @@ public abstract class AbstractGameImpl implements Game {
     }
 
     /**
-     * decides whether to generate a sun.
+     * Decides whether to generate a sun.
      */
     private void generateSun() {
         this.sunTimer.updateState();
@@ -185,6 +221,7 @@ public abstract class AbstractGameImpl implements Game {
                  .filter(zombie -> !zombie.isOver())
                  .min(Comparator.comparing(zombie -> zombie.getPosition().getX()))
                  .ifPresent(bullet::hit));
+         this.zombies.stream().filter(Entity::isOver).forEach(z -> score += z.getZombieType().getDifficulty());
          this.zombies = this.zombies.stream().filter(z -> !z.isOver()).collect(Collectors.toSet());
          this.bullets = this.bullets.stream().filter(b -> !b.isOver()).collect(Collectors.toSet());
     }
@@ -213,7 +250,7 @@ public abstract class AbstractGameImpl implements Game {
     }
 
     /**
-     * Update the plants and check if they could produce suns or projectiles.
+     * Update the plants and check what they can do with the actual state.
      */
     private void updatePlant() {
         for (final var plant : plants) {
@@ -232,16 +269,14 @@ public abstract class AbstractGameImpl implements Game {
                     final var bullet = ((ShootingPlant) plant).nextBullet();
                     bullet.ifPresent(b -> bullets.add(b));
                 }
-            } else if (plant instanceof ExplodingPlant) {
-                if (((ExplodingPlant) plant).hasExploded()) {
-                    ((ExplodingPlant) plant).explodeOver(zombies.stream()
-                            .filter(zombie -> zombie.getPosition().getY() == plant.getPosition().getY())
-                            .filter(zombie -> zombie.getPosition().getX() - ((ExplodingPlant) plant).getRadius()
-                            > plant.getPosition().getX())
-                            .filter(zombie -> zombie.getPosition().getX() - ((ExplodingPlant) plant).getRadius()
-                                    > plant.getPosition().getX())
-                            .toList());
-                }
+            } else if (plant instanceof ExplodingPlant && ((ExplodingPlant) plant).hasExploded()) {
+                ((ExplodingPlant) plant).explodeOver(zombies.stream()
+                        .filter(zombie -> zombie.getPosition().getY() == plant.getPosition().getY())
+                        .filter(zombie -> zombie.getPosition().getX() - ((ExplodingPlant) plant).getRadius()
+                        > plant.getPosition().getX())
+                        .filter(zombie -> zombie.getPosition().getX() - ((ExplodingPlant) plant).getRadius()
+                                > plant.getPosition().getX())
+                        .toList());
             }
         }
         plantsTimer.keySet().forEach(plantType -> {
@@ -251,6 +286,9 @@ public abstract class AbstractGameImpl implements Game {
         });
     }
 
+    /**
+     * Used for the generation zombie management.
+     */
     protected abstract void generateZombie();
 
 }

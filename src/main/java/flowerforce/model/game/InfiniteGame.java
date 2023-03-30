@@ -1,6 +1,16 @@
 package flowerforce.model.game;
 
+/**
+ * An implementation of a new infinite game.
+ * This game will spawn zombies until the player loses.
+ */
 public class InfiniteGame extends AbstractGameImpl {
+
+    /**
+     * Constructor to instantiate an infinite game.
+     * @param level of the game started
+     * @param world an instance of the world that started the game
+     */
     public InfiniteGame(final Level level, final World world) {
         super(level, world);
     }
@@ -10,9 +20,9 @@ public class InfiniteGame extends AbstractGameImpl {
      */
     @Override
     public boolean isOver() {
-        var end = super.isOver();
+        final var end = super.isOver();
         if (end) {
-            this.world.getPlayer().setNewScoreRecord(this.score);
+            this.getWorld().getPlayer().setNewScoreRecord(this.getScore());
         }
         return super.isOver();
     }
@@ -31,7 +41,8 @@ public class InfiniteGame extends AbstractGameImpl {
      */
     @Override
     public int getProgressState() {
-        return 0;
+        return this.getGenerateZombie().getSpawnedZombie()
+                / this.getGenerateZombie().getNumberHordeZombie() * 100;
     }
 
     /**
@@ -39,7 +50,7 @@ public class InfiniteGame extends AbstractGameImpl {
      */
     @Override
     protected void generateZombie() {
-        final var zombie = this.generateZombie.zombieGeneration();
-        zombie.ifPresent(z -> this.zombies.add(z));
+        final var zombie = this.getGenerateZombie().zombieGeneration();
+        zombie.ifPresent(this::addZombie);
     }
 }

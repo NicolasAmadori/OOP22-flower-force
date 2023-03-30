@@ -8,6 +8,9 @@ import flowerforce.model.utilities.TimerImpl;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * This is an implementation of {@link ZombieGeneration}.
+ */
 public class ZombieGenerationImpl implements ZombieGeneration {
     private static final double MIN_SECS_SPAWN_ZOMBIE = 5.0;
     private static final double MAX_SECS_SPAWN_ZOMBIE = 15.0;
@@ -36,6 +39,9 @@ public class ZombieGenerationImpl implements ZombieGeneration {
     private int levelZombieToSpawn;
     private int prevRow = -1;
 
+    /**
+     * @param level an instance of the game started
+     */
     public ZombieGenerationImpl(final Level level) {
         this.zombieTimer = new TimerImpl(timeZombie);
         this.zombies = level.getZombiesId();
@@ -50,6 +56,9 @@ public class ZombieGenerationImpl implements ZombieGeneration {
                 .orElse(0);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Optional<Zombie> zombieGeneration() {
         this.zombieTimer.updateState();
@@ -68,7 +77,7 @@ public class ZombieGenerationImpl implements ZombieGeneration {
                         this.timeZombie -= DEC_TIME_ZOMBIE;
                     }
                     this.zombieTimer.setNumCycles(timeZombie);
-                    generatedZombie++;
+                    generatedZombie = 1;
                 } else {
                     this.zombieTimer.setNumCycles(TIME_TO_SPAWN_HORDE_ZOMBIE);
                 }
@@ -80,6 +89,9 @@ public class ZombieGenerationImpl implements ZombieGeneration {
         return Optional.empty();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Optional<Zombie> bossGeneration() {
         if (boss.isPresent()) {
@@ -92,6 +104,10 @@ public class ZombieGenerationImpl implements ZombieGeneration {
         return Optional.empty();
     }
 
+    /**
+     * Used for the creation of a new zombie.
+     * @return the spawned zombie
+     */
     private Zombie creationZombie() {
         final int delta = hordeZombie / START_NUMBER_ZOMBIE_IN_HORDE + 1;
         final var zombieToSpawn = zombies.stream()
@@ -99,7 +115,7 @@ public class ZombieGenerationImpl implements ZombieGeneration {
                 .collect(Collectors.toSet());
 
         int randomValue = new Random().nextInt(zombieToSpawn.stream()
-                .mapToInt(z -> zombieMaxDifficulty - z.getDifficulty() + delta )
+                .mapToInt(z -> zombieMaxDifficulty - z.getDifficulty() + delta)
                 .sum() + 1);
 
         int row;
@@ -123,5 +139,21 @@ public class ZombieGenerationImpl implements ZombieGeneration {
                         row,
                         Yard.getColsNum()
                 ));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getSpawnedZombie() {
+        return this.generatedZombie;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getNumberHordeZombie() {
+        return this.hordeZombie + 10;
     }
 }
