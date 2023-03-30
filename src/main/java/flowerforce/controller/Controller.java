@@ -1,6 +1,7 @@
 package flowerforce.controller;
 
 import flowerforce.model.game.Game;
+import flowerforce.view.entities.CardView;
 import flowerforce.view.entities.EntityView;
 import flowerforce.view.game.GameEngine;
 import java.util.Set;
@@ -92,7 +93,7 @@ public interface Controller {
      * All the cards that are enabled to select.
      * @return A set of integer, representing the indexes of the enable cards.
      */
-    Set<Integer> getEnabledCards();
+    Set<CardView> getEnabledCards();
 
     /**
      * Get the number of rows available.
