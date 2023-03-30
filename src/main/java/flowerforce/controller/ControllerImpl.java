@@ -8,6 +8,8 @@ import java.util.Optional;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
+
 import flowerforce.controller.utilities.InputHandler;
 import flowerforce.controller.utilities.WorldSavingManager;
 import flowerforce.model.entities.Bullet;
@@ -28,10 +30,10 @@ public final class ControllerImpl implements Controller {
 
     private Optional<GameEngine> gameEngine = Optional.empty();
     private final World world;
-
     private EntityConverter entityConverter;
     private Optional<Game> game;
 
+    private final Map<CardView, Integer> cards = new HashMap<>();
     private final Map<Plant, EntityView> previousPlant = new HashMap<>();
 
     private final Map<Zombie, EntityView> previousZombie = new HashMap<>();
@@ -109,9 +111,9 @@ public final class ControllerImpl implements Controller {
      * {@inheritDoc}
      */
     @Override
-    public boolean placePlant(final int plantId, final int row, final int col) {
+    public boolean placePlant(final CardView cardView, final int row, final int col) {
         checkGame();
-        return this.game.get().placePlant(plantId, row, col);
+        return this.game.get().placePlant(this.cards.get(cardView), row, col);
     }
 
     @Override
@@ -211,19 +213,21 @@ public final class ControllerImpl implements Controller {
         return output;
     }
 
-
     private List<CardView> getCards() {
         checkGame();
-        final List<IdConverter.Plants> plants = this.game.get().getAllPlantIDs();
-        final List<CardView> cards = new ArrayList<>();
-        plants.forEach(p -> cards.add(entityConverter.getCardView(p)));
-        return cards;
+        this.game.get().getAllPlantIDs()
+                .forEach(p -> this.cards.put(entityConverter.getCardView(p), p.ordinal()));
+        return cards.keySet().stream().toList();
     }
 
     @Override
-    public Set<Integer> getEnabledCards() {
+    public Set<CardView> getEnabledCards() {
         checkGame();
-        return this.game.get().getAvailablePlantsIDs(); //uncomment this when game is corrected
+        Set<Integer> enabledCards = this.game.get().getAvailablePlantsIDs(); //TODO: Modify when enum removed
+        return this.cards.entrySet().stream()
+                .filter(e -> enabledCards.contains(e.getValue())) //Removed not available cardviews
+                .map(Map.Entry::getKey) //Map to get just di keys
+                .collect(Collectors.toSet());
     }
 
     @Override
