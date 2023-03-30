@@ -21,11 +21,11 @@ public final class EntityConverter {
     private static final String IMAGES_EXTENSION = ".png";
     private static final String CARD_SUFFIX = "_card";
     private final double yardRatioHeight;
-
     private final double yardRatioWidth;
 
     /**
      * Create a new instance of EntityConverter, setting all the information.
+     * @param modelYardDimension The dimensione of the yard of the model
      * @param viewYardDimension The dimension of the yard of the view
      */
     public EntityConverter(final Dimension2D modelYardDimension, final Dimension2D viewYardDimension) {
@@ -80,14 +80,20 @@ public final class EntityConverter {
         return new CardViewImpl(p.getCost(), completeImagePath);
     }
 
-    public void changePlantViewPosition(final EntityView entityView, final Point2D newPosition) {
-        entityView.setPosition(convertPlantPosition(newPosition, entityView.getPlaceableImage().getUrl()));
-    }
-
+    /**
+     * Change the position of a Zombie EntityView.
+     * @param entityView the EntityView instance whose position is to change
+     * @param newPosition the new position to set
+     */
     public void changeZombieViewPosition(final EntityView entityView, final Point2D newPosition) {
         entityView.setPosition(convertZombiePosition(newPosition, entityView.getPlaceableImage().getUrl()));
     }
 
+    /**
+     * Change the position of a Bullet EntityView.
+     * @param entityView the EntityView instance whose position is to change
+     * @param newPosition the new position to set
+     */
     public void changeBulletViewPosition(final EntityView entityView, final Point2D newPosition) {
         entityView.setPosition(convertBulletPosition(newPosition, entityView.getPlaceableImage().getUrl()));
     }

@@ -21,8 +21,8 @@ public class NewspaperZombie extends ZombieImpl {
      * @param newpaperHealth the health of its newspaper
      */
     public NewspaperZombie(final double defaultDelta, final int damage, final int health, final Point2D position,
-            final Zombies zombieType, final int newspaperHealth) {
-        super(defaultDelta, damage, health + newspaperHealth, position, zombieType);
+            final Zombies zombieType, final int newspaperHealth, final int difficulty) {
+        super(defaultDelta, damage, health + newspaperHealth, position, zombieType, difficulty);
         this.criticalHealth = health;
         this.isRunning = false;
     }
