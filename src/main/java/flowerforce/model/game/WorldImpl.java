@@ -67,7 +67,7 @@ public class WorldImpl implements World {
                                 .filter(x -> x.getLevelId() == levelId)
                                 .findAny()
                                 .get();
-        return new GameImpl(level, this);
+        return new LevelGame(level, this);
     }
 
     /**
@@ -75,7 +75,7 @@ public class WorldImpl implements World {
      */
     @Override
     public Game createInfiniteGame() {
-        return new GameImpl(infiniteModeLevel, this);
+        return new InfiniteGame(infiniteModeLevel, this);
     }
 
     /**
