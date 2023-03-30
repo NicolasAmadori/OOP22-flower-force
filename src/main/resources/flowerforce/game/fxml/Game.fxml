@@ -19,12 +19,12 @@
             <Image url="@../images/Garden.png" />
          </image>
       </ImageView>
-       <ImageView fitHeight="210.0" fitWidth="173.0" layoutX="37.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+       <ImageView fitHeight="210.0" fitWidth="173.0" layoutX="37.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
            <image>
                <Image url="@../images/bar.jpeg" />
            </image>
        </ImageView>
-       <Label fx:id="lblSunCounter" alignment="CENTER" layoutX="52.0" layoutY="174.0" prefHeight="55.0" prefWidth="139.0" text="500">
+       <Label fx:id="lblSunCounter" alignment="CENTER" layoutX="52.0" layoutY="161.0" prefHeight="18.0" prefWidth="139.0" text="500">
            <font>
                <Font size="40.0" />
            </font>
@@ -35,7 +35,7 @@
             <Image url="@../images/returnToMainMenu.png" />
          </image>
       </ImageView>
-      <FlowPane columnHalignment="CENTER" layoutX="50.0" layoutY="250.0" prefHeight="767.0" prefWidth="130.0" vgap="15.0">
+      <FlowPane columnHalignment="CENTER" layoutX="48.0" layoutY="226.0" prefHeight="767.0" prefWidth="130.0" vgap="10.0">
          <children>
             <AnchorPane>
                <children>
@@ -156,6 +156,23 @@
                   </Label>
                </children>
             </AnchorPane>
+            <AnchorPane layoutX="10.0" layoutY="678.0">
+               <children>
+                  <ImageView fx:id="card7" disable="true" fitWidth="150.0" onMouseClicked="#selectCard" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@../images/plants/fastsunflower_card.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+                  <Label fx:id="lbl7" layoutX="98.0" layoutY="55.0" mouseTransparent="true" textAlignment="RIGHT" visible="false">
+                     <font>
+                        <Font size="25.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
          </children>
       </FlowPane>
       <Rectangle fx:id="coloredCell" arcHeight="5.0" arcWidth="5.0" cache="true" height="162.0" layoutX="606.0" layoutY="152.0" mouseTransparent="true" opacity="0.5" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="131.0">
@@ -181,7 +198,7 @@
             </RadialGradient>
          </fill>
       </Rectangle>
-      <ImageView fx:id="imageShovel" fitHeight="102.0" fitWidth="98.0" layoutX="239.0" layoutY="26.0" onMouseClicked="#shovelSelected" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imageShovel" fitHeight="102.0" fitWidth="98.0" layoutX="231.0" layoutY="19.0" onMouseClicked="#shovelSelected" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/shovel.png" />
          </image>
