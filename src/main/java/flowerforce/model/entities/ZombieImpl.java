@@ -19,6 +19,7 @@ public class ZombieImpl extends AbstractLivingEntity implements Zombie {
     private final int damage;
     private final Timer freezeTimer;
     private final Zombies zombieType;
+    private final int difficulty;
     private boolean isFrozen;
     private boolean canBite;
     private double defaultDelta;
@@ -32,12 +33,13 @@ public class ZombieImpl extends AbstractLivingEntity implements Zombie {
      * @param zombieType the type of zombie
      */
     protected ZombieImpl(final double defaultDelta, final int damage, final int health, final Point2D position,
-            final Zombies zombieType) {                
+            final Zombies zombieType, final int difficulty) {                
         super(position, new TimerImpl(EAT_WAITING_TICKS), health);
         this.defaultDelta = defaultDelta;
         this.damage = damage;
         this.freezeTimer = new TimerImpl(FREEZE_WAITING_TICKS);
         this.zombieType = zombieType;
+        this.difficulty = difficulty;
         this.isFrozen = false;
         this.canBite = true;
         this.delta = defaultDelta;
@@ -130,6 +132,14 @@ public class ZombieImpl extends AbstractLivingEntity implements Zombie {
     protected void setDelta(final double newDelta) {
             this.delta = this.isFrozen ? newDelta / FREEZE_FACTOR : newDelta;
             this.defaultDelta = newDelta;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getDifficulty() {
+        return this.difficulty;
     }
 
 }
