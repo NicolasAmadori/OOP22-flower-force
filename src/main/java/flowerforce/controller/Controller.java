@@ -73,7 +73,7 @@ public interface Controller {
      * @param col The column index in which to place the plant
      * @return true if the plant was placed correctly, false otherwise
      */
-    boolean placePlant(int plantId, int row, int col);
+    boolean placePlant(CardView cardView, int row, int col);
 
     /**
      * Remove a placed plant.

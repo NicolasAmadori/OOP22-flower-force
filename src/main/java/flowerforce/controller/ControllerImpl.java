@@ -111,9 +111,9 @@ public final class ControllerImpl implements Controller {
      * {@inheritDoc}
      */
     @Override
-    public boolean placePlant(final int plantId, final int row, final int col) {
+    public boolean placePlant(final CardView cardView, final int row, final int col) {
         checkGame();
-        return this.game.get().placePlant(plantId, row, col);
+        return this.game.get().placePlant(this.cards.get(cardView), row, col);
     }
 
     @Override
