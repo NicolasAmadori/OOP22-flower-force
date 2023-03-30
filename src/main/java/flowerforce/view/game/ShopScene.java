@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public class ShopScene extends AbstractFlowerForceScene {
     private static final String FXML_PATH = "flowerforce/game/fxml/Shop.fxml";
-    private static final String IMAGE_NAME = "shop.png";
+    private static final String IMAGE_NAME = "shopBackground.png";
 
     /**
       * @param application which sets the scene

@@ -10,7 +10,7 @@
     <children>
         <ImageView fx:id="imgBackground" onMouseClicked="#yardClicked" onMouseMoved="#mouseMoved" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <image>
-                <Image url="@../images/shop.png" />
+                <Image url="@../images/shopBackground.png" />
             </image>
         </ImageView>
       <ImageView fx:id="imgPrev" fitHeight="129.0" fitWidth="166.0" layoutX="432.0" layoutY="519.0" pickOnBounds="true" preserveRatio="true" />
