@@ -18,12 +18,15 @@ import java.util.Optional;
  * Code get from https://stackoverflow.com/questions/12161366/how-to-serialize-optionalt-classes-with-gson.
  * @param <E> The type to serialize
  */
-public class OptionalTypeAdapter<E> extends TypeAdapter<Optional<E>> {
+public final class OptionalTypeAdapter<E> extends TypeAdapter<Optional<E>> {
 
+    /**
+     * Get the type adapter factory.
+     */
     public static final TypeAdapterFactory FACTORY = new TypeAdapterFactory() {
         @Override
-        public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-            Class<T> rawType = (Class<T>) type.getRawType();
+        public <T> TypeAdapter<T> create(final Gson gson, final TypeToken<T> type) {
+            final Class<T> rawType = (Class<T>) type.getRawType();
             if (rawType != Optional.class) {
                 return null;
             }
@@ -35,14 +38,17 @@ public class OptionalTypeAdapter<E> extends TypeAdapter<Optional<E>> {
     };
     private final TypeAdapter<E> adapter;
 
-    public OptionalTypeAdapter(TypeAdapter<E> adapter) {
-
+    /**
+     * Get an instance of OptionalTypeAdapter.
+     * @param adapter the type adapter to use
+     */
+    public OptionalTypeAdapter(final TypeAdapter<E> adapter) {
         this.adapter = adapter;
     }
 
     @Override
-    public void write(JsonWriter out, Optional<E> value) throws IOException {
-        if(value.isPresent()){
+    public void write(final JsonWriter out, final Optional<E> value) throws IOException {
+        if (value.isPresent()) {
             adapter.write(out, value.get());
         } else {
             out.nullValue();
@@ -50,14 +56,13 @@ public class OptionalTypeAdapter<E> extends TypeAdapter<Optional<E>> {
     }
 
     @Override
-    public Optional<E> read(JsonReader in) throws IOException {
+    public Optional<E> read(final JsonReader in) throws IOException {
         final JsonToken peek = in.peek();
-        if(peek != JsonToken.NULL){
+        if (peek != JsonToken.NULL) {
             return Optional.ofNullable(adapter.read(in));
         }
 
         in.nextNull();
         return Optional.empty();
     }
-
 }
