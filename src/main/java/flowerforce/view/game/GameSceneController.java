@@ -247,7 +247,7 @@ public final class GameSceneController implements GameEngine {
     }
 
     private void enableCards() {
-        final Set<Integer> enabledCards = this.application.getController().getEnabledCards();
+        final Set<CardView> enabledCards = this.application.getController().getEnabledCards();
         this.cards.keySet().forEach(cIv -> {
             if (enabledCards.contains(this.cards.get(cIv))) {
                 if (cIv.isDisable()) {
