@@ -1,13 +1,22 @@
 package flowerforce.view.game;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
-public class ShopSceneController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class ShopSceneController implements Initializable {
 
     @FXML
     private ImageView imgItemToSell;
+    @FXML
+    private Label lblCoins;
+    @FXML
+    private Label lblCostItem;
 
     private final FlowerForceApplication application;
 
@@ -37,5 +46,10 @@ public class ShopSceneController {
     @FXML
     void prevItem(MouseEvent event) {
         System.out.println("prev");
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        lblCoins.setText(this.application.getController().getPlayerCoins() + "$");
     }
 }
