@@ -11,12 +11,12 @@ public final class IdConverter {
     private static final double FAST_RECHARGE_SECS = 7.5;
     private static final double SLOW_RECHARGE_SECS = 30;
     private static final double VERY_SLOW_RECHARGE_SECS = 30;
-    private static final int FAST_RECHARGE_TICKS = (int) (FAST_RECHARGE_SECS * RenderingInformation.getFramesPerSecond());
-    private static final int SLOW_RECHARGE_TICKS = (int) (SLOW_RECHARGE_SECS * RenderingInformation.getFramesPerSecond());
-    private static final int VERY_SLOW_RECHARGE_TICKS = (int) (VERY_SLOW_RECHARGE_SECS * RenderingInformation.getFramesPerSecond());
+    private static final int FAST_RECHARGE_TICKS = RenderingInformation.convertSecondsToCycles(FAST_RECHARGE_SECS);
+    private static final int SLOW_RECHARGE_TICKS = RenderingInformation.convertSecondsToCycles(SLOW_RECHARGE_SECS);
+    private static final int VERY_SLOW_RECHARGE_TICKS = RenderingInformation.convertSecondsToCycles(VERY_SLOW_RECHARGE_SECS);
     private static final ZombieFactory ZOMBIE_FACTORY = new ZombieFactoryImpl();
     private static final ShootingPlantFactory SHOOTING_PLANT_FACTORY = new ShootingPlantFactoryImpl();
-
+    private static final SunflowerFactory SUNFLOWER_FACTORY = new SunflowerFactoryImpl();
     private IdConverter() {
     }
 
@@ -51,7 +51,11 @@ public final class IdConverter {
         /**
          * Explodes giving a very high damage to all zombies inside a certain range.
          */
-        CHERRYBOMB(150, VERY_SLOW_RECHARGE_TICKS);
+        CHERRYBOMB(150, VERY_SLOW_RECHARGE_TICKS),
+        /**
+         * Produces suns faster than a normal sunflower.
+         */
+        FASTSUNFLOWER(150, SLOW_RECHARGE_TICKS);
 
         private final int cost;
         private final int unlockTime;
@@ -76,6 +80,24 @@ public final class IdConverter {
         public int getUnlockTime() {
             return this.unlockTime;
         }
+    }
+
+    /**
+     * Different bullet types.
+     */
+    public enum Bullets {
+        /**
+         * A standard bullet.
+         */
+        STANDARDBULLET,
+        /**
+         * A snow bullet that slows zombies.
+         */
+        SNOWBULLET,
+        /**
+         * A fire bullet that gives more damage than a standard bullet.
+         */
+        FIREBULLET;
     }
 
     /**
@@ -134,7 +156,7 @@ public final class IdConverter {
     public static Plant createPlant(final Plants plantType, final Point2D pos) {
         switch (plantType) {
             case SUNFLOWER:
-                return new SunflowerImpl(pos, plantType);
+                return SUNFLOWER_FACTORY.createCommonSunflower(pos, plantType);
             case PEASHOOTER:
                 return SHOOTING_PLANT_FACTORY.common(pos, plantType);
             case SNOWSHOOTER:
@@ -143,6 +165,12 @@ public final class IdConverter {
                 return SHOOTING_PLANT_FACTORY.fast(pos, plantType);
             case FIRESHOOTER:
                 return SHOOTING_PLANT_FACTORY.fire(pos, plantType);
+            case WALLNUT:
+                return new Nut(pos, plantType);
+            case CHERRYBOMB:
+                return new CherryBomb(pos, plantType);
+            case FASTSUNFLOWER:
+                return SUNFLOWER_FACTORY.createDoubleSunflower(pos, plantType);
             default:
                 throw new IllegalStateException("ERROR: plant type has not been identified");
         }

@@ -5,7 +5,7 @@ import flowerforce.model.entities.*;
 import flowerforce.model.game.Game;
 import flowerforce.model.game.World;
 import flowerforce.view.entities.CardView;
-import flowerforce.model.utilities.EntityConverter;
+import flowerforce.controller.utilities.EntityConverter;
 import flowerforce.view.entities.EntityView;
 import flowerforce.view.game.GameEngine;
 
@@ -151,12 +151,9 @@ public final class ControllerImpl implements Controller {
             }
         });
         plantsToRemove.forEach(p -> this.previousPlant.remove(p));
-        //Update the position of the EntityView if presents, otherwise EntityView is created
+        //Create the plant EntityView if plant not already present
         plants.forEach(p -> {
-            if(this.previousPlant.containsKey(p)) {
-                this.entityConverter.changePlantViewPosition(this.previousPlant.get(p), p.getPosition());
-            }
-            else {
+            if(!this.previousPlant.containsKey(p)) {
                 this.previousPlant.put(p, this.entityConverter.getEntityView(p));
             }
         });

@@ -8,7 +8,7 @@ import javafx.geometry.Point2D;
  */
 public abstract class AbstractLivingEntity extends AbstractEntity implements LivingEntity {
 
-    private double health;
+    private int health;
     private final Timer timer;
 
 
@@ -18,7 +18,7 @@ public abstract class AbstractLivingEntity extends AbstractEntity implements Liv
      * @param timer used to produce bullets/suns at the right time
      * @param health the starting health of the entity
      */
-    protected AbstractLivingEntity(final Point2D pos, final Timer timer, final double health) {
+    protected AbstractLivingEntity(final Point2D pos, final Timer timer, final int health) {
         super(pos);
         this.timer = timer;
         this.health = health;
@@ -37,7 +37,7 @@ public abstract class AbstractLivingEntity extends AbstractEntity implements Liv
      * {@inheritDoc}
      */
     @Override
-    public double getHealth() {
+    public int getHealth() {
         return this.health;
     }
 
@@ -45,7 +45,7 @@ public abstract class AbstractLivingEntity extends AbstractEntity implements Liv
      * {@inheritDoc}
      */
     @Override
-    public void receiveDamage(final double damage) {
+    public void receiveDamage(final int damage) {
         this.health -= damage;
     }
 

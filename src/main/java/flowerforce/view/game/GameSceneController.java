@@ -45,6 +45,7 @@ public final class GameSceneController implements GameEngine {
     @FXML private ImageView card5;
 
     @FXML private ImageView card6;
+    @FXML private ImageView card7;
 
     @FXML private Label lbl0;
 
@@ -59,6 +60,7 @@ public final class GameSceneController implements GameEngine {
     @FXML private Label lbl5;
 
     @FXML private Label lbl6;
+    @FXML private Label lbl7;
 
     @FXML private ImageView imageMenu;
 
@@ -179,8 +181,8 @@ public final class GameSceneController implements GameEngine {
     @FXML
     void yardClicked(final MouseEvent event) {
         if (isInsideYard(event.getX(), event.getY())) {
-            final int row = this.getRow(event.getY() - YARD_FIRST_Y);
-            final int col = this.getColumn(event.getX() - YARD_FIRST_X);
+            final int row = this.getRow(event.getY());
+            final int col = this.getColumn(event.getX());
             if (this.cardSelected.isPresent()) {
                 if (this.application.getController().placePlant(this.cards.get(this.cardSelected.get()), row, col)) {
                     this.removeBloomEffect();
@@ -203,8 +205,8 @@ public final class GameSceneController implements GameEngine {
     @FXML
     void mouseMoved(final MouseEvent event) {
         if ((this.isShovelSelected || this.cardSelected.isPresent()) && isInsideYard(event.getX(), event.getY())) {
-            this.coloredCell.relocate(YARD_FIRST_X + getColumn(event.getX() - YARD_FIRST_X) * this.cellDimension.getWidth(),
-                    YARD_FIRST_Y + getRow(event.getY() - YARD_FIRST_Y) * this.cellDimension.getHeight());
+            this.coloredCell.relocate(YARD_FIRST_X + getColumn(event.getX()) * this.cellDimension.getWidth(),
+                    YARD_FIRST_Y + getRow(event.getY()) * this.cellDimension.getHeight());
             this.coloredCell.setVisible(true);
         } else {
             this.coloredCell.setVisible(false);
@@ -217,11 +219,11 @@ public final class GameSceneController implements GameEngine {
     }
 
     private int getRow(final double y) {
-        return getGridIndex(y, YARD_HEIGHT, this.rows);
+        return getGridIndex(y - YARD_FIRST_Y, YARD_HEIGHT, this.rows);
     }
 
     private int getColumn(final double x) {
-        return getGridIndex(x, YARD_WIDTH, this.cols);
+        return getGridIndex(x - YARD_FIRST_X, YARD_WIDTH, this.cols);
     }
 
     private int getGridIndex(final double val, final double totalLength, final int nSlices) {
