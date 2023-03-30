@@ -83,10 +83,9 @@ public final class GameSceneController implements GameEngine {
     private final int cols;
     private final FlowerForceApplication application;
     private final Map<EntityView, ImageView> drawnEntities = new HashMap<>();
-    private final List<ImageView> cards = new LinkedList<>();
-    private final List<Label> cardLabels = new LinkedList<>();
+    private final Map<ImageView, CardView> cards = new HashMap<>();
     private final Dimension2D cellDimension;
-    private Optional<Integer> cardSelected = Optional.empty();
+    private Optional<ImageView> cardSelected = Optional.empty();
     private boolean isShovelSelected = false;
 
     public GameSceneController(final FlowerForceApplication application) {
@@ -102,6 +101,25 @@ public final class GameSceneController implements GameEngine {
      */
     @Override
     public void loadCards(final List<CardView> cardViews) {
+        final List<ImageView> cardImageViews = new LinkedList<>(List.of(card0, card1, card2, card3, card4, card5, card6));
+        final List<Label> cardLabels = new LinkedList<>(List.of(lbl0, lbl1, lbl2, lbl3, lbl4, lbl5, lbl6));
+        int i = 0;
+        for (; i < cardViews.size() && i < cardImageViews.size() && i < cardLabels.size(); i++) {
+            this.cards.put(cardImageViews.get(i), cardViews.get(i));
+            //setting images and labels
+            cardImageViews.get(i).setImage(cardViews.get(i).getMenuImage());
+            cardImageViews.get(i).setDisable(false);
+            cardImageViews.get(i).setVisible(true);
+            cardLabels.get(i).setText(Integer.toString(cardViews.get(i).getCost()));
+            cardLabels.get(i).setVisible(true);
+        }
+        for (; i < cardImageViews.size() && i < cardLabels.size(); i++) {
+            cardImageViews.get(i).setDisable(true);
+            cardImageViews.get(i).setVisible(false);
+            cardLabels.get(i).setVisible(false);
+        }
+
+        /*
         this.cardLabels.addAll(List.of(lbl0, lbl1, lbl2, lbl3, lbl4, lbl5, lbl6));
         this.cards.addAll(List.of(card0, card1, card2, card3, card4, card5, card6));
         for (int i = 0; i < cardLabels.size() && i < cards.size(); i++) {
@@ -117,13 +135,14 @@ public final class GameSceneController implements GameEngine {
                 this.cardLabels.remove(i);
             }
         }
+        */
     }
 
     private void addBloomEffect() {
         if (this.isShovelSelected) {
             this.imageShovel.setEffect(BLOOM_EFFECT);
         } else {
-            this.cardSelected.ifPresent(i -> this.cards.get(i).setEffect(BLOOM_EFFECT));
+            this.cardSelected.ifPresent(cIv -> cIv.setEffect(BLOOM_EFFECT));
         }
     }
 
@@ -131,7 +150,7 @@ public final class GameSceneController implements GameEngine {
         if (this.isShovelSelected) {
             this.imageShovel.setEffect(RESET_BLOOM);
         } else {
-            this.cardSelected.ifPresent(i -> this.cards.get(i).setEffect(RESET_BLOOM));
+            this.cardSelected.ifPresent(cIv -> cIv.setEffect(RESET_BLOOM));
         }
     }
 
@@ -147,7 +166,7 @@ public final class GameSceneController implements GameEngine {
     void selectCard(final MouseEvent event) {
         this.removeBloomEffect();
         this.isShovelSelected = false;
-        this.cardSelected = Optional.of(cards.indexOf((ImageView) (event.getSource())));
+        this.cardSelected = Optional.of((ImageView) (event.getSource()));
         this.addBloomEffect();
     }
 
@@ -163,7 +182,7 @@ public final class GameSceneController implements GameEngine {
             final int row = this.getRow(event.getY() - YARD_FIRST_Y);
             final int col = this.getColumn(event.getX() - YARD_FIRST_X);
             if (this.cardSelected.isPresent()) {
-                if (this.application.getController().placePlant(this.cardSelected.get(), row, col)) {
+                if (this.application.getController().placePlant(this.cards.get(this.cardSelected.get()), row, col)) {
                     this.removeBloomEffect();
                     this.cardSelected = Optional.empty();
                 }
@@ -227,15 +246,15 @@ public final class GameSceneController implements GameEngine {
 
     private void enableCards() {
         final Set<Integer> enabledCards = this.application.getController().getEnabledCards();
-        this.cards.forEach(c -> {
-            if (enabledCards.contains(cards.indexOf(c))) {
-                if (c.isDisable()) {
-                    c.setEffect(RESET_COLORS);
-                    c.setDisable(false);                  
+        this.cards.keySet().forEach(cIv -> {
+            if (enabledCards.contains(this.cards.get(cIv))) {
+                if (cIv.isDisable()) {
+                    cIv.setEffect(RESET_COLORS);
+                    cIv.setDisable(false);
                 }
             } else {
-                c.setEffect(BLACK_WHITE);
-                c.setDisable(true);
+                cIv.setEffect(BLACK_WHITE);
+                cIv.setDisable(true);
             }
         });
     }
@@ -298,7 +317,7 @@ public final class GameSceneController implements GameEngine {
         this.imageMenu.setDisable(false);
         this.imageMenu.toFront();
         this.imageResult.toFront();
-        this.cards.forEach(card -> card.setDisable(true));
+        this.cards.keySet().forEach(card -> card.setDisable(true));
         if (isWon) {
             imageResult.setImage(new Image(ResourceFinder.getImagePath("victory.png")));
         } else {
