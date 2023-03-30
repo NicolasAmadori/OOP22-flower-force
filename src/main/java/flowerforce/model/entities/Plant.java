@@ -12,4 +12,6 @@ public interface Plant extends LivingEntity {
      * @return the type of the plant
      */
     Plants getPlantType();
+
+    int getCost();
 }

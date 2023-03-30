@@ -24,11 +24,11 @@ public class MenuSceneController {
     }
 
     /**
-     * Sets Player's score in the Menu
+     * Sets Player's score in the Menu.
      */
     public void initialize() {
-        final int coins = this.application.getController().getPlayerCoins();
-        this.scoreText.setText(this.scoreText.getText().concat(Integer.toString(coins)));
+        final int score = this.application.getController().getPlayerScoreRecord();
+        this.scoreText.setText(this.scoreText.getText().concat(Integer.toString(score)));
     }
 
     /**
@@ -48,5 +48,15 @@ public class MenuSceneController {
                                   + this.application.getController().getLastUnlockedLevelId() + ".");
             alert.showAndWait();
         }
+    }
+
+    @FXML
+    void howToPlay(final MouseEvent event) {
+        this.application.howToPlay();
+    }
+
+    @FXML
+    void shop(final MouseEvent event) {
+        this.application.shop();
     }
 }
