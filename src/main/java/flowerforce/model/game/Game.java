@@ -30,12 +30,6 @@ public interface Game {
     Set<Plant> getPlacedPlants();
 
     /**
-     * Call to know which zombies are eating.
-     * @return the list of zombie that are eating
-     */
-    List<Zombie> getZombieEating();
-
-    /**
      * Call to know which bullets are in the game field.
      * @return the set of bullets in the game field
      */
@@ -84,4 +78,9 @@ public interface Game {
      * @return true if the plant has been removed
      */
     boolean removePlant(int row, int col);
+
+    /**
+     * @return the percentage of the game state
+     */
+    int getProgressState();
 }
