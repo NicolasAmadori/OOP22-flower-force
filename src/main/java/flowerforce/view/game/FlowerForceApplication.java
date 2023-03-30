@@ -83,7 +83,13 @@ public final class FlowerForceApplication extends Application implements FlowerF
     
     @Override
     public void shop() {
-        // TODO Auto-generated method stub
+        try {
+            FlowerForceScene sceneClass = new ShopScene(this);
+            this.setScene(sceneClass.getScene());
+            this.stage.setTitle("Shop");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

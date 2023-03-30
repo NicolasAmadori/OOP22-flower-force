@@ -8,21 +8,21 @@
 
 <AnchorPane fx:id="gamePane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <ImageView fx:id="imgBackground" onMouseClicked="#yardClicked" onMouseMoved="#mouseMoved" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <ImageView fx:id="imgBackground" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <image>
                 <Image url="@../images/shopBackground.png" />
             </image>
         </ImageView>
-      <ImageView fx:id="imgPrev" fitHeight="129.0" fitWidth="166.0" layoutX="432.0" layoutY="519.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="imgNext" fitHeight="140.0" fitWidth="209.0" layoutX="960.0" layoutY="516.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imgPrev" fitHeight="129.0" fitWidth="166.0" layoutX="432.0" layoutY="519.0" onMouseClicked="#prevItem" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imgNext" fitHeight="140.0" fitWidth="209.0" layoutX="960.0" layoutY="516.0" onMouseClicked="#nextItem" pickOnBounds="true" preserveRatio="true" />
       <Label layoutX="1035.0" layoutY="681.0" prefHeight="48.0" prefWidth="119.0">
          <font>
             <Font size="26.0" />
          </font>
       </Label>
       <ImageView fx:id="imgItemToSell" fitHeight="228.0" fitWidth="394.0" layoutX="601.0" layoutY="240.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="imgBuy" fitHeight="150.0" fitWidth="200.0" layoutX="661.0" layoutY="498.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imgBuy" fitHeight="150.0" fitWidth="200.0" layoutX="661.0" layoutY="498.0" onMouseClicked="#buyItem" pickOnBounds="true" preserveRatio="true" />
       <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="imgMenu" fitHeight="96.0" fitWidth="218.0" layoutX="618.0" layoutY="708.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imgMenu" fitHeight="96.0" fitWidth="218.0" layoutX="618.0" layoutY="708.0" onMouseClicked="#mainMenu" pickOnBounds="true" preserveRatio="true" />
     </children>
 </AnchorPane>

@@ -11,6 +11,6 @@ public class ShopScene extends AbstractFlowerForceScene {
       * @throws IOException if some files couldn't be found
      */
     protected ShopScene(final FlowerForceApplication application) throws IOException {
-        super(FXML_PATH, IMAGE_NAME, new GameSceneController(application));
+        super(FXML_PATH, IMAGE_NAME, new ShopSceneController(application));
     }
 }
