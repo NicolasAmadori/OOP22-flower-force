@@ -23,8 +23,6 @@ import javafx.geometry.Point2D;
 
 final class TestSnowBullet {
 
-    private static final double STARTING_BULLET_POS_X = 101.0;
-    private static final double STARTING_BULLET_POS_Y = 100.0;
     private static final double STARTING_PLANT_POS_X = 100.0;
     private static final double STARTING_PLANT_POS_Y = 100.0;
 
@@ -42,7 +40,7 @@ final class TestSnowBullet {
      */
     @BeforeEach
     void setUp() {
-        this.zombie = zombieFactory.basic(new Point2D(STARTING_BULLET_POS_X + 1, STARTING_BULLET_POS_Y), Zombies.BASIC);
+        this.zombie = zombieFactory.basic(new Point2D(STARTING_PLANT_POS_X + 1, STARTING_PLANT_POS_Y), Zombies.BASIC);
         this.bullet = Optional.empty();
         while (this.bullet.isEmpty()) {
             this.producer.updateState();
@@ -55,20 +53,20 @@ final class TestSnowBullet {
      */
     @Test
     void testMove() {
-        assertEquals(new Point2D(STARTING_BULLET_POS_X, STARTING_BULLET_POS_Y), this.bullet.get().getPosition());
+        assertEquals(new Point2D(STARTING_PLANT_POS_X, STARTING_PLANT_POS_Y), this.bullet.get().getPosition());
         this.bullet.get().move();
         assertEquals(
-            new Point2D(STARTING_BULLET_POS_X + this.bullet.get().getDeltaMovement(), STARTING_BULLET_POS_Y),
+            new Point2D(STARTING_PLANT_POS_X + this.bullet.get().getDeltaMovement(), STARTING_PLANT_POS_Y),
             this.bullet.get().getPosition()
         );
         this.bullet.get().move();
         assertEquals(
-            new Point2D(STARTING_BULLET_POS_X + 2 * this.bullet.get().getDeltaMovement(), STARTING_BULLET_POS_Y),
+            new Point2D(STARTING_PLANT_POS_X + 2 * this.bullet.get().getDeltaMovement(), STARTING_PLANT_POS_Y),
             this.bullet.get().getPosition()
         );
         this.bullet.get().move();
         assertEquals(
-            new Point2D(STARTING_BULLET_POS_X + 3 * this.bullet.get().getDeltaMovement(), STARTING_BULLET_POS_Y),
+            new Point2D(STARTING_PLANT_POS_X + 3 * this.bullet.get().getDeltaMovement(), STARTING_PLANT_POS_Y),
             this.bullet.get().getPosition()
         );
     }
