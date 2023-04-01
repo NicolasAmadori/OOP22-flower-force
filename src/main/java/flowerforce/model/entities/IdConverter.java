@@ -65,21 +65,6 @@ public final class IdConverter {
             this.unlockTime = unlockTime;
         }
 
-        public enum Bullets {
-            /**
-             * A standard bullet.
-             */
-            STANDARDBULLET,
-            /**
-             * A snow bullet that slows zombies.
-             */
-            SNOWBULLET,
-            /**
-             * A fire bullet that gives more damage than a standard bullet.
-             */
-            FIREBULLET;
-        }
-
         /**
          *
          * @return the cost in suns of the plant
@@ -95,6 +80,24 @@ public final class IdConverter {
         public int getUnlockTime() {
             return this.unlockTime;
         }
+    }
+
+    /**
+     * Different bullet types.
+     */
+    public enum Bullets {
+        /**
+         * A standard bullet.
+         */
+        STANDARDBULLET,
+        /**
+         * A snow bullet that slows zombies.
+         */
+        SNOWBULLET,
+        /**
+         * A fire bullet that gives more damage than a standard bullet.
+         */
+        FIREBULLET;
     }
 
     /**
@@ -162,8 +165,8 @@ public final class IdConverter {
                 return SHOOTING_PLANT_FACTORY.fast(pos, plantType);
             case FIRESHOOTER:
                 return SHOOTING_PLANT_FACTORY.fire(pos, plantType);
-            /*case WALLNUT:
-                return new Nut(pos, plantType); */ //TODO: decomment
+            case WALLNUT:
+                return new Nut(pos, plantType);
             case CHERRYBOMB:
                 return new CherryBomb(pos, plantType);
             case FASTSUNFLOWER:

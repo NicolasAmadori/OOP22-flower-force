@@ -35,7 +35,8 @@ public interface World {
     Game createInfiniteGame();
 
     /**
-     * Returns the maximum number of frames per second the game must be set to.
+     * 
+     * @return the maximum number of frames per second the game must be set to.
      */
     int getRenderingInformations();
 
@@ -56,4 +57,6 @@ public interface World {
      * @return the columns number of yard's cells matrix
      */
     int getColsNum();
+
+    Shop getShop();
 }

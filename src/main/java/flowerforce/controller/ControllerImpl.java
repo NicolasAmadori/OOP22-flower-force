@@ -1,15 +1,25 @@
 package flowerforce.controller;
 
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Optional;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.NoSuchElementException;
+import flowerforce.controller.utilities.InputHandler;
 import flowerforce.controller.utilities.WorldSavingManager;
-import flowerforce.model.entities.*;
+import flowerforce.model.entities.Bullet;
+import flowerforce.model.entities.IdConverter;
+import flowerforce.model.entities.Plant;
+import flowerforce.model.entities.Zombie;
 import flowerforce.model.game.Game;
 import flowerforce.model.game.World;
+import flowerforce.controller.utilities.EntityConverter;
 import flowerforce.view.entities.CardView;
-import flowerforce.model.utilities.EntityConverter;
 import flowerforce.view.entities.EntityView;
 import flowerforce.view.game.GameEngine;
-
-import java.util.*;
 
 /**
  * This is an implementation of {@link Controller}.
@@ -22,11 +32,11 @@ public final class ControllerImpl implements Controller {
     private EntityConverter entityConverter;
     private Optional<Game> game;
 
-    private Map<Plant, EntityView> previousPlant = new HashMap<>();
+    private final Map<Plant, EntityView> previousPlant = new HashMap<>();
 
-    private Map<Zombie, EntityView> previousZombie = new HashMap<>();
+    private final Map<Zombie, EntityView> previousZombie = new HashMap<>();
 
-    private Map<Bullet, EntityView> previousBullet = new HashMap<>();
+    private final Map<Bullet, EntityView> previousBullet = new HashMap<>();
 
     /**
      * Create a new instance of Controller.
@@ -105,7 +115,7 @@ public final class ControllerImpl implements Controller {
     }
 
     @Override
-    public boolean removePlant(int row, int col) {
+    public boolean removePlant(final int row, final int col) {
         checkGame();
         return this.game.get().removePlant(row, col);
     }
@@ -141,22 +151,19 @@ public final class ControllerImpl implements Controller {
         final Set<Zombie> zombies = this.game.get().getZombies();
         final Set<Bullet> bullets = this.game.get().getBullet();
 
-
+        //TODO: refactor
         //region Plants
         final Set<Plant> plantsToRemove = new HashSet<>();
         //Remove the entities that are no longer there
         this.previousPlant.keySet().forEach(p -> {
-            if(!plants.contains(p)) {
+            if (!plants.contains(p)) {
                 plantsToRemove.add(p);
             }
         });
         plantsToRemove.forEach(p -> this.previousPlant.remove(p));
-        //Update the position of the EntityView if presents, otherwise EntityView is created
+        //Create the plant EntityView if plant not already present
         plants.forEach(p -> {
-            if(this.previousPlant.containsKey(p)) {
-                this.entityConverter.changePlantViewPosition(this.previousPlant.get(p), p.getPosition());
-            }
-            else {
+            if (!this.previousPlant.containsKey(p)) {
                 this.previousPlant.put(p, this.entityConverter.getEntityView(p));
             }
         });
@@ -165,16 +172,15 @@ public final class ControllerImpl implements Controller {
         //region Zombies
         final Set<Zombie> zombiesToRemove = new HashSet<>();
         this.previousZombie.keySet().forEach(z -> {
-            if(!zombies.contains(z)) {
+            if (!zombies.contains(z)) {
                 zombiesToRemove.add(z);
             }
         });
         zombiesToRemove.forEach(z -> this.previousZombie.remove(z));
         zombies.forEach(z -> {
-            if(this.previousZombie.containsKey(z)) {
+            if (this.previousZombie.containsKey(z)) {
                 this.entityConverter.changeZombieViewPosition(this.previousZombie.get(z), z.getPosition());
-            }
-            else {
+            } else {
                 this.previousZombie.put(z, this.entityConverter.getEntityView(z));
             }
         });
@@ -183,16 +189,15 @@ public final class ControllerImpl implements Controller {
         //region Bullets
         final Set<Bullet> bulletToRemove = new HashSet<>();
         this.previousBullet.keySet().forEach(b -> {
-            if(!bullets.contains(b)) {
+            if (!bullets.contains(b)) {
                 bulletToRemove.add(b);
             }
         });
         bulletToRemove.forEach(b -> this.previousBullet.remove(b));
         bullets.forEach(b -> {
-            if(this.previousBullet.containsKey(b)) {
+            if (this.previousBullet.containsKey(b)) {
                 this.entityConverter.changeBulletViewPosition(this.previousBullet.get(b), b.getPosition());
-            }
-            else {
+            } else {
                 this.previousBullet.put(b, this.entityConverter.getEntityView(b));
             }
         });
@@ -206,6 +211,7 @@ public final class ControllerImpl implements Controller {
         return output;
     }
 
+
     private List<CardView> getCards() {
         checkGame();
         final List<IdConverter.Plants> plants = this.game.get().getAllPlantIDs();
@@ -217,7 +223,7 @@ public final class ControllerImpl implements Controller {
     @Override
     public Set<Integer> getEnabledCards() {
         checkGame();
-        return this.game.get().getAvailablePlantsIDs();//uncomment this when game is corrected
+        return this.game.get().getAvailablePlantsIDs(); //uncomment this when game is corrected
     }
 
     @Override

@@ -1,5 +1,7 @@
 package flowerforce.model.entities;
 
+import flowerforce.model.entities.IdConverter.Bullets;
+import flowerforce.model.entities.IdConverter.Bullets;
 import javafx.geometry.Point2D;
 
 public class BulletFactoryImpl implements BulletFactory {
@@ -9,17 +11,17 @@ public class BulletFactoryImpl implements BulletFactory {
 
     @Override
     public Bullet createStandardBullet(final Point2D pos) {
-        return new BulletImpl(pos, STANDARD_DAMAGE);
+        return new BulletImpl(pos, STANDARD_DAMAGE, Bullets.STANDARDBULLET);
     }
 
     @Override
     public Bullet createFireBullet(final Point2D pos) {
-        return new BulletImpl(pos, FIRE_DAMAGE, z -> z.warmUp());
+        return new BulletImpl(pos, FIRE_DAMAGE, Bullets.FIREBULLET, z -> z.warmUp());
     }
 
     @Override
     public Bullet createSnowdBullet(final Point2D pos) {
-        return new BulletImpl(pos, STANDARD_DAMAGE, z -> z.freeze());
+        return new BulletImpl(pos, STANDARD_DAMAGE, Bullets.SNOWBULLET, z -> z.freeze());
     }
     
 }

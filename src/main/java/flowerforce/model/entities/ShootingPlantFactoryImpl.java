@@ -15,6 +15,11 @@ public class ShootingPlantFactoryImpl implements ShootingPlantFactory {
         STANDARD_SECS_SHOOTING_TIME * RenderingInformation.getFramesPerSecond()
     );
     private static final int STANDARD_SHOOTER_HEALTH = 300;
+    private static final int COMMON_SHOOTER_COST = 100;
+    private static final int SNOW_SHOOTER_COST = 175;
+    private static final int FIRE_SHOOTER_COST = 175;
+    private static final int FAST_SHOOTER_COST = 225;
+
 
     private final BulletFactory bulletFactory = new BulletFactoryImpl();
 
@@ -28,6 +33,7 @@ public class ShootingPlantFactoryImpl implements ShootingPlantFactory {
             new TimerImpl(STANDARD_SHOOTING_TIME),
             STANDARD_SHOOTER_HEALTH,
             () -> this.bulletFactory.createStandardBullet(getBulletPos(pos)),
+            COMMON_SHOOTER_COST,
             plantType
         );
     }
@@ -42,6 +48,7 @@ public class ShootingPlantFactoryImpl implements ShootingPlantFactory {
             new TimerImpl(STANDARD_SHOOTING_TIME),
             STANDARD_SHOOTER_HEALTH,
             () -> this.bulletFactory.createSnowdBullet(getBulletPos(pos)),
+            SNOW_SHOOTER_COST,
             plantType
         );
     }
@@ -56,6 +63,7 @@ public class ShootingPlantFactoryImpl implements ShootingPlantFactory {
             new TimerImpl(STANDARD_SHOOTING_TIME),
             STANDARD_SHOOTER_HEALTH,
             () -> this.bulletFactory.createFireBullet(getBulletPos(pos)),
+            FIRE_SHOOTER_COST,
             plantType
         );
     }
@@ -70,6 +78,7 @@ public class ShootingPlantFactoryImpl implements ShootingPlantFactory {
             new TimerImpl(STANDARD_SHOOTING_TIME / 2),
             STANDARD_SHOOTER_HEALTH,
             () -> this.bulletFactory.createStandardBullet(getBulletPos(pos)),
+            FAST_SHOOTER_COST,
             plantType
         );
     }
