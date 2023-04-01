@@ -2,6 +2,7 @@ package flowerforce.model;
 
 import flowerforce.model.entities.IdConverter;
 import flowerforce.model.entities.Zombie;
+import flowerforce.model.entities.IdConverter.Zombies;
 import flowerforce.model.game.Yard;
 import javafx.geometry.Point2D;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,12 +14,15 @@ final class TestZombie {
     private static final double INITIAL_X = Yard.getYardDimension().getWidth();
     private static final double INITIAL_Y = Yard.getYardDimension().getHeight();
     private static final double FREEZE_FACTOR = 2; //Freeze factor of ZombieImpl
+    private static final double ACCELERATE_FACTOR = 3; //Accelerate factor of Newspaper zombie
     private static final int DAMAGE = 10;
     private Zombie zombie;
+    private Zombie newspaper;
 
     @BeforeEach
     public void setup() {
         this.zombie = IdConverter.createZombie(IdConverter.Zombies.BASIC, new Point2D(INITIAL_X, INITIAL_Y));
+        this.newspaper = IdConverter.createZombie(Zombies.NEWSPAPER, new Point2D(INITIAL_X, INITIAL_Y));
     }
 
     @Test
@@ -37,7 +41,8 @@ final class TestZombie {
 
     @Test
     public void testFreeze() {
-        double expectedDelta = this.zombie.getDeltaMovement();
+        double initialDelta = this.zombie.getDeltaMovement();
+        double expectedDelta = initialDelta;
         assertEquals(expectedDelta, this.zombie.getDeltaMovement());
         this.zombie.freeze();
         expectedDelta = expectedDelta / FREEZE_FACTOR;
@@ -46,6 +51,9 @@ final class TestZombie {
         this.zombie.freeze();
         //delta must remain the same because the zombie is already frozen
         assertEquals(expectedDelta, this.zombie.getDeltaMovement());
+        //with warmUp method zombie must restore its initial velocity
+        this.zombie.warmUp();
+        assertEquals(initialDelta, this.zombie.getDeltaMovement());
     }
 
     @Test
@@ -58,5 +66,13 @@ final class TestZombie {
         this.zombie.receiveDamage(2 * DAMAGE);
         expectedHealth -= 2 * DAMAGE;
         assertEquals(expectedHealth, this.zombie.getHealth());
+    }
+
+    public void testNewspaper() {
+        double initialDelta = this.newspaper.getDeltaMovement();
+        while (this.newspaper.getDeltaMovement() == initialDelta) {
+            this.newspaper.receiveDamage(DAMAGE);
+        }
+        assertEquals(initialDelta * ACCELERATE_FACTOR, this.newspaper.getDeltaMovement());
     }
 }
