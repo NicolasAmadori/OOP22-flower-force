@@ -34,7 +34,7 @@ public interface ZombieFactory {
      * @param zombieType the type of zombie
      * @return a running zombie
      */
-    Zombie running(Point2D position, Zombies zombieType);
+    Zombie runner(Point2D position, Zombies zombieType);
 
     /** 
      * @param position where it is initially placed

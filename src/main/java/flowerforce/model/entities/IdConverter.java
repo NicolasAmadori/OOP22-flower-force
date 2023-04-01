@@ -188,7 +188,7 @@ public final class IdConverter {
             case BUCKETHEAD:
                 return ZOMBIE_FACTORY.buckethead(pos, zombieType);
             case RUNNER:
-                return ZOMBIE_FACTORY.running(pos, zombieType);
+                return ZOMBIE_FACTORY.runner(pos, zombieType);
             case QUARTERBACK:
                 return ZOMBIE_FACTORY.quarterback(pos, zombieType);
             case NEWSPAPER:

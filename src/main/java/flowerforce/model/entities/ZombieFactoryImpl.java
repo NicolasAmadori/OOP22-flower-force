@@ -33,7 +33,7 @@ public class ZombieFactoryImpl implements ZombieFactory {
      */
     @Override
     public Zombie basic(final Point2D position, final Zombies zombieType) {
-        return new ZombieImpl(BASIC_DELTA, BASIC_DAMAGE, BASIC_HEALTH, position, zombieType, BASIC_DIFFICULTY);
+        return new ZombieImpl(BASIC_DELTA, BASIC_DAMAGE, BASIC_HEALTH, position, zombieType, BASIC_DIFFICULTY, "basic");
     }
 
     /**
@@ -41,7 +41,7 @@ public class ZombieFactoryImpl implements ZombieFactory {
      */
     @Override
     public Zombie conehead(final Point2D position, final Zombies zombieType) {
-        return new ZombieImpl(BASIC_DELTA, BASIC_DAMAGE, BASIC_HEALTH + CONE_HEALTH, position, zombieType, CONEHEAD_DIFFICULTY);
+        return new ZombieImpl(BASIC_DELTA, BASIC_DAMAGE, BASIC_HEALTH + CONE_HEALTH, position, zombieType, CONEHEAD_DIFFICULTY, "conehead");
     }
 
     /**
@@ -49,15 +49,15 @@ public class ZombieFactoryImpl implements ZombieFactory {
      */
     @Override
     public Zombie buckethead(final Point2D position, final Zombies zombieType) {
-        return new ZombieImpl(BASIC_DELTA, BASIC_DAMAGE, BASIC_HEALTH + BUCKET_HEALTH, position, zombieType, BUCKETHEAD_DIFFICULTY);
+        return new ZombieImpl(BASIC_DELTA, BASIC_DAMAGE, BASIC_HEALTH + BUCKET_HEALTH, position, zombieType, BUCKETHEAD_DIFFICULTY, "buckethead");
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Zombie running(final Point2D position, final Zombies zombieType) {
-        return new ZombieImpl(RUNNING_DELTA, BASIC_DAMAGE, BASIC_HEALTH, position, zombieType, RUNNING_DIFFICULTY);
+    public Zombie runner(final Point2D position, final Zombies zombieType) {
+        return new ZombieImpl(RUNNING_DELTA, BASIC_DAMAGE, BASIC_HEALTH, position, zombieType, RUNNING_DIFFICULTY, "runner");
     }
 
     /**
@@ -65,17 +65,23 @@ public class ZombieFactoryImpl implements ZombieFactory {
      */
     @Override
     public Zombie quarterback(final Point2D position, final Zombies zombieType) {
-        return new ZombieImpl(RUNNING_DELTA, BASIC_DAMAGE, BASIC_HEALTH + HELMET_HEALTH, position, zombieType, QUARTERBACK_DIFFICULTY);
+        return new ZombieImpl(RUNNING_DELTA, BASIC_DAMAGE, BASIC_HEALTH + HELMET_HEALTH, position, zombieType, QUARTERBACK_DIFFICULTY, "quarterback");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Zombie newspaper(Point2D position, Zombies zombieType) {
-        return new NewspaperZombie(BASIC_DELTA, BASIC_DAMAGE, BASIC_HEALTH, position, zombieType, NEWSPAPER_HEALTH, NEWSPAPER_DIFFICULTY);
+        return new NewspaperZombie(BASIC_DELTA, BASIC_DAMAGE, BASIC_HEALTH, position, zombieType, NEWSPAPER_HEALTH, NEWSPAPER_DIFFICULTY, "newspaper");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Zombie gargantuar(Point2D position, Zombies zombieType) {
-        return new ZombieImpl(BASIC_DELTA, GARGANTUAR_DAMAGE, GARGANTUAR_HEALTH, position, zombieType, GARGANTUAR_DIFFICULTY);
+        return new ZombieImpl(BASIC_DELTA, GARGANTUAR_DAMAGE, GARGANTUAR_HEALTH, position, zombieType, GARGANTUAR_DIFFICULTY, "gargantuar");
     }
 
 }
