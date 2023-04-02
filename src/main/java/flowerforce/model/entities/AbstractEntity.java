@@ -32,7 +32,7 @@ public abstract class AbstractEntity implements Entity {
      * {@inheritDoc}
      */
     @Override
-    public String getEntityName() {
+    public String getName() {
         return this.entityName;
     }
 
