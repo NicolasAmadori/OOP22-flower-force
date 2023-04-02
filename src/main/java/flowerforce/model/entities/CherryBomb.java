@@ -22,7 +22,6 @@ public class CherryBomb extends AbstractPlant implements ExplodingPlant {
     /**
      * 
      * @param pos the initial position to place the entity in
-     * @param plantType the type of the plant
      */
     public CherryBomb(final Point2D pos) {
         super(
