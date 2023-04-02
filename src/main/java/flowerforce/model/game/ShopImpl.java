@@ -1,47 +1,52 @@
 package flowerforce.model.game;
 
+import flowerforce.model.entities.CherryBomb;
+import flowerforce.model.entities.ExplodingPlant;
 import flowerforce.model.entities.Plant;
+import flowerforce.model.entities.SunflowerFactoryImpl;
 import javafx.util.Pair;
-
-import java.util.*;
-import java.util.function.Supplier;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import javafx.geometry.Point2D;
 
 /**
  * This is an implementation of {@link Shop}
  */
 public class ShopImpl implements Shop{
-    private Player player;
-    private Map<Pair<String, Integer>, Supplier<Plant>> buyablePlants = new LinkedHashMap<>();
+    private static final Set<Pair<Function<Point2D, Plant>, Integer>> SHOP_PLANTS = Set.of(
+            new Pair<> ((pos) -> new SunflowerFactoryImpl().createDoubleSunflower(pos), 10),
+            new Pair<> ((pos) -> new CherryBomb(pos), 20)
+    ); //TODO: set actual costs
+    private final Player player;
+    private final Map<Pair<String, Integer>, Function<Point2D, Plant>> buyablePlants = new LinkedHashMap<>();
 
-    private Map<Pair<String, Integer>, Supplier<Plant>> boughtPlants = new LinkedHashMap<>();
+    private final Map<Pair<String, Integer>, Function<Point2D, Plant>> boughtPlants = new LinkedHashMap<>();
 
     /**
      * This is a constructor for a new shop instance.
      * @param player The player to add bought plants to
      */
-    public ShopImpl(Player player, Set<Pair<Supplier<Plant>, Integer>> buyablePlants) {
+    public ShopImpl(Player player) {
         this.player = player;
 
         //Adding all plants in the map
-        buyablePlants.forEach(p -> {
-            this.buyablePlants.put(new Pair<>(p.getKey().get().getName(), p.getValue()),
+        final Point2D samplePoint = new Point2D(0, 0);
+        SHOP_PLANTS.forEach(p -> {
+            this.buyablePlants.put(new Pair<>(p.getKey().apply(samplePoint).getName(), p.getValue()),
                                    p.getKey());
         });
 
-        //add all the already bought plants to the boughPlants Map
-        int i = 0;
-        Set<Pair<String, Integer>> plantToRemove = new HashSet<>();
-        for (var p : this.buyablePlants.entrySet()) {
-            if(this.player.getPlantsIds().contains(i)) {
-                this.boughtPlants.put(p.getKey(), p.getValue());
-                plantToRemove.add(p.getKey());
-            }
-            i++;
-        }
-
-        //Remove bought plants from the buyable Plants Map
-        plantToRemove.forEach(p -> this.buyablePlants.remove(p));
+        //Move already bought plants from buyablePlants to boughtPlants
+        getPlayerBoughtPlants().forEach(p -> {
+            this.boughtPlants.put(p, this.buyablePlants.get(p));
+            this.buyablePlants.remove(p);
+        });
     }
 
     /**
@@ -49,7 +54,7 @@ public class ShopImpl implements Shop{
      */
     @Override
     public Map<Pair<String, Integer>, Boolean> getPlants() {
-        Map<Pair<String, Integer>, Boolean> outputMap = new HashMap<>();
+        final Map<Pair<String, Integer>, Boolean> outputMap = new HashMap<>();
         this.buyablePlants.keySet().forEach(k -> outputMap.put(k, false));
         this.boughtPlants.keySet().forEach(k -> outputMap.put(k, true));
         return outputMap;
@@ -71,6 +76,26 @@ public class ShopImpl implements Shop{
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Set<Function<Point2D, Plant>> getBoughtPlantsProducer() {
+        return  this.boughtPlants.values().stream()
+                .collect(Collectors.toSet());
+    }
+
+    private Set<Pair<String, Integer>> getPlayerBoughtPlants() {
+        int i = 0;
+        Set<Pair<String, Integer>> boughtPlants = new HashSet<>();
+        for (var p : this.buyablePlants.entrySet()) {
+            if(this.player.getPlantsIds().contains(i)) {
+                boughtPlants.add(p.getKey());
+            }
+            i++;
+        }
+        return boughtPlants;
+    }
     private int getKeyIndex(final Pair<String, Integer> plantInfo) {
         int i = 0;
         for (var e: this.buyablePlants.entrySet()) {
