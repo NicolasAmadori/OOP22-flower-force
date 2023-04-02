@@ -1,10 +1,6 @@
 package flowerforce.model.game;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.stream.IntStream;
 
 import flowerforce.model.utilities.RenderingInformation;
 import javafx.geometry.Dimension2D;
@@ -20,20 +16,14 @@ public class WorldImpl implements World {
     private static final int NEW_PLAYER_LAST_UNLOCKED_LEVEL = 1;
 
     private final Player player;
-    private final List<Level> levelList;
-    private final Level infiniteModeLevel;
     private final Shop shop;
 
     /**
      * Generates a world.
      * @param player the player that plays the game
-     * @param levelList the list of all levels
-     * @param infiniteModeLevel the level that models the infinite mode
      */
-    public WorldImpl(final Optional<Player> player, final List<Level> levelList, final Level infiniteModeLevel) {
+    public WorldImpl(final Optional<Player> player) {
         this.player = player.orElse(new PlayerImpl(NEW_PLAYER_COINS, NEW_PLAYER_RECORD, NEW_PLAYER_LAST_UNLOCKED_LEVEL));
-        this.levelList = levelList;
-        this.infiniteModeLevel = infiniteModeLevel;
         this.shop = new ShopImpl(this.player);
     }
 
@@ -49,25 +39,8 @@ public class WorldImpl implements World {
      * {@inheritDoc}
      */
     @Override
-    public Map<Integer, Boolean> getLevels() {
-        final Map<Integer, Boolean> levelsMap = new HashMap<>();
-        IntStream.rangeClosed(1, this.player.getLastUnlockedLevelId())
-            .forEach(e -> levelsMap.put(e, true));
-        IntStream.rangeClosed(this.player.getLastUnlockedLevelId() + 1, this.levelList.size())
-            .forEach(e -> levelsMap.put(e, false));
-        return levelsMap;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public Game createLevelGame(final int levelId) {
-        final Level level = this.levelList.stream()
-                                .filter(x -> x.getLevelId() == levelId)
-                                .findAny()
-                                .get();
-        return new LevelGame(level, this);
+        return new LevelGame(levelId, this);
     }
 
     /**
@@ -75,7 +48,7 @@ public class WorldImpl implements World {
      */
     @Override
     public Game createInfiniteGame() {
-        return new InfiniteGame(infiniteModeLevel, this);
+        return new InfiniteGame(this);
     }
 
     /**
