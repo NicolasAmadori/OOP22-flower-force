@@ -24,7 +24,7 @@ public class InfiniteGame extends AbstractGameImpl {
     public boolean isOver() {
         final var end = super.isOver();
         if (end) {
-            this.getWorld().getPlayer().setNewScoreRecord(this.getScore());
+            this.getWorld().getPlayer().addNewScore(this.getScore());
         }
         return super.isOver();
     }

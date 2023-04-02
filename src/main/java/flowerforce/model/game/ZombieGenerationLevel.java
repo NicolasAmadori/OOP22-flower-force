@@ -10,8 +10,7 @@ import java.util.Optional;
 public interface ZombieGenerationLevel extends ZombieGeneration {
 
     /**
-     * If boss is present, spawns it.
-     * @return the boss if it is present
+     * @return the boss of the level
      */
-    Optional<Zombie> bossGeneration();
+    Zombie bossGeneration();
 }

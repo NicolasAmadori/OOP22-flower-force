@@ -55,10 +55,6 @@ public class LevelGame extends AbstractGameImpl {
      */
     @Override
     protected void generateZombie() {
-        if(remainingZombie == 0) {
-            System.out.println("ssj");
-        }
-        System.out.println(this.remainingZombie);
         if (remainingZombie != 0) {
             final var zombie = this.generateZombie.zombieGeneration();
             if (zombie.isPresent()) {
@@ -67,10 +63,7 @@ public class LevelGame extends AbstractGameImpl {
             }
             if (this.getLevel().getBossId().isPresent() && remainingZombie == 0) {
                 final var boss = this.generateZombie.bossGeneration();
-                if (boss.isPresent()) {
-                    remainingZombie--;
-                    this.addZombie(boss.get());
-                }
+                this.addZombie(boss);
             }
         }
     }
