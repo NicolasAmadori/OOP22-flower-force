@@ -16,8 +16,10 @@ import javafx.util.Pair;
 public final class EntityConverterImpl implements EntityConverter {
     private static final String IMAGES_EXTENSION = ".png";
     private static final String CARD_SUFFIX = "_card";
+    private static final double BULLET_OFFSET = 85.0 / 880.0;
     private final double yardRatioHeight;
     private final double yardRatioWidth;
+    private final double bulletHeightOffset;
 
     /**
      * Create a new instance of EntityConverter, setting all the information.
@@ -27,6 +29,7 @@ public final class EntityConverterImpl implements EntityConverter {
     public EntityConverterImpl(final Dimension2D modelYardDimension, final Dimension2D viewYardDimension) {
         this.yardRatioHeight = viewYardDimension.getHeight() / modelYardDimension.getHeight();
         this.yardRatioWidth =  viewYardDimension.getWidth() / modelYardDimension.getWidth();
+        this.bulletHeightOffset = viewYardDimension.getHeight() * BULLET_OFFSET; //Set proportion for the bullet generation offset
     }
 
     /**
@@ -125,7 +128,7 @@ public final class EntityConverterImpl implements EntityConverter {
         outputPosition = outputPosition.subtract(
                 getImageWidth(imagePath),
                 getImageHeight(imagePath));
-        return outputPosition.subtract(0, 80); //TODO: modify
+        return outputPosition.subtract(0, bulletHeightOffset); //set the bullet offset for the bullet
     }
 
     private static double getImageWidth(final String path) {
