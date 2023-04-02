@@ -1,6 +1,5 @@
 package flowerforce.model.entities;
 
-import flowerforce.model.entities.IdConverter.Zombies;
 import javafx.geometry.Point2D;
 
 /**
@@ -17,12 +16,11 @@ public class NewspaperZombie extends ZombieImpl {
      * @param damage given by the zombie
      * @param health of the zombie
      * @param position of the zombie
-     * @param zombieType the type of zombie
      * @param newpaperHealth the health of its newspaper
      */
     public NewspaperZombie(final double defaultDelta, final int damage, final int health, final Point2D position,
-            final Zombies zombieType, final int newspaperHealth, final int difficulty) {
-        super(defaultDelta, damage, health + newspaperHealth, position, zombieType, difficulty);
+            final int newspaperHealth, final int difficulty, final String zombieName) {
+        super(defaultDelta, damage, health + newspaperHealth, position, difficulty, zombieName);
         this.criticalHealth = health;
         this.isRunning = false;
     }

@@ -1,6 +1,5 @@
 package flowerforce.model.entities;
 
-import flowerforce.model.entities.IdConverter.Zombies;
 import flowerforce.model.utilities.RenderingInformation;
 import javafx.geometry.Point2D;
 
@@ -32,50 +31,56 @@ public class ZombieFactoryImpl implements ZombieFactory {
      * {@inheritDoc}
      */
     @Override
-    public Zombie basic(final Point2D position, final Zombies zombieType) {
-        return new ZombieImpl(BASIC_DELTA, BASIC_DAMAGE, BASIC_HEALTH, position, zombieType, BASIC_DIFFICULTY);
+    public Zombie basic(final Point2D position) {
+        return new ZombieImpl(BASIC_DELTA, BASIC_DAMAGE, BASIC_HEALTH, position, BASIC_DIFFICULTY, "basic");
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Zombie conehead(final Point2D position, final Zombies zombieType) {
-        return new ZombieImpl(BASIC_DELTA, BASIC_DAMAGE, BASIC_HEALTH + CONE_HEALTH, position, zombieType, CONEHEAD_DIFFICULTY);
+    public Zombie conehead(final Point2D position) {
+        return new ZombieImpl(BASIC_DELTA, BASIC_DAMAGE, BASIC_HEALTH + CONE_HEALTH, position, CONEHEAD_DIFFICULTY, "conehead");
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Zombie buckethead(final Point2D position, final Zombies zombieType) {
-        return new ZombieImpl(BASIC_DELTA, BASIC_DAMAGE, BASIC_HEALTH + BUCKET_HEALTH, position, zombieType, BUCKETHEAD_DIFFICULTY);
+    public Zombie buckethead(final Point2D position) {
+        return new ZombieImpl(BASIC_DELTA, BASIC_DAMAGE, BASIC_HEALTH + BUCKET_HEALTH, position, BUCKETHEAD_DIFFICULTY, "buckethead");
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Zombie running(final Point2D position, final Zombies zombieType) {
-        return new ZombieImpl(RUNNING_DELTA, BASIC_DAMAGE, BASIC_HEALTH, position, zombieType, RUNNING_DIFFICULTY);
+    public Zombie runner(final Point2D position) {
+        return new ZombieImpl(RUNNING_DELTA, BASIC_DAMAGE, BASIC_HEALTH, position, RUNNING_DIFFICULTY, "runner");
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Zombie quarterback(final Point2D position, final Zombies zombieType) {
-        return new ZombieImpl(RUNNING_DELTA, BASIC_DAMAGE, BASIC_HEALTH + HELMET_HEALTH, position, zombieType, QUARTERBACK_DIFFICULTY);
+    public Zombie quarterback(final Point2D position) {
+        return new ZombieImpl(RUNNING_DELTA, BASIC_DAMAGE, BASIC_HEALTH + HELMET_HEALTH, position, QUARTERBACK_DIFFICULTY, "quarterback");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Zombie newspaper(Point2D position, Zombies zombieType) {
-        return new NewspaperZombie(BASIC_DELTA, BASIC_DAMAGE, BASIC_HEALTH, position, zombieType, NEWSPAPER_HEALTH, NEWSPAPER_DIFFICULTY);
+    public Zombie newspaper(Point2D position) {
+        return new NewspaperZombie(BASIC_DELTA, BASIC_DAMAGE, BASIC_HEALTH, position, NEWSPAPER_HEALTH, NEWSPAPER_DIFFICULTY, "newspaper");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Zombie gargantuar(Point2D position, Zombies zombieType) {
-        return new ZombieImpl(BASIC_DELTA, GARGANTUAR_DAMAGE, GARGANTUAR_HEALTH, position, zombieType, GARGANTUAR_DIFFICULTY);
+    public Zombie gargantuar(Point2D position) {
+        return new ZombieImpl(BASIC_DELTA, GARGANTUAR_DAMAGE, GARGANTUAR_HEALTH, position, GARGANTUAR_DIFFICULTY, "gargantuar");
     }
 
 }
