@@ -52,14 +52,14 @@
                   <Image url="@../images/Ladventure.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="howToPlay" fitHeight="500.0" fitWidth="500.0" onMouseClicked="#howToPlay" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/icon.png" />
-               </image>
-            </ImageView>
             <ImageView fx:id="shop" accessibleText="2" fitHeight="500.0" fitWidth="500.0" onMouseClicked="#shop" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/shopicon.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="howToPlay" fitHeight="500.0" fitWidth="500.0" onMouseClicked="#howToPlay" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/how_to_play.png" />
                </image>
             </ImageView>
          </children>
