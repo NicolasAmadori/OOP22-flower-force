@@ -1,7 +1,6 @@
 package flowerforce.model.game;
 
 import flowerforce.model.entities.CherryBomb;
-import flowerforce.model.entities.ExplodingPlant;
 import flowerforce.model.entities.Plant;
 import flowerforce.model.entities.SunflowerFactoryImpl;
 import javafx.util.Pair;
@@ -24,7 +23,7 @@ public class ShopImpl implements Shop{
             new Pair<> ((pos) -> new CherryBomb(pos), 20)
     ); //TODO: set actual costs
     private final Player player;
-    private final Map<Pair<String, Integer>, Function<Point2D, Plant>> buyablePlants = new LinkedHashMap<>();
+    private final Map<Pair<String, Integer>, Function<Point2D, Plant>> purchasablePlants = new LinkedHashMap<>();
 
     private final Map<Pair<String, Integer>, Function<Point2D, Plant>> boughtPlants = new LinkedHashMap<>();
 
@@ -38,14 +37,14 @@ public class ShopImpl implements Shop{
         //Adding all plants in the map
         final Point2D samplePoint = new Point2D(0, 0);
         SHOP_PLANTS.forEach(p -> {
-            this.buyablePlants.put(new Pair<>(p.getKey().apply(samplePoint).getName(), p.getValue()),
+            this.purchasablePlants.put(new Pair<>(p.getKey().apply(samplePoint).getName(), p.getValue()),
                                    p.getKey());
         });
 
-        //Move already bought plants from buyablePlants to boughtPlants
+        //Move already bought plants from boughtPlants to boughtPlants
         getPlayerBoughtPlants().forEach(p -> {
-            this.boughtPlants.put(p, this.buyablePlants.get(p));
-            this.buyablePlants.remove(p);
+            this.boughtPlants.put(p, this.purchasablePlants.get(p));
+            this.purchasablePlants.remove(p);
         });
     }
 
@@ -53,9 +52,9 @@ public class ShopImpl implements Shop{
      * {@inheritDoc}
      */
     @Override
-    public Map<Pair<String, Integer>, Boolean> getPlants() {
+    public Map<Pair<String, Integer>, Boolean> getPurchasablePlants() {
         final Map<Pair<String, Integer>, Boolean> outputMap = new HashMap<>();
-        this.buyablePlants.keySet().forEach(k -> outputMap.put(k, false));
+        this.purchasablePlants.keySet().forEach(k -> outputMap.put(k, false));
         this.boughtPlants.keySet().forEach(k -> outputMap.put(k, true));
         return outputMap;
     }
@@ -66,11 +65,11 @@ public class ShopImpl implements Shop{
     @Override
     public boolean buyPlant(final Pair<String, Integer> plantInfo) {
         //TODO: refactor
-        if(this.buyablePlants.containsKey(plantInfo) &&
+        if(this.purchasablePlants.containsKey(plantInfo) &&
                 this.player.subtractCoins(plantInfo.getValue())) {
             this.player.addPlant(getKeyIndex(plantInfo));
-            this.buyablePlants.remove(plantInfo);
-            this.boughtPlants.put(plantInfo, this.buyablePlants.get(plantInfo));
+            this.purchasablePlants.remove(plantInfo);
+            this.boughtPlants.put(plantInfo, this.purchasablePlants.get(plantInfo));
             return true;
         }
         return false;
@@ -88,7 +87,7 @@ public class ShopImpl implements Shop{
     private Set<Pair<String, Integer>> getPlayerBoughtPlants() {
         int i = 0;
         Set<Pair<String, Integer>> boughtPlants = new HashSet<>();
-        for (var p : this.buyablePlants.entrySet()) {
+        for (var p : this.purchasablePlants.entrySet()) {
             if(this.player.getPlantsIds().contains(i)) {
                 boughtPlants.add(p.getKey());
             }
@@ -98,7 +97,7 @@ public class ShopImpl implements Shop{
     }
     private int getKeyIndex(final Pair<String, Integer> plantInfo) {
         int i = 0;
-        for (var e: this.buyablePlants.entrySet()) {
+        for (var e: this.purchasablePlants.entrySet()) {
             if (e.equals(plantInfo)) {
                 return i;
             }
