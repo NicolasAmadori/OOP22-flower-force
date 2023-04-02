@@ -1,6 +1,5 @@
 package flowerforce.model.entities;
 
-import flowerforce.model.entities.IdConverter.Zombies;
 import flowerforce.model.utilities.RenderingInformation;
 import flowerforce.model.utilities.Timer;
 import flowerforce.model.utilities.TimerImpl;
@@ -18,7 +17,6 @@ public class ZombieImpl extends AbstractLivingEntity implements Zombie {
     private static final int EAT_WAITING_TICKS = RenderingInformation.convertSecondsToCycles(EAT_WAITING_SECS);
     private final int damage;
     private final Timer freezeTimer;
-    private final Zombies zombieType;
     private final int difficulty;
     private boolean isFrozen;
     private boolean canBite;
@@ -30,15 +28,14 @@ public class ZombieImpl extends AbstractLivingEntity implements Zombie {
      * @param damage given by the zombie
      * @param health of the zombie
      * @param position of the zombie
-     * @param zombieType the type of zombie
+     * @param difficulty the generic difficulty of the zombie
+     * @param zombieName the name of the zombie
      */
-    protected ZombieImpl(final double defaultDelta, final int damage, final int health, final Point2D position,
-            final Zombies zombieType, final int difficulty) {                
-        super(position, new TimerImpl(EAT_WAITING_TICKS), health);
+    protected ZombieImpl(final double defaultDelta, final int damage, final int health, final Point2D position, final int difficulty, final String zombieName) {                
+        super(position, new TimerImpl(EAT_WAITING_TICKS), health, zombieName);
         this.defaultDelta = defaultDelta;
         this.damage = damage;
         this.freezeTimer = new TimerImpl(FREEZE_WAITING_TICKS);
-        this.zombieType = zombieType;
         this.difficulty = difficulty;
         this.isFrozen = false;
         this.canBite = true;
@@ -107,14 +104,6 @@ public class ZombieImpl extends AbstractLivingEntity implements Zombie {
             super.getTimer().reset();
             this.canBite = false;
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Zombies getZombieType() {
-        return this.zombieType;
     }
 
     /**

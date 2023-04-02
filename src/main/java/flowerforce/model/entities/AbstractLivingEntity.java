@@ -17,9 +17,10 @@ public abstract class AbstractLivingEntity extends AbstractEntity implements Liv
      * @param pos the initial position to place the entity in
      * @param timer used to produce bullets/suns at the right time
      * @param health the starting health of the entity
+     * @param entityName the name of the entity
      */
-    protected AbstractLivingEntity(final Point2D pos, final Timer timer, final int health) {
-        super(pos);
+    protected AbstractLivingEntity(final Point2D pos, final Timer timer, final int health, final String entityName) {
+        super(pos, entityName);
         this.timer = timer;
         this.health = health;
     }

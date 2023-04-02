@@ -1,7 +1,5 @@
 package flowerforce.model.game;
 
-import flowerforce.model.entities.IdConverter;
-
 import java.util.Set;
 
 /**
@@ -53,10 +51,10 @@ public interface Player {
     void unlockedNextLevel();
 
     /**
-     * Add a plant in player inventory
-     * @param plantId the id of the plant to add
+     * Add a plant in player inventory.
+     * @param plantIndex an index of the plant to add
      */
-    void addPlant(IdConverter.Plants plant);
+    void addPlant(int plantIndex);
 
-    Set<IdConverter.Plants> getPlants();
+    Set<Integer> getPlantsIds();
 }
