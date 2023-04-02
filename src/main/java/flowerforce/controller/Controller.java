@@ -111,4 +111,6 @@ public interface Controller {
      * Save the actual state of the game.
      */
     void save();
+
+    Set<EntityView> getDamagedEntities();
 }

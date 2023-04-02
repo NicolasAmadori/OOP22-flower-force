@@ -6,22 +6,19 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.List;
-import java.util.ArrayList;
+import java.util.Random;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
-
-import flowerforce.controller.utilities.InputHandler;
+import flowerforce.controller.utilities.EntityConverter;
 import flowerforce.controller.utilities.WorldSavingManager;
-import flowerforce.model.entities.Bullet;
-import flowerforce.model.entities.IdConverter;
-import flowerforce.model.entities.Plant;
-import flowerforce.model.entities.Zombie;
 import flowerforce.model.game.Game;
 import flowerforce.model.game.World;
-import flowerforce.controller.utilities.EntityConverter;
+import flowerforce.controller.utilities.EntityConverterImpl;
 import flowerforce.view.entities.CardView;
 import flowerforce.view.entities.EntityView;
 import flowerforce.view.game.GameEngine;
+import javafx.util.Pair;
+import javafx.geometry.Point2D;
 
 /**
  * This is an implementation of {@link Controller}.
@@ -33,12 +30,10 @@ public final class ControllerImpl implements Controller {
     private EntityConverter entityConverter;
     private Optional<Game> game;
 
-    private final Map<CardView, Integer> cards = new HashMap<>();
-    private final Map<Plant, EntityView> previousPlant = new HashMap<>();
-
-    private final Map<Zombie, EntityView> previousZombie = new HashMap<>();
-
-    private final Map<Bullet, EntityView> previousBullet = new HashMap<>();
+    private final Map<CardView, Pair<String, Integer>> cards = new HashMap<>();
+    private final Map<Pair<String, Point2D>, EntityView> previousPlant = new HashMap<>();
+    private final Map<Pair<String, Point2D>, EntityView> previousZombie = new HashMap<>();
+    private final Map<Pair<String, Point2D>, EntityView> previousBullet = new HashMap<>();
 
     /**
      * Create a new instance of Controller.
@@ -86,7 +81,7 @@ public final class ControllerImpl implements Controller {
     public void setGameEngine(final GameEngine gameEngine) {
         this.gameEngine = Optional.ofNullable(gameEngine);
         checkGameEngine();
-        this.entityConverter = new EntityConverter(this.world.getYardDimension(), this.gameEngine.get().getYardDimension());
+        this.entityConverter = new EntityConverterImpl(this.world.getYardDimension(), this.gameEngine.get().getYardDimension());
     }
 
     /**
@@ -149,13 +144,13 @@ public final class ControllerImpl implements Controller {
     @Override
     public Set<EntityView> getPlacedEntities() {
         checkGame();
-        final Set<Plant> plants = this.game.get().getPlacedPlants();
-        final Set<Zombie> zombies = this.game.get().getZombies();
-        final Set<Bullet> bullets = this.game.get().getBullet();
+        final Set<Pair<String, Point2D>> plants = this.game.get().getPlacedPlants();
+        final Set<Pair<String, Point2D>> zombies = this.game.get().getZombies();
+        final Set<Pair<String, Point2D>> bullets = this.game.get().getBullet();
 
         //TODO: refactor
         //region Plants
-        final Set<Plant> plantsToRemove = new HashSet<>();
+        final Set<Pair<String, Point2D>> plantsToRemove = new HashSet<>();
         //Remove the entities that are no longer there
         this.previousPlant.keySet().forEach(p -> {
             if (!plants.contains(p)) {
@@ -166,13 +161,13 @@ public final class ControllerImpl implements Controller {
         //Create the plant EntityView if plant not already present
         plants.forEach(p -> {
             if (!this.previousPlant.containsKey(p)) {
-                this.previousPlant.put(p, this.entityConverter.getEntityView(p));
+                this.previousPlant.put(p, this.entityConverter.getPlantView(p));
             }
         });
         //endregion
 
         //region Zombies
-        final Set<Zombie> zombiesToRemove = new HashSet<>();
+        final Set<Pair<String, Point2D>> zombiesToRemove = new HashSet<>();
         this.previousZombie.keySet().forEach(z -> {
             if (!zombies.contains(z)) {
                 zombiesToRemove.add(z);
@@ -181,15 +176,15 @@ public final class ControllerImpl implements Controller {
         zombiesToRemove.forEach(z -> this.previousZombie.remove(z));
         zombies.forEach(z -> {
             if (this.previousZombie.containsKey(z)) {
-                this.entityConverter.changeZombieViewPosition(this.previousZombie.get(z), z.getPosition());
+                this.entityConverter.changeZombieViewPosition(this.previousZombie.get(z), z.getValue());
             } else {
-                this.previousZombie.put(z, this.entityConverter.getEntityView(z));
+                this.previousZombie.put(z, this.entityConverter.getZombieView(z));
             }
         });
         //endregion
 
         //region Bullets
-        final Set<Bullet> bulletToRemove = new HashSet<>();
+        final Set<Pair<String, Point2D>> bulletToRemove = new HashSet<>();
         this.previousBullet.keySet().forEach(b -> {
             if (!bullets.contains(b)) {
                 bulletToRemove.add(b);
@@ -198,9 +193,9 @@ public final class ControllerImpl implements Controller {
         bulletToRemove.forEach(b -> this.previousBullet.remove(b));
         bullets.forEach(b -> {
             if (this.previousBullet.containsKey(b)) {
-                this.entityConverter.changeBulletViewPosition(this.previousBullet.get(b), b.getPosition());
+                this.entityConverter.changeBulletViewPosition(this.previousBullet.get(b), b.getValue());
             } else {
-                this.previousBullet.put(b, this.entityConverter.getEntityView(b));
+                this.previousBullet.put(b, this.entityConverter.getBulletView(b));
             }
         });
         //endregion
@@ -216,7 +211,7 @@ public final class ControllerImpl implements Controller {
     private List<CardView> getCards() {
         checkGame();
         this.game.get().getAllPlantIDs()
-                .forEach(p -> this.cards.put(entityConverter.getCardView(p), p.ordinal()));
+                .forEach(p -> cards.put(entityConverter.getCardView(p), p));
         return cards.keySet().stream().toList();
     }
 
@@ -243,6 +238,20 @@ public final class ControllerImpl implements Controller {
     @Override
     public void save() {
         WorldSavingManager.save(this.world);
+    }
+
+    @Override
+    public Set<EntityView> getDamagedEntities() {
+        int nZombies = this.previousZombie.size();
+        Random r = new Random();
+        int nZombiesToDamage = r.nextInt(nZombies);
+        Set<EntityView> output = new HashSet<>();
+        this.previousZombie.forEach((p,e) -> {
+            if (output.size() < nZombiesToDamage) {
+                output.add(e);
+            }
+        });
+        return output;
     }
 
     private void checkGameEngine() {
