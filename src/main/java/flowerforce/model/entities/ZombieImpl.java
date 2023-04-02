@@ -31,10 +31,12 @@ public class ZombieImpl extends AbstractLivingEntity implements Zombie {
      * @param health of the zombie
      * @param position of the zombie
      * @param zombieType the type of zombie
+     * @param difficulty the generic difficulty of the zombie
+     * @param zombieName the name of the zombie
      */
     protected ZombieImpl(final double defaultDelta, final int damage, final int health, final Point2D position,
-            final Zombies zombieType, final int difficulty) {                
-        super(position, new TimerImpl(EAT_WAITING_TICKS), health);
+            final Zombies zombieType, final int difficulty, final String zombieName) {                
+        super(position, new TimerImpl(EAT_WAITING_TICKS), health, zombieName);
         this.defaultDelta = defaultDelta;
         this.damage = damage;
         this.freezeTimer = new TimerImpl(FREEZE_WAITING_TICKS);
