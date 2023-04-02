@@ -6,20 +6,19 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Random;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
+import flowerforce.controller.utilities.EntityConverter;
 import flowerforce.controller.utilities.WorldSavingManager;
-import flowerforce.model.entities.Bullet;
-import flowerforce.model.entities.IdConverter;
-import flowerforce.model.entities.Plant;
-import flowerforce.model.entities.Zombie;
 import flowerforce.model.game.Game;
 import flowerforce.model.game.World;
-import flowerforce.controller.utilities.EntityConverter;
+import flowerforce.controller.utilities.EntityConverterImpl;
 import flowerforce.view.entities.CardView;
 import flowerforce.view.entities.EntityView;
 import flowerforce.view.game.GameEngine;
+import javafx.util.Pair;
+import javafx.geometry.Point2D;
 
 /**
  * This is an implementation of {@link Controller}.
@@ -28,15 +27,13 @@ public final class ControllerImpl implements Controller {
 
     private Optional<GameEngine> gameEngine = Optional.empty();
     private final World world;
-
     private EntityConverter entityConverter;
     private Optional<Game> game;
 
-    private final Map<Plant, EntityView> previousPlant = new HashMap<>();
-
-    private final Map<Zombie, EntityView> previousZombie = new HashMap<>();
-
-    private final Map<Bullet, EntityView> previousBullet = new HashMap<>();
+    private final Map<CardView, Pair<String, Integer>> cards = new HashMap<>();
+    private final Map<Pair<String, Point2D>, EntityView> previousPlant = new HashMap<>();
+    private final Map<Pair<String, Point2D>, EntityView> previousZombie = new HashMap<>();
+    private final Map<Pair<String, Point2D>, EntityView> previousBullet = new HashMap<>();
 
     /**
      * Create a new instance of Controller.
@@ -84,7 +81,7 @@ public final class ControllerImpl implements Controller {
     public void setGameEngine(final GameEngine gameEngine) {
         this.gameEngine = Optional.ofNullable(gameEngine);
         checkGameEngine();
-        this.entityConverter = new EntityConverter(this.world.getYardDimension(), this.gameEngine.get().getYardDimension());
+        this.entityConverter = new EntityConverterImpl(this.world.getYardDimension(), this.gameEngine.get().getYardDimension());
     }
 
     /**
@@ -109,9 +106,9 @@ public final class ControllerImpl implements Controller {
      * {@inheritDoc}
      */
     @Override
-    public boolean placePlant(final int plantId, final int row, final int col) {
+    public boolean placePlant(final CardView cardView, final int row, final int col) {
         checkGame();
-        return this.game.get().placePlant(plantId, row, col);
+        return this.game.get().placePlant(this.cards.get(cardView), row, col);
     }
 
     @Override
@@ -147,13 +144,13 @@ public final class ControllerImpl implements Controller {
     @Override
     public Set<EntityView> getPlacedEntities() {
         checkGame();
-        final Set<Plant> plants = this.game.get().getPlacedPlants();
-        final Set<Zombie> zombies = this.game.get().getZombies();
-        final Set<Bullet> bullets = this.game.get().getBullet();
+        final Set<Pair<String, Point2D>> plants = this.game.get().getPlacedPlants();
+        final Set<Pair<String, Point2D>> zombies = this.game.get().getZombies();
+        final Set<Pair<String, Point2D>> bullets = this.game.get().getBullet();
 
         //TODO: refactor
         //region Plants
-        final Set<Plant> plantsToRemove = new HashSet<>();
+        final Set<Pair<String, Point2D>> plantsToRemove = new HashSet<>();
         //Remove the entities that are no longer there
         this.previousPlant.keySet().forEach(p -> {
             if (!plants.contains(p)) {
@@ -164,13 +161,13 @@ public final class ControllerImpl implements Controller {
         //Create the plant EntityView if plant not already present
         plants.forEach(p -> {
             if (!this.previousPlant.containsKey(p)) {
-                this.previousPlant.put(p, this.entityConverter.getEntityView(p));
+                this.previousPlant.put(p, this.entityConverter.getPlantView(p));
             }
         });
         //endregion
 
         //region Zombies
-        final Set<Zombie> zombiesToRemove = new HashSet<>();
+        final Set<Pair<String, Point2D>> zombiesToRemove = new HashSet<>();
         this.previousZombie.keySet().forEach(z -> {
             if (!zombies.contains(z)) {
                 zombiesToRemove.add(z);
@@ -179,15 +176,15 @@ public final class ControllerImpl implements Controller {
         zombiesToRemove.forEach(z -> this.previousZombie.remove(z));
         zombies.forEach(z -> {
             if (this.previousZombie.containsKey(z)) {
-                this.entityConverter.changeZombieViewPosition(this.previousZombie.get(z), z.getPosition());
+                this.entityConverter.changeZombieViewPosition(this.previousZombie.get(z), z.getValue());
             } else {
-                this.previousZombie.put(z, this.entityConverter.getEntityView(z));
+                this.previousZombie.put(z, this.entityConverter.getZombieView(z));
             }
         });
         //endregion
 
         //region Bullets
-        final Set<Bullet> bulletToRemove = new HashSet<>();
+        final Set<Pair<String, Point2D>> bulletToRemove = new HashSet<>();
         this.previousBullet.keySet().forEach(b -> {
             if (!bullets.contains(b)) {
                 bulletToRemove.add(b);
@@ -196,9 +193,9 @@ public final class ControllerImpl implements Controller {
         bulletToRemove.forEach(b -> this.previousBullet.remove(b));
         bullets.forEach(b -> {
             if (this.previousBullet.containsKey(b)) {
-                this.entityConverter.changeBulletViewPosition(this.previousBullet.get(b), b.getPosition());
+                this.entityConverter.changeBulletViewPosition(this.previousBullet.get(b), b.getValue());
             } else {
-                this.previousBullet.put(b, this.entityConverter.getEntityView(b));
+                this.previousBullet.put(b, this.entityConverter.getBulletView(b));
             }
         });
         //endregion
@@ -211,19 +208,21 @@ public final class ControllerImpl implements Controller {
         return output;
     }
 
-
     private List<CardView> getCards() {
         checkGame();
-        final List<IdConverter.Plants> plants = this.game.get().getAllPlantIDs();
-        final List<CardView> cards = new ArrayList<>();
-        plants.forEach(p -> cards.add(entityConverter.getCardView(p)));
-        return cards;
+        this.game.get().getAllPlantIDs()
+                .forEach(p -> cards.put(entityConverter.getCardView(p), p));
+        return cards.keySet().stream().toList();
     }
 
     @Override
-    public Set<Integer> getEnabledCards() {
+    public Set<CardView> getEnabledCards() {
         checkGame();
-        return this.game.get().getAvailablePlantsIDs(); //uncomment this when game is corrected
+        Set<Integer> enabledCards = this.game.get().getAvailablePlantsIDs(); //TODO: Modify when enum removed
+        return this.cards.entrySet().stream()
+                .filter(e -> enabledCards.contains(e.getValue())) //Removed not available cardviews
+                .map(Map.Entry::getKey) //Map to get just di keys
+                .collect(Collectors.toSet());
     }
 
     @Override
@@ -241,18 +240,6 @@ public final class ControllerImpl implements Controller {
         WorldSavingManager.save(this.world);
     }
 
-    private void checkGameEngine() {
-        if (this.gameEngine.isEmpty()) {
-            throw new NoSuchElementException("GameEngine has not been set.");
-        }
-    }
-
-    private void checkGame() {
-        if (this.game.isEmpty()) {
-            throw new NoSuchElementException("Game has not been started.");
-        }
-    }
-
     @Override
     public Set<EntityView> getDamagedEntities() {
         int nZombies = this.previousZombie.size();
@@ -265,5 +252,17 @@ public final class ControllerImpl implements Controller {
             }
         });
         return output;
+    }
+
+    private void checkGameEngine() {
+        if (this.gameEngine.isEmpty()) {
+            throw new NoSuchElementException("GameEngine has not been set.");
+        }
+    }
+
+    private void checkGame() {
+        if (this.game.isEmpty()) {
+            throw new NoSuchElementException("Game has not been started.");
+        }
     }
 }
