@@ -8,6 +8,7 @@ package flowerforce.model.game;
 public class LevelGame extends AbstractGameImpl {
     private int remainingZombie;
 
+    private final ZombieGenerationLevel generateZombie;
     /**
      * Constructor to instantiate a level game.
      * @param level of the game started
@@ -16,6 +17,7 @@ public class LevelGame extends AbstractGameImpl {
     public LevelGame(final Level level, final World world) {
         super(level, world);
         this.remainingZombie = level.getTotalZombies();
+        generateZombie = new ZombieGenerationLevelImpl(level);
     }
 
     /**
@@ -53,14 +55,18 @@ public class LevelGame extends AbstractGameImpl {
      */
     @Override
     protected void generateZombie() {
+        if(remainingZombie == 0) {
+            System.out.println("ssj");
+        }
+        System.out.println(this.remainingZombie);
         if (remainingZombie != 0) {
-            final var zombie = this.getGenerateZombie().zombieGeneration();
+            final var zombie = this.generateZombie.zombieGeneration();
             if (zombie.isPresent()) {
                 remainingZombie--;
                 this.addZombie(zombie.get());
             }
             if (this.getLevel().getBossId().isPresent() && remainingZombie == 0) {
-                final var boss = this.getGenerateZombie().bossGeneration();
+                final var boss = this.generateZombie.bossGeneration();
                 if (boss.isPresent()) {
                     remainingZombie--;
                     this.addZombie(boss.get());

@@ -23,7 +23,6 @@ public abstract class AbstractGameImpl implements Game {
     private final TimerImpl sunTimer;
     private final Map<IdConverter.Plants, TimerImpl> plantsTimer = new HashMap<>();
     private int sun;
-    private final ZombieGeneration generateZombie;
     private final Level level;
     private final World world;
     private int score;
@@ -40,7 +39,6 @@ public abstract class AbstractGameImpl implements Game {
         this.level.getPlantsId().forEach(p -> plantsTimer.put(p, new TimerImpl(p.getUnlockTime())));
         this.world = world;
         this.score = 0;
-        this.generateZombie = new ZombieGenerationImpl(level);
     }
 
     /**
@@ -61,13 +59,6 @@ public abstract class AbstractGameImpl implements Game {
      */
     protected void addZombie(final Zombie zombie) {
         this.zombies.add(zombie);
-    }
-
-    /**
-     * @return
-     */
-    protected ZombieGeneration getGenerateZombie() {
-        return this.generateZombie;
     }
 
     /**
