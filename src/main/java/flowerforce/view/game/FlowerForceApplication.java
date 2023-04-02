@@ -69,7 +69,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
             System.out.println(e);
         }
     }
-    
+
     @Override
     public void howToPlay() {
         try {
@@ -80,7 +80,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
             e.printStackTrace();
         }
     }
-    
+
     @Override
     public void shop() {
         try {
@@ -101,7 +101,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
         this.stage.setScene(scene);
         this.stage.show();
     }
-    
+
     /**
      * Produces a scene scaled on screen's dimensions.
      * @param root the root element to resize

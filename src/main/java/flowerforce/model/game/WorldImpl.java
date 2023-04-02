@@ -110,6 +110,9 @@ public class WorldImpl implements World {
         return Yard.getColsNum();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Shop getShop() {
         return this.shop;

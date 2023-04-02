@@ -50,11 +50,19 @@ public class MenuSceneController {
         }
     }
 
+    /**
+     * Opens How to play tutorial.
+     * @param event the MouseEvent to handle
+     */
     @FXML
     void howToPlay(final MouseEvent event) {
         this.application.howToPlay();
     }
 
+    /**
+     * Opens the shop.
+     * @param event the MouseEvent to handle
+     */
     @FXML
     void shop(final MouseEvent event) {
         this.application.shop();

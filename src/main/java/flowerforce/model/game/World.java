@@ -58,5 +58,9 @@ public interface World {
      */
     int getColsNum();
 
+    /**
+     * 
+     * @return this World's Shop
+     */
     Shop getShop();
 }
