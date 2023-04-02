@@ -2,6 +2,7 @@ package flowerforce.model.game;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.IntStream;
@@ -34,7 +35,7 @@ public class WorldImpl implements World {
         this.player = player.orElse(new PlayerImpl(NEW_PLAYER_COINS, NEW_PLAYER_RECORD, NEW_PLAYER_LAST_UNLOCKED_LEVEL));
         this.levelList = levelList;
         this.infiniteModeLevel = infiniteModeLevel;
-        this.shop = new ShopImpl(this.player);
+        this.shop = new ShopImpl(this.player, Set.of());
     }
 
     /**
