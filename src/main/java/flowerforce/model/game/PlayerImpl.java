@@ -72,12 +72,10 @@ public class PlayerImpl implements Player {
      * {@inheritDoc}
      */
     @Override
-    public boolean addNewScore(final int score) {
-        if (score <= this.scoreRecord) {
-            return false;
+    public void addNewScore(final int score) {
+        if (score > this.scoreRecord) {
+            this.scoreRecord = score;
         }
-        this.scoreRecord = score;
-        return true;
     }
 
     /**
