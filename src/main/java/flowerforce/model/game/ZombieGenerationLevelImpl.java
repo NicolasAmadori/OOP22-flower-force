@@ -91,7 +91,11 @@ public class ZombieGenerationLevelImpl implements ZombieGenerationLevel {
      * {@inheritDoc}
      */
     @Override
-    public Optional<Zombie> bossGeneration() {
-        return Optional.empty();
+    public Zombie bossGeneration() {
+        return IdConverter.createZombie(boss.get(),
+                Yard.getEntityPosition(
+                        2,
+                        Yard.getColsNum()
+                ));
     }
 }

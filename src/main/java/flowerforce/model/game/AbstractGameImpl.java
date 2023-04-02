@@ -8,7 +8,6 @@ import javafx.geometry.Point2D;
 import java.util.*;
 import java.util.stream.Collectors;
 
-
 /**
  * This is an implementation of {@link Game}.
  */
