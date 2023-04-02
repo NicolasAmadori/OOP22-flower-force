@@ -107,9 +107,8 @@ public final class FlowerForceApplication extends Application implements FlowerF
      * @param root the root element to resize
      * @param imageName the image to take proportions from
      * @return a scaled scene based on screen's dimensions
-     * @throws IOException
      */
-    public static Scene getScaledScene(final AnchorPane root, final String imageName) throws IOException {
+    public static Scene getScaledScene(final AnchorPane root, final String imageName) {
         //background's dimensions
         final Dimension2D imgDimensions = getImgDimensions(imageName);
         //app's dimensions
