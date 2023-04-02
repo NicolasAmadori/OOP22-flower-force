@@ -9,7 +9,7 @@ import javafx.geometry.Point2D;
 /**
  * Models a Nut, a tank plant that loses life the more times passes.
  */
-public class Nut extends AbstractPlant {
+public class Wallnut extends AbstractPlant {
 
     private static final int NUT_HEALTH = 5000;
     private static final int AUTO_DAMAGE = 30;
@@ -22,8 +22,8 @@ public class Nut extends AbstractPlant {
      * @param timer used to produce bullets/suns at the right time
      * @param plantType the type of the plant
      */
-    public Nut(final Point2D pos, final Plants plantType) {
-        super(pos, new TimerImpl(DAMAGE_PERIOD), NUT_HEALTH, NUT_COST,  RechargeTimes.getSlowRechargeTime(), plantType);
+    public Wallnut(final Point2D pos) {
+        super(pos, new TimerImpl(DAMAGE_PERIOD), NUT_HEALTH, NUT_COST,  RechargeTimes.getSlowRechargeTime(), "wallnut");
     }
 
     /**

@@ -29,8 +29,7 @@ final class TestSnowBullet {
     private final ShootingPlantFactory plantFactory = new ShootingPlantFactoryImpl();
     private final ZombieFactory zombieFactory = new ZombieFactoryImpl();
     private final ShootingPlant producer = this.plantFactory.snow(
-        new Point2D(STARTING_PLANT_POS_X, STARTING_PLANT_POS_Y),
-        Plants.SNOWSHOOTER
+        new Point2D(STARTING_PLANT_POS_X, STARTING_PLANT_POS_Y)
     );
     private Zombie zombie;
     private Optional<Bullet> bullet;

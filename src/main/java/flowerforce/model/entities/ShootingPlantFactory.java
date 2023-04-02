@@ -14,7 +14,7 @@ public interface ShootingPlantFactory {
      * @param plantType the type of the plant
      * @return a Common Shooter Plant
      */
-    ShootingPlant common(Point2D pos, Plants plantType);
+    ShootingPlant peashooter(Point2D pos);
 
     /**
      * 
@@ -22,7 +22,7 @@ public interface ShootingPlantFactory {
      * @param plantType the type of the plant
      * @return a Snow Plant
      */
-    ShootingPlant snow(Point2D pos, Plants plantType);
+    ShootingPlant snow(Point2D pos);
 
     /**
      * 
@@ -30,7 +30,7 @@ public interface ShootingPlantFactory {
      * @param plantType the type of the plant
      * @return a Fire Plant
      */
-    ShootingPlant fire(Point2D pos, Plants plantType);
+    ShootingPlant fire(Point2D pos);
 
     /**
      * 
@@ -38,5 +38,5 @@ public interface ShootingPlantFactory {
      * @param plantType the type of the plant
      * @return a Fast Shooter Plant
      */
-    ShootingPlant fast(Point2D pos, Plants plantType);
+    ShootingPlant fast(Point2D pos);
 }

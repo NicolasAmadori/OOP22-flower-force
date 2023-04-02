@@ -166,7 +166,7 @@ public final class IdConverter {
             case FIRESHOOTER:
                 return SHOOTING_PLANT_FACTORY.fire(pos, plantType);
             case WALLNUT:
-                return new Nut(pos, plantType);
+                return new Wallnut(pos, plantType);
             case CHERRYBOMB:
                 return new CherryBomb(pos, plantType);
             case FASTSUNFLOWER:
