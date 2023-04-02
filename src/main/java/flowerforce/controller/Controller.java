@@ -67,6 +67,12 @@ public interface Controller {
     int getSunCounter();
 
     /**
+     * Get the actual score of the game.
+     * @return an integer representing the score of the game
+     */
+    int getScore();
+
+    /**
      * Place a new plant in a specified position.
      * @param plantId The id of the plant to place
      * @param row The row index in which to place the plant
