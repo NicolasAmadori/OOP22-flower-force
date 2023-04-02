@@ -1,7 +1,6 @@
 package flowerforce.controller;
 
 import flowerforce.model.game.Game;
-import flowerforce.view.entities.CardView;
 import flowerforce.view.entities.EntityView;
 import flowerforce.view.game.GameEngine;
 import java.util.Set;
@@ -73,7 +72,7 @@ public interface Controller {
      * @param col The column index in which to place the plant
      * @return true if the plant was placed correctly, false otherwise
      */
-    boolean placePlant(CardView cardView, int row, int col);
+    boolean placePlant(int plantId, int row, int col);
 
     /**
      * Remove a placed plant.
@@ -93,7 +92,7 @@ public interface Controller {
      * All the cards that are enabled to select.
      * @return A set of integer, representing the indexes of the enable cards.
      */
-    Set<CardView> getEnabledCards();
+    Set<Integer> getEnabledCards();
 
     /**
      * Get the number of rows available.
