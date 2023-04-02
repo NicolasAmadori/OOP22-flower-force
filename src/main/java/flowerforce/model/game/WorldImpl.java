@@ -35,7 +35,7 @@ public class WorldImpl implements World {
         this.player = player.orElse(new PlayerImpl(NEW_PLAYER_COINS, NEW_PLAYER_RECORD, NEW_PLAYER_LAST_UNLOCKED_LEVEL));
         this.levelList = levelList;
         this.infiniteModeLevel = infiniteModeLevel;
-        this.shop = new ShopImpl(this.player, Set.of());
+        this.shop = new ShopImpl(this.player);
     }
 
     /**
