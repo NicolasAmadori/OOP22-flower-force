@@ -8,10 +8,11 @@ import java.util.Optional;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
+import flowerforce.controller.utilities.EntityConverter;
 import flowerforce.controller.utilities.WorldSavingManager;
 import flowerforce.model.game.Game;
 import flowerforce.model.game.World;
-import flowerforce.controller.utilities.EntityConverter;
+import flowerforce.controller.utilities.EntityConverterImpl;
 import flowerforce.view.entities.CardView;
 import flowerforce.view.entities.EntityView;
 import flowerforce.view.game.GameEngine;
@@ -79,7 +80,7 @@ public final class ControllerImpl implements Controller {
     public void setGameEngine(final GameEngine gameEngine) {
         this.gameEngine = Optional.ofNullable(gameEngine);
         checkGameEngine();
-        this.entityConverter = new EntityConverter(this.world.getYardDimension(), this.gameEngine.get().getYardDimension());
+        this.entityConverter = new EntityConverterImpl(this.world.getYardDimension(), this.gameEngine.get().getYardDimension());
     }
 
     /**
