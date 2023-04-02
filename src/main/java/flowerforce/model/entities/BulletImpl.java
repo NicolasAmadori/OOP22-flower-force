@@ -3,7 +3,6 @@ package flowerforce.model.entities;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-import flowerforce.model.entities.IdConverter.Bullets;
 import flowerforce.model.utilities.RenderingInformation;
 import javafx.geometry.Point2D;
 

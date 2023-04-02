@@ -1,7 +1,5 @@
 package flowerforce.model.entities;
 
-import flowerforce.model.entities.IdConverter.Bullets;
-import flowerforce.model.entities.IdConverter.Bullets;
 import javafx.geometry.Point2D;
 
 public class BulletFactoryImpl implements BulletFactory {

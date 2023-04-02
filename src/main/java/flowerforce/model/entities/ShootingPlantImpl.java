@@ -6,7 +6,6 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import flowerforce.model.entities.IdConverter.Plants;
 import flowerforce.model.utilities.Timer;
 import javafx.geometry.Point2D;
 

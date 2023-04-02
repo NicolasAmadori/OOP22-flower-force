@@ -1,6 +1,5 @@
 package flowerforce.model.entities;
 
-import flowerforce.model.entities.IdConverter.Plants;
 import javafx.geometry.Point2D;
 
 /**

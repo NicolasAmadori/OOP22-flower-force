@@ -1,8 +1,6 @@
 package flowerforce.model.entities;
 
-import flowerforce.model.entities.IdConverter.Plants;
 import flowerforce.model.utilities.Timer;
-import flowerforce.model.utilities.TimerImpl;
 import javafx.geometry.Point2D;
 
 /**
