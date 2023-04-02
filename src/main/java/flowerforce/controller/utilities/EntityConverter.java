@@ -10,8 +10,6 @@ import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.util.Pair;
 
-import java.util.Locale;
-
 /**
  * This utility class convert an entity given from the model into an entity that can be drawn in the view.
  */
