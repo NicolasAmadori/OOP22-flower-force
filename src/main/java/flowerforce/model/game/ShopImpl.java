@@ -1,6 +1,9 @@
 package flowerforce.model.game;
 
+import flowerforce.model.entities.CherryBomb;
+import flowerforce.model.entities.ExplodingPlant;
 import flowerforce.model.entities.Plant;
+import flowerforce.model.entities.SunflowerFactoryImpl;
 import javafx.util.Pair;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -16,7 +19,10 @@ import javafx.geometry.Point2D;
  * This is an implementation of {@link Shop}
  */
 public class ShopImpl implements Shop{
-    private static final Set<Pair<Function<Point2D, Plant>, Integer>> SHOP_PLANTS = Set.of();//TODO: set starting plants
+    private static final Set<Pair<Function<Point2D, Plant>, Integer>> SHOP_PLANTS = Set.of(
+            new Pair<> ((pos) -> new SunflowerFactoryImpl().createDoubleSunflower(pos), 10),
+            new Pair<> ((pos) -> new CherryBomb(pos), 20)
+    ); //TODO: set actual costs
     private final Player player;
     private final Map<Pair<String, Integer>, Function<Point2D, Plant>> buyablePlants = new LinkedHashMap<>();
 
