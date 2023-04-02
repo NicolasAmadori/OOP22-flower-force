@@ -27,14 +27,15 @@ public class ShootingPlantFactoryImpl implements ShootingPlantFactory {
      * {@inheritDoc}
      */
     @Override
-    public ShootingPlant common(final Point2D pos, final Plants plantType) {
+    public ShootingPlant peashooter(final Point2D pos) {
         return new ShootingPlantImpl(
             pos,
             new TimerImpl(STANDARD_SHOOTING_TIME),
             STANDARD_SHOOTER_HEALTH,
-            () -> this.bulletFactory.createStandardBullet(getBulletPos(pos)),
+            () -> this.bulletFactory.createStandardBullet(new Point2D(pos.getX(), pos.getY())),
             COMMON_SHOOTER_COST,
-            plantType
+            RechargeTimes.getFastRechargeTime(),
+            "peashooter"
         );
     }
 
@@ -42,14 +43,15 @@ public class ShootingPlantFactoryImpl implements ShootingPlantFactory {
      * {@inheritDoc}
      */
     @Override
-    public ShootingPlant snow(final Point2D pos, final Plants plantType) {
+    public ShootingPlant snow(final Point2D pos) {
         return new ShootingPlantImpl(
             pos,
             new TimerImpl(STANDARD_SHOOTING_TIME),
             STANDARD_SHOOTER_HEALTH,
-            () -> this.bulletFactory.createSnowdBullet(getBulletPos(pos)),
+            () -> this.bulletFactory.createSnowdBullet(new Point2D(pos.getX(), pos.getY())),
             SNOW_SHOOTER_COST,
-            plantType
+            RechargeTimes.getFastRechargeTime(),
+            "snowshooter"
         );
     }
 
@@ -57,14 +59,15 @@ public class ShootingPlantFactoryImpl implements ShootingPlantFactory {
      * {@inheritDoc}
      */
     @Override
-    public ShootingPlant fire(final Point2D pos, final Plants plantType) {
+    public ShootingPlant fire(final Point2D pos) {
         return new ShootingPlantImpl(
             pos,
             new TimerImpl(STANDARD_SHOOTING_TIME),
             STANDARD_SHOOTER_HEALTH,
-            () -> this.bulletFactory.createFireBullet(getBulletPos(pos)),
+            () -> this.bulletFactory.createFireBullet(new Point2D(pos.getX(), pos.getY())),
             FIRE_SHOOTER_COST,
-            plantType
+            RechargeTimes.getFastRechargeTime(),
+            "fireshooter"
         );
     }
 
@@ -72,19 +75,16 @@ public class ShootingPlantFactoryImpl implements ShootingPlantFactory {
      * {@inheritDoc}
      */
     @Override
-    public ShootingPlant fast(final Point2D pos, final Plants plantType) {
+    public ShootingPlant fast(final Point2D pos) {
         return new ShootingPlantImpl(
             pos,
             new TimerImpl(STANDARD_SHOOTING_TIME / 2),
             STANDARD_SHOOTER_HEALTH,
-            () -> this.bulletFactory.createStandardBullet(getBulletPos(pos)),
+            () -> this.bulletFactory.createStandardBullet(new Point2D(pos.getX(), pos.getY())),
             FAST_SHOOTER_COST,
-            plantType
+            RechargeTimes.getFastRechargeTime(),
+            "fastshooter"
         );
-    }
-
-    private static Point2D getBulletPos(final Point2D plantPos) {
-        return new Point2D(plantPos.getX() + 1, plantPos.getY());
     }
 
 }
