@@ -6,16 +6,10 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
-
-import flowerforce.controller.utilities.InputHandler;
 import flowerforce.controller.utilities.WorldSavingManager;
-import flowerforce.model.entities.Bullet;
-import flowerforce.model.entities.Plant;
-import flowerforce.model.entities.Zombie;
 import flowerforce.model.game.Game;
 import flowerforce.model.game.World;
 import flowerforce.controller.utilities.EntityConverter;
@@ -36,11 +30,9 @@ public final class ControllerImpl implements Controller {
     private EntityConverter entityConverter;
     private Optional<Game> game;
 
-    private final Map<CardView, Integer> cards = new HashMap<>();
+    private final Map<CardView, Pair<String, Integer>> cards = new HashMap<>();
     private final Map<Pair<String, Point2D>, EntityView> previousPlant = new HashMap<>();
-
     private final Map<Pair<String, Point2D>, EntityView> previousZombie = new HashMap<>();
-
     private final Map<Pair<String, Point2D>, EntityView> previousBullet = new HashMap<>();
     private final Map<CardView, Pair<String,Integer>> purchasablePlants = new HashMap<>();
 
@@ -229,7 +221,7 @@ public final class ControllerImpl implements Controller {
     private List<CardView> getCards() {
         checkGame();
         this.game.get().getAllPlantIDs()
-                .forEach(p -> this.cards.put(entityConverter.getCardView(p), p.ordinal()));
+                .forEach(p -> cards.put(entityConverter.getCardView(p), p));
         return cards.keySet().stream().toList();
     }
 
