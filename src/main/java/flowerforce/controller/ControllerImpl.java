@@ -114,6 +114,15 @@ public final class ControllerImpl implements Controller {
      * {@inheritDoc}
      */
     @Override
+    public int getProgresState() {
+        checkGame();
+        return this.game.getProgressState();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public boolean placePlant(final CardView cardView, final int row, final int col) {
         checkGame();
         return this.game.get().placePlant(this.cards.get(cardView), row, col);
