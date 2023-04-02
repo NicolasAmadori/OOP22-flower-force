@@ -10,6 +10,7 @@ import javafx.geometry.Point2D;
 public abstract class AbstractPlant extends AbstractLivingEntity implements Plant {
 
     private final Plants plantType;
+    private final int cost;
 
     /**
      * 
@@ -18,9 +19,10 @@ public abstract class AbstractPlant extends AbstractLivingEntity implements Plan
      * @param health the starting health of the entity
      * @param plantType the type of the plant
      */
-    public AbstractPlant(final Point2D pos, final Timer timer, final double health, final Plants plantType) {
+    public AbstractPlant(final Point2D pos, final Timer timer, final int health, final int cost, final Plants plantType) {
         super(pos, timer, health);
         this.plantType = plantType;
+        this.cost = cost;
     }
 
     /**
@@ -29,6 +31,11 @@ public abstract class AbstractPlant extends AbstractLivingEntity implements Plan
     @Override
     public Plants getPlantType() {
         return this.plantType;
+    }
+
+    @Override
+    public int getCost() {
+        return this.cost;
     }
 
 }

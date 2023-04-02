@@ -9,13 +9,13 @@ public interface LivingEntity extends Entity {
      * 
      * @return the remaining health
      */
-    double getHealth();
+    int getHealth();
 
     /**
      * Called to do some damage on the entity.
      * @param damage the damage to do
      */
-    void receiveDamage(double damage);
+    void receiveDamage(int damage);
 
     /**
      * Called to update an entity's internal state.
