@@ -1,89 +1,81 @@
 package flowerforce.model.game;
 
-import flowerforce.model.entities.IdConverter;
+import flowerforce.model.entities.*;
+import javafx.geometry.Point2D;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.function.Function;
 
 /**
  * This is an implementation of {@link Level}.
  */
-public class LevelImpl implements Level {
+public final class LevelImpl {
 
-    private final List<IdConverter.Zombies> availableZombies;
-    private final List<IdConverter.Plants> availablePlants;
-    private final int coins;
-    private final int nZombie;
-    private final int iDLevel;
-    private final Optional<IdConverter.Zombies> zombieBoss;
+    private static final List<Function<Point2D, Zombie>> AVAILABLE_ZOMBIES = List.of(
+            (pos) -> new ZombieFactoryImpl().basic(pos),
+            (pos) -> new ZombieFactoryImpl().conehead(pos),
+            (pos) -> new ZombieFactoryImpl().runner(pos),
+            (pos) -> new ZombieFactoryImpl().newspaper(pos),
+            (pos) -> new ZombieFactoryImpl().buckethead(pos),
+            (pos) -> new ZombieFactoryImpl().quarterback(pos)
+    );
+    private static final List<Function<Point2D, Plant>> AVAILABLE_PLANTS = List.of(
+            (pos) -> new SunflowerFactoryImpl().createCommonSunflower(pos),
+            (pos) -> new ShootingPlantFactoryImpl().peashooter(pos),
+            (pos) -> new ShootingPlantFactoryImpl().snow(pos),
+            Wallnut::new,
+            (pos) -> new ShootingPlantFactoryImpl().fire(pos),
+            (pos) -> new ShootingPlantFactoryImpl().fast(pos)
+    );
+    private static final int COINS = 100;
+    private static final List<Integer> ZOMBIE_LEVEL = List.of(20,40,60,60,60,80,80);
+    private static final Function<Point2D, Zombie> ZOMBIE_BOSS = (pos) -> new ZombieFactoryImpl().gargantuar(pos);
+    private static final int INFINITE_LEVEL_ID = 0;
 
-    /**
-     *
-     * @param availableZombies Zombies that can be used in this level
-     * @param availablePlants Plants that can be used in this level
-     * @param coins Coins that are awarded once the level is completed
-     * @param nZombie Number of zombies that must be spawned in the level
-     * @param iD ID of the level
-     * @param zombieBoss If present, it contains the level boss
-     */
-    public LevelImpl(final int iD, final List<IdConverter.Zombies> availableZombies,
-                     final List<IdConverter.Plants> availablePlants, final int coins,
-                     final Optional<IdConverter.Zombies> zombieBoss, final int nZombie) {
-        this.coins = coins;
-        this.availablePlants = availablePlants;
-        this.availableZombies = availableZombies;
-        this.nZombie = nZombie;
-        this.zombieBoss = zombieBoss;
-        this.iDLevel = iD;
-    }
-
-
+    private LevelImpl() {}
 
     /**
      * {@inheritDoc}.
      */
-    @Override
-    public int getLevelCoins() {
-        return this.coins;
+    public static int getLevelCoins(final int id) {
+        return COINS * id;
     }
 
     /**
      * {@inheritDoc}.
      */
-    @Override
-    public List<IdConverter.Plants> getPlantsId() {
-        return this.availablePlants;
+    public static List<Function<Point2D, Plant>> getPlantsId(final int id) {
+        if (INFINITE_LEVEL_ID == id) {
+            return AVAILABLE_PLANTS;
+        }
+        return AVAILABLE_PLANTS.subList(0, Math.min(1 + id, AVAILABLE_ZOMBIES.size()));
     }
 
     /**
      * {@inheritDoc}.
      */
-    @Override
-    public List<IdConverter.Zombies> getZombiesId() {
-        return this.availableZombies;
+    public static List<Function<Point2D, Zombie>> getZombiesId(final int id) {
+        if (INFINITE_LEVEL_ID == id) {
+            return AVAILABLE_ZOMBIES;
+        }
+        return AVAILABLE_ZOMBIES.subList(0, Math.min(1 + id, AVAILABLE_ZOMBIES.size()));
     }
 
     /**
      * {@inheritDoc}.
      */
-    @Override
-    public Integer getTotalZombies() {
-        return this.nZombie;
+    public static Integer getTotalZombies(final int id) {
+        return ZOMBIE_LEVEL.get(id-1);
     }
 
     /**
      * {@inheritDoc}.
      */
-    @Override
-    public Integer getLevelId() {
-        return this.iDLevel;
+    public static Function<Point2D, Zombie> getBossId(final int id) {
+        return 1 + id > AVAILABLE_ZOMBIES.size() ? ZOMBIE_BOSS : null;
     }
 
-    /**
-     * {@inheritDoc}.
-     */
-    @Override
-    public Optional<IdConverter.Zombies> getBossId() {
-        return this.zombieBoss;
+    public static int getInfiniteLevelId() {
+        return INFINITE_LEVEL_ID;
     }
 }

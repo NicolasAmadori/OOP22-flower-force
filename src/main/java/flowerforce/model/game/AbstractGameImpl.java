@@ -4,14 +4,17 @@ import flowerforce.model.entities.*;
 import flowerforce.model.utilities.RenderingInformation;
 import flowerforce.model.utilities.TimerImpl;
 import javafx.geometry.Point2D;
+import javafx.util.Pair;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
  * This is an implementation of {@link Game}.
  */
 public abstract class AbstractGameImpl implements Game {
+    private final Map<Pair<String,Integer>, Function<Point2D,Plant>> placeablePlant;
     private static final double STANDARD_SECS_SPAWN_SUN = 5.0;
     private static final int TIME_TO_SPAWN_SUN = (int) (STANDARD_SECS_SPAWN_SUN * RenderingInformation.getFramesPerSecond());
     private static final int SUN_VALUE = 25;
@@ -20,22 +23,31 @@ public abstract class AbstractGameImpl implements Game {
     private Set<Bullet> bullets = new HashSet<>();
     private Set<Zombie> zombies = new HashSet<>();
     private final TimerImpl sunTimer;
-    private final Map<IdConverter.Plants, TimerImpl> plantsTimer = new HashMap<>();
+    private final Map<Pair<String,Integer>, TimerImpl> plantsTimer = new HashMap<>();
     private int sun;
-    private final Level level;
+    private final int levelId;
     private final World world;
     private int score;
+    private static final Point2D TEMPORARY_POSITION = new Point2D(0,0);
 
     /**
      * Constructor to instantiate an infinite game.
-     * @param level of the game started
+     * @param id of the game started
      * @param world an instance of the world that started the game
      */
-    public AbstractGameImpl(final Level level, final World world) {
+    public AbstractGameImpl(final int id, final World world) {
+        var pos = new Point2D(0,0);
+        this.placeablePlant = new HashMap<>();
+        LevelImpl.getPlantsId(id).forEach(p -> placeablePlant.put(
+                new Pair<>(p.apply(TEMPORARY_POSITION).getName(),
+                        p.apply(TEMPORARY_POSITION).getCost()),p)
+        );
+        this.placeablePlant.keySet().forEach(p -> LevelImpl.getPlantsId(id));
         this.sun = INITIAL_SUN * SUN_VALUE;
-        this.level = level;
+        this.levelId = id;
         this.sunTimer = new TimerImpl(TIME_TO_SPAWN_SUN);
-        this.level.getPlantsId().forEach(p -> plantsTimer.put(p, new TimerImpl(p.getUnlockTime())));
+        this.placeablePlant.keySet().forEach(p -> plantsTimer
+                .put(p, new TimerImpl(placeablePlant.get(p).apply(TEMPORARY_POSITION).getRechargeTime())));
         this.world = world;
         this.score = 0;
     }
@@ -85,24 +97,24 @@ public abstract class AbstractGameImpl implements Game {
      * {@inheritDoc}
      */
     @Override
-    public Set<Zombie> getZombies() {
-        return this.zombies;
+    public Set<Pair<String,Point2D>> getZombies() {
+        return zombies.stream().map(z -> new Pair<>(z.getName(),z.getPosition())).collect(Collectors.toSet());
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Set<Plant> getPlacedPlants() {
-        return this.plants;
+    public Set<Pair<String,Point2D>> getPlacedPlants() {
+        return plants.stream().map(p -> new Pair<>(p.getName(),p.getPosition())).collect(Collectors.toSet());
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Set<Bullet> getBullet() {
-        return this.bullets;
+    public Set<Pair<String,Point2D>> getBullet() {
+        return bullets.stream().map(b -> new Pair<>(b.getName(),b.getPosition())).collect(Collectors.toSet());
     }
 
     /**
@@ -117,19 +129,18 @@ public abstract class AbstractGameImpl implements Game {
      * {@inheritDoc}
      */
     @Override
-    public boolean placePlant(final int idPlant, final int row, final int col) {
+    public boolean placePlant(final Pair<String,Integer> plantInfo, final int row, final int col) {
         final Point2D position = Yard.getEntityPosition(row, col);
         for (final var plant : this.plants) {
             if (plant.getPosition().equals(position)) {
                 return false;
             }
         }
-        final var plantType = IdConverter.Plants.values()[idPlant];
-        final var plant = IdConverter.createPlant(plantType, position);
-        this.plantsTimer.get(plantType).reset();
-        this.plantsTimer.get(plantType).updateState();
-        this.sun -= plantType.getCost();
-        this.plants.add(plant);
+        final var plant = placeablePlant.get(plantInfo).apply(position);
+        plants.add(plant);
+        this.plantsTimer.get(plantInfo).reset();
+        this.plantsTimer.get(plantInfo).updateState();
+        this.sun -= plantInfo.getValue();
         return true;
     }
 
@@ -147,11 +158,10 @@ public abstract class AbstractGameImpl implements Game {
      * {@inheritDoc}
      */
     @Override
-    public Set<Integer> getAvailablePlantsIDs() {
-        return this.level.getPlantsId().stream()
-                .filter(plantType -> plantType.getCost() <= sun)
+    public Set<Pair<String,Integer>> getAvailablePlantsIDs() {
+        return this.placeablePlant.keySet().stream()
+                .filter(plantType -> plantType.getValue() <= sun)
                 .filter(plantType -> plantsTimer.get(plantType).isReady())
-                .map(Enum::ordinal)
                 .collect(Collectors.toSet());
     }
 
@@ -159,8 +169,8 @@ public abstract class AbstractGameImpl implements Game {
      * {@inheritDoc}
      */
     @Override
-    public List<IdConverter.Plants> getAllPlantIDs() {
-        return this.level.getPlantsId();
+    public List<Pair<String,Integer>> getAllPlantIDs() {
+        return this.placeablePlant.keySet().stream().toList();
     }
 
     /**
@@ -211,7 +221,7 @@ public abstract class AbstractGameImpl implements Game {
                  .filter(zombie -> !zombie.isOver())
                  .min(Comparator.comparing(zombie -> zombie.getPosition().getX()))
                  .ifPresent(bullet::hit));
-         this.zombies.stream().filter(Entity::isOver).forEach(z -> score += z.getZombieType().getDifficulty());
+         this.zombies.stream().filter(Entity::isOver).forEach(z -> score += z.getDifficulty());
          this.zombies = this.zombies.stream().filter(z -> !z.isOver()).collect(Collectors.toSet());
          this.bullets = this.bullets.stream().filter(b -> !b.isOver()).collect(Collectors.toSet());
     }

@@ -14,7 +14,7 @@ public class LevelGame extends AbstractGameImpl {
      * @param level of the game started
      * @param world an instance of the world that started the game
      */
-    public LevelGame(final Level level, final World world) {
+    public LevelGame(final int levelId, final World world) {
         super(level, world);
         this.remainingZombie = level.getTotalZombies();
         generateZombie = new ZombieGenerationLevelImpl(level);
