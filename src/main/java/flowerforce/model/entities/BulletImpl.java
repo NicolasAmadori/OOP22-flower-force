@@ -16,7 +16,6 @@ public class BulletImpl extends AbstractEntity implements Bullet {
     private static final double DELTA = RenderingInformation.getDeltaFromSecondsPerCell(SECS_PER_CELL);
 
     private final int damage;
-    private final Bullets bulletType;
     private boolean hasHit;
     private Optional<Consumer<Zombie>> actionOverZombie = Optional.empty();
 
@@ -25,15 +24,14 @@ public class BulletImpl extends AbstractEntity implements Bullet {
      * @param pos the initial position to place the bullet in
      * @param damage the damage that the bullet does to zombies
      */
-    public BulletImpl(final Point2D pos, final int damage, final Bullets bulletType) {
-        super(pos);
+    public BulletImpl(final Point2D pos, final int damage, final String bulletName) {
+        super(pos, bulletName);
         this.damage = damage;
-        this.bulletType = bulletType;
     }
 
 
-    public BulletImpl(final Point2D pos, final int damage, final Bullets bulletType, final Consumer<Zombie> action) {
-        this(pos, damage, bulletType);
+    public BulletImpl(final Point2D pos, final int damage, final String bulletName, final Consumer<Zombie> action) {
+        this(pos, damage, bulletName);
         this.actionOverZombie = Optional.of(action);
     }
 
@@ -70,12 +68,6 @@ public class BulletImpl extends AbstractEntity implements Bullet {
     @Override
     public double getDeltaMovement() {
         return DELTA;
-    }
-
-
-    @Override
-    public Bullets getBulletType() {
-        return this.bulletType;
     }
 
 }

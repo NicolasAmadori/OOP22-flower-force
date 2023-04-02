@@ -18,19 +18,21 @@ public class CherryBomb extends AbstractPlant implements ExplodingPlant {
     private static final int DAMAGE = 1800;
     private static final int CHERRY_RADIUS = 1;
     private static final double SECONDS_BEFORE_EXPLOSION = 1.2;
+    private static final String CHERRY_NAME = "cherrybomb";
 
     /**
      * 
      * @param pos the initial position to place the entity in
      * @param plantType the type of the plant
      */
-    public CherryBomb(final Point2D pos, final Plants plantType) {
+    public CherryBomb(final Point2D pos) {
         super(
             pos,
             new TimerImpl(RenderingInformation.convertSecondsToCycles(SECONDS_BEFORE_EXPLOSION)), 
             CHERRY_HEALTH,
             CHERRY_COST,
-            plantType
+            RechargeTimes.getVerySlowRechargeTime(),
+            CHERRY_NAME
         );
     }
 

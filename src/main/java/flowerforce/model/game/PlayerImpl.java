@@ -1,7 +1,5 @@
 package flowerforce.model.game;
 
-import flowerforce.model.entities.IdConverter;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,7 +11,7 @@ public class PlayerImpl implements Player {
     private int nCoins;
     private int scoreRecord;
     private int lastUnlockedLevelId;
-    private Set<IdConverter.Plants> plants = new HashSet<>();
+    private Set<Integer> plantsIds = new HashSet<>();
 
     /**
      * Constructor to instantiate a totally new player.
@@ -102,15 +100,15 @@ public class PlayerImpl implements Player {
      * {@inheritDoc}
      */
     @Override
-    public void addPlant(IdConverter.Plants plantId) {
-        plants.add(plantId);
+    public void addPlant(final int plantIndex) {
+        this.plantsIds.add(plantIndex);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Set<IdConverter.Plants> getPlants() {
-        return plants;
+    public Set<Integer> getPlantsIds() {
+        return this.plantsIds;
     }
 }
