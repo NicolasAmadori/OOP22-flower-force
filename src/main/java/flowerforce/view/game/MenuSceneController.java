@@ -36,10 +36,10 @@ public class MenuSceneController {
      * @param event the MouseEvent to handle
      */
     @FXML
-    void start(final MouseEvent event) {
+    void startLevel(final MouseEvent event) {
         final int levelId = Integer.parseInt(((ImageView) event.getSource()).getAccessibleText());
         if (levelId <= this.application.getController().getLastUnlockedLevelId()) {
-            this.application.game(levelId);
+            this.application.levelGame(levelId);
         } else  {
             final Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Level not unlocked");
@@ -48,6 +48,15 @@ public class MenuSceneController {
                                   + this.application.getController().getLastUnlockedLevelId() + ".");
             alert.showAndWait();
         }
+    }
+
+    /**
+     * Starts an Adventure mode game.
+     * @param event the MouseEvent to handle
+     */
+    @FXML
+    void startAdventureGame(final MouseEvent event) {
+        this.application.adventureGame();
     }
 
     /**
