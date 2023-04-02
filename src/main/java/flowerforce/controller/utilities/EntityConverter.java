@@ -1,10 +1,6 @@
 package flowerforce.controller.utilities;
 
 import flowerforce.common.ResourceFinder;
-import flowerforce.model.entities.Bullet;
-import flowerforce.model.entities.IdConverter;
-import flowerforce.model.entities.Plant;
-import flowerforce.model.entities.Zombie;
 import flowerforce.view.entities.CardView;
 import flowerforce.view.entities.CardViewImpl;
 import flowerforce.view.entities.EntityView;
@@ -12,7 +8,7 @@ import flowerforce.view.entities.EntityViewImpl;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
-import java.util.Locale;
+import javafx.util.Pair;
 
 /**
  * This utility class convert an entity given from the model into an entity that can be drawn in the view.
@@ -21,11 +17,11 @@ public final class EntityConverter {
     private static final String IMAGES_EXTENSION = ".png";
     private static final String CARD_SUFFIX = "_card";
     private final double yardRatioHeight;
-
     private final double yardRatioWidth;
 
     /**
      * Create a new instance of EntityConverter, setting all the information.
+     * @param modelYardDimension The dimensione of the yard of the model
      * @param viewYardDimension The dimension of the yard of the view
      */
     public EntityConverter(final Dimension2D modelYardDimension, final Dimension2D viewYardDimension) {
@@ -34,60 +30,66 @@ public final class EntityConverter {
     }
 
     /**
-     * Convert a plant into an entityView.
-     * @param p The plant instance to convert
+     * Create an entityView using the plant information.
+     * @param plantInfo the information of the plant
      * @return The entityView representing the plant
      */
-    public EntityView getEntityView(final Plant p) {
+    public EntityView getPlantView(final Pair<String, Point2D> plantInfo) {
         final String completeImagePath = ResourceFinder.getPlantImagePath(
-                p.getPlantType().name().toLowerCase(Locale.getDefault()).concat(IMAGES_EXTENSION));
-        final Point2D newPosition = convertPlantPosition(p.getPosition(), completeImagePath);
+                plantInfo.getKey().concat(IMAGES_EXTENSION));
+        final Point2D newPosition = convertPlantPosition(plantInfo.getValue(), completeImagePath);
         return new EntityViewImpl(newPosition, completeImagePath);
     }
 
     /**
-     * Convert a zombie into an entityView.
-     * @param z The zombie instance to convert
+     * Create an entityView using the zombie information.
+     * @param zombieInfo the information of the zombie
      * @return The entityView representing the zombie
      */
-    public EntityView getEntityView(final Zombie z) {
+    public EntityView getZombieView(final Pair<String, Point2D> zombieInfo) {
         final String completeImagePath = ResourceFinder.getZombieImagePath(
-                z.getZombieType().name().toLowerCase(Locale.getDefault()).concat(IMAGES_EXTENSION));
-        final Point2D newPosition = convertZombiePosition(z.getPosition(), completeImagePath);
+                zombieInfo.getKey().concat(IMAGES_EXTENSION));
+        final Point2D newPosition = convertZombiePosition(zombieInfo.getValue(), completeImagePath);
         return new EntityViewImpl(newPosition, completeImagePath);
     }
 
     /**
-     * Convert a bullet into an entityView.
-     * @param b The bullet instance to convert
+     * Create an entityView using the bullet information.
+     * @param bulletInfo the information of the bullet
      * @return The entityView representing the bullet
      */
-    public EntityView getEntityView(final Bullet b) {
+    public EntityView getBulletView(final Pair<String, Point2D> bulletInfo) {
         final String completeImagePath = ResourceFinder.getBulletImagePath(
-                b.getBulletType().name().toLowerCase(Locale.getDefault()).concat(IMAGES_EXTENSION));
-        final Point2D newPosition = convertBulletPosition(b.getPosition(), completeImagePath);
+                bulletInfo.getKey().concat(IMAGES_EXTENSION));
+        final Point2D newPosition = convertBulletPosition(bulletInfo.getValue(), completeImagePath);
         return new EntityViewImpl(newPosition, completeImagePath);
     }
 
     /**
-     * Get the CardView to draw plants cards.
-     * @param p the type of the plant
+     * Get a CardView to draw a plant card.
+     * @param plantInfo The information of the plant
      * @return The CardView instance with image and cost
      */
-    public CardView getCardView(final IdConverter.Plants p) {
+    public CardView getCardView(final Pair<String, Integer> plantInfo) {
         final String completeImagePath = ResourceFinder.getPlantImagePath(
-                p.name().toLowerCase(Locale.getDefault()).concat(CARD_SUFFIX).concat(IMAGES_EXTENSION));
-        return new CardViewImpl(p.getCost(), completeImagePath);
+                plantInfo.getKey().concat(CARD_SUFFIX).concat(IMAGES_EXTENSION));
+        return new CardViewImpl(plantInfo.getValue(), completeImagePath);
     }
 
-    public void changePlantViewPosition(final EntityView entityView, final Point2D newPosition) {
-        entityView.setPosition(convertPlantPosition(newPosition, entityView.getPlaceableImage().getUrl()));
-    }
-
+    /**
+     * Change the position of a Zombie EntityView.
+     * @param entityView the EntityView instance whose position is to change
+     * @param newPosition the new position to set
+     */
     public void changeZombieViewPosition(final EntityView entityView, final Point2D newPosition) {
         entityView.setPosition(convertZombiePosition(newPosition, entityView.getPlaceableImage().getUrl()));
     }
 
+    /**
+     * Change the position of a Bullet EntityView.
+     * @param entityView the EntityView instance whose position is to change
+     * @param newPosition the new position to set
+     */
     public void changeBulletViewPosition(final EntityView entityView, final Point2D newPosition) {
         entityView.setPosition(convertBulletPosition(newPosition, entityView.getPlaceableImage().getUrl()));
     }
@@ -130,7 +132,6 @@ public final class EntityConverter {
                 getImageWidth(imagePath),
                 getImageHeight(imagePath));
         return outputPosition.subtract(0, 80); //TODO: modify
-//        return outputPosition;
     }
 
     private static double getImageWidth(final String path) {

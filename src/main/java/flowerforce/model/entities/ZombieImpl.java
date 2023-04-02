@@ -1,6 +1,5 @@
 package flowerforce.model.entities;
 
-import flowerforce.model.entities.IdConverter.Zombies;
 import flowerforce.model.utilities.RenderingInformation;
 import flowerforce.model.utilities.Timer;
 import flowerforce.model.utilities.TimerImpl;
@@ -18,7 +17,7 @@ public class ZombieImpl extends AbstractLivingEntity implements Zombie {
     private static final int EAT_WAITING_TICKS = RenderingInformation.convertSecondsToCycles(EAT_WAITING_SECS);
     private final int damage;
     private final Timer freezeTimer;
-    private final Zombies zombieType;
+    private final int difficulty;
     private boolean isFrozen;
     private boolean canBite;
     private double defaultDelta;
@@ -29,15 +28,15 @@ public class ZombieImpl extends AbstractLivingEntity implements Zombie {
      * @param damage given by the zombie
      * @param health of the zombie
      * @param position of the zombie
-     * @param zombieType the type of zombie
+     * @param difficulty the generic difficulty of the zombie
+     * @param zombieName the name of the zombie
      */
-    protected ZombieImpl(final double defaultDelta, final int damage, final int health, final Point2D position,
-            final Zombies zombieType) {                
-        super(position, new TimerImpl(EAT_WAITING_TICKS), health);
+    protected ZombieImpl(final double defaultDelta, final int damage, final int health, final Point2D position, final int difficulty, final String zombieName) {                
+        super(position, new TimerImpl(EAT_WAITING_TICKS), health, zombieName);
         this.defaultDelta = defaultDelta;
         this.damage = damage;
         this.freezeTimer = new TimerImpl(FREEZE_WAITING_TICKS);
-        this.zombieType = zombieType;
+        this.difficulty = difficulty;
         this.isFrozen = false;
         this.canBite = true;
         this.delta = defaultDelta;
@@ -111,14 +110,6 @@ public class ZombieImpl extends AbstractLivingEntity implements Zombie {
      * {@inheritDoc}
      */
     @Override
-    public Zombies getZombieType() {
-        return this.zombieType;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public double getDeltaMovement() {
         return this.delta;
     }
@@ -130,6 +121,14 @@ public class ZombieImpl extends AbstractLivingEntity implements Zombie {
     protected void setDelta(final double newDelta) {
             this.delta = this.isFrozen ? newDelta / FREEZE_FACTOR : newDelta;
             this.defaultDelta = newDelta;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getDifficulty() {
+        return this.difficulty;
     }
 
 }

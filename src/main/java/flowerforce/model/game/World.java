@@ -57,4 +57,6 @@ public interface World {
      * @return the columns number of yard's cells matrix
      */
     int getColsNum();
+
+    Shop getShop();
 }

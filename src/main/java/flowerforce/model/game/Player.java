@@ -1,5 +1,7 @@
 package flowerforce.model.game;
 
+import java.util.Set;
+
 /**
  * The class representing the player with all his information.
  */
@@ -47,4 +49,12 @@ public interface Player {
      * Unlock the next level.
      */
     void unlockedNextLevel();
+
+    /**
+     * Add a plant in player inventory.
+     * @param plantIndex an index of the plant to add
+     */
+    void addPlant(int plantIndex);
+
+    Set<Integer> getPlantsIds();
 }

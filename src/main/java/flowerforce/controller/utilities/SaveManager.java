@@ -14,6 +14,7 @@ import flowerforce.common.ResourceFinder;
  * @param <T> The type of the file to save on the file or to load from it
  */
 public final class SaveManager<T> {
+    private static final String SAVING_FILES_EXTENSION = ".json";
     private final Gson gson; //Instance to json text converter
     private final Class<T> genericClass; //class of the type to deserialize
     private final String savingFilePath; //path of the savingFile
@@ -25,7 +26,7 @@ public final class SaveManager<T> {
      */
     public SaveManager(final Class<T> genericClass, final String fileName) {
         this.genericClass = genericClass;
-        this.savingFilePath = ResourceFinder.getSavingFilePath(fileName + ".json"); //TODO: maybe move getProperty to constant like EntityConverter
+        this.savingFilePath = ResourceFinder.getSavingFilePath(fileName + SAVING_FILES_EXTENSION);
 
         this.gson = new GsonBuilder()
                 .registerTypeAdapterFactory(OptionalTypeAdapter.FACTORY)
