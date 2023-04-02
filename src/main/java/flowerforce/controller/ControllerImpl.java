@@ -25,7 +25,6 @@ import flowerforce.view.entities.EntityView;
 import flowerforce.view.game.GameEngine;
 import javafx.util.Pair;
 import javafx.geometry.Point2D;
-import javafx.util.Pair;
 
 /**
  * This is an implementation of {@link Controller}.
@@ -249,12 +248,12 @@ public final class ControllerImpl implements Controller {
      */
     @Override
     public Map<CardView, Boolean> getPurchasablePlants() {
-        Map<Pair<String,Integer>, Boolean> shopPlants = this.world.getShop().getPlants();
+        Map<Pair<String,Integer>, Boolean> shopPlants = this.world.getShop().getPurchasablePlants();
         Map<CardView, Boolean> toReturn = new HashMap<>();
         this.purchasablePlants.clear();
         shopPlants.keySet().stream()
                 .forEach(p -> {
-                    CardView card = new CardViewImpl(p.getValue(), p.getKey() + ".png"); //TODO: use entityConverter
+                    CardView card = entityConverter.getCardView(p);
                     this.purchasablePlants.put(card, p);
                     toReturn.put(card, shopPlants.get(p));
                 });
