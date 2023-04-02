@@ -1,6 +1,7 @@
 package flowerforce.view.game;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -27,49 +28,28 @@ import javafx.scene.shape.Rectangle;
 public final class GameSceneController implements GameEngine {
 
     @FXML private AnchorPane gamePane;
-
     @FXML private ImageView imgBackground;
-
     @FXML private Label lblSunCounter;
-
     @FXML private ImageView card0;
-
     @FXML private ImageView card1;
-
     @FXML private ImageView card2;
-
     @FXML private ImageView card3;
-
     @FXML private ImageView card4;
-
     @FXML private ImageView card5;
-
     @FXML private ImageView card6;
     @FXML private ImageView card7;
-
     @FXML private Label lbl0;
-
     @FXML private Label lbl1;
-
     @FXML private Label lbl2;
-
     @FXML private Label lbl3;
-
     @FXML private Label lbl4;
-
     @FXML private Label lbl5;
-
     @FXML private Label lbl6;
     @FXML private Label lbl7;
-
     @FXML private ImageView imageMenu;
-
     @FXML private ImageView imageResult;
-
     @FXML private Rectangle coloredCell;
-
     @FXML private ImageView imageShovel;
-
     @FXML private ImageView transparentShovel;
 
     //Garden size: 1920x1080, yard size: 1320x880. Down-shift: 150px, right-shift: 600px.
@@ -78,9 +58,8 @@ public final class GameSceneController implements GameEngine {
     private static final int YARD_WIDTH = 1314;
     private static final int YARD_HEIGHT = 880;
     private static final Effect BLOOM_EFFECT = new Bloom(0.65);
-    private static final Effect RESET_BLOOM = new Bloom(1);
-    private static final Effect BLACK_WHITE = new ColorAdjust(0,-1,0,0);
-    private static final Effect RESET_COLORS = new ColorAdjust(0,0,0,0);
+    private static final Effect BLACK_WHITE_EFFECT = new ColorAdjust(0,-1,0,0);
+    private static final Effect DAMAGE_EFFECT = new ColorAdjust(0, 0, 0.5, 0);
     private final int rows;
     private final int cols;
     private final FlowerForceApplication application;
@@ -150,9 +129,9 @@ public final class GameSceneController implements GameEngine {
 
     private void removeBloomEffect() {
         if (this.isShovelSelected) {
-            this.imageShovel.setEffect(RESET_BLOOM);
+            this.imageShovel.setEffect(null);
         } else {
-            this.cardSelected.ifPresent(cIv -> cIv.setEffect(RESET_BLOOM));
+            this.cardSelected.ifPresent(cIv -> cIv.setEffect(null));
         }
     }
 
@@ -242,7 +221,8 @@ public final class GameSceneController implements GameEngine {
     @Override
     public void render() {
         this.enableCards();
-        this.updateEntities(this.application.getController().getPlacedEntities());        
+        this.updateEntities(this.application.getController().getPlacedEntities());
+        this.damageEntities();
         this.updateSunCounter();
     }
 
@@ -251,11 +231,11 @@ public final class GameSceneController implements GameEngine {
         this.cards.keySet().forEach(cIv -> {
             if (enabledCards.contains(this.cards.get(cIv))) {
                 if (cIv.isDisable()) {
-                    cIv.setEffect(RESET_COLORS);
+                    cIv.setEffect(null);
                     cIv.setDisable(false);
                 }
             } else {
-                cIv.setEffect(BLACK_WHITE);
+                cIv.setEffect(BLACK_WHITE_EFFECT);
                 cIv.setDisable(true);
             }
         });
@@ -282,6 +262,18 @@ public final class GameSceneController implements GameEngine {
                     this.drawnEntities.put(e, iv);
                     this.gamePane.getChildren().add(iv);
                 });
+    }
+
+    private void damageEntities() {
+        final Set<EntityView> damagedEntities = new HashSet<>(); //TODO: take them from controller
+        //TODO: remove
+        if (drawnEntities.size() > 0 && Math.random() > 0.9) {
+            damagedEntities.add(this.drawnEntities.keySet().stream().toList().get((int) (Math.random() * this.drawnEntities.size())));
+        }
+        this.drawnEntities.keySet().stream()
+                .peek(e -> this.drawnEntities.get(e).setEffect(null))
+                .filter(e -> damagedEntities.contains(e))
+                .forEach(e -> this.drawnEntities.get(e).setEffect(DAMAGE_EFFECT));
     }
 
     private void updateSunCounter() {
