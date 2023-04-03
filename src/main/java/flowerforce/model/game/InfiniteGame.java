@@ -9,12 +9,12 @@ public class InfiniteGame extends AbstractGameImpl {
 
     /**
      * Constructor to instantiate an infinite game.
-     * @param level of the game started
+     * @param levelId of the game started
      * @param world an instance of the world that started the game
      */
-    public InfiniteGame(final Level level, final World world) {
-        super(level, world);
-        this.generateZombie = new ZombieGenerationInfiniteImpl(level);
+    public InfiniteGame(final int levelId, final World world) {
+        super(levelId, world);
+        this.generateZombie = new ZombieGenerationInfiniteImpl(levelId);
     }
 
     /**

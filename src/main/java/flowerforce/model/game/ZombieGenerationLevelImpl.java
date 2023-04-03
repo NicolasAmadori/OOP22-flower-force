@@ -1,11 +1,12 @@
 package flowerforce.model.game;
 
-import flowerforce.model.entities.IdConverter;
 import flowerforce.model.entities.Zombie;
 import flowerforce.model.utilities.RenderingInformation;
 import flowerforce.model.utilities.TimerImpl;
+import javafx.geometry.Point2D;
 
 import java.util.*;
+import java.util.function.Function;
 
 /**
  * This is an implementation of {@link ZombieGenerationLevel}.
@@ -30,16 +31,16 @@ public class ZombieGenerationLevelImpl implements ZombieGenerationLevel {
     private int hordeZombie = START_NUMBER_ZOMBIE_IN_HORDE;
     private int generatedZombie = 1;
     private int hordeGeneratedZombie = 0;
-    private final Optional<IdConverter.Zombies> boss;
+    private final Optional<Function<Point2D,Zombie>> boss;
     private final CreationZombie genZombie;
 
     /**
-     * @param level an instance of the game started
+     * @param levelId of the game started
      */
-    public ZombieGenerationLevelImpl(final Level level) {
-        genZombie = new CreationZombie(level.getZombiesId());
+    public ZombieGenerationLevelImpl(final int levelId) {
+        genZombie = new CreationZombie(LevelImpl.getZombiesId(levelId));
         this.zombieTimer = new TimerImpl(timeZombie);
-        this.boss = level.getBossId();
+        this.boss = LevelImpl.getBossId(levelId);
     }
 
     /**
@@ -92,10 +93,9 @@ public class ZombieGenerationLevelImpl implements ZombieGenerationLevel {
      */
     @Override
     public Zombie bossGeneration() {
-        return IdConverter.createZombie(boss.get(),
-                Yard.getEntityPosition(
-                        2,
-                        Yard.getColsNum()
-                ));
+        return boss.get().apply(Yard.getEntityPosition(
+                new Random().nextInt(Yard.getRowsNum()),
+                Yard.getColsNum()
+        ));
     }
 }

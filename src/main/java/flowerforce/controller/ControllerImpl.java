@@ -143,8 +143,8 @@ public final class ControllerImpl implements Controller {
     public Set<EntityView> getPlacedEntities() {
         checkGame();
         final Set<Pair<String, Point2D>> plants = this.game.get().getPlacedPlants();
-        final Set<Pair<String, Point2D>> zombies = this.game.get().getZombies();
-        final Set<Pair<String, Point2D>> bullets = this.game.get().getBullet();
+        final Set<Pair<String, Point2D>> zombies = this.game.get().getPlacedZombies();
+        final Set<Pair<String, Point2D>> bullets = this.game.get().getPlacedBullet();
 
         //TODO: refactor
         //region Plants
@@ -208,7 +208,7 @@ public final class ControllerImpl implements Controller {
 
     private List<CardView> getCards() {
         checkGame();
-        this.game.get().getAllPlantIDs()
+        this.game.get().getAllPlant()
                 .forEach(p -> cards.put(entityConverter.getCardView(p), p));
         return cards.keySet().stream().toList();
     }
@@ -216,7 +216,7 @@ public final class ControllerImpl implements Controller {
     @Override
     public Set<CardView> getEnabledCards() {
         checkGame();
-        Set<Integer> enabledCards = this.game.get().getAvailablePlantsIDs(); //TODO: Modify when enum removed
+        Set<Integer> enabledCards = this.game.get().getEnabledPlants(); //TODO: Modify when enum removed
         return this.cards.entrySet().stream()
                 .filter(e -> enabledCards.contains(e.getValue())) //Removed not available cardviews
                 .map(Map.Entry::getKey) //Map to get just di keys

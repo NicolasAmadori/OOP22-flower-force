@@ -1,9 +1,6 @@
 package flowerforce.model.game;
 
-import flowerforce.model.entities.Bullet;
 import flowerforce.model.entities.IdConverter;
-import flowerforce.model.entities.Plant;
-import flowerforce.model.entities.Zombie;
 import javafx.geometry.Point2D;
 import javafx.util.Pair;
 
@@ -23,7 +20,7 @@ public interface Game {
      * Call to know which zombies are still alive.
      * @return the set of zombie still alive
      */
-    Set<Pair<String,Point2D>> getZombies();
+    Set<Pair<String,Point2D>> getPlacedZombies();
 
     /**
      * Call to know which plants are in the field.
@@ -35,7 +32,7 @@ public interface Game {
      * Call to know which bullets are in the game field.
      * @return the set of bullets in the game field
      */
-    Set<Pair<String, Point2D>> getBullet();
+    Set<Pair<String, Point2D>> getPlacedBullet();
 
     /**
      * @return The number of suns the player has in the game
@@ -61,7 +58,7 @@ public interface Game {
      * Identify which plants can be selected to be placed on the playing field.
      * @return the types of plants that can be selected
      */
-    Set<Pair<String,Integer>> getAvailablePlantsIDs();
+    Set<Pair<String,Integer>> getEnabledPlants();
 
     /**
      * @return true if the player won the level.
@@ -71,7 +68,7 @@ public interface Game {
     /**
      * @return the list of plants IDS of the level.
      */
-    List<Pair<String,Integer>> getAllPlantIDs();
+    List<Pair<String,Integer>> getAllPlant();
 
     /**
      * If there is a plant in that location, it will be removed.

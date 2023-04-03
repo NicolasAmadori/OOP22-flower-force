@@ -4,10 +4,11 @@ import flowerforce.model.entities.*;
 import javafx.geometry.Point2D;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 
 /**
- * This is an implementation of {@link Level}.
+ * This is an implementation of .
  */
 public final class LevelImpl {
 
@@ -71,8 +72,8 @@ public final class LevelImpl {
     /**
      * {@inheritDoc}.
      */
-    public static Function<Point2D, Zombie> getBossId(final int id) {
-        return 1 + id > AVAILABLE_ZOMBIES.size() ? ZOMBIE_BOSS : null;
+    public static Optional<Function<Point2D, Zombie>> getBossId(final int id) {
+        return 1 + id > AVAILABLE_ZOMBIES.size() ? Optional.of(ZOMBIE_BOSS) : Optional.empty();
     }
 
     public static int getInfiniteLevelId() {

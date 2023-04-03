@@ -80,13 +80,6 @@ public abstract class AbstractGameImpl implements Game {
     }
 
     /**
-     * @return the actual level of the game
-     */
-    protected Level getLevel() {
-        return this.level;
-    }
-
-    /**
      * @return the instance of the World
      */
     protected World getWorld() {
@@ -97,7 +90,7 @@ public abstract class AbstractGameImpl implements Game {
      * {@inheritDoc}
      */
     @Override
-    public Set<Pair<String,Point2D>> getZombies() {
+    public Set<Pair<String,Point2D>> getPlacedZombies() {
         return zombies.stream().map(z -> new Pair<>(z.getName(),z.getPosition())).collect(Collectors.toSet());
     }
 
@@ -113,7 +106,7 @@ public abstract class AbstractGameImpl implements Game {
      * {@inheritDoc}
      */
     @Override
-    public Set<Pair<String,Point2D>> getBullet() {
+    public Set<Pair<String,Point2D>> getPlacedBullet() {
         return bullets.stream().map(b -> new Pair<>(b.getName(),b.getPosition())).collect(Collectors.toSet());
     }
 
@@ -158,7 +151,7 @@ public abstract class AbstractGameImpl implements Game {
      * {@inheritDoc}
      */
     @Override
-    public Set<Pair<String,Integer>> getAvailablePlantsIDs() {
+    public Set<Pair<String,Integer>> getEnabledPlants() {
         return this.placeablePlant.keySet().stream()
                 .filter(plantType -> plantType.getValue() <= sun)
                 .filter(plantType -> plantsTimer.get(plantType).isReady())
@@ -169,7 +162,7 @@ public abstract class AbstractGameImpl implements Game {
      * {@inheritDoc}
      */
     @Override
-    public List<Pair<String,Integer>> getAllPlantIDs() {
+    public List<Pair<String,Integer>> getAllPlant() {
         return this.placeablePlant.keySet().stream().toList();
     }
 
