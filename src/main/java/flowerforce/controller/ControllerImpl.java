@@ -242,7 +242,7 @@ public final class ControllerImpl implements Controller {
 
     private List<CardView> getCards() {
         checkGame();
-        this.game.get().getAllPlant()
+        this.game.get().getPlaceablePlant()
                 .forEach(p -> cards.put(CardGenerator.getCardView(p), p));
         return cards.keySet().stream().toList();
     }

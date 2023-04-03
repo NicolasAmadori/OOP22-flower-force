@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
  * This is an implementation of {@link Game}.
  */
 public abstract class AbstractGameImpl implements Game {
-    private final Map<EntityInfo, Function<Point2D,Plant>> placeablePlant;
+    private final Map<EntityInfo<String,Integer>, Function<Point2D,Plant>> placeablePlant;
     private static final double STANDARD_SECS_SPAWN_SUN = 5.0;
     private static final int TIME_TO_SPAWN_SUN = (int) (STANDARD_SECS_SPAWN_SUN * RenderingInformation.getFramesPerSecond());
     private static final int SUN_VALUE = 25;
@@ -37,11 +37,11 @@ public abstract class AbstractGameImpl implements Game {
     public AbstractGameImpl(final int id, final World world) {
         this.placeablePlant = new HashMap<>();
         Level.getPlantsId(id).forEach(p -> placeablePlant.put(
-                new EntityInfo(p.apply(TEMPORARY_POSITION).getName(),
+                new EntityInfo<String,Integer>(p.apply(TEMPORARY_POSITION).getName(),
                         p.apply(TEMPORARY_POSITION).getCost()),p)
         );
         world.getShop().getBoughtPlantsFunctions().forEach(p -> placeablePlant.put(
-                new EntityInfo(p.apply(TEMPORARY_POSITION).getName(),
+                new EntityInfo<String,Integer>(p.apply(TEMPORARY_POSITION).getName(),
                         p.apply(TEMPORARY_POSITION).getCost()),p)
         );
         this.sun = INITIAL_SUN * SUN_VALUE;
@@ -90,7 +90,7 @@ public abstract class AbstractGameImpl implements Game {
      * {@inheritDoc}
      */
     @Override
-    public Set<EntityInfo> getPlacedZombies() {
+    public Set<EntityInfo<String,Point2D>> getPlacedZombies() {
         return zombies.stream().map(Entity::getEntityInfo).collect(Collectors.toSet());
     }
 
@@ -98,7 +98,7 @@ public abstract class AbstractGameImpl implements Game {
      * {@inheritDoc}
      */
     @Override
-    public Set<EntityInfo> getPlacedPlants() {
+    public Set<EntityInfo<String,Point2D>> getPlacedPlants() {
         return plants.stream().map(Entity::getEntityInfo).collect(Collectors.toSet());
     }
 
@@ -106,7 +106,7 @@ public abstract class AbstractGameImpl implements Game {
      * {@inheritDoc}
      */
     @Override
-    public Set<EntityInfo> getPlacedBullet() {
+    public Set<EntityInfo<String,Point2D>> getPlacedBullet() {
         return bullets.stream().map(Entity::getEntityInfo).collect(Collectors.toSet());
     }
 
@@ -162,8 +162,8 @@ public abstract class AbstractGameImpl implements Game {
      * {@inheritDoc}
      */
     @Override
-    public List<Pair<String,Integer>> getAllPlant() {
-        return this.placeablePlant.keySet().stream().toList();
+    public Set<EntityInfo<String,Integer>> getPlaceablePlant() {
+        return this.placeablePlant.keySet();
     }
 
     /**
