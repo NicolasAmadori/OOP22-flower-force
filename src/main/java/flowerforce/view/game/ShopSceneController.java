@@ -74,11 +74,11 @@ public class ShopSceneController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         lblCoins.setText(this.application.getController().getPlayerCoins() + "$");
-        this.application.getController().getPurchasablePlants().keySet().forEach(p ->
+        var tmpPurchasablePlants = this.application.getController().getPurchasablePlants();
+        tmpPurchasablePlants.keySet().forEach(p ->
             {
                 imagePlants.add(new Pair<>(new ImageView(p.getMenuImage()), p));
-                purchasablePlants.put(p,
-                        this.application.getController().getPurchasablePlants().get(p));
+                purchasablePlants.put(p, tmpPurchasablePlants.get(p));
             }
         );
         this.changePlant();
@@ -87,12 +87,12 @@ public class ShopSceneController implements Initializable {
     private void changePlant() {
         this.imgItemToSell.setImage(imagePlants.get(index).getKey().getImage());
         this.lblCostItem.setText("" + imagePlants.get(index).getValue().getCost());
-        if (!purchasablePlants.get(imagePlants.get(index).getValue())) {
-            this.imgItemToSell.setEffect(BLACK_WHITE_EFFECT);
-            this.imgBuy.setDisable(true);
-        } else {
+        if (purchasablePlants.get(imagePlants.get(index).getValue())) {
             this.imgItemToSell.setEffect(null);
             this.imgBuy.setDisable(false);
+        } else {
+            this.imgItemToSell.setEffect(BLACK_WHITE_EFFECT);
+            this.imgBuy.setDisable(true);
         }
     }
 }
