@@ -235,10 +235,10 @@ public final class ControllerImpl implements Controller {
     @Override
     public Set<CardView> getEnabledCards() {
         checkGame();
-        Set<Integer> enabledCards = this.game.get().getAvailablePlantsIDs(); //TODO: Modify when enum removed
+        final Set<Pair<String, Integer>> enabledPlants = this.game.get().getAvailablePlantsIDs();
         return this.cards.entrySet().stream()
-                .filter(e -> enabledCards.contains(e.getValue())) //Removed not available cardviews
-                .map(Map.Entry::getKey) //Map to get just di keys
+                .filter(e -> enabledPlants.contains(e.getValue())) //Removed not available cardviews
+                .map(Map.Entry::getKey) //Map to get just keys
                 .collect(Collectors.toSet());
     }
 
