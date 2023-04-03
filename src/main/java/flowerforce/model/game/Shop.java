@@ -14,7 +14,7 @@ public interface Shop {
     /**
      * Get all the plants contained in the shop.
      * @return A map where the key contain the information of the plant,
-     * nd the value is a boolean, true if the plant is already bought, false otherwise
+     * and the value is a boolean, true if the plant is purchasable, false otherwise
      */
     Map<Pair<String, Integer>, Boolean> getPurchasablePlants();
 
@@ -29,5 +29,5 @@ public interface Shop {
      * Get all the function producer of the plants instances.
      * @return A set of function
      */
-    Set<Function<Point2D, Plant>> getBoughtPlantsProducer();
+    Set<Function<Point2D, Plant>> getBoughtPlantsFunctions();
 }

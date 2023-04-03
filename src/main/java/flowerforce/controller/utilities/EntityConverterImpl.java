@@ -1,8 +1,6 @@
 package flowerforce.controller.utilities;
 
 import flowerforce.common.ResourceFinder;
-import flowerforce.view.entities.CardView;
-import flowerforce.view.entities.CardViewImpl;
 import flowerforce.view.entities.EntityView;
 import flowerforce.view.entities.EntityViewImpl;
 import javafx.geometry.Dimension2D;
@@ -15,9 +13,11 @@ import javafx.util.Pair;
  */
 public final class EntityConverterImpl implements EntityConverter {
     private static final String IMAGES_EXTENSION = ".png";
-    private static final String CARD_SUFFIX = "_card";
+
+    private static final double BULLET_OFFSET = 85.0 / 880.0;
     private final double yardRatioHeight;
     private final double yardRatioWidth;
+    private final double bulletHeightOffset;
 
     /**
      * Create a new instance of EntityConverter, setting all the information.
@@ -27,6 +27,7 @@ public final class EntityConverterImpl implements EntityConverter {
     public EntityConverterImpl(final Dimension2D modelYardDimension, final Dimension2D viewYardDimension) {
         this.yardRatioHeight = viewYardDimension.getHeight() / modelYardDimension.getHeight();
         this.yardRatioWidth =  viewYardDimension.getWidth() / modelYardDimension.getWidth();
+        this.bulletHeightOffset = viewYardDimension.getHeight() * BULLET_OFFSET; //Set proportion for the bullet generation offset
     }
 
     /**
@@ -60,16 +61,6 @@ public final class EntityConverterImpl implements EntityConverter {
                 bulletInfo.getKey().concat(IMAGES_EXTENSION));
         final Point2D newPosition = convertBulletPosition(bulletInfo.getValue(), completeImagePath);
         return new EntityViewImpl(newPosition, completeImagePath);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public CardView getCardView(final Pair<String, Integer> plantInfo) {
-        final String completeImagePath = ResourceFinder.getPlantImagePath(
-                plantInfo.getKey().concat(CARD_SUFFIX).concat(IMAGES_EXTENSION));
-        return new CardViewImpl(plantInfo.getValue(), completeImagePath);
     }
 
     /**
@@ -125,7 +116,7 @@ public final class EntityConverterImpl implements EntityConverter {
         outputPosition = outputPosition.subtract(
                 getImageWidth(imagePath),
                 getImageHeight(imagePath));
-        return outputPosition.subtract(0, 80); //TODO: modify
+        return outputPosition.subtract(0, bulletHeightOffset); //set the bullet offset for the bullet
     }
 
     private static double getImageWidth(final String path) {

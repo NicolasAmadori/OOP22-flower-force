@@ -3,7 +3,6 @@ package flowerforce.model.entities;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-import flowerforce.model.entities.IdConverter.Bullets;
 import flowerforce.model.utilities.RenderingInformation;
 import javafx.geometry.Point2D;
 
@@ -23,13 +22,20 @@ public class BulletImpl extends AbstractEntity implements Bullet {
      * 
      * @param pos the initial position to place the bullet in
      * @param damage the damage that the bullet does to zombies
+     * @param bulletName the bullet's name
      */
     public BulletImpl(final Point2D pos, final int damage, final String bulletName) {
         super(pos, bulletName);
         this.damage = damage;
     }
 
-
+    /**
+     * 
+     * @param pos the initial position to place the bullet in
+     * @param damage the damage that the bullet does to zombies
+     * @param bulletName the bullet's name
+     * @param action an action to do on a zombie when hit
+     */
     public BulletImpl(final Point2D pos, final int damage, final String bulletName, final Consumer<Zombie> action) {
         this(pos, damage, bulletName);
         this.actionOverZombie = Optional.of(action);

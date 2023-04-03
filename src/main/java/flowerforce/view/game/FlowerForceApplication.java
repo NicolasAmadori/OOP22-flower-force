@@ -1,12 +1,13 @@
 package flowerforce.view.game;
 
-import java.io.IOException;
+import java.util.function.Supplier;
 
 import flowerforce.common.ResourceFinder;
 import flowerforce.controller.Controller;
 import flowerforce.controller.ControllerImpl;
 import flowerforce.controller.GameLoop;
 import flowerforce.model.game.Game;
+import flowerforce.view.utilities.SoundManager;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.geometry.Dimension2D;
@@ -43,6 +44,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
             System.exit(0);
         });
         this.menu();
+        SoundManager.startMainTheme();
     }
 
     @Override
@@ -57,19 +59,15 @@ public final class FlowerForceApplication extends Application implements FlowerF
     }
 
     @Override
-    public void game(final int levelId) {
-        try {
-            this.sceneClass = new GameScene(this);
-            this.setScene(this.sceneClass.getScene());
-            this.stage.setTitle(levelId == 0 ? "Adventure Mode" : "Level " + levelId);
-            Game game = levelId == 0 ? this.controller.startNewInfiniteGame() : this.controller.startNewLevelGame(levelId);
-            AnimationTimer gameLoop = new GameLoop(this.controller.getGameEngine(), game, this.controller.getFramesPerSecond());
-            gameLoop.start();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+    public void levelGame(final int levelId) {
+        this.game("Level" + levelId, () -> this.controller.startNewLevelGame(levelId));
     }
-    
+
+    @Override
+    public void adventureGame() {
+        this.game("Adventure mode", () -> this.controller.startNewInfiniteGame());
+    }
+
     @Override
     public void howToPlay() {
         try {
@@ -80,13 +78,14 @@ public final class FlowerForceApplication extends Application implements FlowerF
             e.printStackTrace();
         }
     }
-    
+
     @Override
     public void shop() {
         try {
             FlowerForceScene sceneClass = new ShopScene(this);
             this.setScene(sceneClass.getScene());
             this.stage.setTitle("Shop");
+            SoundManager.openShopSound();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -97,19 +96,34 @@ public final class FlowerForceApplication extends Application implements FlowerF
         return this.controller;
     }
 
+    private void game(final String title, final Supplier<Game> gameGetter) {
+        try {
+            this.sceneClass = new GameScene(this);
+            this.setScene(this.sceneClass.getScene());
+            this.stage.setTitle(title);
+            AnimationTimer gameLoop = new GameLoop(
+                this.controller.getGameEngine(),
+                gameGetter.get(),
+                this.controller.getFramesPerSecond()
+            );
+            gameLoop.start();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
     private void setScene(final Scene scene) {
         this.stage.setScene(scene);
         this.stage.show();
     }
-    
+
     /**
      * Produces a scene scaled on screen's dimensions.
      * @param root the root element to resize
      * @param imageName the image to take proportions from
      * @return a scaled scene based on screen's dimensions
-     * @throws IOException
      */
-    public static Scene getScaledScene(final AnchorPane root, final String imageName) throws IOException {
+    public static Scene getScaledScene(final AnchorPane root, final String imageName) {
         //background's dimensions
         final Dimension2D imgDimensions = getImgDimensions(imageName);
         //app's dimensions
