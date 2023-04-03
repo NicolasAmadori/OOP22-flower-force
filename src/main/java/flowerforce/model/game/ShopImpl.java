@@ -10,8 +10,6 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.function.Function;
-import java.util.stream.Collectors;
-
 import javafx.geometry.Point2D;
 
 /**
@@ -19,9 +17,9 @@ import javafx.geometry.Point2D;
  */
 public class ShopImpl implements Shop{
     private static final Set<Pair<Function<Point2D, Plant>, Integer>> SHOP_PLANTS = Set.of(
-            new Pair<> ((pos) -> new SunflowerFactoryImpl().createDoubleSunflower(pos), 10),
-            new Pair<> (CherryBomb::new, 20)
-    ); //TODO: set actual costs
+            new Pair<Function<Point2D, Plant>, Integer> ((pos) -> new SunflowerFactoryImpl().createDoubleSunflower(pos), 600),
+            new Pair<Function<Point2D, Plant>, Integer> (CherryBomb::new, 900)
+    );
     private final Player player;
     private final Map<Pair<String, Integer>, Function<Point2D, Plant>> purchasablePlants = new LinkedHashMap<>();
 
@@ -38,7 +36,7 @@ public class ShopImpl implements Shop{
         final Point2D samplePoint = new Point2D(0, 0);
         SHOP_PLANTS.forEach(p -> {
             this.purchasablePlants.put(new Pair<>(p.getKey().apply(samplePoint).getName(), p.getValue()),
-                                   p.getKey());
+                    p.getKey());
         });
 
         //Move already bought plants from boughtPlants to boughtPlants
