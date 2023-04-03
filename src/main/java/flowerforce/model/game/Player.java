@@ -37,7 +37,7 @@ public interface Player {
      * @param score The integer representing the new score record
      * @return True if the operation was succesful, false otherwise
      */
-    boolean setNewScoreRecord(int score);
+    void addNewScore(int score);
 
     /**
      * Get the id of the last level the player has unlocked.
