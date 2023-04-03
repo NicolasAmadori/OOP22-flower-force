@@ -8,10 +8,11 @@ import java.util.Optional;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
+import flowerforce.controller.utilities.EntityConverter;
 import flowerforce.controller.utilities.WorldSavingManager;
 import flowerforce.model.game.Game;
 import flowerforce.model.game.World;
-import flowerforce.controller.utilities.EntityConverter;
+import flowerforce.controller.utilities.EntityConverterImpl;
 import flowerforce.view.entities.CardView;
 import flowerforce.view.entities.EntityView;
 import flowerforce.view.game.GameEngine;
@@ -79,7 +80,7 @@ public final class ControllerImpl implements Controller {
     public void setGameEngine(final GameEngine gameEngine) {
         this.gameEngine = Optional.ofNullable(gameEngine);
         checkGameEngine();
-        this.entityConverter = new EntityConverter(this.world.getYardDimension(), this.gameEngine.get().getYardDimension());
+        this.entityConverter = new EntityConverterImpl(this.world.getYardDimension(), this.gameEngine.get().getYardDimension());
     }
 
     /**
@@ -98,6 +99,24 @@ public final class ControllerImpl implements Controller {
     public int getSunCounter() {
         checkGame();
         return this.game.get().getSun();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getScore() {
+        checkGame();
+        return this.game.getScore();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getProgresState() {
+        checkGame();
+        return this.game.getProgressState();
     }
 
     /**
@@ -216,10 +235,10 @@ public final class ControllerImpl implements Controller {
     @Override
     public Set<CardView> getEnabledCards() {
         checkGame();
-        Set<Integer> enabledCards = this.game.get().getEnabledPlants(); //TODO: Modify when enum removed
+        final Set<Pair<String, Integer>> enabledPlants = this.game.get().getEnabledPlants();
         return this.cards.entrySet().stream()
-                .filter(e -> enabledCards.contains(e.getValue())) //Removed not available cardviews
-                .map(Map.Entry::getKey) //Map to get just di keys
+                .filter(e -> enabledPlants.contains(e.getValue())) //Removed not available cardviews
+                .map(Map.Entry::getKey) //Map to get just keys
                 .collect(Collectors.toSet());
     }
 
