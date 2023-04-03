@@ -30,11 +30,11 @@ public final class ControllerImpl implements Controller {
     private EntityConverter entityConverter;
     private Optional<Game> game;
 
-    private Map<CardView, Pair<String, Integer>> cards;
-    private Map<Pair<String, Point2D>, EntityView> previousPlant;
-    private Map<Pair<String, Point2D>, EntityView> previousZombie;
-    private Map<Pair<String, Point2D>, EntityView> previousBullet;
-    private Map<CardView, Pair<String,Integer>> purchasablePlants;
+    private Map<CardView, Pair<String, Integer>> cards = new HashMap<>();
+    private Map<Pair<String, Point2D>, EntityView> previousPlant = new HashMap<>();
+    private Map<Pair<String, Point2D>, EntityView> previousZombie = new HashMap<>();
+    private Map<Pair<String, Point2D>, EntityView> previousBullet = new HashMap<>();
+    private Map<CardView, Pair<String,Integer>> purchasablePlants = new HashMap<>();
 
     /**
      * Create a new instance of Controller.
@@ -300,10 +300,10 @@ public final class ControllerImpl implements Controller {
     }
 
     private void resetGame() {
-        cards = new HashMap<>();
-        previousPlant = new HashMap<>();
-        previousZombie = new HashMap<>();
-        previousBullet = new HashMap<>();
-        purchasablePlants = new HashMap<>();
+        this.cards.clear();
+        this.previousPlant.clear();
+        this.previousZombie.clear();
+        this.previousBullet.clear();
+        this.purchasablePlants.clear();
     }
 }

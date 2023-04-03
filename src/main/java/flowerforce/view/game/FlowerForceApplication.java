@@ -7,6 +7,7 @@ import flowerforce.controller.Controller;
 import flowerforce.controller.ControllerImpl;
 import flowerforce.controller.GameLoop;
 import flowerforce.model.game.Game;
+import flowerforce.view.utilities.SoundManager;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.geometry.Dimension2D;
@@ -43,6 +44,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
             System.exit(0);
         });
         this.menu();
+        SoundManager.startMainTheme();
     }
 
     @Override
@@ -83,6 +85,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
             FlowerForceScene sceneClass = new ShopScene(this);
             this.setScene(sceneClass.getScene());
             this.stage.setTitle("Shop");
+            SoundManager.openShopSound();
         } catch (Exception e) {
             e.printStackTrace();
         }
