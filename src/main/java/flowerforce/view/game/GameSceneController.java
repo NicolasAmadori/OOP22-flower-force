@@ -102,24 +102,6 @@ public final class GameSceneController implements GameEngine {
             cardImageViews.get(i).setVisible(false);
             cardLabels.get(i).setVisible(false);
         }
-
-        /*
-        this.cardLabels.addAll(List.of(lbl0, lbl1, lbl2, lbl3, lbl4, lbl5, lbl6));
-        this.cards.addAll(List.of(card0, card1, card2, card3, card4, card5, card6));
-        for (int i = 0; i < cardLabels.size() && i < cards.size(); i++) {
-            if (i < cardViews.size()) {
-                this.cards.get(i).setImage(cardViews.get(i).getMenuImage());
-                this.cardLabels.get(i).setText(String.valueOf(cardViews.get(i).getCost()));
-                this.cards.get(i).setVisible(true);
-                this.cardLabels.get(i).setVisible(true);
-            } else {
-                this.cards.get(i).setVisible(false);
-                this.cardLabels.get(i).setVisible(false);
-                this.cards.remove(i);
-                this.cardLabels.remove(i);
-            }
-        }
-        */
     }
 
     private void addBloomEffect() {
@@ -296,7 +278,7 @@ public final class GameSceneController implements GameEngine {
     }
 
     private void updateProgressBar() {
-        final double newPercentage = (double) this.application.getController().getScore() / 100; //TODO: get double not int and it's always zero
+        final double newPercentage = this.application.getController().getProgressState();
         if (newPercentage != this.progressBar.getProgress()) {
             this.progressBar.setProgress(newPercentage);
         }
