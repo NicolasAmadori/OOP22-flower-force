@@ -216,7 +216,7 @@ public abstract class AbstractGameImpl implements Game {
                  .filter(zombie -> !zombie.isOver())
                  .min(Comparator.comparing(zombie -> zombie.getPosition().getX()))
                  .ifPresent(bullet::hit));
-         this.zombies.stream().filter(Entity::isOver).forEach(z -> score += z.getDifficulty());
+         this.zombies.stream().filter(Entity::isOver).forEach(z -> score += z.getDifficulty() * 100);
          this.zombies = this.zombies.stream().filter(z -> !z.isOver()).collect(Collectors.toSet());
          this.bullets = this.bullets.stream().filter(b -> !b.isOver()).collect(Collectors.toSet());
     }

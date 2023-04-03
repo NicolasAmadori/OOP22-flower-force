@@ -80,7 +80,7 @@ public interface Game {
     /**
      * @return the percentage of the game state
      */
-    int getProgressState();
+    double getProgressState();
 
     /**
      * @return the score of the actual game

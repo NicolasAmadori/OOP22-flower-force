@@ -41,9 +41,9 @@ public class InfiniteGame extends AbstractGameImpl {
      * @return
      */
     @Override
-    public int getProgressState() {
+    public double getProgressState() {
         return this.generateZombie.getSpawnedZombie()
-                / this.generateZombie.getNumberHordeZombie() * 100;
+                / (double) this.generateZombie.getNumberHordeZombie();
     }
 
     /**

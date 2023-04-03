@@ -35,8 +35,8 @@ public class LevelGame extends AbstractGameImpl {
      * {@inheritDoc}
      */
     @Override
-    public int getProgressState() {
-        return (Level.getTotalZombies(this.id) - remainingZombie) / Level.getTotalZombies(this.id) * 100;
+    public double getProgressState() {
+        return (Level.getTotalZombies(this.id) - remainingZombie) / (double) Level.getTotalZombies(this.id);
     }
 
     /**
