@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import flowerforce.common.ResourceFinder;
 import flowerforce.view.entities.CardView;
 import flowerforce.view.entities.EntityView;
+import flowerforce.view.utilities.SoundManager;
 import javafx.fxml.FXML;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
@@ -122,18 +123,24 @@ public final class GameSceneController implements GameEngine {
 
     @FXML
     void shovelSelected(final MouseEvent event) {
-        this.removeBloomEffect();
-        this.cardSelected = Optional.empty();
-        this.isShovelSelected = true;
-        this.addBloomEffect();        
+        if (!this.isShovelSelected) {
+            this.removeBloomEffect();
+            this.cardSelected = Optional.empty();
+            this.isShovelSelected = true;
+            SoundManager.useShovel();
+            this.addBloomEffect();
+        }
     }
 
     @FXML
     void selectCard(final MouseEvent event) {
-        this.removeBloomEffect();
-        this.isShovelSelected = false;
-        this.cardSelected = Optional.of((ImageView) (event.getSource()));
-        this.addBloomEffect();
+        if (!(this.cardSelected.isPresent() && this.cardSelected.get().equals((ImageView) event.getSource()))) {
+            this.removeBloomEffect();
+            this.isShovelSelected = false;
+            this.cardSelected = Optional.of((ImageView) (event.getSource()));
+            SoundManager.cardSelected();
+            this.addBloomEffect();
+        }
     }
 
     private boolean isInsideYard(double x, double y) {
@@ -151,11 +158,13 @@ public final class GameSceneController implements GameEngine {
                 if (this.application.getController().placePlant(this.cards.get(this.cardSelected.get()), row, col)) {
                     this.removeBloomEffect();
                     this.cardSelected = Optional.empty();
+                    SoundManager.plantPlaced();
                 }
             } else if (this.isShovelSelected) {
                 if (this.application.getController().removePlant(row, col)) {
                     this.removeBloomEffect();
                     this.isShovelSelected = false;
+                    SoundManager.useShovel();
                 }
             }            
         } else {
