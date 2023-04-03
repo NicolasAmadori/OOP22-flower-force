@@ -6,7 +6,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Optional;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import flowerforce.common.ResourceFinder;
 
 /**
@@ -15,7 +14,7 @@ import flowerforce.common.ResourceFinder;
  */
 public final class SaveManager<T> {
     private static final String SAVING_FILES_EXTENSION = ".json";
-    private final Gson gson; //Instance to json text converter
+    private final Gson GSON = new Gson(); //Instance to json text converter
     private final Class<T> genericClass; //class of the type to deserialize
     private final String savingFilePath; //path of the savingFile
 
@@ -27,10 +26,6 @@ public final class SaveManager<T> {
     public SaveManager(final Class<T> genericClass, final String fileName) {
         this.genericClass = genericClass;
         this.savingFilePath = ResourceFinder.getSavingFilePath(fileName + SAVING_FILES_EXTENSION);
-
-        this.gson = new GsonBuilder()
-                .registerTypeAdapterFactory(OptionalTypeAdapter.FACTORY)
-                .create();
     }
 
     /**
@@ -40,7 +35,7 @@ public final class SaveManager<T> {
      */
     public boolean save(final T p) {
         try (FileWriter fw = new FileWriter(savingFilePath)) {
-            fw.write(gson.toJson(p));
+            fw.write(GSON.toJson(p));
             return true;
 
         } catch (IOException e) {
@@ -61,7 +56,7 @@ public final class SaveManager<T> {
         }
 
         try (FileReader fr = new FileReader(file)) {
-            return Optional.of(gson.fromJson(fr, genericClass));
+            return Optional.of(GSON.fromJson(fr, genericClass));
         } catch (IOException e) {
             return Optional.empty();
         }
