@@ -1,5 +1,6 @@
 package flowerforce.model.game;
 
+import flowerforce.model.entities.EntityInfo;
 import javafx.geometry.Point2D;
 import javafx.util.Pair;
 
@@ -19,19 +20,19 @@ public interface Game {
      * Call to know which zombies are still alive.
      * @return the set of zombie still alive
      */
-    Set<Pair<String,Point2D>> getPlacedZombies();
+    Set<EntityInfo> getPlacedZombies();
 
     /**
      * Call to know which plants are in the field.
      * @return the set of plants still alive
      */
-    Set<Pair<String,Point2D>> getPlacedPlants();
+    Set<EntityInfo> getPlacedPlants();
 
     /**
      * Call to know which bullets are in the game field.
      * @return the set of bullets in the game field
      */
-    Set<Pair<String, Point2D>> getPlacedBullet();
+    Set<EntityInfo> getPlacedBullet();
 
     /**
      * @return The number of suns the player has in the game
