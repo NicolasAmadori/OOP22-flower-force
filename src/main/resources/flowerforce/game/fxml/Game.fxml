@@ -161,7 +161,7 @@
                <children>
                   <ImageView fx:id="card7" disable="true" fitWidth="150.0" onMouseClicked="#selectCard" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
-                        <Image url="@../images/plants/fastsunflower_card.png" />
+                        <Image url="@../images/plants/doublesunflower_card.png" />
                      </image>
                      <cursor>
                         <Cursor fx:constant="HAND" />
