@@ -47,12 +47,12 @@ final class TestPlayer {
         assertEquals(0, this.player.getScoreRecord());
 
         this.player.addNewScore(4_000);
-        assertEquals(4_000, this.player.getScoreRecord());
+        assertEquals(4_000, this.player.getCoins());
 
         this.player.addNewScore(1_500);
-        assertEquals(4_000, this.player.getScoreRecord());
+        assertEquals(4_000, this.player.getCoins());
 
         this.player.addNewScore(10_000);
-        assertEquals(10_000, this.player.getScoreRecord());
+        assertEquals(10_000, this.player.getCoins());
     }
 }
