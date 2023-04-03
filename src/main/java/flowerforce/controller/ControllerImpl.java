@@ -300,10 +300,10 @@ public final class ControllerImpl implements Controller {
     }
 
     private void resetGame() {
-        cards.clear();
-        previousPlant.clear();
-        previousZombie.clear();
-        previousBullet.clear();
-        purchasablePlants.clear();
+        this.cards.clear();
+        this.previousPlant.clear();
+        this.previousZombie.clear();
+        this.previousBullet.clear();
+        this.purchasablePlants.clear();
     }
 }
