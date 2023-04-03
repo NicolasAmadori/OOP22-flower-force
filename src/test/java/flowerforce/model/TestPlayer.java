@@ -1,13 +1,14 @@
 package flowerforce.model;
 
-import flowerforce.model.game.ShopImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import flowerforce.model.game.Player;
 import flowerforce.model.game.PlayerImpl;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 final class TestPlayer {
 
