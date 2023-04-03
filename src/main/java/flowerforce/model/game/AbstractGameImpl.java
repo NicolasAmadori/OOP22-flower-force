@@ -41,7 +41,7 @@ public abstract class AbstractGameImpl implements Game {
                 new Pair<>(p.apply(TEMPORARY_POSITION).getName(),
                         p.apply(TEMPORARY_POSITION).getCost()),p)
         );
-        world.getShop().getBoughtPlantsProducer().forEach(p -> placeablePlant.put(
+        world.getShop().getBoughtPlantsFunctions().forEach(p -> placeablePlant.put(
                 new Pair<>(p.apply(TEMPORARY_POSITION).getName(),
                         p.apply(TEMPORARY_POSITION).getCost()),p)
         );
