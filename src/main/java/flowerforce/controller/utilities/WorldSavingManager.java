@@ -4,7 +4,6 @@ import flowerforce.model.game.World;
 import flowerforce.model.game.WorldImpl;
 import flowerforce.model.game.Player;
 import flowerforce.model.game.PlayerImpl;
-
 import java.util.Optional;
 
 /**
