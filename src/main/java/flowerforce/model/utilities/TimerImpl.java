@@ -53,7 +53,7 @@ public class TimerImpl implements Timer {
         this.nCycles = newNCycles;
     }
 
-    private static final void verifyNCycles(final int nCycles) {
+    private static void verifyNCycles(final int nCycles) {
         if (nCycles <= 0) {
             throw new IllegalArgumentException("Timer must be set to a positive integer!");
         }

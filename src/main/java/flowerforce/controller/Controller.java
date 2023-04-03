@@ -4,6 +4,8 @@ import flowerforce.model.game.Game;
 import flowerforce.view.entities.CardView;
 import flowerforce.view.entities.EntityView;
 import flowerforce.view.game.GameEngine;
+
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -67,8 +69,20 @@ public interface Controller {
     int getSunCounter();
 
     /**
+     * Get the actual score of the game.
+     * @return an integer representing the score of the game
+     */
+    int getScore();
+
+    /**
+     * Get the progress percentage of the game.
+     * @return a number from 0.0 to 1.0 representing the percentage
+     */
+    double getProgressState();
+
+    /**
      * Place a new plant in a specified position.
-     * @param plantId The id of the plant to place
+     * @param cardView The card view representing the plant to place
      * @param row The row index in which to place the plant
      * @param col The column index in which to place the plant
      * @return true if the plant was placed correctly, false otherwise
@@ -84,6 +98,13 @@ public interface Controller {
     boolean removePlant(int row, int col);
 
     /**
+     * 
+     * @param cardView to shop
+     * @return true if the plant has been purchased correctly, false otherwise
+     */
+    boolean buyPlant(CardView cardView);
+
+    /**
      * Get all the entities to draw.
      * @return A set of EntityView.
      */
@@ -94,6 +115,12 @@ public interface Controller {
      * @return A set of integer, representing the indexes of the enable cards.
      */
     Set<CardView> getEnabledCards();
+
+    /**
+     * 
+     * @return the plants that can be purchased
+     */
+    Map<CardView, Boolean> getPurchasablePlants();
 
     /**
      * Get the number of rows available.

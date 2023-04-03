@@ -1,5 +1,7 @@
 package flowerforce.model.game;
 
+import java.util.Optional;
+
 /**
  * An implementation of a new level game.
  * This game will spawn a specific number of zombie.
@@ -7,17 +9,18 @@ package flowerforce.model.game;
  */
 public class LevelGame extends AbstractGameImpl {
     private int remainingZombie;
-
+    private final int id;
     private final ZombieGenerationLevel generateZombie;
     /**
      * Constructor to instantiate a level game.
-     * @param level of the game started
+     * @param levelId of the game started
      * @param world an instance of the world that started the game
      */
-    public LevelGame(final Level level, final World world) {
-        super(level, world);
-        this.remainingZombie = level.getTotalZombies();
-        generateZombie = new ZombieGenerationLevelImpl(level);
+    public LevelGame(final int levelId, final World world) {
+        super(levelId, world);
+        this.id = levelId;
+        this.remainingZombie = Level.getTotalZombies(levelId);
+        generateZombie = new ZombieGenerationLevelImpl(levelId);
     }
 
     /**
@@ -25,15 +28,15 @@ public class LevelGame extends AbstractGameImpl {
      */
     @Override
     public boolean result() {
-        return this.remainingZombie == 0 && this.getZombies().isEmpty();
+        return this.remainingZombie == 0 && this.getPlacedZombies().isEmpty();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public int getProgressState() {
-        return (this.getLevel().getTotalZombies() - remainingZombie) / this.getLevel().getTotalZombies() * 100;
+    public double getProgressState() {
+        return (Level.getTotalZombies(this.id) - remainingZombie) / (double) Level.getTotalZombies(this.id);
     }
 
     /**
@@ -43,9 +46,9 @@ public class LevelGame extends AbstractGameImpl {
     public boolean isOver() {
         final var end = super.isOver();
         if (end && this.result() &&
-                this.getWorld().getPlayer().getLastUnlockedLevelId() == this.getLevel().getLevelId()) {
+                this.getWorld().getPlayer().getLastUnlockedLevelId() == this.id) {
             this.getWorld().getPlayer().unlockedNextLevel();
-            this.getWorld().getPlayer().addCoins(this.getLevel().getLevelCoins());
+            this.getWorld().getPlayer().addCoins(Level.getLevelCoins(id));
         }
         return end || result();
     }
@@ -55,22 +58,15 @@ public class LevelGame extends AbstractGameImpl {
      */
     @Override
     protected void generateZombie() {
-        if(remainingZombie == 0) {
-            System.out.println("ssj");
-        }
-        System.out.println(this.remainingZombie);
         if (remainingZombie != 0) {
             final var zombie = this.generateZombie.zombieGeneration();
             if (zombie.isPresent()) {
                 remainingZombie--;
                 this.addZombie(zombie.get());
             }
-            if (this.getLevel().getBossId().isPresent() && remainingZombie == 0) {
+            if (Level.getBossId(id).isPresent() && remainingZombie == 0) {
                 final var boss = this.generateZombie.bossGeneration();
-                if (boss.isPresent()) {
-                    remainingZombie--;
-                    this.addZombie(boss.get());
-                }
+                this.addZombie(boss);
             }
         }
     }

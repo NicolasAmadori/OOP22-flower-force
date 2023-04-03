@@ -10,9 +10,15 @@ public interface FlowerForceView {
     void menu();
 
     /**
-     * This method is called to set the game scene in the application.
+     * This method is called to start a level.
+     * @param levelId
      */
-    void game(int levelId);
+    void levelGame(int levelId);
+
+    /**
+     * This method is called to start an Adventure game.
+     */
+    void adventureGame();
 
     /**
      * This method is called to set the how to play scene in the application.

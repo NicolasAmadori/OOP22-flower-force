@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.List;
+import java.util.Collections;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import flowerforce.controller.utilities.EntityConverter;
@@ -29,10 +30,11 @@ public final class ControllerImpl implements Controller {
     private EntityConverter entityConverter;
     private Optional<Game> game;
 
-    private final Map<CardView, Pair<String, Integer>> cards = new HashMap<>();
-    private final Map<Pair<String, Point2D>, EntityView> previousPlant = new HashMap<>();
-    private final Map<Pair<String, Point2D>, EntityView> previousZombie = new HashMap<>();
-    private final Map<Pair<String, Point2D>, EntityView> previousBullet = new HashMap<>();
+    private Map<CardView, Pair<String, Integer>> cards = new HashMap<>();
+    private Map<Pair<String, Point2D>, EntityView> previousPlant = new HashMap<>();
+    private Map<Pair<String, Point2D>, EntityView> previousZombie = new HashMap<>();
+    private Map<Pair<String, Point2D>, EntityView> previousBullet = new HashMap<>();
+    private Map<CardView, Pair<String,Integer>> purchasablePlants = new HashMap<>();
 
     /**
      * Create a new instance of Controller.
@@ -105,6 +107,24 @@ public final class ControllerImpl implements Controller {
      * {@inheritDoc}
      */
     @Override
+    public int getScore() {
+        checkGame();
+        return this.game.get().getScore();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public double getProgressState() {
+        checkGame();
+        return this.game.get().getProgressState();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public boolean placePlant(final CardView cardView, final int row, final int col) {
         checkGame();
         return this.game.get().placePlant(this.cards.get(cardView), row, col);
@@ -120,7 +140,17 @@ public final class ControllerImpl implements Controller {
      * {@inheritDoc}
      */
     @Override
+    public boolean buyPlant(final CardView cardView) {
+        this.checkGame();
+        return this.world.getShop().buyPlant(this.purchasablePlants.get(cardView));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Game startNewLevelGame(final int levelId) {
+        resetGame();
         this.game = Optional.of(this.world.createLevelGame(levelId));
         checkGame();
         checkGameEngine();
@@ -133,6 +163,7 @@ public final class ControllerImpl implements Controller {
      */
     @Override
     public Game startNewInfiniteGame() {
+        resetGame();
         this.game = Optional.of(this.world.createInfiniteGame());
         checkGame();
         checkGameEngine();
@@ -144,8 +175,8 @@ public final class ControllerImpl implements Controller {
     public Set<EntityView> getPlacedEntities() {
         checkGame();
         final Set<Pair<String, Point2D>> plants = this.game.get().getPlacedPlants();
-        final Set<Pair<String, Point2D>> zombies = this.game.get().getZombies();
-        final Set<Pair<String, Point2D>> bullets = this.game.get().getBullet();
+        final Set<Pair<String, Point2D>> zombies = this.game.get().getPlacedZombies();
+        final Set<Pair<String, Point2D>> bullets = this.game.get().getPlacedBullet();
 
         //TODO: refactor
         //region Plants
@@ -209,7 +240,7 @@ public final class ControllerImpl implements Controller {
 
     private List<CardView> getCards() {
         checkGame();
-        this.game.get().getAllPlantIDs()
+        this.game.get().getAllPlant()
                 .forEach(p -> cards.put(entityConverter.getCardView(p), p));
         return cards.keySet().stream().toList();
     }
@@ -217,11 +248,28 @@ public final class ControllerImpl implements Controller {
     @Override
     public Set<CardView> getEnabledCards() {
         checkGame();
-        Set<Integer> enabledCards = this.game.get().getAvailablePlantsIDs(); //TODO: Modify when enum removed
+        final Set<Pair<String, Integer>> enabledPlants = this.game.get().getEnabledPlants();
         return this.cards.entrySet().stream()
-                .filter(e -> enabledCards.contains(e.getValue())) //Removed not available cardviews
-                .map(Map.Entry::getKey) //Map to get just di keys
+                .filter(e -> enabledPlants.contains(e.getValue())) //Removed not available cardviews
+                .map(Map.Entry::getKey) //Map to get just keys
                 .collect(Collectors.toSet());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Map<CardView, Boolean> getPurchasablePlants() {
+        Map<Pair<String,Integer>, Boolean> shopPlants = this.world.getShop().getPurchasablePlants();
+        Map<CardView, Boolean> toReturn = new HashMap<>();
+        this.purchasablePlants.clear();
+        shopPlants.keySet().stream()
+                .forEach(p -> {
+                    CardView card = entityConverter.getCardView(p);
+                    this.purchasablePlants.put(card, p);
+                    toReturn.put(card, shopPlants.get(p));
+                });
+        return Collections.unmodifiableMap(toReturn);
     }
 
     @Override
@@ -249,5 +297,13 @@ public final class ControllerImpl implements Controller {
         if (this.game.isEmpty()) {
             throw new NoSuchElementException("Game has not been started.");
         }
+    }
+
+    private void resetGame() {
+        this.cards.clear();
+        this.previousPlant.clear();
+        this.previousZombie.clear();
+        this.previousBullet.clear();
+        this.purchasablePlants.clear();
     }
 }

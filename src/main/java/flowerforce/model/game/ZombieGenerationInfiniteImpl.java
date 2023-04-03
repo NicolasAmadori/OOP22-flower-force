@@ -31,14 +31,13 @@ public class ZombieGenerationInfiniteImpl implements ZombieGeneration {
     private int hordeZombie = START_NUMBER_ZOMBIE_IN_HORDE;
     private int generatedZombie = 1;
     private int hordeGeneratedZombie = 0;
-    private CreationZombie genZombie;
-
+    private final CreationZombie genZombie;
 
     /**
-     * @param level an instance of the game started
+     * @param levelId of the game started
      */
-    public ZombieGenerationInfiniteImpl(final Level level) {
-        genZombie = new CreationZombie(level.getZombiesId());
+    public ZombieGenerationInfiniteImpl(final int levelId) {
+        genZombie = new CreationZombie(Level.getZombiesId(levelId));
         zombieTimer = new TimerImpl(START_TIME_TO_SPAWN_ZOMBIE);
     }
 
@@ -49,7 +48,7 @@ public class ZombieGenerationInfiniteImpl implements ZombieGeneration {
     public Optional<Zombie> zombieGeneration() {
         this.zombieTimer.updateState();
         if (this.zombieTimer.isReady()) {
-            if (generatedZombie % 10 == 0) {
+            if (generatedZombie % 7 == 0) {
                 hordeGeneratedZombie++;
                 if (hordeGeneratedZombie == hordeZombie) {
                     if (hordeZombie + INC_ZOMBIE_HORDE < MAX_ZOMBIE_TO_SPAWN_HORDE) {
@@ -87,7 +86,7 @@ public class ZombieGenerationInfiniteImpl implements ZombieGeneration {
      */
     @Override
     public int getNumberHordeZombie() {
-        return hordeZombie + 10;
+        return hordeZombie + 7;
     }
 
 

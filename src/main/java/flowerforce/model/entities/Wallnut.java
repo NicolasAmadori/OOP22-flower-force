@@ -1,8 +1,6 @@
 package flowerforce.model.entities;
 
-import flowerforce.model.entities.IdConverter.Plants;
 import flowerforce.model.utilities.RenderingInformation;
-import flowerforce.model.utilities.Timer;
 import flowerforce.model.utilities.TimerImpl;
 import javafx.geometry.Point2D;
 
@@ -19,8 +17,6 @@ public class Wallnut extends AbstractPlant {
     /**
      * 
      * @param pos the initial position to place the entity in
-     * @param timer used to produce bullets/suns at the right time
-     * @param plantType the type of the plant
      */
     public Wallnut(final Point2D pos) {
         super(pos, new TimerImpl(DAMAGE_PERIOD), NUT_HEALTH, NUT_COST,  RechargeTimes.getSlowRechargeTime(), "wallnut");

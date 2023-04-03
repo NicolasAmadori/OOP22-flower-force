@@ -1,12 +1,8 @@
 package flowerforce.model.entities;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
-import flowerforce.model.entities.IdConverter.Plants;
 import flowerforce.model.utilities.Timer;
 import javafx.geometry.Point2D;
 
@@ -23,8 +19,10 @@ public class ShootingPlantImpl extends AbstractPlant implements ShootingPlant {
      * @param pos the initial position to place the entity in
      * @param timer used to produce bullets/suns at the right time
      * @param health the starting health of the entity
-     * @param bulletClass the class of the bullet type to generate
-     * @param plantType the type of the plant
+     * @param bulletProducer the producer of the bullets for this plant
+     * @param cost plant's cost
+     * @param rechargeTime plant's recharge time
+     * @param plantName plant's name
      */
     public ShootingPlantImpl(
         final Point2D pos,

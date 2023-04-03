@@ -2,6 +2,7 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -24,7 +25,7 @@
                <Image url="@../images/bar.jpeg" />
            </image>
        </ImageView>
-       <Label fx:id="lblSunCounter" alignment="CENTER" layoutX="52.0" layoutY="161.0" prefHeight="18.0" prefWidth="139.0" text="500">
+       <Label fx:id="lblSunCounter" alignment="CENTER" layoutX="52.0" layoutY="161.0" prefHeight="18.0" prefWidth="139.0" text="0">
            <font>
                <Font size="40.0" />
            </font>
@@ -43,9 +44,6 @@
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
-                     <image>
-                        <Image url="@../images/plants/sunflower_card.png" />
-                     </image>
                   </ImageView>
                   <Label fx:id="lbl0" layoutX="98.0" layoutY="55.0" mouseTransparent="true" visible="false">
                      <font>
@@ -60,9 +58,6 @@
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
-                     <image>
-                        <Image url="@../images/plants/peashooter_card.png" />
-                     </image>
                   </ImageView>
                   <Label fx:id="lbl1" layoutX="98.0" layoutY="55.0" mouseTransparent="true" textAlignment="RIGHT" visible="false">
                      <font>
@@ -74,9 +69,6 @@
             <AnchorPane>
                <children>
                   <ImageView fx:id="card2" disable="true" fitWidth="150.0" onMouseClicked="#selectCard" pickOnBounds="true" preserveRatio="true" visible="false">
-                     <image>
-                        <Image url="@../images/plants/snowshooter_card.png" />
-                     </image>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -91,9 +83,6 @@
             <AnchorPane>
                <children>
                   <ImageView fx:id="card3" disable="true" fitWidth="150.0" onMouseClicked="#selectCard" pickOnBounds="true" preserveRatio="true" visible="false">
-                     <image>
-                        <Image url="@../images/plants/fastshooter_card.png" />
-                     </image>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -108,9 +97,6 @@
             <AnchorPane>
                <children>
                   <ImageView fx:id="card4" disable="true" fitWidth="150.0" onMouseClicked="#selectCard" pickOnBounds="true" preserveRatio="true" visible="false">
-                     <image>
-                        <Image url="@../images/plants/fireshooter_card.png" />
-                     </image>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -125,9 +111,6 @@
             <AnchorPane layoutX="10.0" layoutY="467.0">
                <children>
                   <ImageView fx:id="card5" disable="true" fitWidth="150.0" onMouseClicked="#selectCard" pickOnBounds="true" preserveRatio="true" visible="false">
-                     <image>
-                        <Image url="@../images/plants/wallnut_card.png" />
-                     </image>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -142,9 +125,6 @@
             <AnchorPane layoutX="10.0" layoutY="582.0">
                <children>
                   <ImageView fx:id="card6" disable="true" fitWidth="150.0" onMouseClicked="#selectCard" pickOnBounds="true" preserveRatio="true" visible="false">
-                     <image>
-                        <Image url="@../images/plants/cherrybomb_card.png" />
-                     </image>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -159,9 +139,6 @@
             <AnchorPane layoutX="10.0" layoutY="678.0">
                <children>
                   <ImageView fx:id="card7" disable="true" fitWidth="150.0" onMouseClicked="#selectCard" pickOnBounds="true" preserveRatio="true" visible="false">
-                     <image>
-                        <Image url="@../images/plants/fastsunflower_card.png" />
-                     </image>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -203,5 +180,16 @@
             <Image url="@../images/shovel.png" />
          </image>
       </ImageView>
+      <ProgressBar fx:id="progressBar" layoutX="1610.0" layoutY="1044.0" mouseTransparent="true" nodeOrientation="RIGHT_TO_LEFT" prefHeight="30.0" prefWidth="300.0" progress="0.0" />
+      <Label layoutX="643.0" layoutY="1032.0" text="Score:">
+         <font>
+            <Font name="System Bold Italic" size="28.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblScore" alignment="BASELINE_LEFT" layoutX="726.0" layoutY="1029.0" mouseTransparent="true" prefHeight="50.0" prefWidth="875.0" text="0">
+         <font>
+            <Font name="System Bold" size="34.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

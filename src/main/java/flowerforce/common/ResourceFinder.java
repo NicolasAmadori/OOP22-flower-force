@@ -14,9 +14,10 @@ public final class ResourceFinder {
     private static final String RESOURCES_FOLDER_ABSOLUTE_PATH = PROJECT_FOLDER_ABSOLUTE_PATH
             + File.separator + RESOURCES_FOLDER_PATH;
 
-    private static final String IMAGES_FOLDER_NAME = "images";
+    private static final String SOUNDS_FOLDER_NAME = "sounds";
     private static final String FXML_FOLDER_NAME = "fxml";
     private static final String SAVING_FOLDER_NAME = "savings";
+    private static final String IMAGES_FOLDER_NAME = "images";
     private static final String PLANTS_FOLDER_NAME = "plants";
     private static final String ZOMBIES_FOLDER_NAME = "zombies";
     private static final String BULLETS_FOLDER_NAME = "bullets";
@@ -55,7 +56,7 @@ public final class ResourceFinder {
     /**
      * Get the complete path of a generic image (not plant, zombie or bullet).
      * @param filename The complete name of the image requested
-     * @return An optional of the image path, empty if the requested image do not exist in the images folder
+     * @return A string representing the absolute path of the image file
      */
     public static String getImagePath(final String filename) {
         final String completePath = getImagesFolderPath() + File.separator + filename;
@@ -66,7 +67,7 @@ public final class ResourceFinder {
     /**
      * Get the complete path of a fxml file.
      * @param filename The complete name of the fxml file requested
-     * @return An optional of the fxml file path, empty if the requested fxml file do not exist in the fxml folder
+     * @return A string representing the absolute path of the fxml file
      */
     public static String getFXMLPath(final String filename) {
         final String completePath = getFXMLFolderPath() + File.separator + filename;
@@ -75,9 +76,20 @@ public final class ResourceFinder {
     }
 
     /**
+     * Get the complete path of a sound file.
+     * @param filename The complete name of the sound file requested
+     * @return A string representing the absolute path of the sound file
+     */
+    public static String getSoundPath(final String filename) {
+        final String completePath = getSoundsFolderPath() + File.separator + filename;
+        checkPath(completePath);
+        return completePath;
+    }
+
+    /**
      * Get the complete path of a saving file.
      * @param filename The complete name of the saving file requested
-     * @return An optional of the saving file path, empty if the requested saving file do not exist in the savings folder
+     * @return A string representing the absolute path of the saving file
      */
     public static String getSavingFilePath(final String filename) {
         final String completePath = getSavingFolderPath() + File.separator + filename;
@@ -91,6 +103,14 @@ public final class ResourceFinder {
      */
     public static String getImagesFolderPath() {
         return RESOURCES_FOLDER_ABSOLUTE_PATH + File.separator + IMAGES_FOLDER_NAME;
+    }
+
+    /**
+     * Get the path of the sounds' folder.
+     * @return the absolute path
+     */
+    public static String getSoundsFolderPath() {
+        return RESOURCES_FOLDER_ABSOLUTE_PATH + File.separator + SOUNDS_FOLDER_NAME;
     }
 
     /**
