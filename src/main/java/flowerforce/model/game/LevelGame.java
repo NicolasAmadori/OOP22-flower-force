@@ -29,7 +29,7 @@ public class LevelGame extends AbstractGameImpl {
      */
     @Override
     public boolean result() {
-        return this.remainingZombie == 0 && this.getPlacedZombies().isEmpty();
+        return this.remainingZombie == 0 && super.getPlacedZombies().isEmpty();
     }
 
     /**
@@ -47,9 +47,9 @@ public class LevelGame extends AbstractGameImpl {
     public boolean isOver() {
         final var end = super.isOver();
         if (end && this.result() &&
-                this.getWorld().getPlayer().getLastUnlockedLevelId() == this.id) {
-            this.getWorld().getPlayer().unlockedNextLevel();
-            this.getWorld().getPlayer().addCoins(Level.getLevelCoins(id));
+                super.getWorld().getPlayer().getLastUnlockedLevelId() == this.id) {
+            super.getWorld().getPlayer().unlockedNextLevel();
+            super.getWorld().getPlayer().addCoins(Level.getLevelCoins(id));
         }
         return end || result();
     }
@@ -63,11 +63,11 @@ public class LevelGame extends AbstractGameImpl {
             final var zombie = this.generateZombie.zombieGeneration();
             if (zombie.isPresent()) {
                 remainingZombie--;
-                this.addZombie(zombie.get());
+                super.addZombie(zombie.get());
             }
             if (Level.getBossId(id).isPresent() && remainingZombie == 0) {
                 final var boss = this.generateZombie.bossGeneration();
-                this.addZombie(boss);
+                super.addZombie(boss);
             }
         }
     }
