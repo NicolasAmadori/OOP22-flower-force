@@ -29,7 +29,7 @@ public final class Level {
             (pos) -> new ShootingPlantFactoryImpl().fast(pos)
     );
     private static final int COINS = 100;
-    private static final List<Integer> ZOMBIE_LEVEL = List.of(20,40,60,60,60,80,80);
+    private static final List<Integer> ZOMBIE_LEVEL = List.of(34,51,68,68,68,85,85);
     private static final Function<Point2D, Zombie> ZOMBIE_BOSS = (pos) -> new ZombieFactoryImpl().gargantuar(pos);
 
     private Level() {}

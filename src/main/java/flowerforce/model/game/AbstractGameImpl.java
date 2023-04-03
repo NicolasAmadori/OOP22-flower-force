@@ -36,13 +36,15 @@ public abstract class AbstractGameImpl implements Game {
      * @param world an instance of the world that started the game
      */
     public AbstractGameImpl(final int id, final World world) {
-        var pos = new Point2D(0,0);
         this.placeablePlant = new HashMap<>();
         Level.getPlantsId(id).forEach(p -> placeablePlant.put(
                 new Pair<>(p.apply(TEMPORARY_POSITION).getName(),
                         p.apply(TEMPORARY_POSITION).getCost()),p)
         );
-        this.placeablePlant.keySet().forEach(p -> Level.getPlantsId(id));
+        world.getShop().getBoughtPlantsProducer().forEach(p -> placeablePlant.put(
+                new Pair<>(p.apply(TEMPORARY_POSITION).getName(),
+                        p.apply(TEMPORARY_POSITION).getCost()),p)
+        );
         this.sun = INITIAL_SUN * SUN_VALUE;
         this.levelId = id;
         this.sunTimer = new TimerImpl(TIME_TO_SPAWN_SUN);
@@ -214,7 +216,7 @@ public abstract class AbstractGameImpl implements Game {
                  .filter(zombie -> !zombie.isOver())
                  .min(Comparator.comparing(zombie -> zombie.getPosition().getX()))
                  .ifPresent(bullet::hit));
-         this.zombies.stream().filter(Entity::isOver).forEach(z -> score += z.getDifficulty());
+         this.zombies.stream().filter(Entity::isOver).forEach(z -> score += z.getDifficulty() * 100);
          this.zombies = this.zombies.stream().filter(z -> !z.isOver()).collect(Collectors.toSet());
          this.bullets = this.bullets.stream().filter(b -> !b.isOver()).collect(Collectors.toSet());
     }

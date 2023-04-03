@@ -50,7 +50,7 @@ public class ZombieGenerationLevelImpl implements ZombieGenerationLevel {
     public Optional<Zombie> zombieGeneration() {
         this.zombieTimer.updateState();
         if (this.zombieTimer.isReady()) {
-            if (generatedZombie % 10 == 0) {
+            if (generatedZombie % 7 == 0) {
                 hordeGeneratedZombie++;
                 if (hordeGeneratedZombie == hordeZombie) {
                     hordeGeneratedZombie = 0;
@@ -85,7 +85,7 @@ public class ZombieGenerationLevelImpl implements ZombieGenerationLevel {
      */
     @Override
     public int getNumberHordeZombie() {
-        return this.hordeZombie + 10;
+        return this.hordeZombie + 7;
     }
 
     /**

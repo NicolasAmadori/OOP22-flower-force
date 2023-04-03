@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.effect.Bloom;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.Effect;
@@ -51,6 +52,8 @@ public final class GameSceneController implements GameEngine {
     @FXML private Rectangle coloredCell;
     @FXML private ImageView imageShovel;
     @FXML private ImageView transparentShovel;
+    @FXML private ProgressBar progressBar;
+    @FXML private Label lblScore;
 
     //Garden size: 1920x1080, yard size: 1320x880. Down-shift: 150px, right-shift: 600px.
     private static final int YARD_FIRST_X = 600;
@@ -224,6 +227,8 @@ public final class GameSceneController implements GameEngine {
         this.updateEntities(this.application.getController().getPlacedEntities());
         this.damageEntities();
         this.updateSunCounter();
+        this.updateScore();
+        this.updateProgressBar();
     }
 
     private void enableCards() {
@@ -280,6 +285,20 @@ public final class GameSceneController implements GameEngine {
         final int newSunCounter = this.application.getController().getSunCounter();
         if (newSunCounter != Integer.parseInt(this.lblSunCounter.getText())) {
             this.lblSunCounter.setText(Integer.toString(newSunCounter));
+        }
+    }
+
+    private void updateScore() {
+        final int newScore = this.application.getController().getScore();
+        if (newScore != Integer.parseInt(this.lblScore.getText())) {
+            this.lblScore.setText(Integer.toString(newScore));
+        }
+    }
+
+    private void updateProgressBar() {
+        final double newPercentage = (double) this.application.getController().getScore() / 100; //TODO: get double not int and it's always zero
+        if (newPercentage != this.progressBar.getProgress()) {
+            this.progressBar.setProgress(newPercentage);
         }
     }
 

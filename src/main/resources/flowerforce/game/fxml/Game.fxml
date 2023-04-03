@@ -2,6 +2,7 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -160,7 +161,7 @@
                <children>
                   <ImageView fx:id="card7" disable="true" fitWidth="150.0" onMouseClicked="#selectCard" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
-                        <Image url="@../images/plants/fastsunflower_card.png" />
+                        <Image url="@../images/plants/doublesunflower_card.png" />
                      </image>
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -203,5 +204,16 @@
             <Image url="@../images/shovel.png" />
          </image>
       </ImageView>
+      <ProgressBar fx:id="progressBar" layoutX="1610.0" layoutY="1044.0" mouseTransparent="true" nodeOrientation="RIGHT_TO_LEFT" prefHeight="30.0" prefWidth="300.0" progress="0.0" />
+      <Label layoutX="643.0" layoutY="1032.0" text="Score:">
+         <font>
+            <Font name="System Bold Italic" size="28.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblScore" alignment="BASELINE_LEFT" layoutX="726.0" layoutY="1029.0" mouseTransparent="true" prefWidth="70.0" text="100">
+         <font>
+            <Font name="System Bold" size="34.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
