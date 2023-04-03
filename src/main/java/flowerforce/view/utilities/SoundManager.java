@@ -1,5 +1,7 @@
 package flowerforce.view.utilities;
 
+import flowerforce.common.ResourceFinder;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -9,18 +11,17 @@ import java.util.List;
 
 public final class SoundManager {
 
-    private static final float MAIN_THEME_VOLUME = -30f;
-    private static final float SOUND_EFFECT_VOLUME = -20f;
-    private static final List<String> PATHS = List.of(
-            "C:\\Users\\nicol\\Downloads\\OOP22-flower-force\\src\\main\\resources\\flowerforce\\game\\sounds\\main_theme.wav"
-    );
+    private static final float MAIN_THEME_VOLUME = -20f;
+    private static final float SOUND_EFFECT_VOLUME = -10f;
 
+    private static final String MAIN_THEME_FILE_NAME = "main_theme.wav";
+    private static final String GAME_START_FILE_NAME = "start_game_siren_with_voice.wav";
     public static void startMainTheme() {
-        playLoopSound(PATHS.get(0));
+        playLoopSound(ResourceFinder.getSoundPath(MAIN_THEME_FILE_NAME));
     }
 
-    public static void placePlant() {
-        playSoundEffect(PATHS.get(0));
+    public static void startGameSound() {
+        playSoundEffect(ResourceFinder.getSoundPath(GAME_START_FILE_NAME));
     }
 
     private static void playLoopSound(String path) {
