@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Collections;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
+
+import flowerforce.controller.utilities.CardGenerator;
 import flowerforce.controller.utilities.EntityConverter;
 import flowerforce.controller.utilities.WorldSavingManager;
 import flowerforce.model.game.Game;
@@ -241,7 +243,7 @@ public final class ControllerImpl implements Controller {
     private List<CardView> getCards() {
         checkGame();
         this.game.get().getAllPlant()
-                .forEach(p -> cards.put(entityConverter.getCardView(p), p));
+                .forEach(p -> cards.put(CardGenerator.getCardView(p), p));
         return cards.keySet().stream().toList();
     }
 
@@ -265,7 +267,7 @@ public final class ControllerImpl implements Controller {
         this.purchasablePlants.clear();
         shopPlants.keySet().stream()
                 .forEach(p -> {
-                    CardView card = entityConverter.getCardView(p);
+                    CardView card = CardGenerator.getCardView(p);
                     this.purchasablePlants.put(card, p);
                     toReturn.put(card, shopPlants.get(p));
                 });
