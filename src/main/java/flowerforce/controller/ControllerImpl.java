@@ -143,8 +143,9 @@ public final class ControllerImpl implements Controller {
      */
     @Override
     public boolean buyPlant(final CardView cardView) {
-        this.checkGame();
-        return this.world.getShop().buyPlant(this.purchasablePlants.get(cardView));
+        final boolean isBought = this.world.getShop().buyPlant(this.purchasablePlants.get(cardView));
+        this.save();
+        return isBought;
     }
 
     /**
