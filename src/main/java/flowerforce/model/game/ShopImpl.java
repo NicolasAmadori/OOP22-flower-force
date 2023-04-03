@@ -52,8 +52,8 @@ public class ShopImpl implements Shop{
     @Override
     public Map<Pair<String, Integer>, Boolean> getPurchasablePlants() {
         final Map<Pair<String, Integer>, Boolean> outputMap = new HashMap<>();
-        this.purchasablePlants.keySet().forEach(k -> outputMap.put(k, true));
-        this.boughtPlants.entrySet().forEach(k -> outputMap.put(k.getKey(), this.player.getCoins() >= k.getKey().getValue()));
+        this.purchasablePlants.entrySet().forEach(e -> outputMap.put(e.getKey(), this.player.getCoins() >= e.getKey().getValue()));
+        this.boughtPlants.keySet().forEach(k -> outputMap.put(k, false));
         return outputMap;
     }
 
