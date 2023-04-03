@@ -4,6 +4,8 @@ import flowerforce.model.game.Game;
 import flowerforce.view.entities.CardView;
 import flowerforce.view.entities.EntityView;
 import flowerforce.view.game.GameEngine;
+
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -96,6 +98,13 @@ public interface Controller {
     boolean removePlant(int row, int col);
 
     /**
+     * 
+     * @param cardView to shop
+     * @return true if the plant has been purchased correctly, false otherwise
+     */
+    boolean buyPlant(CardView cardView);
+
+    /**
      * Get all the entities to draw.
      * @return A set of EntityView.
      */
@@ -106,6 +115,12 @@ public interface Controller {
      * @return A set of integer, representing the indexes of the enable cards.
      */
     Set<CardView> getEnabledCards();
+
+    /**
+     * 
+     * @return the plants that can be purchased
+     */
+    Map<CardView, Boolean> getPurchasablePlants();
 
     /**
      * Get the number of rows available.

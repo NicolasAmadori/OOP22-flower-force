@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.List;
+import java.util.Collections;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import flowerforce.controller.utilities.EntityConverter;
@@ -14,6 +15,7 @@ import flowerforce.model.game.Game;
 import flowerforce.model.game.World;
 import flowerforce.controller.utilities.EntityConverterImpl;
 import flowerforce.view.entities.CardView;
+import flowerforce.view.entities.CardViewImpl;
 import flowerforce.view.entities.EntityView;
 import flowerforce.view.game.GameEngine;
 import javafx.util.Pair;
@@ -33,6 +35,7 @@ public final class ControllerImpl implements Controller {
     private final Map<Pair<String, Point2D>, EntityView> previousPlant = new HashMap<>();
     private final Map<Pair<String, Point2D>, EntityView> previousZombie = new HashMap<>();
     private final Map<Pair<String, Point2D>, EntityView> previousBullet = new HashMap<>();
+    private final Map<CardView, Pair<String,Integer>> purchasablePlants = new HashMap<>();
 
     /**
      * Create a new instance of Controller.
@@ -132,6 +135,15 @@ public final class ControllerImpl implements Controller {
     public boolean removePlant(final int row, final int col) {
         checkGame();
         return this.game.get().removePlant(row, col);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean buyPlant(final CardView cardView) {
+        this.checkGame();
+        return this.world.getShop().buyPlant(this.purchasablePlants.get(cardView));
     }
 
     /**
@@ -240,6 +252,23 @@ public final class ControllerImpl implements Controller {
                 .filter(e -> enabledPlants.contains(e.getValue())) //Removed not available cardviews
                 .map(Map.Entry::getKey) //Map to get just keys
                 .collect(Collectors.toSet());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Map<CardView, Boolean> getPurchasablePlants() {
+        Map<Pair<String,Integer>, Boolean> shopPlants = this.world.getShop().getPurchasablePlants();
+        Map<CardView, Boolean> toReturn = new HashMap<>();
+        this.purchasablePlants.clear();
+        shopPlants.keySet().stream()
+                .forEach(p -> {
+                    CardView card = entityConverter.getCardView(p);
+                    this.purchasablePlants.put(card, p);
+                    toReturn.put(card, shopPlants.get(p));
+                });
+        return Collections.unmodifiableMap(toReturn);
     }
 
     @Override
