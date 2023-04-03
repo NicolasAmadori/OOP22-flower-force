@@ -15,7 +15,6 @@ import flowerforce.model.game.Game;
 import flowerforce.model.game.World;
 import flowerforce.controller.utilities.EntityConverterImpl;
 import flowerforce.view.entities.CardView;
-import flowerforce.view.entities.CardViewImpl;
 import flowerforce.view.entities.EntityView;
 import flowerforce.view.game.GameEngine;
 import javafx.util.Pair;
@@ -31,11 +30,11 @@ public final class ControllerImpl implements Controller {
     private EntityConverter entityConverter;
     private Optional<Game> game;
 
-    private final Map<CardView, Pair<String, Integer>> cards = new HashMap<>();
-    private final Map<Pair<String, Point2D>, EntityView> previousPlant = new HashMap<>();
-    private final Map<Pair<String, Point2D>, EntityView> previousZombie = new HashMap<>();
-    private final Map<Pair<String, Point2D>, EntityView> previousBullet = new HashMap<>();
-    private final Map<CardView, Pair<String,Integer>> purchasablePlants = new HashMap<>();
+    private Map<CardView, Pair<String, Integer>> cards;
+    private Map<Pair<String, Point2D>, EntityView> previousPlant;
+    private Map<Pair<String, Point2D>, EntityView> previousZombie;
+    private Map<Pair<String, Point2D>, EntityView> previousBullet;
+    private Map<CardView, Pair<String,Integer>> purchasablePlants;
 
     /**
      * Create a new instance of Controller.
@@ -117,7 +116,7 @@ public final class ControllerImpl implements Controller {
      * {@inheritDoc}
      */
     @Override
-    public int getProgresState() {
+    public double getProgressState() {
         checkGame();
         return this.game.get().getProgressState();
     }
@@ -151,6 +150,7 @@ public final class ControllerImpl implements Controller {
      */
     @Override
     public Game startNewLevelGame(final int levelId) {
+        resetGame();
         this.game = Optional.of(this.world.createLevelGame(levelId));
         checkGame();
         checkGameEngine();
@@ -163,6 +163,7 @@ public final class ControllerImpl implements Controller {
      */
     @Override
     public Game startNewInfiniteGame() {
+        resetGame();
         this.game = Optional.of(this.world.createInfiniteGame());
         checkGame();
         checkGameEngine();
@@ -296,5 +297,13 @@ public final class ControllerImpl implements Controller {
         if (this.game.isEmpty()) {
             throw new NoSuchElementException("Game has not been started.");
         }
+    }
+
+    private void resetGame() {
+        cards = new HashMap<>();
+        previousPlant = new HashMap<>();
+        previousZombie = new HashMap<>();
+        previousBullet = new HashMap<>();
+        purchasablePlants = new HashMap<>();
     }
 }

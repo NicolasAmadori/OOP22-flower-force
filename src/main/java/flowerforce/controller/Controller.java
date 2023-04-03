@@ -76,9 +76,9 @@ public interface Controller {
 
     /**
      * Get the progress percentage of the game.
-     * @return a precentage representing the progress of the game
+     * @return a number from 0.0 to 1.0 representing the percentage
      */
-    int getProgresState();
+    double getProgressState();
 
     /**
      * Place a new plant in a specified position.
