@@ -29,5 +29,5 @@ public interface Shop {
      * Get all the function producer of the plants instances.
      * @return A set of function
      */
-    Set<Function<Point2D, Plant>> getBoughtPlantsProducer();
+    Set<Function<Point2D, Plant>> getBoughtPlantsFunctions();
 }

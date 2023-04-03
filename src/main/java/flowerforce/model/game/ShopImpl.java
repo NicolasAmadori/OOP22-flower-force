@@ -20,7 +20,7 @@ import javafx.geometry.Point2D;
 public class ShopImpl implements Shop{
     private static final Set<Pair<Function<Point2D, Plant>, Integer>> SHOP_PLANTS = Set.of(
             new Pair<> ((pos) -> new SunflowerFactoryImpl().createDoubleSunflower(pos), 10),
-            new Pair<> ((pos) -> new CherryBomb(pos), 20)
+            new Pair<> (CherryBomb::new, 20)
     ); //TODO: set actual costs
     private final Player player;
     private final Map<Pair<String, Integer>, Function<Point2D, Plant>> purchasablePlants = new LinkedHashMap<>();
@@ -79,9 +79,8 @@ public class ShopImpl implements Shop{
      * {@inheritDoc}
      */
     @Override
-    public Set<Function<Point2D, Plant>> getBoughtPlantsProducer() {
-        return  this.boughtPlants.values().stream()
-                .collect(Collectors.toSet());
+    public Set<Function<Point2D, Plant>> getBoughtPlantsFunctions() {
+        return new HashSet<>(this.boughtPlants.values());
     }
 
     private Set<Pair<String, Integer>> getPlayerBoughtPlants() {
