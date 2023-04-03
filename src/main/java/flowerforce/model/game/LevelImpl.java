@@ -31,7 +31,6 @@ public final class LevelImpl {
     private static final int COINS = 100;
     private static final List<Integer> ZOMBIE_LEVEL = List.of(20,40,60,60,60,80,80);
     private static final Function<Point2D, Zombie> ZOMBIE_BOSS = (pos) -> new ZombieFactoryImpl().gargantuar(pos);
-    private static final int INFINITE_LEVEL_ID = 0;
 
     private LevelImpl() {}
 
@@ -46,9 +45,6 @@ public final class LevelImpl {
      * {@inheritDoc}.
      */
     public static List<Function<Point2D, Plant>> getPlantsId(final int id) {
-        if (INFINITE_LEVEL_ID == id) {
-            return AVAILABLE_PLANTS;
-        }
         return AVAILABLE_PLANTS.subList(0, Math.min(1 + id, AVAILABLE_ZOMBIES.size()));
     }
 
@@ -56,9 +52,6 @@ public final class LevelImpl {
      * {@inheritDoc}.
      */
     public static List<Function<Point2D, Zombie>> getZombiesId(final int id) {
-        if (INFINITE_LEVEL_ID == id) {
-            return AVAILABLE_ZOMBIES;
-        }
         return AVAILABLE_ZOMBIES.subList(0, Math.min(1 + id, AVAILABLE_ZOMBIES.size()));
     }
 
@@ -74,9 +67,5 @@ public final class LevelImpl {
      */
     public static Optional<Function<Point2D, Zombie>> getBossId(final int id) {
         return 1 + id > AVAILABLE_ZOMBIES.size() ? Optional.of(ZOMBIE_BOSS) : Optional.empty();
-    }
-
-    public static int getInfiniteLevelId() {
-        return INFINITE_LEVEL_ID;
     }
 }

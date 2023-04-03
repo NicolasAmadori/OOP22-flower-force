@@ -6,15 +6,14 @@ package flowerforce.model.game;
  */
 public class InfiniteGame extends AbstractGameImpl {
     private final ZombieGenerationInfiniteImpl generateZombie;
-
     /**
      * Constructor to instantiate an infinite game.
-     * @param levelId of the game started
      * @param world an instance of the world that started the game
      */
-    public InfiniteGame(final int levelId, final World world) {
-        super(levelId, world);
-        this.generateZombie = new ZombieGenerationInfiniteImpl(levelId);
+    public InfiniteGame(final World world) {
+        super(world.getPlayer().getLastUnlockedLevelId(), world);
+        this.generateZombie = new ZombieGenerationInfiniteImpl(
+                world.getPlayer().getLastUnlockedLevelId());
     }
 
     /**
