@@ -39,9 +39,10 @@ public class ShopSceneController implements Initializable {
 
     @FXML
     void buyItem(MouseEvent event) {
+        var bought = this.application.getController().buyPlant(imagePlants.get(index).getValue());
         purchasablePlants.put(
                 imagePlants.get(index).getValue(),
-                this.application.getController().buyPlant(imagePlants.get(index).getValue())
+                !bought
         );
         lblCoins.setText(this.application.getController().getPlayerCoins() + "$");
         changePlant();
