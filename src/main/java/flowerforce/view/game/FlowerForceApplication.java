@@ -85,6 +85,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
             FlowerForceScene sceneClass = new ShopScene(this);
             this.setScene(sceneClass.getScene());
             this.stage.setTitle("Shop");
+            SoundManager.openShopSound();
         } catch (Exception e) {
             e.printStackTrace();
         }

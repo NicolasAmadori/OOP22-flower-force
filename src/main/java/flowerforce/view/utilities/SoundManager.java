@@ -16,12 +16,17 @@ public final class SoundManager {
 
     private static final String MAIN_THEME_FILE_NAME = "main_theme.wav";
     private static final String GAME_START_FILE_NAME = "start_game_siren_with_voice.wav";
+    private static final String SHOP_OPENING_FILE_NAME = "shop_effect.wav";
     public static void startMainTheme() {
         playLoopSound(ResourceFinder.getSoundPath(MAIN_THEME_FILE_NAME));
     }
 
     public static void startGameSound() {
         playSoundEffect(ResourceFinder.getSoundPath(GAME_START_FILE_NAME));
+    }
+
+    public static void openShopSound() {
+        playSoundEffect(ResourceFinder.getSoundPath(SHOP_OPENING_FILE_NAME));
     }
 
     private static void playLoopSound(String path) {
