@@ -12,16 +12,16 @@ import flowerforce.model.game.ShopImpl;
 
 final class TestShop {
 
-    Player player;
-    Shop shop;
+    private Player player;
+    private Shop shop;
 
     /**
      * Sets up the testing.
      */
     @BeforeEach
     void setUp() {
-        player = new PlayerImpl(); //The default player has 0 coins
-        shop = new ShopImpl(player);
+        this.player = new PlayerImpl(); //The default player has 0 coins
+        this.shop = new ShopImpl(this.player);
     }
 
     /**
@@ -29,7 +29,7 @@ final class TestShop {
      */
     @Test
     void testPurchase() {
-        var plantToBuy = this.shop.getPurchasablePlants().entrySet().stream()
+        final var plantToBuy = this.shop.getPurchasablePlants().entrySet().stream()
                                                                                 .filter(e -> e.getValue())
                                                                                 .map(e -> e.getKey())
                                                                                 .findAny()
@@ -38,7 +38,7 @@ final class TestShop {
         assertFalse(this.shop.buyPlant(plantToBuy));//the method should return false because the player do not have enough money
         assertFalse(this.shop.getPurchasablePlants().get(plantToBuy));//Check that the plant is not bough
 
-        this.player.addCoins(1000);//Add coins to the player to buy plants
+        this.player.addCoins(1_000);//Add coins to the player to buy plants
 
         assertTrue(this.shop.buyPlant(plantToBuy));//The method should return true because now the player have enough money to buy the plant
         assertTrue(this.shop.getPurchasablePlants().get(plantToBuy));//Check if the plant is really bought
