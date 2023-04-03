@@ -1,5 +1,7 @@
 package flowerforce.model.game;
 
+import java.util.Optional;
+
 /**
  * An implementation of a new level game.
  * This game will spawn a specific number of zombie.
@@ -33,8 +35,8 @@ public class LevelGame extends AbstractGameImpl {
      * {@inheritDoc}
      */
     @Override
-    public int getProgressState() {
-        return (Level.getTotalZombies(this.id) - remainingZombie) / Level.getTotalZombies(this.id) * 100;
+    public double getProgressState() {
+        return (Level.getTotalZombies(this.id) - remainingZombie) / (double) Level.getTotalZombies(this.id);
     }
 
     /**
@@ -62,7 +64,7 @@ public class LevelGame extends AbstractGameImpl {
                 remainingZombie--;
                 this.addZombie(zombie.get());
             }
-            if (Level.getBossId(id) != null && remainingZombie == 0) {
+            if (Level.getBossId(id).isPresent() && remainingZombie == 0) {
                 final var boss = this.generateZombie.bossGeneration();
                 this.addZombie(boss);
             }
