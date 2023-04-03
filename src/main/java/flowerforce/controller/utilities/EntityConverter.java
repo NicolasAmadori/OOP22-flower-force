@@ -29,13 +29,6 @@ public interface EntityConverter {
     EntityView getBulletView(Pair<String, Point2D> bulletInfo);
 
     /**
-     * Get a CardView to draw a plant card.
-     * @param plantInfo The information of the plant
-     * @return The CardView instance with image and cost
-     */
-    CardView getCardView(Pair<String, Integer> plantInfo);
-
-    /**
      * Change the position of a Zombie EntityView.
      * @param entityView the EntityView instance whose position is to change
      * @param newPosition the new position to set
