@@ -38,9 +38,9 @@ public class ZombieGenerationLevelImpl implements ZombieGenerationLevel {
      * @param levelId of the game started
      */
     public ZombieGenerationLevelImpl(final int levelId) {
-        genZombie = new CreationZombie(LevelImpl.getZombiesId(levelId));
+        genZombie = new CreationZombie(Level.getZombiesId(levelId));
         this.zombieTimer = new TimerImpl(timeZombie);
-        this.boss = LevelImpl.getBossId(levelId);
+        this.boss = Level.getBossId(levelId);
     }
 
     /**

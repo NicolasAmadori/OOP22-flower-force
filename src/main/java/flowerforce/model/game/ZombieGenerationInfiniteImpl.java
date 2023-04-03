@@ -38,7 +38,7 @@ public class ZombieGenerationInfiniteImpl implements ZombieGeneration {
      * @param levelId of the game started
      */
     public ZombieGenerationInfiniteImpl(final int levelId) {
-        genZombie = new CreationZombie(LevelImpl.getZombiesId(levelId));
+        genZombie = new CreationZombie(Level.getZombiesId(levelId));
         zombieTimer = new TimerImpl(START_TIME_TO_SPAWN_ZOMBIE);
     }
 

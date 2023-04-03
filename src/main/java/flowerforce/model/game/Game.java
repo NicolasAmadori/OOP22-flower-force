@@ -1,6 +1,5 @@
 package flowerforce.model.game;
 
-import flowerforce.model.entities.IdConverter;
 import javafx.geometry.Point2D;
 import javafx.util.Pair;
 
@@ -82,4 +81,9 @@ public interface Game {
      * @return the percentage of the game state
      */
     int getProgressState();
+
+    /**
+     * @return the score of the actual game
+     */
+    int getScore();
 }

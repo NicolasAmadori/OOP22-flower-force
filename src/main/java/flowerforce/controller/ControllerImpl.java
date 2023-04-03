@@ -107,7 +107,7 @@ public final class ControllerImpl implements Controller {
     @Override
     public int getScore() {
         checkGame();
-        return this.game.getScore();
+        return this.game.get().getScore();
     }
 
     /**
@@ -116,7 +116,7 @@ public final class ControllerImpl implements Controller {
     @Override
     public int getProgresState() {
         checkGame();
-        return this.game.getProgressState();
+        return this.game.get().getProgressState();
     }
 
     /**

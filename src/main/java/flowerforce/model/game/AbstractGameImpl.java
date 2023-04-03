@@ -38,11 +38,11 @@ public abstract class AbstractGameImpl implements Game {
     public AbstractGameImpl(final int id, final World world) {
         var pos = new Point2D(0,0);
         this.placeablePlant = new HashMap<>();
-        LevelImpl.getPlantsId(id).forEach(p -> placeablePlant.put(
+        Level.getPlantsId(id).forEach(p -> placeablePlant.put(
                 new Pair<>(p.apply(TEMPORARY_POSITION).getName(),
                         p.apply(TEMPORARY_POSITION).getCost()),p)
         );
-        this.placeablePlant.keySet().forEach(p -> LevelImpl.getPlantsId(id));
+        this.placeablePlant.keySet().forEach(p -> Level.getPlantsId(id));
         this.sun = INITIAL_SUN * SUN_VALUE;
         this.levelId = id;
         this.sunTimer = new TimerImpl(TIME_TO_SPAWN_SUN);
@@ -75,7 +75,7 @@ public abstract class AbstractGameImpl implements Game {
     /**
      * @return the actual value of the game score.
      */
-    protected int getScore() {
+    public int getScore() {
         return this.score;
     }
 

@@ -1,41 +1,71 @@
 package flowerforce.model.game;
 
-import flowerforce.model.entities.IdConverter;
+import flowerforce.model.entities.*;
+import javafx.geometry.Point2D;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
 /**
- * It contains the information that characterizes each level of the game.
+ * This is an implementation of .
  */
-public interface Level {
-    /**
-     * @return The number of coins that is assigned once the level is completed
-     */
-    int getLevelCoins();
+public final class Level {
+
+    private static final List<Function<Point2D, Zombie>> AVAILABLE_ZOMBIES = List.of(
+            (pos) -> new ZombieFactoryImpl().basic(pos),
+            (pos) -> new ZombieFactoryImpl().conehead(pos),
+            (pos) -> new ZombieFactoryImpl().runner(pos),
+            (pos) -> new ZombieFactoryImpl().newspaper(pos),
+            (pos) -> new ZombieFactoryImpl().buckethead(pos),
+            (pos) -> new ZombieFactoryImpl().quarterback(pos)
+    );
+    private static final List<Function<Point2D, Plant>> AVAILABLE_PLANTS = List.of(
+            (pos) -> new SunflowerFactoryImpl().createCommonSunflower(pos),
+            (pos) -> new ShootingPlantFactoryImpl().peashooter(pos),
+            (pos) -> new ShootingPlantFactoryImpl().snow(pos),
+            Wallnut::new,
+            (pos) -> new ShootingPlantFactoryImpl().fire(pos),
+            (pos) -> new ShootingPlantFactoryImpl().fast(pos)
+    );
+    private static final int COINS = 100;
+    private static final List<Integer> ZOMBIE_LEVEL = List.of(20,40,60,60,60,80,80);
+    private static final Function<Point2D, Zombie> ZOMBIE_BOSS = (pos) -> new ZombieFactoryImpl().gargantuar(pos);
+
+    private Level() {}
 
     /**
-     * @return the plants that can be used in this level
+     * {@inheritDoc}.
      */
-    List<IdConverter.Plants> getPlantsId();
+    public static int getLevelCoins(final int id) {
+        return COINS * id;
+    }
 
     /**
-     * @return the zombies that can be used in this level
+     * {@inheritDoc}.
      */
-    List<IdConverter.Zombies> getZombiesId();
+    public static List<Function<Point2D, Plant>> getPlantsId(final int id) {
+        return AVAILABLE_PLANTS.subList(0, Math.min(1 + id, AVAILABLE_ZOMBIES.size()));
+    }
 
     /**
-     * @return the number of zombies in this level
+     * {@inheritDoc}.
      */
-    Integer getTotalZombies();
+    public static List<Function<Point2D, Zombie>> getZombiesId(final int id) {
+        return AVAILABLE_ZOMBIES.subList(0, Math.min(1 + id, AVAILABLE_ZOMBIES.size()));
+    }
 
     /**
-     * @return the ID of the level
+     * {@inheritDoc}.
      */
-    Integer getLevelId();
+    public static Integer getTotalZombies(final int id) {
+        return ZOMBIE_LEVEL.get(id-1);
+    }
 
     /**
-     * @return the ID of the zombie boss
+     * {@inheritDoc}.
      */
-    Optional<IdConverter.Zombies> getBossId();
+    public static Optional<Function<Point2D, Zombie>> getBossId(final int id) {
+        return 1 + id > AVAILABLE_ZOMBIES.size() ? Optional.of(ZOMBIE_BOSS) : Optional.empty();
+    }
 }
