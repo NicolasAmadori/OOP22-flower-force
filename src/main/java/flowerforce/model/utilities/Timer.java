@@ -24,7 +24,7 @@ public interface Timer {
     void reset();
 
     /**
-     * Sets the timer to a number of cycles (greater than 0)
+     * Sets the timer to a number of cycles (greater than 0).
      * @param numCycles number the timer is set to
      */
     void setNumCycles(int numCycles);

@@ -2,7 +2,6 @@ package flowerforce.model.entities;
 
 import java.util.List;
 
-import flowerforce.model.entities.IdConverter.Plants;
 import flowerforce.model.utilities.RenderingInformation;
 import flowerforce.model.utilities.TimerImpl;
 import javafx.geometry.Point2D;
@@ -23,7 +22,6 @@ public class CherryBomb extends AbstractPlant implements ExplodingPlant {
     /**
      * 
      * @param pos the initial position to place the entity in
-     * @param plantType the type of the plant
      */
     public CherryBomb(final Point2D pos) {
         super(
