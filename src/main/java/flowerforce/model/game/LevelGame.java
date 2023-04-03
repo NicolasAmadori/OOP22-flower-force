@@ -11,6 +11,7 @@ public class LevelGame extends AbstractGameImpl {
     private int remainingZombie;
     private final int id;
     private final ZombieGenerationLevel generateZombie;
+
     /**
      * Constructor to instantiate a level game.
      * @param levelId of the game started

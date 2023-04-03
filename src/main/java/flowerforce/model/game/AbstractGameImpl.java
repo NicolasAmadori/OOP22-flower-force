@@ -25,7 +25,6 @@ public abstract class AbstractGameImpl implements Game {
     private final TimerImpl sunTimer;
     private final Map<Pair<String,Integer>, TimerImpl> plantsTimer = new HashMap<>();
     private int sun;
-    private final int levelId;
     private final World world;
     private int score;
     private static final Point2D TEMPORARY_POSITION = new Point2D(0,0);
@@ -46,7 +45,6 @@ public abstract class AbstractGameImpl implements Game {
                         p.apply(TEMPORARY_POSITION).getCost()),p)
         );
         this.sun = INITIAL_SUN * SUN_VALUE;
-        this.levelId = id;
         this.sunTimer = new TimerImpl(TIME_TO_SPAWN_SUN);
         this.placeablePlant.keySet().forEach(p -> plantsTimer
                 .put(p, new TimerImpl(placeablePlant.get(p).apply(TEMPORARY_POSITION).getRechargeTime())));
