@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
  * This is an implementation of {@link Game}.
  */
 public abstract class AbstractGameImpl implements Game {
-    private final Map<Pair<String,Integer>, Function<Point2D,Plant>> placeablePlant;
+    private final Map<EntityInfo<String,Integer>, Function<Point2D,Plant>> placeablePlant;
     private static final double STANDARD_SECS_SPAWN_SUN = 5.0;
     private static final int TIME_TO_SPAWN_SUN = (int) (STANDARD_SECS_SPAWN_SUN * RenderingInformation.getFramesPerSecond());
     private static final int SUN_VALUE = 25;
@@ -25,7 +25,6 @@ public abstract class AbstractGameImpl implements Game {
     private final TimerImpl sunTimer;
     private final Map<Pair<String,Integer>, TimerImpl> plantsTimer = new HashMap<>();
     private int sun;
-    private final int levelId;
     private final World world;
     private int score;
     private static final Point2D TEMPORARY_POSITION = new Point2D(0,0);
@@ -38,15 +37,14 @@ public abstract class AbstractGameImpl implements Game {
     public AbstractGameImpl(final int id, final World world) {
         this.placeablePlant = new HashMap<>();
         Level.getPlantsId(id).forEach(p -> placeablePlant.put(
-                new Pair<>(p.apply(TEMPORARY_POSITION).getName(),
+                new EntityInfo<String,Integer>(p.apply(TEMPORARY_POSITION).getName(),
                         p.apply(TEMPORARY_POSITION).getCost()),p)
         );
         world.getShop().getBoughtPlantsFunctions().forEach(p -> placeablePlant.put(
-                new Pair<>(p.apply(TEMPORARY_POSITION).getName(),
+                new EntityInfo<String,Integer>(p.apply(TEMPORARY_POSITION).getName(),
                         p.apply(TEMPORARY_POSITION).getCost()),p)
         );
         this.sun = INITIAL_SUN * SUN_VALUE;
-        this.levelId = id;
         this.sunTimer = new TimerImpl(TIME_TO_SPAWN_SUN);
         this.placeablePlant.keySet().forEach(p -> plantsTimer
                 .put(p, new TimerImpl(placeablePlant.get(p).apply(TEMPORARY_POSITION).getRechargeTime())));
@@ -92,24 +90,24 @@ public abstract class AbstractGameImpl implements Game {
      * {@inheritDoc}
      */
     @Override
-    public Set<Pair<String,Point2D>> getPlacedZombies() {
-        return zombies.stream().map(z -> new Pair<>(z.getName(),z.getPosition())).collect(Collectors.toSet());
+    public Set<EntityInfo<String,Point2D>> getPlacedZombies() {
+        return zombies.stream().map(Entity::getEntityInfo).collect(Collectors.toSet());
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Set<Pair<String,Point2D>> getPlacedPlants() {
-        return plants.stream().map(p -> new Pair<>(p.getName(),p.getPosition())).collect(Collectors.toSet());
+    public Set<EntityInfo<String,Point2D>> getPlacedPlants() {
+        return plants.stream().map(Entity::getEntityInfo).collect(Collectors.toSet());
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Set<Pair<String,Point2D>> getPlacedBullet() {
-        return bullets.stream().map(b -> new Pair<>(b.getName(),b.getPosition())).collect(Collectors.toSet());
+    public Set<EntityInfo<String,Point2D>> getPlacedBullet() {
+        return bullets.stream().map(Entity::getEntityInfo).collect(Collectors.toSet());
     }
 
     /**
@@ -164,8 +162,8 @@ public abstract class AbstractGameImpl implements Game {
      * {@inheritDoc}
      */
     @Override
-    public List<Pair<String,Integer>> getAllPlant() {
-        return this.placeablePlant.keySet().stream().toList();
+    public Set<EntityInfo<String,Integer>> getPlaceablePlant() {
+        return this.placeablePlant.keySet();
     }
 
     /**

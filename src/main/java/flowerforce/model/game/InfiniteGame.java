@@ -23,7 +23,7 @@ public class InfiniteGame extends AbstractGameImpl {
     public boolean isOver() {
         final var end = super.isOver();
         if (end) {
-            this.getWorld().getPlayer().addNewScore(this.getScore());
+            super.getWorld().getPlayer().addNewScore(super.getScore());
         }
         return super.isOver();
     }
@@ -52,6 +52,6 @@ public class InfiniteGame extends AbstractGameImpl {
     @Override
     protected void generateZombie() {
         final var zombie = this.generateZombie.zombieGeneration();
-        zombie.ifPresent(this::addZombie);
+        zombie.ifPresent(super::addZombie);
     }
 }
