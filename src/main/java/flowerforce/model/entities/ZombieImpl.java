@@ -31,7 +31,8 @@ public class ZombieImpl extends AbstractLivingEntity implements Zombie {
      * @param difficulty the generic difficulty of the zombie
      * @param zombieName the name of the zombie
      */
-    protected ZombieImpl(final double defaultDelta, final int damage, final int health, final Point2D position, final int difficulty, final String zombieName) {                
+    protected ZombieImpl(final double defaultDelta, final int damage, final int health, final Point2D position,
+            final int difficulty, final String zombieName) {
         super(position, new TimerImpl(EAT_WAITING_TICKS), health, zombieName);
         this.defaultDelta = defaultDelta;
         this.damage = damage;
@@ -117,7 +118,7 @@ public class ZombieImpl extends AbstractLivingEntity implements Zombie {
     }
 
     /**
-     * This method can be called by subtypes to change the delta (so the velocity) of the zombie
+     * This method can be called by subtypes to change the delta (i.e. the velocity) of the zombie.
      * @param newDelta to be set
      */
     protected void setDelta(final double newDelta) {
