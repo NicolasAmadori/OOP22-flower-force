@@ -1,6 +1,5 @@
 package flowerforce.model.entities;
 
-import flowerforce.model.game.Yard;
 import flowerforce.model.utilities.RenderingInformation;
 import flowerforce.model.utilities.TimerImpl;
 import javafx.geometry.Point2D;
@@ -8,7 +7,7 @@ import javafx.geometry.Point2D;
 /**
  * A factory that generates {@link ShootingPlant} instances.
  */
-public class ShootingPlantFactory {
+public final class ShootingPlantFactory {
 
     private static final double STANDARD_SECS_SHOOTING_TIME = 1.425;
     private static final int STANDARD_SHOOTING_TIME = (int) (

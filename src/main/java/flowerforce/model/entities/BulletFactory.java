@@ -5,7 +5,7 @@ import javafx.geometry.Point2D;
 /**
  * Models a factory for Bullet entities.
  */
-public class BulletFactory {
+public final class BulletFactory {
 
     private static final int STANDARD_DAMAGE = 20;
     private static final int FIRE_DAMAGE = STANDARD_DAMAGE * 2;
