@@ -24,7 +24,7 @@ public final class ResourceFinder {
 
     private static final String IMAGES_FOLDER_NAME = "images";
 
-    private static final String MENU_IMAGES_FOLDER_NAME = "bullets";
+    private static final String MENU_IMAGES_FOLDER_NAME = "menu";
 
     private static final String PLANTS_IMAGES_FOLDER_NAME = "plants";
 
