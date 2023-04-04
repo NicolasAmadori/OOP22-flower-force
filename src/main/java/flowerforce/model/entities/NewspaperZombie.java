@@ -3,7 +3,8 @@ package flowerforce.model.entities;
 import javafx.geometry.Point2D;
 
 /**
- * This class models a newspaper zombie that extends {@link ZombieImpl}
+ * This class models a newspaper zombie that extends {@link ZombieImpl}, so that
+ * it can accelerate after receiving a certain damage.
  */
 public class NewspaperZombie extends ZombieImpl {
 
@@ -16,7 +17,9 @@ public class NewspaperZombie extends ZombieImpl {
      * @param damage given by the zombie
      * @param health of the zombie
      * @param position of the zombie
-     * @param newpaperHealth the health of its newspaper
+     * @param newspaperHealth the health of its newspaper
+     * @param difficulty the generic difficulty of the zombie
+     * @param zombieName the name of the zombie
      */
     public NewspaperZombie(final double defaultDelta, final int damage, final int health, final Point2D position,
             final int newspaperHealth, final int difficulty, final String zombieName) {
@@ -25,6 +28,11 @@ public class NewspaperZombie extends ZombieImpl {
         this.isRunning = false;
     }
 
+    /**
+     * Override of {@link Zombie#receiveDamage(int)},
+     * so that {@link NewspaperZombie} can accelerate after receiving a certain damage.
+     * @param damage to receive
+     */
     @Override
     public void receiveDamage(final int damage) {
         super.receiveDamage(damage);

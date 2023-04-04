@@ -28,10 +28,13 @@ public abstract class AbstractZombieGeneration implements ZombieGeneration {
     private int hordeGeneratedZombie = 0;
     private int hordeZombie;
     private final int startNumberZombieHorde;
+    private final int zombieBeforeHorde;
     private boolean incrementableHorde;
 
-    public AbstractZombieGeneration(final int levelId, final int startNumberZombieHorde) {
+    public AbstractZombieGeneration(final int levelId, final int zombieBeforeHorde,
+                                    final int startNumberZombieHorde) {
         genZombie = new CreationZombie(LevelInfo.getZombiesInfo(levelId));
+        this.zombieBeforeHorde = zombieBeforeHorde;
         this.zombieTimer = new TimerImpl(timeZombie);
         this.startNumberZombieHorde = startNumberZombieHorde;
         this.hordeZombie = startNumberZombieHorde;
@@ -44,7 +47,7 @@ public abstract class AbstractZombieGeneration implements ZombieGeneration {
     public Optional<Zombie> zombieGeneration() {
         this.zombieTimer.updateState();
         if (this.zombieTimer.isReady()) {
-            if (this.generatedZombie % startNumberZombieHorde == 0) {
+            if (this.generatedZombie % zombieBeforeHorde == 0) {
                 this.hordeGeneratedZombie++;
                 if (this.hordeGeneratedZombie == this.hordeZombie) {
                     if (timeZombie - DEC_TIME_ZOMBIE > MIN_TIME_TO_SPAWN_ZOMBIE) {
@@ -79,7 +82,7 @@ public abstract class AbstractZombieGeneration implements ZombieGeneration {
      */
     @Override
     public int getNumberHordeZombie() {
-        return this.hordeZombie + startNumberZombieHorde;
+        return this.hordeZombie + this.zombieBeforeHorde;
     }
 
     protected void increaseHordeZombie(final int value, final int maxRange) {
