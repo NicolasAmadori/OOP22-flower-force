@@ -11,7 +11,7 @@ import javafx.scene.text.Text;
 public class MenuSceneController {
 
     @FXML
-    private Text scoreText;
+    private Text scoreRecord;
 
     private final FlowerForceApplication application;
 
@@ -27,8 +27,8 @@ public class MenuSceneController {
      * Sets Player's score in the Menu.
      */
     public void initialize() {
-        final int score = this.application.getController().getPlayerScoreRecord();
-        this.scoreText.setText(this.scoreText.getText().concat(Integer.toString(score)));
+        final int record = this.application.getController().getPlayerScoreRecord();
+        this.scoreRecord.setText(this.scoreRecord.getText().concat(Integer.toString(record)));
     }
 
     /**
