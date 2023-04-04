@@ -12,44 +12,44 @@
    <children>
       <ImageView fx:id="background" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
-            <Image url="@../images/menu.png" />
+            <Image url="@../images/menu/menu.png" />
          </image>
       </ImageView>
       <FlowPane hgap="200.0" layoutX="243.0" layoutY="698.0" prefHeight="1419.0" prefWidth="3955.0" styleClass="flowpane" vgap="60.0">
          <children>
             <ImageView fx:id="Lvl1" accessibleText="1" fitHeight="500.0" fitWidth="500.0" onMouseClicked="#startLevel" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/L1.png" />
+                  <Image url="@../images/menu/L1.png" />
                </image>
             </ImageView>
             <ImageView fx:id="Lvl2" accessibleText="2" fitHeight="500.0" fitWidth="500.0" onMouseClicked="#startLevel" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/L2.png" />
+                  <Image url="@../images/menu/L2.png" />
                </image>
             </ImageView>
             <ImageView fx:id="Lvl3" accessibleText="3" fitHeight="500.0" fitWidth="500.0" onMouseClicked="#startLevel" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/L3.png" />
+                  <Image url="@../images/menu/L3.png" />
                </image>
             </ImageView>
             <ImageView fx:id="Lvl4" accessibleText="4" fitHeight="500.0" fitWidth="500.0" onMouseClicked="#startLevel" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/L4.png" />
+                  <Image url="@../images/menu/L4.png" />
                </image>
             </ImageView>
             <ImageView fx:id="Lvl5" accessibleText="5" fitHeight="500.0" fitWidth="500.0" onMouseClicked="#startLevel" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/L5.png" />
+                  <Image url="@../images/menu/L5.png" />
                </image>
             </ImageView>
             <ImageView fx:id="Lvl6" accessibleText="6" fitHeight="500.0" fitWidth="500.0" onMouseClicked="#startLevel" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/L6.png" />
+                  <Image url="@../images/menu/L6.png" />
                </image>
             </ImageView>
             <ImageView fx:id="adventureMode" fitHeight="500.0" fitWidth="500.0" onMouseClicked="#startAdventureGame" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/Ladventure.png" />
+                  <Image url="@../images/menu/Ladventure.png" />
                </image>
             </ImageView>
          </children>
@@ -69,12 +69,12 @@
          <children>
             <ImageView fx:id="shop" accessibleText="2" fitHeight="487.0" fitWidth="386.0" onMouseClicked="#shop" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/shopicon.png" />
+                  <Image url="@../images/menu/shopicon.png" />
                </image>
             </ImageView>
             <ImageView fx:id="howToPlay" fitHeight="500.0" fitWidth="500.0" onMouseClicked="#howToPlay" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/how_to_play.png" />
+                  <Image url="@../images/menu/how_to_play.png" />
                </image>
             </ImageView>
          </children>

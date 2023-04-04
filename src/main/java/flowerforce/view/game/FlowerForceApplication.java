@@ -37,7 +37,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
         this.stage = primaryStage;
         this.controller = new ControllerImpl();
         this.stage.setResizable(false);
-        this.stage.getIcons().add(new Image(ResourceFinder.getImagePath(GAMEICON_NAME)));
+        this.stage.getIcons().add(new Image(ResourceFinder.getMenuImagePath(GAMEICON_NAME)));
         this.stage.setOnCloseRequest(e -> {
             Platform.exit();
             System.exit(0);
@@ -146,7 +146,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
      * @return a Dimension2D contaning image's dimensions
      */
     public static Dimension2D getImgDimensions(final String imgName) {
-        final Image image = new Image(ResourceFinder.getImagePath(imgName));
+        final Image image = new Image(ResourceFinder.getMenuImagePath(imgName));
         //image's dimensions
         return new Dimension2D(image.getWidth(), image.getHeight());
     }

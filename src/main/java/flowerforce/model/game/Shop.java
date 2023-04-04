@@ -3,7 +3,6 @@ package flowerforce.model.game;
 import flowerforce.model.entities.Plant;
 import flowerforce.model.entities.PlantInfo;
 import javafx.geometry.Point2D;
-import javafx.util.Pair;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
