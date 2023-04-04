@@ -20,16 +20,12 @@
             <Font size="26.0" />
          </font>
       </Label>
-      <ImageView fitHeight="228.0" fitWidth="394.0" layoutX="657.0" layoutY="264.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../../../../../../../Downloads/pot.png" />
-         </image></ImageView>
       <ImageView fx:id="imgBuy" fitHeight="134.0" fitWidth="187.0" layoutX="711.0" layoutY="488.0" onMouseClicked="#buyItem" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../../../../../Downloads/buy_button.png" />
+            <Image url="@../images/buy_button.png" />
          </image></ImageView>
       <ImageView fx:id="imgMenu" fitHeight="96.0" fitWidth="218.0" layoutX="618.0" layoutY="708.0" onMouseClicked="#mainMenu" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fx:id="imgItemToSell" fitHeight="150.0" fitWidth="200.0" layoutX="696.0" layoutY="204.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imgItemToSell" fitHeight="208.0" fitWidth="291.0" layoutX="735.0" layoutY="217.0" pickOnBounds="true" preserveRatio="true" />
       <Label fx:id="lblCoins" layoutX="10.0" layoutY="21.0" textFill="#13e243">
          <font>
             <Font size="80.0" />
