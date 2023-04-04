@@ -1,7 +1,5 @@
 package flowerforce.view.game;
 
-import java.io.IOException;
-
 /**
  * Models the Menu screen.
  */
@@ -15,7 +13,7 @@ public class MenuScene extends AbstractFlowerForceScene {
      * @param application the application that displays the scene
      * @throws IOException
      */
-    public MenuScene(final FlowerForceApplication application) throws IOException {
+    public MenuScene(final FlowerForceApplication application) {
         super(FXML_PATH, IMAGE_NAME, new MenuSceneController(application));
     }
 
