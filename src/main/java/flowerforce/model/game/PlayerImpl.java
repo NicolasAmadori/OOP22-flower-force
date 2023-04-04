@@ -11,7 +11,7 @@ public class PlayerImpl implements Player {
     private int nCoins;
     private int scoreRecord;
     private int lastUnlockedLevelId;
-    private Set<Integer> plantsIds = new HashSet<>();
+    private final Set<Integer> plantsIds = new HashSet<>();
 
     /**
      * Constructor to instantiate a totally new player.
