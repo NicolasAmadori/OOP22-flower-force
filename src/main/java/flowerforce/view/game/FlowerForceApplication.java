@@ -73,21 +73,10 @@ public final class FlowerForceApplication extends Application implements FlowerF
 
     @Override
     public void shop() {
-<<<<<<< HEAD
-        try {
-            FlowerForceScene sceneClass = new ShopScene(this);
-            this.setScene(sceneClass.getScene());
-            this.stage.setTitle("Shop");
-            SoundManager.openShop();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-=======
         final FlowerForceScene sceneClass = new ShopScene(this);
         this.setScene(sceneClass.getScene());
         this.stage.setTitle("Shop");
-        SoundManager.openShopSound();
->>>>>>> ff9b699275f71fa402530f77f8eccad9165b73f9
+        SoundManager.openShop();
     }
 
     @Override
