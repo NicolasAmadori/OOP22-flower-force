@@ -22,6 +22,7 @@ public abstract class AbstractGameImpl implements Game {
     private Set<Plant> plants = new HashSet<>();
     private Set<Bullet> bullets = new HashSet<>();
     private Set<Zombie> zombies = new HashSet<>();
+    private final Set<EntityInfo<String,Point2D>> damagedEntities = new HashSet<>();
     private final TimerImpl sunTimer;
     private final Map<Pair<String,Integer>, TimerImpl> plantsTimer = new HashMap<>();
     private int sun;
@@ -92,6 +93,14 @@ public abstract class AbstractGameImpl implements Game {
     @Override
     public Set<EntityInfo<String,Point2D>> getPlacedZombies() {
         return zombies.stream().map(Entity::getEntityInfo).collect(Collectors.toSet());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Set<EntityInfo<String,Point2D>> getDamagedEntity() {
+        return this.damagedEntities;
     }
 
     /**
@@ -213,7 +222,10 @@ public abstract class AbstractGameImpl implements Game {
                          - bullet.getDeltaMovement() - zombie.getDeltaMovement())
                  .filter(zombie -> !zombie.isOver())
                  .min(Comparator.comparing(zombie -> zombie.getPosition().getX()))
-                 .ifPresent(bullet::hit));
+                 .ifPresent(z -> {
+                     bullet.hit(z);
+                     damagedEntities.add(z.getEntityInfo());
+                 }));
          this.zombies.stream().filter(Entity::isOver).forEach(z -> score += z.getDifficulty() * 100);
          this.zombies = this.zombies.stream().filter(z -> !z.isOver()).collect(Collectors.toSet());
          this.bullets = this.bullets.stream().filter(b -> !b.isOver()).collect(Collectors.toSet());
@@ -229,7 +241,12 @@ public abstract class AbstractGameImpl implements Game {
                 .filter(zombie -> zombie.getPosition().getX() <= plant.getPosition().getX())
                 .filter(zombie -> zombie.getPosition().getX() > plant.getPosition().getX()
                         - Yard.getCellDimension().getWidth())
-                .forEach(zombie -> zombieEating.put(zombie, plant)));
+                .forEach(zombie ->
+                    {
+                        zombieEating.put(zombie, plant);
+                        this.damagedEntities.add(zombie.getEntityInfo());
+                    }
+                ));
 
         this.zombies.forEach(zombie -> {
                     if (zombieEating.containsKey(zombie)) {

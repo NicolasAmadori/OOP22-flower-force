@@ -28,6 +28,12 @@ public interface Game {
     Set<EntityInfo<String,Point2D>> getPlacedPlants();
 
     /**
+     * Call to know which entity got damage.
+     * @return the set of the damage entities
+     */
+    Set<EntityInfo<String,Point2D>> getDamagedEntity();
+
+    /**
      * Call to know which bullets are in the game field.
      * @return the set of bullets in the game field
      */
