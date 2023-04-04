@@ -1,5 +1,6 @@
 package flowerforce.controller.utilities;
 
+import flowerforce.model.entities.EntityInfo;
 import flowerforce.view.entities.CardView;
 import flowerforce.view.entities.EntityView;
 import javafx.geometry.Point2D;
@@ -12,21 +13,21 @@ public interface EntityConverter {
      * @param plantInfo the information of the plant
      * @return The entityView representing the plant
      */
-    EntityView getPlantView(Pair<String, Point2D> plantInfo);
+    EntityView getPlantView(EntityInfo plantInfo);
 
     /**
      * Create an entityView using the zombie information.
      * @param zombieInfo the information of the zombie
      * @return The entityView representing the zombie
      */
-    EntityView getZombieView(Pair<String, Point2D> zombieInfo);
+    EntityView getZombieView(EntityInfo zombieInfo);
 
     /**
      * Create an entityView using the bullet information.
      * @param bulletInfo the information of the bullet
      * @return The entityView representing the bullet
      */
-    EntityView getBulletView(Pair<String, Point2D> bulletInfo);
+    EntityView getBulletView(EntityInfo bulletInfo);
 
     /**
      * Change the position of a Zombie EntityView.
