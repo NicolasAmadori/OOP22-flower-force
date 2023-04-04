@@ -1,7 +1,7 @@
 package flowerforce.model.game;
 
 import flowerforce.model.entities.Zombie;
-import flowerforce.model.entities.ZombieFactoryImpl;
+import flowerforce.model.entities.ZombieFactory;
 import javafx.geometry.Point2D;
 
 import java.util.List;
@@ -60,7 +60,7 @@ public class CreationZombie {
                         ));
             }
         }
-        return new ZombieFactoryImpl().basic(Yard.getEntityPosition(
+        return new ZombieFactory().basic(Yard.getEntityPosition(
                 row,
                 Yard.getColsNum() - 1
         ));
