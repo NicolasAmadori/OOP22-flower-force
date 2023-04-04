@@ -17,12 +17,12 @@
    <children>
       <ImageView fx:id="imgBackground" onMouseClicked="#yardClicked" onMouseMoved="#mouseMoved" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
-            <Image url="@../images/Garden.png" />
+            <Image url="@../images/menu/Garden.png" />
          </image>
       </ImageView>
        <ImageView fitHeight="210.0" fitWidth="173.0" layoutX="37.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
            <image>
-               <Image url="@../images/bar.jpeg" />
+               <Image url="@../images/menu/sunCounterSign.jpeg" />
            </image>
        </ImageView>
        <Label fx:id="lblSunCounter" alignment="CENTER" layoutX="52.0" layoutY="161.0" prefHeight="18.0" prefWidth="139.0" text="0">
@@ -33,7 +33,7 @@
       <ImageView fx:id="imageResult" disable="true" fitHeight="608.0" fitWidth="525.0" layoutX="818.0" layoutY="163.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" visible="false" />
       <ImageView fx:id="imageMenu" disable="true" fitHeight="153.0" fitWidth="282.0" layoutX="937.0" layoutY="785.0" onMouseClicked="#selectMenu" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
-            <Image url="@../images/returnToMainMenu.png" />
+            <Image url="@../images/menu/returnToMainMenu.png" />
          </image>
       </ImageView>
       <FlowPane columnHalignment="CENTER" layoutX="48.0" layoutY="226.0" prefHeight="767.0" prefWidth="130.0" vgap="10.0">
@@ -177,7 +177,7 @@
       </Rectangle>
       <ImageView fx:id="imageShovel" fitHeight="102.0" fitWidth="98.0" layoutX="231.0" layoutY="19.0" onMouseClicked="#shovelSelected" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../images/shovel.png" />
+            <Image url="@../images/menu/shovel.png" />
          </image>
       </ImageView>
       <ProgressBar fx:id="progressBar" layoutX="1610.0" layoutY="1044.0" mouseTransparent="true" nodeOrientation="RIGHT_TO_LEFT" prefHeight="30.0" prefWidth="300.0" progress="0.0" />
