@@ -14,6 +14,7 @@ import flowerforce.controller.utilities.CardGenerator;
 import flowerforce.controller.utilities.EntityConverter;
 import flowerforce.controller.utilities.WorldSavingManager;
 import flowerforce.model.entities.EntityInfo;
+import flowerforce.model.entities.PlantInfo;
 import flowerforce.model.game.Game;
 import flowerforce.model.game.World;
 import flowerforce.controller.utilities.EntityConverterImpl;
@@ -37,7 +38,7 @@ public final class ControllerImpl implements Controller {
     private Map<EntityInfo<String, Point2D>, EntityView> previousPlant = new HashMap<>();
     private Map<EntityInfo<String, Point2D>, EntityView> previousZombie = new HashMap<>();
     private Map<EntityInfo<String, Point2D>, EntityView> previousBullet = new HashMap<>();
-    private Map<CardView, Pair<String,Integer>> purchasablePlants = new HashMap<>();
+    private final Map<CardView, PlantInfo> purchasablePlants = new HashMap<>();
 
     /**
      * Create a new instance of Controller.
@@ -264,7 +265,7 @@ public final class ControllerImpl implements Controller {
      */
     @Override
     public Map<CardView, Boolean> getPurchasablePlants() {
-        Map<Pair<String,Integer>, Boolean> shopPlants = this.world.getShop().getPurchasablePlants();
+        Map<PlantInfo, Boolean> shopPlants = this.world.getShop().getPurchasablePlants();
         Map<CardView, Boolean> toReturn = new HashMap<>();
         this.purchasablePlants.clear();
         shopPlants.keySet().stream()
