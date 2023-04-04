@@ -18,9 +18,9 @@ public final class ResourceFinder {
     private static final String FXML_FOLDER_NAME = "fxml";
     private static final String SAVING_FOLDER_NAME = "savings";
     private static final String IMAGES_FOLDER_NAME = "images";
-    private static final String PLANTS_FOLDER_NAME = "plants";
-    private static final String ZOMBIES_FOLDER_NAME = "zombies";
-    private static final String BULLETS_FOLDER_NAME = "bullets";
+    private static final String PLANTS_IMAGES_FOLDER_NAME = "plants";
+    private static final String ZOMBIES_IMAGES_FOLDER_NAME = "zombies";
+    private static final String BULLETS_IMAGES_FOLDER_NAME = "bullets";
 
     private ResourceFinder() {
 
@@ -32,7 +32,7 @@ public final class ResourceFinder {
      * @return the absolute path of the plant image
      */
     public static String getPlantImagePath(final String filename) {
-        return getImagePath(PLANTS_FOLDER_NAME + File.separator + filename);
+        return getImagePath(PLANTS_IMAGES_FOLDER_NAME + File.separator + filename);
     }
 
     /**
@@ -41,7 +41,7 @@ public final class ResourceFinder {
      * @return the absolute path of the zombie image
      */
     public static String getZombieImagePath(final String filename) {
-        return getImagePath(ZOMBIES_FOLDER_NAME + File.separator + filename);
+        return getImagePath(ZOMBIES_IMAGES_FOLDER_NAME + File.separator + filename);
     }
 
     /**
@@ -50,7 +50,7 @@ public final class ResourceFinder {
      * @return the absolute path of the bullet image
      */
     public static String getBulletImagePath(final String filename) {
-        return getImagePath(BULLETS_FOLDER_NAME + File.separator + filename);
+        return getImagePath(BULLETS_IMAGES_FOLDER_NAME + File.separator + filename);
     }
 
     /**
