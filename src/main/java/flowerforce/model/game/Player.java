@@ -35,7 +35,6 @@ public interface Player {
     /**
      * Set a new value for the score record of the player.
      * @param score The integer representing the new score record
-     * @return True if the operation was succesful, false otherwise
      */
     void addNewScore(int score);
 
@@ -56,5 +55,9 @@ public interface Player {
      */
     void addPlant(int plantIndex);
 
+    /**
+     * Get all the bought plant ids (ids read from the shop).
+     * @return a set of integer representing the ids
+     */
     Set<Integer> getPlantsIds();
 }

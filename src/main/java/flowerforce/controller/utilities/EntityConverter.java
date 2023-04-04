@@ -1,11 +1,12 @@
 package flowerforce.controller.utilities;
 
 import flowerforce.model.entities.EntityInfo;
-import flowerforce.view.entities.CardView;
 import flowerforce.view.entities.EntityView;
 import javafx.geometry.Point2D;
-import javafx.util.Pair;
 
+/**
+ * The Entity converter to create entities to draw in the view.
+ */
 public interface EntityConverter {
 
     /**
