@@ -15,7 +15,7 @@ import flowerforce.model.entities.ShootingPlantFactory;
 import flowerforce.model.entities.ShootingPlantFactoryImpl;
 import flowerforce.model.entities.Zombie;
 import flowerforce.model.entities.ZombieFactory;
-import flowerforce.model.entities.ZombieFactoryImpl;
+import flowerforce.model.entities.ZombieFactory;
 import javafx.geometry.Point2D;
 
 
@@ -25,7 +25,7 @@ final class TestSnowBullet {
     private static final double STARTING_PLANT_POS_Y = 100.0;
 
     private final ShootingPlantFactory plantFactory = new ShootingPlantFactoryImpl();
-    private final ZombieFactory zombieFactory = new ZombieFactoryImpl();
+    private final ZombieFactory zombieFactory = new ZombieFactory();
     private final ShootingPlant producer = this.plantFactory.snow(
         new Point2D(STARTING_PLANT_POS_X, STARTING_PLANT_POS_Y)
     );
