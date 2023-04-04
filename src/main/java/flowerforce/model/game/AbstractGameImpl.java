@@ -101,7 +101,9 @@ public abstract class AbstractGameImpl implements Game {
      */
     @Override
     public Set<EntityInfo<String, Point2D>> getDamagedEntity() {
-        return this.damagedEntities;
+        var tmpDamagedEntities = Set.copyOf(this.damagedEntities);
+        damagedEntities.clear();
+        return tmpDamagedEntities;
     }
 
     /**
