@@ -1,12 +1,12 @@
 package flowerforce.controller.utilities;
 
 import flowerforce.common.ResourceFinder;
+import flowerforce.model.entities.EntityInfo;
 import flowerforce.view.entities.EntityView;
 import flowerforce.view.entities.EntityViewImpl;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
-import javafx.util.Pair;
 
 /**
  * This utility class convert an entity given from the model into an entity that can be drawn in the view.
@@ -34,7 +34,7 @@ public final class EntityConverterImpl implements EntityConverter {
      * {@inheritDoc}
      */
     @Override
-    public EntityView getPlantView(final Pair<String, Point2D> plantInfo) {
+    public EntityView getPlantView(final EntityInfo<String, Point2D> plantInfo) {
         final String completeImagePath = ResourceFinder.getPlantImagePath(
                 plantInfo.getKey().concat(IMAGES_EXTENSION));
         final Point2D newPosition = convertPlantPosition(plantInfo.getValue(), completeImagePath);
@@ -45,7 +45,7 @@ public final class EntityConverterImpl implements EntityConverter {
      * {@inheritDoc}
      */
     @Override
-    public EntityView getZombieView(final Pair<String, Point2D> zombieInfo) {
+    public EntityView getZombieView(final EntityInfo<String, Point2D> zombieInfo) {
         final String completeImagePath = ResourceFinder.getZombieImagePath(
                 zombieInfo.getKey().concat(IMAGES_EXTENSION));
         final Point2D newPosition = convertZombiePosition(zombieInfo.getValue(), completeImagePath);
@@ -56,7 +56,7 @@ public final class EntityConverterImpl implements EntityConverter {
      * {@inheritDoc}
      */
     @Override
-    public EntityView getBulletView(final Pair<String, Point2D> bulletInfo) {
+    public EntityView getBulletView(final EntityInfo<String, Point2D> bulletInfo) {
         final String completeImagePath = ResourceFinder.getBulletImagePath(
                 bulletInfo.getKey().concat(IMAGES_EXTENSION));
         final Point2D newPosition = convertBulletPosition(bulletInfo.getValue(), completeImagePath);
