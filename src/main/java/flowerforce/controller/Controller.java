@@ -1,5 +1,6 @@
 package flowerforce.controller;
 
+import flowerforce.model.entities.EntityInfo;
 import flowerforce.model.game.Game;
 import flowerforce.view.entities.CardView;
 import flowerforce.view.entities.EntityView;
@@ -121,6 +122,12 @@ public interface Controller {
      * @return A set of EntityView.
      */
     Set<EntityView> getPlacedBullets();
+
+    /**
+     * Get all the entities that received damage.
+     * @return A set of entityInfo
+     */
+    Set<EntityView> getDamagedEntities();
 
     /**
      * All the cards that are enabled to select.

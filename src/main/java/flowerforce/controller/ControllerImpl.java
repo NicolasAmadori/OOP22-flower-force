@@ -250,6 +250,23 @@ public final class ControllerImpl implements Controller {
         return new HashSet<>(this.previousBullet.values());
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Set<EntityView> getDamagedEntities() {
+        checkGame();
+        final var damagedEntities = this.game.get().getDamagedEntity();
+        final Set<EntityView> output = new HashSet<>();
+        this.previousPlant.entrySet().stream()
+                .filter(e -> damagedEntities.contains(e.getKey()))
+                .forEach(e -> output.add(e.getValue()));
+        this.previousZombie.entrySet().stream()
+                .filter(e -> damagedEntities.contains(e.getKey()))
+                .forEach(e -> output.add(e.getValue()));
+        return output;
+    }
+
     private List<CardView> getCards() {
         this.checkGame();
         this.game.get().getPlaceablePlant()
