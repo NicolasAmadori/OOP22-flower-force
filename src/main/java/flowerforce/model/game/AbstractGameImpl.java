@@ -251,8 +251,9 @@ public abstract class AbstractGameImpl implements Game {
 
         this.zombies.forEach(zombie -> {
             if (zombieEating.containsKey(zombie)) {
-                this.damagedEntities.add(zombieEating.get(zombie).getEntityInfo());
-                zombie.manageEating(zombieEating.get(zombie));
+                if (zombie.manageEating(zombieEating.get(zombie))) {
+                    this.damagedEntities.add(zombieEating.get(zombie).getEntityInfo());
+                }
             } else {
                 zombie.move();
             }
