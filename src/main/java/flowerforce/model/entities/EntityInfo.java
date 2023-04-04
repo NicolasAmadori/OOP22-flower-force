@@ -1,25 +1,28 @@
 package flowerforce.model.entities;
 
-import javafx.util.Pair;
+import javafx.geometry.Point2D;
 
 /**
- * This class models the info that must be saved about an entity in order to recognise it using maps.
- * It extends {@link Pair} and override just the method {@link Pair#equals(Object)}.
+ * Models the info that must be saved about an {@link Entity} in order to recognise it using maps.
  */
-public class EntityInfo<X,Y> extends Pair<X,Y> {
+public interface EntityInfo {
 
     /**
      * 
-     * @param key of the pair
-     * @param value of the pair
+     * @return the name of the entity
      */
-    public EntityInfo(final X key, final Y value) {
-        super(key, value);
-    }
+    String getName();
 
-    @Override
-    public boolean equals(final Object obj) {
-        return this == obj;
-    }
+    /**
+     * 
+     * @return the position of the entity
+     */
+    Point2D getPosition();
+
+    /**
+     * 
+     * @param position to be set
+     */
+    void setPosition(Point2D position);
 
 }

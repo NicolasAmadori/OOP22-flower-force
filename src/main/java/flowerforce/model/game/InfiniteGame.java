@@ -1,7 +1,6 @@
 package flowerforce.model.game;
 
 /**
- * An implementation of a new infinite game.
  * This game will spawn zombies until the player loses.
  */
 public class InfiniteGame extends AbstractGameImpl {
