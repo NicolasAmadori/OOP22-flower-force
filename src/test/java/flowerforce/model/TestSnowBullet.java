@@ -23,14 +23,7 @@ final class TestSnowBullet {
     private static final double STARTING_PLANT_POS_X = 100.0;
     private static final double STARTING_PLANT_POS_Y = 100.0;
 
-<<<<<<< HEAD
-    private final ZombieFactory zombieFactory = new ZombieFactoryImpl();
     private final ShootingPlant producer = ShootingPlantFactory.createSnowShooter(
-=======
-    private final ShootingPlantFactory plantFactory = new ShootingPlantFactoryImpl();
-    private final ZombieFactory zombieFactory = new ZombieFactory();
-    private final ShootingPlant producer = this.plantFactory.snow(
->>>>>>> e78a1dac07915425c57e394e221079e7d8bd6fa7
         new Point2D(STARTING_PLANT_POS_X, STARTING_PLANT_POS_Y)
     );
     private Zombie zombie;
@@ -41,7 +34,7 @@ final class TestSnowBullet {
      */
     @BeforeEach
     void setUp() {
-        this.zombie = zombieFactory.basic(new Point2D(STARTING_PLANT_POS_X + 1, STARTING_PLANT_POS_Y));
+        this.zombie = ZombieFactory.basic(new Point2D(STARTING_PLANT_POS_X + 1, STARTING_PLANT_POS_Y));
         this.bullet = Optional.empty();
         while (this.bullet.isEmpty()) {
             this.producer.updateState();

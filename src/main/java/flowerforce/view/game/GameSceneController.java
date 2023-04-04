@@ -307,7 +307,7 @@ public final class GameSceneController implements GameEngine {
     }
 
     private void damageEntities() {
-        final Set<EntityView> damagedEntities = new HashSet<>(); //TODO: take them from controller
+        final Set<EntityView> damagedEntities = this.application.getController().getDamagedEntities();
         //plants
         if (this.damageDrawnEntities(damagedEntities, this.drawnPlants)) {
             SoundManager.zombieEating();
@@ -316,8 +316,6 @@ public final class GameSceneController implements GameEngine {
         if (this.damageDrawnEntities(damagedEntities, this.drawnZombies)) {
             SoundManager.bulletHit();
         }
-        //bullets
-        this.damageDrawnEntities(damagedEntities, this.drawnBullets);
     }
 
     private boolean damageDrawnEntities(final Set<EntityView> damagedEntities, final Map<EntityView, ImageView> drawnEntities) {
