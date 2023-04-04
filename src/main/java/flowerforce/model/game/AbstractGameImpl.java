@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
  * This is an implementation of {@link Game}.
  */
 public abstract class AbstractGameImpl implements Game {
-    private final Map<EntityInfo<String, Integer>, Function<Point2D, Plant>> placeablePlant;
+    private final Map<PlantInfo, Function<Point2D, Plant>> placeablePlant;
     private static final double STANDARD_SECS_SPAWN_SUN = 5.0;
     private static final int TIME_TO_SPAWN_SUN = (int)
             (STANDARD_SECS_SPAWN_SUN * RenderingInformation.getFramesPerSecond());
@@ -23,9 +23,9 @@ public abstract class AbstractGameImpl implements Game {
     private Set<Plant> plants = new HashSet<>();
     private Set<Bullet> bullets = new HashSet<>();
     private Set<Zombie> zombies = new HashSet<>();
-    private final Set<EntityInfo<String, Point2D>> damagedEntities = new HashSet<>();
+    private final Set<EntityInfo> damagedEntities = new HashSet<>();
     private final TimerImpl sunTimer;
-    private final Map<Pair<String, Integer>, TimerImpl> plantsTimer = new HashMap<>();
+    private final Map<PlantInfo, TimerImpl> plantsTimer = new HashMap<>();
     private int sun;
     private final World world;
     private int score;
@@ -39,11 +39,11 @@ public abstract class AbstractGameImpl implements Game {
     public AbstractGameImpl(final int id, final World world) {
         this.placeablePlant = new HashMap<>();
         Level.getPlantsInfo(id).forEach(p -> placeablePlant.put(
-                new EntityInfo<String, Integer>(p.apply(TEMPORARY_POSITION).getName(),
+                new PlantInfoImpl(p.apply(TEMPORARY_POSITION).getName(),
                         p.apply(TEMPORARY_POSITION).getCost()),p)
         );
         world.getShop().getBoughtPlantsFunctions().forEach(p -> placeablePlant.put(
-                new EntityInfo<String, Integer>(p.apply(TEMPORARY_POSITION).getName(),
+                new PlantInfoImpl(p.apply(TEMPORARY_POSITION).getName(),
                         p.apply(TEMPORARY_POSITION).getCost()), p)
         );
         this.sun = INITIAL_SUN * SUN_VALUE;
@@ -93,7 +93,7 @@ public abstract class AbstractGameImpl implements Game {
      * {@inheritDoc}
      */
     @Override
-    public Set<EntityInfo<String, Point2D>> getPlacedZombies() {
+    public Set<EntityInfo> getPlacedZombies() {
         return zombies.stream().map(Entity::getEntityInfo).collect(Collectors.toSet());
     }
 
@@ -101,7 +101,7 @@ public abstract class AbstractGameImpl implements Game {
      * {@inheritDoc}
      */
     @Override
-    public Set<EntityInfo<String, Point2D>> getDamagedEntity() {
+    public Set<EntityInfo> getDamagedEntity() {
         var tmpDamagedEntities = Set.copyOf(this.damagedEntities);
         damagedEntities.clear();
         return tmpDamagedEntities;
@@ -111,7 +111,7 @@ public abstract class AbstractGameImpl implements Game {
      * {@inheritDoc}
      */
     @Override
-    public Set<EntityInfo<String, Point2D>> getPlacedPlants() {
+    public Set<EntityInfo> getPlacedPlants() {
         return plants.stream().map(Entity::getEntityInfo).collect(Collectors.toSet());
     }
 
@@ -119,7 +119,7 @@ public abstract class AbstractGameImpl implements Game {
      * {@inheritDoc}
      */
     @Override
-    public Set<EntityInfo<String, Point2D>> getPlacedBullet() {
+    public Set<EntityInfo> getPlacedBullet() {
         return bullets.stream().map(Entity::getEntityInfo).collect(Collectors.toSet());
     }
 
@@ -135,7 +135,7 @@ public abstract class AbstractGameImpl implements Game {
      * {@inheritDoc}
      */
     @Override
-    public boolean placePlant(final Pair<String, Integer> plantInfo, final int row, final int col) {
+    public boolean placePlant(final PlantInfo plantInfo, final int row, final int col) {
         final Point2D position = Yard.getEntityPosition(row, col);
         for (final var plant : this.plants) {
             if (plant.getPosition().equals(position)) {
@@ -146,7 +146,7 @@ public abstract class AbstractGameImpl implements Game {
         plants.add(plant);
         this.plantsTimer.get(plantInfo).reset();
         this.plantsTimer.get(plantInfo).updateState();
-        this.sun -= plantInfo.getValue();
+        this.sun -= plantInfo.getCost();
         return true;
     }
 
@@ -164,9 +164,9 @@ public abstract class AbstractGameImpl implements Game {
      * {@inheritDoc}
      */
     @Override
-    public Set<Pair<String, Integer>> getEnabledPlants() {
+    public Set<PlantInfo> getEnabledPlants() {
         return this.placeablePlant.keySet().stream()
-                .filter(plantType -> plantType.getValue() <= sun)
+                .filter(plantType -> plantType.getCost() <= sun)
                 .filter(plantType -> plantsTimer.get(plantType).isReady())
                 .collect(Collectors.toSet());
     }
@@ -175,7 +175,7 @@ public abstract class AbstractGameImpl implements Game {
      * {@inheritDoc}
      */
     @Override
-    public Set<EntityInfo<String, Integer>> getPlaceablePlant() {
+    public Set<PlantInfo> getPlaceablePlant() {
         return this.placeablePlant.keySet();
     }
 
@@ -247,17 +247,17 @@ public abstract class AbstractGameImpl implements Game {
                         - Yard.getCellDimension().getWidth())
                 .forEach(zombie -> {
                         zombieEating.put(zombie, plant);
-                        this.damagedEntities.add(zombie.getEntityInfo());
                     }
                 ));
 
         this.zombies.forEach(zombie -> {
-                    if (zombieEating.containsKey(zombie)) {
-                        zombie.manageEating(zombieEating.get(zombie));
-                    } else {
-                        zombie.move();
-                    }
-                });
+            if (zombieEating.containsKey(zombie)) {
+                this.damagedEntities.add(zombieEating.get(zombie).getEntityInfo());
+                zombie.manageEating(zombieEating.get(zombie));
+            } else {
+                zombie.move();
+            }
+        });
         this.zombies.forEach(LivingEntity::updateState);
         this.plants = this.plants.stream().filter(p -> !p.isOver()).collect(Collectors.toSet());
     }
