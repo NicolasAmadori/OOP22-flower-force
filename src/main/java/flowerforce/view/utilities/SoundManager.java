@@ -113,15 +113,15 @@ public final class SoundManager {
 
     private static void playLoopSound(final String path) {
         final Optional<Clip> clip = createClip(path, MAIN_THEME_VOLUME);
-        if(clip.isPresent()) {
+        if (clip.isPresent()) {
             clip.get().start();
             clip.get().loop(Clip.LOOP_CONTINUOUSLY);
         }
     }
 
-    private static void playSoundEffect(final String path){
-        final Optional<Clip> clip = createClip(path, MAIN_THEME_VOLUME);
-        if(clip.isPresent()) {
+    private static void playSoundEffect(final String path) {
+        final Optional<Clip> clip = createClip(path, SOUND_EFFECT_VOLUME);
+        if (clip.isPresent()) {
             clip.get().start();
         }
     }
@@ -129,7 +129,7 @@ public final class SoundManager {
     private static Optional<Clip> createClip(final String path, final float volume) {
         try {
             final File file = new File(path);
-            AudioInputStream ais = AudioSystem.getAudioInputStream(file);
+            final AudioInputStream ais = AudioSystem.getAudioInputStream(file);
             final Clip clip = AudioSystem.getClip();
             clip.open(ais);
             final FloatControl fc = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
