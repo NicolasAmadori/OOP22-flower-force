@@ -9,8 +9,11 @@ import java.util.List;
 import java.util.Collections;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
+
+import flowerforce.controller.utilities.CardGenerator;
 import flowerforce.controller.utilities.EntityConverter;
 import flowerforce.controller.utilities.WorldSavingManager;
+import flowerforce.model.entities.EntityInfo;
 import flowerforce.model.game.Game;
 import flowerforce.model.game.World;
 import flowerforce.controller.utilities.EntityConverterImpl;
@@ -31,9 +34,9 @@ public final class ControllerImpl implements Controller {
     private Optional<Game> game;
 
     private Map<CardView, Pair<String, Integer>> cards = new HashMap<>();
-    private Map<Pair<String, Point2D>, EntityView> previousPlant = new HashMap<>();
-    private Map<Pair<String, Point2D>, EntityView> previousZombie = new HashMap<>();
-    private Map<Pair<String, Point2D>, EntityView> previousBullet = new HashMap<>();
+    private Map<EntityInfo<String, Point2D>, EntityView> previousPlant = new HashMap<>();
+    private Map<EntityInfo<String, Point2D>, EntityView> previousZombie = new HashMap<>();
+    private Map<EntityInfo<String, Point2D>, EntityView> previousBullet = new HashMap<>();
     private Map<CardView, Pair<String,Integer>> purchasablePlants = new HashMap<>();
 
     /**
@@ -141,8 +144,9 @@ public final class ControllerImpl implements Controller {
      */
     @Override
     public boolean buyPlant(final CardView cardView) {
-        this.checkGame();
-        return this.world.getShop().buyPlant(this.purchasablePlants.get(cardView));
+        final boolean isBought = this.world.getShop().buyPlant(this.purchasablePlants.get(cardView));
+        this.save();
+        return isBought;
     }
 
     /**
@@ -174,13 +178,13 @@ public final class ControllerImpl implements Controller {
     @Override
     public Set<EntityView> getPlacedEntities() {
         checkGame();
-        final Set<Pair<String, Point2D>> plants = this.game.get().getPlacedPlants();
-        final Set<Pair<String, Point2D>> zombies = this.game.get().getPlacedZombies();
-        final Set<Pair<String, Point2D>> bullets = this.game.get().getPlacedBullet();
+        final Set<EntityInfo<String, Point2D>> plants = this.game.get().getPlacedPlants();
+        final Set<EntityInfo<String, Point2D>> zombies = this.game.get().getPlacedZombies();
+        final Set<EntityInfo<String, Point2D>> bullets = this.game.get().getPlacedBullet();
 
         //TODO: refactor
         //region Plants
-        final Set<Pair<String, Point2D>> plantsToRemove = new HashSet<>();
+        final Set<EntityInfo<String, Point2D>> plantsToRemove = new HashSet<>();
         //Remove the entities that are no longer there
         this.previousPlant.keySet().forEach(p -> {
             if (!plants.contains(p)) {
@@ -197,7 +201,7 @@ public final class ControllerImpl implements Controller {
         //endregion
 
         //region Zombies
-        final Set<Pair<String, Point2D>> zombiesToRemove = new HashSet<>();
+        final Set<EntityInfo<String, Point2D>> zombiesToRemove = new HashSet<>();
         this.previousZombie.keySet().forEach(z -> {
             if (!zombies.contains(z)) {
                 zombiesToRemove.add(z);
@@ -214,7 +218,7 @@ public final class ControllerImpl implements Controller {
         //endregion
 
         //region Bullets
-        final Set<Pair<String, Point2D>> bulletToRemove = new HashSet<>();
+        final Set<EntityInfo<String, Point2D>> bulletToRemove = new HashSet<>();
         this.previousBullet.keySet().forEach(b -> {
             if (!bullets.contains(b)) {
                 bulletToRemove.add(b);
@@ -240,8 +244,8 @@ public final class ControllerImpl implements Controller {
 
     private List<CardView> getCards() {
         checkGame();
-        this.game.get().getAllPlant()
-                .forEach(p -> cards.put(entityConverter.getCardView(p), p));
+        this.game.get().getPlaceablePlant()
+                .forEach(p -> cards.put(CardGenerator.getCardView(p), p));
         return cards.keySet().stream().toList();
     }
 
@@ -265,7 +269,7 @@ public final class ControllerImpl implements Controller {
         this.purchasablePlants.clear();
         shopPlants.keySet().stream()
                 .forEach(p -> {
-                    CardView card = entityConverter.getCardView(p);
+                    CardView card = CardGenerator.getCardView(p);
                     this.purchasablePlants.put(card, p);
                     toReturn.put(card, shopPlants.get(p));
                 });
