@@ -98,12 +98,14 @@ public class ZombieImpl extends AbstractLivingEntity implements Zombie {
      * {@inheritDoc}
      */
     @Override
-    public void manageEating(final Plant plant) {
+    public boolean manageEating(final Plant plant) {
         if (this.canBite) {
             plant.receiveDamage(this.damage);
             super.getTimer().reset();
             this.canBite = false;
+            return true;
         }
+        return false;
     }
 
     /**
