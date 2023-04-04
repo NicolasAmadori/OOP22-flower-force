@@ -36,7 +36,7 @@ public final class EntityConverterImpl implements EntityConverter {
     @Override
     public EntityView getPlantView(final EntityInfo plantInfo) {
         final String completeImagePath = ResourceFinder.getPlantImagePath(
-                plantInfo.getName()g.concat(IMAGES_EXTENSION));
+                plantInfo.getName().concat(IMAGES_EXTENSION));
         final Point2D newPosition = convertPlantPosition(plantInfo.getPosition(), completeImagePath);
         return new EntityViewImpl(newPosition, completeImagePath);
     }
