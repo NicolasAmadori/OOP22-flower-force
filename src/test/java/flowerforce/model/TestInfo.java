@@ -13,7 +13,6 @@ import flowerforce.model.entities.PlantInfo;
 import flowerforce.model.entities.PlantInfoImpl;
 import flowerforce.model.entities.Zombie;
 import flowerforce.model.entities.ZombieFactory;
-import flowerforce.model.entities.ZombieFactory;
 import javafx.geometry.Point2D;
 
 public final class TestInfo {
@@ -21,7 +20,6 @@ public final class TestInfo {
     private static final Point2D pos1 = new Point2D(10, 20);
     private static final String str1 = "test";
     private static final int cost1 = 100;
-    private static final ZombieFactory ZOMBIE_FACTORY = new ZombieFactory();
 
     @Test
     public void testEqualsEntityInfo() {
@@ -47,7 +45,7 @@ public final class TestInfo {
 
     @Test
     public void testMoveEntityInfo() {
-        final Zombie basic = ZOMBIE_FACTORY.basic(pos1);
+        final Zombie basic = ZombieFactory.basic(pos1);
         final EntityInfo e1 = basic.getEntityInfo();
         assertEquals(e1, basic.getEntityInfo());
         basic.move();
