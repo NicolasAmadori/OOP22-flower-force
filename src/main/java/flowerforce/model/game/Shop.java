@@ -1,6 +1,7 @@
 package flowerforce.model.game;
 
 import flowerforce.model.entities.Plant;
+import flowerforce.model.entities.PlantInfo;
 import javafx.geometry.Point2D;
 import javafx.util.Pair;
 import java.util.Map;
@@ -16,14 +17,14 @@ public interface Shop {
      * @return A map where the key contain the information of the plant,
      * and the value is a boolean, true if the plant is purchasable, false otherwise
      */
-    Map<Pair<String, Integer>, Boolean> getPurchasablePlants();
+    Map<PlantInfo, Boolean> getPurchasablePlants();
 
     /**
      * Buy a certain plant from the shop.
      * @param plantInfo the information of the plant to buy
      * @return true if the plant was successfully bought, false otherwise
      */
-    boolean buyPlant(Pair<String, Integer> plantInfo);
+    boolean buyPlant(PlantInfo plantInfo);
 
     /**
      * Get all the function producer of the plants instances.
