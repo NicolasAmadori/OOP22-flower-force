@@ -14,18 +14,21 @@ public final class ShootingPlantFactory {
         STANDARD_SECS_SHOOTING_TIME * RenderingInformation.getFramesPerSecond()
     );
     private static final int STANDARD_SHOOTER_HEALTH = 300;
+    private static final int STRONG_SHOOTER_HEALTH = STANDARD_SHOOTER_HEALTH / 10;
+
     private static final int COMMON_SHOOTER_COST = 100;
     private static final int SNOW_SHOOTER_COST = 175;
     private static final int FIRE_SHOOTER_COST = 175;
     private static final int FAST_SHOOTER_COST = 225;
+    private static final int STRONG_SHOOTER_COST = 300;
 
     private ShootingPlantFactory() {
     }
 
     /**
-     * 
+     * Creates a Pea Shooter Plant.
      * @param pos the position where to place it
-     * @return a Common Shooter Plant
+     * @return a Pea Shooter Plant
      */
     public static ShootingPlant createPeaShooter(final Point2D pos) {
         return new ShootingPlantImpl(
@@ -40,16 +43,16 @@ public final class ShootingPlantFactory {
     }
 
     /**
-     * 
+     * Creates a Snow Shooter Plant.
      * @param pos the position where to place it
-     * @return a Snow Plant
+     * @return a Snow Shooter Plant
      */
     public static ShootingPlant createSnowShooter(final Point2D pos) {
         return new ShootingPlantImpl(
             pos,
             new TimerImpl(STANDARD_SHOOTING_TIME),
             STANDARD_SHOOTER_HEALTH,
-            () -> BulletFactory.createSnowdBullet(new Point2D(pos.getX(), pos.getY())),
+            () -> BulletFactory.createSnowBullet(new Point2D(pos.getX(), pos.getY())),
             SNOW_SHOOTER_COST,
             RechargeTimes.getFastRechargeTime(),
             "snowshooter"
@@ -57,9 +60,9 @@ public final class ShootingPlantFactory {
     }
 
     /**
-     * 
+     * Creates a Fire Shooter.
      * @param pos the position where to place it
-     * @return a Fire Plant
+     * @return a Fire Shooter Plant
      */
     public static ShootingPlant createFireShooter(final Point2D pos) {
         return new ShootingPlantImpl(
@@ -74,7 +77,7 @@ public final class ShootingPlantFactory {
     }
 
     /**
-     * 
+     * Creates a Fast Shooter.
      * @param pos the position where to place it
      * @return a Fast Shooter Plant
      */
@@ -87,6 +90,23 @@ public final class ShootingPlantFactory {
             FAST_SHOOTER_COST,
             RechargeTimes.getFastRechargeTime(),
             "fastshooter"
+        );
+    }
+
+    /**
+     * Creates a Strong Shooter.
+     * @param pos the position where to place it
+     * @return a Strong Shooter Plant
+     */
+    public static ShootingPlant createStrongShooter(final Point2D pos) {
+        return new ShootingPlantImpl(
+            pos,
+            new TimerImpl(STANDARD_SHOOTING_TIME * 10),
+            STRONG_SHOOTER_HEALTH,
+            () -> BulletFactory.createStrongBullet(new Point2D(pos.getX(), pos.getY())),
+            STRONG_SHOOTER_COST,
+            RechargeTimes.getVerySlowRechargeTime(),
+            "strongshooter"
         );
     }
 }

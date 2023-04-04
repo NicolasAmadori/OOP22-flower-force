@@ -9,6 +9,7 @@ public final class BulletFactory {
 
     private static final int STANDARD_DAMAGE = 20;
     private static final int FIRE_DAMAGE = STANDARD_DAMAGE * 2;
+    private static final int STRONG_DAMAGE = STANDARD_DAMAGE * 25;
 
     private BulletFactory() {
     }
@@ -36,7 +37,16 @@ public final class BulletFactory {
      * @param pos the position to place the bullet in
      * @return a snow bullet in the given position
      */
-    public static Bullet createSnowdBullet(final Point2D pos) {
+    public static Bullet createSnowBullet(final Point2D pos) {
         return new BulletImpl(pos, STANDARD_DAMAGE, "snowbullet", z -> z.freeze());
+    }
+
+    /**
+     * Creates a strong bullet.
+     * @param pos the position to place the bullet in
+     * @return a strong bullet in the given position
+     */
+    public static Bullet createStrongBullet(final Point2D pos) {
+        return new BulletImpl(pos, STRONG_DAMAGE, "strongbullet");
     }
 }
