@@ -36,8 +36,7 @@ public class InfiniteGame extends AbstractGameImpl {
     }
 
     /**
-     *
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public double getProgressState() {

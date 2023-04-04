@@ -32,7 +32,7 @@ public final class LevelInfo {
     private static final List<Integer> ZOMBIE_LEVEL = List.of(34, 51, 68, 68, 68, 85, 85);
     private static final Function<Point2D, Zombie> ZOMBIE_BOSS = ZombieFactory::gargantuar;
 
-    private LevelInfo() {}
+    private LevelInfo() { }
 
     /**
      * @param id of the level

@@ -29,7 +29,7 @@ public abstract class AbstractGameImpl implements Game {
     private final World world;
     private int score;
     private static final Point2D TEMPORARY_POSITION = new Point2D(0, 0);
-    final Map<Zombie, Plant> zombieEating = new HashMap<>();
+    private final Map<Zombie, Plant> zombieEating = new HashMap<>();
     /**
      * Constructor to instantiate an infinite game.
      * @param id of the game started
@@ -39,7 +39,7 @@ public abstract class AbstractGameImpl implements Game {
         this.placeablePlant = new HashMap<>();
         LevelInfo.getPlantsInfo(id).forEach(p -> placeablePlant.put(
                 new PlantInfoImpl(p.apply(TEMPORARY_POSITION).getName(),
-                        p.apply(TEMPORARY_POSITION).getCost()),p)
+                        p.apply(TEMPORARY_POSITION).getCost()), p)
         );
         world.getShop().getBoughtPlantsFunctions().forEach(p -> placeablePlant.put(
                 new PlantInfoImpl(p.apply(TEMPORARY_POSITION).getName(),
@@ -101,7 +101,7 @@ public abstract class AbstractGameImpl implements Game {
      */
     @Override
     public Set<EntityInfo> getDamagedEntity() {
-        var tmpDamagedEntities = Set.copyOf(this.damagedEntities);
+        final var tmpDamagedEntities = Set.copyOf(this.damagedEntities);
         damagedEntities.clear();
         return tmpDamagedEntities;
     }
