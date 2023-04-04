@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import flowerforce.common.ResourceFinder;
 import flowerforce.view.entities.CardView;
 import flowerforce.view.entities.EntityView;
+import flowerforce.view.utilities.SoundManager;
 import javafx.fxml.FXML;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
@@ -66,11 +67,14 @@ public final class GameSceneController implements GameEngine {
     private final int rows;
     private final int cols;
     private final FlowerForceApplication application;
-    private final Map<EntityView, ImageView> drawnEntities = new HashMap<>();
+    private final Map<EntityView, ImageView> drawnPlants = new HashMap<>();
+    private final Map<EntityView, ImageView> drawnZombies = new HashMap<>();
+    private final Map<EntityView, ImageView> drawnBullets = new HashMap<>();
     private final Map<ImageView, CardView> cards = new HashMap<>();
     private final Dimension2D cellDimension;
     private Optional<ImageView> cardSelected = Optional.empty();
     private boolean isShovelSelected = false;
+    private boolean isFirstZombie = true;
 
     public GameSceneController(final FlowerForceApplication application) {
         this.application = application;
@@ -85,8 +89,8 @@ public final class GameSceneController implements GameEngine {
      */
     @Override
     public void loadCards(final List<CardView> cardViews) {
-        final List<ImageView> cardImageViews = new LinkedList<>(List.of(card0, card1, card2, card3, card4, card5, card6));
-        final List<Label> cardLabels = new LinkedList<>(List.of(lbl0, lbl1, lbl2, lbl3, lbl4, lbl5, lbl6));
+        final List<ImageView> cardImageViews = new LinkedList<>(List.of(card0, card1, card2, card3, card4, card5, card6, card7));
+        final List<Label> cardLabels = new LinkedList<>(List.of(lbl0, lbl1, lbl2, lbl3, lbl4, lbl5, lbl6, lbl7));
         int i = 0;
         for (; i < cardViews.size() && i < cardImageViews.size() && i < cardLabels.size(); i++) {
             this.cards.put(cardImageViews.get(i), cardViews.get(i));
@@ -122,18 +126,24 @@ public final class GameSceneController implements GameEngine {
 
     @FXML
     void shovelSelected(final MouseEvent event) {
-        this.removeBloomEffect();
-        this.cardSelected = Optional.empty();
-        this.isShovelSelected = true;
-        this.addBloomEffect();        
+        if (!this.isShovelSelected) {
+            this.removeBloomEffect();
+            this.cardSelected = Optional.empty();
+            this.isShovelSelected = true;
+            SoundManager.useShovel();
+            this.addBloomEffect();
+        }
     }
 
     @FXML
     void selectCard(final MouseEvent event) {
-        this.removeBloomEffect();
-        this.isShovelSelected = false;
-        this.cardSelected = Optional.of((ImageView) (event.getSource()));
-        this.addBloomEffect();
+        if (!(this.cardSelected.isPresent() && this.cardSelected.get().equals((ImageView) event.getSource()))) {
+            this.removeBloomEffect();
+            this.isShovelSelected = false;
+            this.cardSelected = Optional.of((ImageView) (event.getSource()));
+            SoundManager.cardSelected();
+            this.addBloomEffect();
+        }
     }
 
     private boolean isInsideYard(double x, double y) {
@@ -151,11 +161,13 @@ public final class GameSceneController implements GameEngine {
                 if (this.application.getController().placePlant(this.cards.get(this.cardSelected.get()), row, col)) {
                     this.removeBloomEffect();
                     this.cardSelected = Optional.empty();
+                    SoundManager.plantPlaced();
                 }
             } else if (this.isShovelSelected) {
                 if (this.application.getController().removePlant(row, col)) {
                     this.removeBloomEffect();
                     this.isShovelSelected = false;
+                    SoundManager.useShovel();
                 }
             }            
         } else {
@@ -206,7 +218,7 @@ public final class GameSceneController implements GameEngine {
     @Override
     public void render() {
         this.enableCards();
-        this.updateEntities(this.application.getController().getPlacedEntities());
+        this.updateEntities();
         this.damageEntities();
         this.updateSunCounter();
         this.updateScore();
@@ -228,39 +240,92 @@ public final class GameSceneController implements GameEngine {
         });
     }
 
-    private void updateEntities(final Set<EntityView> newEntities) {
-        final Set<EntityView> toRemove =  this.drawnEntities.keySet().stream()
+    private void updateEntities() {
+        final Set<EntityView> placedPlants = this.application.getController().getPlacedPlants();
+        final Set<EntityView> placedZombies = this.application.getController().getPlacedZombies();
+        final Set<EntityView> placedBullets = this.application.getController().getPlacedBullets();
+        //plants
+        if (this.removeEntities(placedPlants, this.drawnPlants)) {
+            //TODO: SoundManager.zombieHasEaten();
+        }
+        this.updateEntities(placedPlants, this.drawnPlants);
+        if (this.addEntities(placedPlants, this.drawnPlants)) {
+            SoundManager.plantPlaced();
+        }
+        //zombies
+        if (this.removeEntities(placedZombies, this.drawnZombies)) {
+            //TODO: SoundManager.zombieDied();
+        }
+        this.updateEntities(placedZombies, this.drawnZombies);
+        if (this.addEntities(placedZombies, this.drawnZombies)) {
+            if (this.isFirstZombie) {
+                SoundManager.zombiesAreComing();
+                this.isFirstZombie = false;
+            }
+            SoundManager.zombieGroan();
+        }
+        //bullets
+        if (this.removeEntities(placedBullets, this.drawnBullets)) {
+            SoundManager.bulletHit();
+        }
+        this.updateEntities(placedBullets, this.drawnBullets);
+        if (this.addEntities(placedBullets, this.drawnBullets)) {
+            SoundManager.bulletShot();
+        }
+
+    }
+
+    private boolean removeEntities(final Set<EntityView> newEntities, final Map<EntityView, ImageView> oldEntities) { //TODO: check if it works with parameter
+        final Set<EntityView> toRemove =  oldEntities.keySet().stream()
                 .filter(e -> !newEntities.contains(e))
                 .collect(Collectors.toSet());
         toRemove.forEach(e -> {
-            this.gamePane.getChildren().remove(this.drawnEntities.get(e));
-            this.drawnEntities.remove(e);
+            this.gamePane.getChildren().remove(oldEntities.get(e));
+            oldEntities.remove(e);
         });
+        return !toRemove.isEmpty();
+    }
+
+    private void updateEntities(final Set<EntityView> newEntities, final Map<EntityView, ImageView> oldEntities) {
         newEntities.stream()
-                .filter(e -> this.drawnEntities.containsKey(e))
+                .filter(e -> oldEntities.containsKey(e))
                 .forEach(e -> {
-                    this.drawnEntities.get(e).relocate(e.getPlacingPosition().getX() + YARD_FIRST_X, e.getPlacingPosition().getY() + YARD_FIRST_Y);
-                    this.drawnEntities.get(e).setImage(e.getPlaceableImage());
+                    oldEntities.get(e).relocate(e.getPlacingPosition().getX() + YARD_FIRST_X, e.getPlacingPosition().getY() + YARD_FIRST_Y);
+                    oldEntities.get(e).setImage(e.getPlaceableImage());
                 });
-        newEntities.stream()
-                .filter(e -> !this.drawnEntities.containsKey(e))
-                .forEach(e -> {
-                    ImageView iv = toImageView(e.getPlaceableImage(), e.getPlacingPosition());
-                    this.drawnEntities.put(e, iv);
-                    this.gamePane.getChildren().add(iv);
-                });
+    }
+
+    private boolean addEntities(final Set<EntityView> newEntities, final Map<EntityView, ImageView> oldEntities) {
+        return newEntities.stream()
+                    .filter(e -> !oldEntities.containsKey(e))
+                    .peek(e -> {
+                        ImageView iv = toImageView(e.getPlaceableImage(), e.getPlacingPosition());
+                        oldEntities.put(e, iv);
+                        this.gamePane.getChildren().add(iv);
+                    })
+                    .findAny().isPresent();
     }
 
     private void damageEntities() {
         final Set<EntityView> damagedEntities = new HashSet<>(); //TODO: take them from controller
-        //TODO: remove
-        if (drawnEntities.size() > 0 && Math.random() > 0.9) {
-            damagedEntities.add(this.drawnEntities.keySet().stream().toList().get((int) (Math.random() * this.drawnEntities.size())));
+        //plants
+        if (this.damageDrawnEntities(damagedEntities, this.drawnPlants)) {
+            SoundManager.zombieEating();
         }
-        this.drawnEntities.keySet().stream()
-                .peek(e -> this.drawnEntities.get(e).setEffect(null))
+        //zombies
+        if (this.damageDrawnEntities(damagedEntities, this.drawnZombies)) {
+            SoundManager.bulletHit();
+        }
+        //bullets
+        this.damageDrawnEntities(damagedEntities, this.drawnBullets);
+    }
+
+    private boolean damageDrawnEntities(final Set<EntityView> damagedEntities, final Map<EntityView, ImageView> drawnEntities) {
+        return drawnEntities.keySet().stream()
+                .peek(e -> drawnEntities.get(e).setEffect(null))
                 .filter(e -> damagedEntities.contains(e))
-                .forEach(e -> this.drawnEntities.get(e).setEffect(DAMAGE_EFFECT));
+                .peek(e -> drawnEntities.get(e).setEffect(DAMAGE_EFFECT))
+                .findAny().isPresent();
     }
 
     private void updateSunCounter() {
