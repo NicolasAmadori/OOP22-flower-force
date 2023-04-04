@@ -1,8 +1,6 @@
 package flowerforce.model.game;
 
 import flowerforce.model.entities.Zombie;
-import flowerforce.model.utilities.RenderingInformation;
-import flowerforce.model.utilities.TimerImpl;
 
 import java.util.*;
 
@@ -19,7 +17,7 @@ public class ZombieGenerationInfiniteImpl extends AbstractZombieGeneration {
      * @param levelId of the game started
      */
     public ZombieGenerationInfiniteImpl(final int levelId) {
-        super(levelId,START_NUMBER_ZOMBIE_IN_HORDE);
+        super(levelId, START_NUMBER_ZOMBIE_IN_HORDE);
     }
 
     /**

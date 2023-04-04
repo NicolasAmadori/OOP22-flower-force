@@ -1,13 +1,10 @@
 package flowerforce.model.game;
 
 import flowerforce.model.entities.Zombie;
-import flowerforce.model.game.ZombieGeneration;
 import flowerforce.model.utilities.RenderingInformation;
 import flowerforce.model.utilities.TimerImpl;
-import javafx.geometry.Point2D;
 
 import java.util.Optional;
-import java.util.function.Function;
 
 public abstract class AbstractZombieGeneration implements ZombieGeneration {
 
@@ -34,7 +31,7 @@ public abstract class AbstractZombieGeneration implements ZombieGeneration {
     private boolean incrementableHorde;
 
     public AbstractZombieGeneration(final int levelId, final int startNumberZombieHorde) {
-        genZombie = new CreationZombie(Level.getZombiesId(levelId));
+        genZombie = new CreationZombie(Level.getZombiesInfo(levelId));
         this.zombieTimer = new TimerImpl(timeZombie);
         this.startNumberZombieHorde = startNumberZombieHorde;
         this.hordeZombie = startNumberZombieHorde;
