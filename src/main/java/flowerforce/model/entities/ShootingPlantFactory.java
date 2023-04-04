@@ -1,5 +1,6 @@
 package flowerforce.model.entities;
 
+import flowerforce.model.game.Yard;
 import flowerforce.model.utilities.RenderingInformation;
 import flowerforce.model.utilities.TimerImpl;
 import javafx.geometry.Point2D;
@@ -32,7 +33,7 @@ public class ShootingPlantFactory {
             pos,
             new TimerImpl(STANDARD_SHOOTING_TIME),
             STANDARD_SHOOTER_HEALTH,
-            () -> BulletFactory.createStandardBullet(new Point2D(pos.getX(), pos.getY())),
+            () -> BulletFactory.createStandardBullet(new Point2D(pos.getX() - Yard.getCellDimension().getWidth(), pos.getY())),
             COMMON_SHOOTER_COST,
             RechargeTimes.getFastRechargeTime(),
             "peashooter"
@@ -49,7 +50,7 @@ public class ShootingPlantFactory {
             pos,
             new TimerImpl(STANDARD_SHOOTING_TIME),
             STANDARD_SHOOTER_HEALTH,
-            () -> BulletFactory.createSnowdBullet(new Point2D(pos.getX(), pos.getY())),
+            () -> BulletFactory.createSnowdBullet(new Point2D(pos.getX() - Yard.getCellDimension().getWidth(), pos.getY())),
             SNOW_SHOOTER_COST,
             RechargeTimes.getFastRechargeTime(),
             "snowshooter"
@@ -66,7 +67,7 @@ public class ShootingPlantFactory {
             pos,
             new TimerImpl(STANDARD_SHOOTING_TIME),
             STANDARD_SHOOTER_HEALTH,
-            () -> BulletFactory.createFireBullet(new Point2D(pos.getX(), pos.getY())),
+            () -> BulletFactory.createFireBullet(new Point2D(pos.getX() - Yard.getCellDimension().getWidth(), pos.getY())),
             FIRE_SHOOTER_COST,
             RechargeTimes.getFastRechargeTime(),
             "fireshooter"
@@ -83,7 +84,7 @@ public class ShootingPlantFactory {
             pos,
             new TimerImpl(STANDARD_SHOOTING_TIME / 2),
             STANDARD_SHOOTER_HEALTH,
-            () -> BulletFactory.createStandardBullet(new Point2D(pos.getX(), pos.getY())),
+            () -> BulletFactory.createStandardBullet(new Point2D(pos.getX() - Yard.getCellDimension().getWidth(), pos.getY())),
             FAST_SHOOTER_COST,
             RechargeTimes.getFastRechargeTime(),
             "fastshooter"
