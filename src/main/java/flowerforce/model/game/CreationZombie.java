@@ -60,7 +60,7 @@ public class CreationZombie {
                         ));
             }
         }
-        return new ZombieFactory().basic(Yard.getEntityPosition(
+        return ZombieFactory.basic(Yard.getEntityPosition(
                 row,
                 Yard.getColsNum() - 1
         ));
