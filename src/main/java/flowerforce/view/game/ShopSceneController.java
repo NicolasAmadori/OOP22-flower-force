@@ -46,7 +46,7 @@ public class ShopSceneController implements Initializable {
                 !bought
         );
         if (bought) {
-            SoundManager.openShopSound();
+            SoundManager.openShop();
         }
         lblCoins.setText(this.application.getController().getPlayerCoins() + "$");
         changePlant();
