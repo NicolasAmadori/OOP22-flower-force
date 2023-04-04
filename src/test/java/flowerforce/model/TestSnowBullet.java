@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import flowerforce.model.entities.Bullet;
 import flowerforce.model.entities.ShootingPlant;
 import flowerforce.model.entities.ShootingPlantFactory;
-import flowerforce.model.entities.ShootingPlantFactoryImpl;
 import flowerforce.model.entities.Zombie;
 import flowerforce.model.entities.ZombieFactory;
 import flowerforce.model.entities.ZombieFactoryImpl;
@@ -24,9 +23,8 @@ final class TestSnowBullet {
     private static final double STARTING_PLANT_POS_X = 100.0;
     private static final double STARTING_PLANT_POS_Y = 100.0;
 
-    private final ShootingPlantFactory plantFactory = new ShootingPlantFactoryImpl();
     private final ZombieFactory zombieFactory = new ZombieFactoryImpl();
-    private final ShootingPlant producer = this.plantFactory.snow(
+    private final ShootingPlant producer = ShootingPlantFactory.createSnowShooter(
         new Point2D(STARTING_PLANT_POS_X, STARTING_PLANT_POS_Y)
     );
     private Zombie zombie;
