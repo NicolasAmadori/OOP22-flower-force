@@ -7,7 +7,6 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 import java.io.File;
-import java.util.List;
 
 public final class SoundManager {
 
@@ -16,7 +15,7 @@ public final class SoundManager {
     private static final String SOUND_FILE_EXTENSION = ".wav";
 
     private static final String MAIN_THEME_FILE_NAME = "mainTheme" + SOUND_FILE_EXTENSION;
-    private static final String GAME_START_FILE_NAME = "startGameSiren" + SOUND_FILE_EXTENSION;
+    private static final String ZOMBIES_SIREN_FILE_NAME = "zombiesSiren" + SOUND_FILE_EXTENSION;
     private static final String SHOP_OPENING_FILE_NAME = "shopEffect" + SOUND_FILE_EXTENSION;
     private static final String SHOVEL_FILE_NAME = "shovel" + SOUND_FILE_EXTENSION;
     private static final String CARD_SELECTED_FILE_NAME = "cardSelected" + SOUND_FILE_EXTENSION;
@@ -27,8 +26,8 @@ public final class SoundManager {
         playLoopSound(ResourceFinder.getSoundPath(MAIN_THEME_FILE_NAME));
     }
 
-    public static void startGame() {
-        playSoundEffect(ResourceFinder.getSoundPath(GAME_START_FILE_NAME));
+    public static void zombiesAreComing() {
+        playSoundEffect(ResourceFinder.getSoundPath(ZOMBIES_SIREN_FILE_NAME));
     }
 
     public static void openShop() {
