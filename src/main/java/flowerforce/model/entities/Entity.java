@@ -29,6 +29,6 @@ public interface Entity {
      * 
      * @return the info about the name and the position of the entity, wrapped in an unique object (in order to be a key of maps)
      */
-    EntityInfo<String,Point2D> getEntityInfo();
+    EntityInfo getEntityInfo();
 
 }

@@ -34,10 +34,10 @@ public final class EntityConverterImpl implements EntityConverter {
      * {@inheritDoc}
      */
     @Override
-    public EntityView getPlantView(final EntityInfo<String, Point2D> plantInfo) {
+    public EntityView getPlantView(final EntityInfo plantInfo) {
         final String completeImagePath = ResourceFinder.getPlantImagePath(
-                plantInfo.getKey().concat(IMAGES_EXTENSION));
-        final Point2D newPosition = convertPlantPosition(plantInfo.getValue(), completeImagePath);
+                plantInfo.getName().concat(IMAGES_EXTENSION));
+        final Point2D newPosition = convertPlantPosition(plantInfo.getPosition(), completeImagePath);
         return new EntityViewImpl(newPosition, completeImagePath);
     }
 
@@ -45,10 +45,10 @@ public final class EntityConverterImpl implements EntityConverter {
      * {@inheritDoc}
      */
     @Override
-    public EntityView getZombieView(final EntityInfo<String, Point2D> zombieInfo) {
+    public EntityView getZombieView(final EntityInfo zombieInfo) {
         final String completeImagePath = ResourceFinder.getZombieImagePath(
-                zombieInfo.getKey().concat(IMAGES_EXTENSION));
-        final Point2D newPosition = convertZombiePosition(zombieInfo.getValue(), completeImagePath);
+                zombieInfo.getName().concat(IMAGES_EXTENSION));
+        final Point2D newPosition = convertZombiePosition(zombieInfo.getPosition(), completeImagePath);
         return new EntityViewImpl(newPosition, completeImagePath);
     }
 
@@ -56,10 +56,10 @@ public final class EntityConverterImpl implements EntityConverter {
      * {@inheritDoc}
      */
     @Override
-    public EntityView getBulletView(final EntityInfo<String, Point2D> bulletInfo) {
+    public EntityView getBulletView(final EntityInfo bulletInfo) {
         final String completeImagePath = ResourceFinder.getBulletImagePath(
-                bulletInfo.getKey().concat(IMAGES_EXTENSION));
-        final Point2D newPosition = convertBulletPosition(bulletInfo.getValue(), completeImagePath);
+                bulletInfo.getName().concat(IMAGES_EXTENSION));
+        final Point2D newPosition = convertBulletPosition(bulletInfo.getPosition(), completeImagePath);
         return new EntityViewImpl(newPosition, completeImagePath);
     }
 

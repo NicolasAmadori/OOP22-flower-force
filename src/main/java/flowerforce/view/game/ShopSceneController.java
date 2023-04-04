@@ -1,6 +1,7 @@
 package flowerforce.view.game;
 
 import flowerforce.view.entities.CardView;
+import flowerforce.view.utilities.SoundManager;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -44,6 +45,9 @@ public class ShopSceneController implements Initializable {
                 imagePlants.get(index).getValue(),
                 !bought
         );
+        if (bought) {
+            SoundManager.openShop();
+        }
         lblCoins.setText(this.application.getController().getPlayerCoins() + "$");
         changePlant();
 

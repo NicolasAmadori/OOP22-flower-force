@@ -2,10 +2,16 @@ package flowerforce.model.game;
 
 import flowerforce.model.entities.CherryBomb;
 import flowerforce.model.entities.Plant;
+import flowerforce.model.entities.PlantInfo;
+import flowerforce.model.entities.PlantInfoImpl;
 import flowerforce.model.entities.SunflowerFactoryImpl;
 import javafx.util.Pair;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -21,8 +27,7 @@ public class ShopImpl implements Shop{
     );
     private final Player player;
 
-    private final List<Pair<String, Integer>> plants = new ArrayList<>();
-//    private final Map<Function<Point2D, Plant>, Pair<String, Integer>> plants = new LinkedHashMap<>();
+    private final List<PlantInfo> plants = new ArrayList<>();
 
     /**
      * This is a constructor for a new shop instance.
@@ -35,7 +40,7 @@ public class ShopImpl implements Shop{
         final Point2D samplePoint = new Point2D(0, 0);
         SHOP_PLANTS.forEach(p -> {
             this.plants.add(
-                    new Pair<>(p.getKey().apply(samplePoint).getName(), p.getValue()));
+                    new PlantInfoImpl(p.getKey().apply(samplePoint).getName(), p.getValue()));
         });
     }
 
@@ -43,10 +48,10 @@ public class ShopImpl implements Shop{
      * {@inheritDoc}
      */
     @Override
-    public Map<Pair<String, Integer>, Boolean> getPurchasablePlants() {
-        final Map<Pair<String, Integer>, Boolean> outputMap = new HashMap<>();
+    public Map<PlantInfo, Boolean> getPurchasablePlants() {
+        final Map<PlantInfo, Boolean> outputMap = new HashMap<>();
         var playerPlants = this.getPlayerBoughtPlants();
-        this.plants.forEach(p -> outputMap.put(p, !playerPlants.contains(p) && this.player.getCoins() >= p.getValue()));
+        this.plants.forEach(p -> outputMap.put(p, !playerPlants.contains(p) && this.player.getCoins() >= p.getCost()));
         return outputMap;
     }
 
@@ -54,10 +59,10 @@ public class ShopImpl implements Shop{
      * {@inheritDoc}
      */
     @Override
-    public boolean buyPlant(final Pair<String, Integer> plantInfo) {
+    public boolean buyPlant(final PlantInfo plantInfo) {
         //TODO: refactor
         if(this.plants.contains(plantInfo) &&
-                this.player.subtractCoins(plantInfo.getValue())) {
+                this.player.subtractCoins(plantInfo.getCost())) {
             this.player.addPlant(getKeyIndex(plantInfo));
             return true;
         }
@@ -74,12 +79,12 @@ public class ShopImpl implements Shop{
                 .collect(Collectors.toSet());
     }
 
-    private Set<Pair<String, Integer>> getPlayerBoughtPlants() {
+    private Set<PlantInfo> getPlayerBoughtPlants() {
         return this.player.getPlantsIds().stream()
                 .map(id -> this.plants.get(id))
                 .collect(Collectors.toSet());
     }
-    private int getKeyIndex(final Pair<String, Integer> plantInfo) {
+    private int getKeyIndex(final PlantInfo plantInfo) {
         return this.plants.indexOf(plantInfo);
     }
 }
