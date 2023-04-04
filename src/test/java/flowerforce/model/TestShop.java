@@ -1,18 +1,18 @@
 package flowerforce.model;
 
+import flowerforce.model.entities.PlantInfo;
 import javafx.util.Pair;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import flowerforce.model.game.Player;
 import flowerforce.model.game.PlayerImpl;
 import flowerforce.model.game.Shop;
 import flowerforce.model.game.ShopImpl;
-
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 final class TestShop {
 
@@ -33,7 +33,7 @@ final class TestShop {
      */
     @Test
     void testPurchasablePlantNumber() {
-        Set<Pair<String, Integer>> purchasablePlants = this.shop.getPurchasablePlants().entrySet().stream()
+        Set<PlantInfo> purchasablePlants = this.shop.getPurchasablePlants().entrySet().stream()
                 .filter(e -> e.getValue())
                  .map(e -> e.getKey())
                 .collect(Collectors.toSet());
@@ -77,7 +77,7 @@ final class TestShop {
     @Test
     void testPurchase() {
         this.player.addCoins(1_000);
-        final Pair<String, Integer> anyPurchasablePlant = this.shop.getPurchasablePlants().entrySet().stream()
+        final PlantInfo anyPurchasablePlant = this.shop.getPurchasablePlants().entrySet().stream()
                                                             .filter(e -> e.getValue())
                                                             .map(e -> e.getKey())
                                                             .findAny()
