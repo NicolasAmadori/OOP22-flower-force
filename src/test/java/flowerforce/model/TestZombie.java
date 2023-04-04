@@ -2,7 +2,6 @@ package flowerforce.model;
 
 import flowerforce.model.entities.Zombie;
 import flowerforce.model.entities.ZombieFactory;
-import flowerforce.model.entities.ZombieFactory;
 import flowerforce.model.game.Yard;
 import javafx.geometry.Point2D;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,7 +11,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 final class TestZombie {
 
-    private static final ZombieFactory ZOMBIE_FACTORY = new ZombieFactory();
     private static final double INITIAL_X = Yard.getYardDimension().getWidth();
     private static final double INITIAL_Y = Yard.getYardDimension().getHeight();
     private static final double FREEZE_FACTOR = 2; //Freeze factor of ZombieImpl
@@ -23,8 +21,8 @@ final class TestZombie {
 
     @BeforeEach
     public void setup() {
-        this.zombie = ZOMBIE_FACTORY.basic(new Point2D(INITIAL_X, INITIAL_Y));
-        this.newspaper = ZOMBIE_FACTORY.newspaper(new Point2D(INITIAL_X, INITIAL_Y));
+        this.zombie = ZombieFactory.basic(new Point2D(INITIAL_X, INITIAL_Y));
+        this.newspaper = ZombieFactory.newspaper(new Point2D(INITIAL_X, INITIAL_Y));
     }
 
     @Test
