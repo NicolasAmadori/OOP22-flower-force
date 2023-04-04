@@ -17,7 +17,7 @@ public class LevelGame extends AbstractGameImpl {
     public LevelGame(final int levelId, final World world) {
         super(levelId, world);
         this.id = levelId;
-        this.remainingZombie = Level.getTotalZombies(levelId);
+        this.remainingZombie = LevelInfo.getTotalZombies(levelId);
         generateZombie = new ZombieGenerationLevelImpl(levelId);
     }
 
@@ -34,7 +34,7 @@ public class LevelGame extends AbstractGameImpl {
      */
     @Override
     public double getProgressState() {
-        return (Level.getTotalZombies(this.id) - remainingZombie) / (double) Level.getTotalZombies(this.id);
+        return (LevelInfo.getTotalZombies(this.id) - remainingZombie) / (double) LevelInfo.getTotalZombies(this.id);
     }
 
     /**
@@ -46,7 +46,7 @@ public class LevelGame extends AbstractGameImpl {
         if (end && this.result()
                 && super.getWorld().getPlayer().getLastUnlockedLevelId() == this.id) {
             super.getWorld().getPlayer().unlockedNextLevel();
-            super.getWorld().getPlayer().addCoins(Level.getLevelCoins(id));
+            super.getWorld().getPlayer().addCoins(LevelInfo.getLevelCoins(id));
         }
         return end || result();
     }
@@ -62,7 +62,7 @@ public class LevelGame extends AbstractGameImpl {
                 remainingZombie--;
                 super.addZombie(zombie.get());
             }
-            if (Level.getBossId(id).isPresent() && remainingZombie == 0) {
+            if (LevelInfo.getBossId(id).isPresent() && remainingZombie == 0) {
                 final var boss = this.generateZombie.bossGeneration();
                 super.addZombie(boss);
             }

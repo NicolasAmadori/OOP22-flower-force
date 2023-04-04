@@ -8,31 +8,31 @@ import java.util.Optional;
 import java.util.function.Function;
 
 /**
- * This is an implementation of .
+ *
  */
-public final class Level {
+public final class LevelInfo {
 
     private static final List<Function<Point2D, Zombie>> AVAILABLE_ZOMBIES = List.of(
-            (pos) -> new ZombieFactoryImpl().basic(pos),
-            (pos) -> new ZombieFactoryImpl().conehead(pos),
-            (pos) -> new ZombieFactoryImpl().runner(pos),
-            (pos) -> new ZombieFactoryImpl().newspaper(pos),
-            (pos) -> new ZombieFactoryImpl().buckethead(pos),
-            (pos) -> new ZombieFactoryImpl().quarterback(pos)
+            ZombieFactory::basic,
+            ZombieFactory::conehead,
+            ZombieFactory::runner,
+            ZombieFactory::newspaper,
+            ZombieFactory::buckethead,
+            ZombieFactory::quarterback
     );
     private static final List<Function<Point2D, Plant>> AVAILABLE_PLANTS = List.of(
-            (pos) -> new SunflowerFactoryImpl().createCommonSunflower(pos),
-            (pos) -> new ShootingPlantFactoryImpl().peashooter(pos),
-            (pos) -> new ShootingPlantFactoryImpl().snow(pos),
+            SunflowerFactory::createCommonSunflower,
+            ShootingPlantFactory::createPeaShooter,
+            ShootingPlantFactory::createSnowShooter,
             Wallnut::new,
-            (pos) -> new ShootingPlantFactoryImpl().fire(pos),
-            (pos) -> new ShootingPlantFactoryImpl().fast(pos)
+            ShootingPlantFactory::createFireShooter,
+            ShootingPlantFactory::createFastShooter
     );
     private static final int COINS = 100;
     private static final List<Integer> ZOMBIE_LEVEL = List.of(34, 51, 68, 68, 68, 85, 85);
-    private static final Function<Point2D, Zombie> ZOMBIE_BOSS = (pos) -> new ZombieFactoryImpl().gargantuar(pos);
+    private static final Function<Point2D, Zombie> ZOMBIE_BOSS = ZombieFactory::gargantuar;
 
-    private Level() {}
+    private LevelInfo() {}
 
     /**
      * @param id of the level

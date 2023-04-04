@@ -1,12 +1,11 @@
 package flowerforce.model.game;
 
-import flowerforce.model.entities.CherryBomb;
 import flowerforce.model.entities.Plant;
 import flowerforce.model.entities.PlantInfo;
 import flowerforce.model.entities.PlantInfoImpl;
-import flowerforce.model.entities.SunflowerFactoryImpl;
+import flowerforce.model.entities.SunflowerFactory;
+import flowerforce.model.entities.CherryBomb;
 import javafx.util.Pair;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +13,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
 import javafx.geometry.Point2D;
 
 /**
@@ -22,7 +20,7 @@ import javafx.geometry.Point2D;
  */
 public class ShopImpl implements Shop{
     private static final List<Pair<Function<Point2D, Plant>, Integer>> SHOP_PLANTS = List.of(
-            new Pair<Function<Point2D, Plant>, Integer> ((pos) -> new SunflowerFactoryImpl().createDoubleSunflower(pos), 600),
+            new Pair<Function<Point2D, Plant>, Integer> (SunflowerFactory::createDoubleSunflower, 600),
             new Pair<Function<Point2D, Plant>, Integer> (CherryBomb::new, 900)
     );
     private final Player player;

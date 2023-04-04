@@ -4,7 +4,6 @@ import flowerforce.model.entities.*;
 import flowerforce.model.utilities.RenderingInformation;
 import flowerforce.model.utilities.TimerImpl;
 import javafx.geometry.Point2D;
-import javafx.util.Pair;
 
 import java.util.*;
 import java.util.function.Function;
@@ -38,7 +37,7 @@ public abstract class AbstractGameImpl implements Game {
      */
     public AbstractGameImpl(final int id, final World world) {
         this.placeablePlant = new HashMap<>();
-        Level.getPlantsInfo(id).forEach(p -> placeablePlant.put(
+        LevelInfo.getPlantsInfo(id).forEach(p -> placeablePlant.put(
                 new PlantInfoImpl(p.apply(TEMPORARY_POSITION).getName(),
                         p.apply(TEMPORARY_POSITION).getCost()),p)
         );
@@ -252,8 +251,9 @@ public abstract class AbstractGameImpl implements Game {
 
         this.zombies.forEach(zombie -> {
             if (zombieEating.containsKey(zombie)) {
-                this.damagedEntities.add(zombieEating.get(zombie).getEntityInfo());
-                zombie.manageEating(zombieEating.get(zombie));
+                if (zombie.manageEating(zombieEating.get(zombie))) {
+                    this.damagedEntities.add(zombieEating.get(zombie).getEntityInfo());
+                }
             } else {
                 zombie.move();
             }

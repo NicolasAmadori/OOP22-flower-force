@@ -60,7 +60,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
 
     @Override
     public void levelGame(final int levelId) {
-        this.game("Level" + levelId, () -> this.controller.startNewLevelGame(levelId));
+        this.game("Level " + levelId, () -> this.controller.startNewLevelGame(levelId));
     }
 
     @Override
