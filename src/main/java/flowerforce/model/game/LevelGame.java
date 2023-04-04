@@ -1,7 +1,6 @@
 package flowerforce.model.game;
 
 /**
- * An implementation of a new level game.
  * This game will spawn a specific number of zombie.
  * If the player defeat all this zombie, he will pass the level.
  */

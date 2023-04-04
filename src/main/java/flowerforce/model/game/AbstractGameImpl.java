@@ -16,7 +16,8 @@ import java.util.stream.Collectors;
 public abstract class AbstractGameImpl implements Game {
     private final Map<EntityInfo<String, Integer>, Function<Point2D, Plant>> placeablePlant;
     private static final double STANDARD_SECS_SPAWN_SUN = 5.0;
-    private static final int TIME_TO_SPAWN_SUN = (int) (STANDARD_SECS_SPAWN_SUN * RenderingInformation.getFramesPerSecond());
+    private static final int TIME_TO_SPAWN_SUN = (int)
+            (STANDARD_SECS_SPAWN_SUN * RenderingInformation.getFramesPerSecond());
     private static final int SUN_VALUE = 25;
     private static final int INITIAL_SUN = 2;
     private Set<Plant> plants = new HashSet<>();
