@@ -252,7 +252,7 @@ public final class GameSceneController implements GameEngine {
         final Set<EntityView> placedBullets = this.application.getController().getPlacedBullets();
         //plants
         if (this.removeEntities(placedPlants, this.drawnPlants)) {
-            //TODO: SoundManager.zombieHasEaten();
+            SoundManager.zombieHasEaten();
         }
         this.updateEntities(placedPlants, this.drawnPlants);
         if (this.addEntities(placedPlants, this.drawnPlants)) {
@@ -260,7 +260,7 @@ public final class GameSceneController implements GameEngine {
         }
         //zombies
         if (this.removeEntities(placedZombies, this.drawnZombies)) {
-            //TODO: SoundManager.zombieDied();
+            SoundManager.zombieDied();
         }
         this.updateEntities(placedZombies, this.drawnZombies);
         if (this.addEntities(placedZombies, this.drawnZombies)) {

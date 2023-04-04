@@ -98,6 +98,20 @@ public final class SoundManager {
     }
 
     /**
+     * Start the sound effect of zombie that has eaten a plant.
+     */
+    public static void zombieHasEaten() {
+        playSoundEffect(ResourceFinder.getSoundPath("plantEaten" + SOUND_FILE_EXTENSION));
+    }
+
+    /**
+     * Start the sound effect of zombie screaming when it dies
+     */
+    public static void zombieDied() {
+        playSoundEffect(ResourceFinder.getSoundPath("zombieDiedScream" + SOUND_FILE_EXTENSION));
+    }
+
+    /**
      * Start the bulletShot effect.
      */
     public static void bulletShot() {
