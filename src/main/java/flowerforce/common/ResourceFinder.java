@@ -27,7 +27,7 @@ public final class ResourceFinder {
     }
 
     /**
-     * Get the image for a Plant
+     * Get the image for a Plant.
      * @param filename the name of the file
      * @return the absolute path of the plant image
      */
@@ -36,7 +36,7 @@ public final class ResourceFinder {
     }
 
     /**
-     * Get the image for a Zombie
+     * Get the image for a Zombie.
      * @param filename the name of the file
      * @return the absolute path of the zombie image
      */
@@ -45,7 +45,7 @@ public final class ResourceFinder {
     }
 
     /**
-     * Get the image for a Bullet
+     * Get the image for a Bullet.
      * @param filename the name of the file
      * @return the absolute path of the bullet image
      */
