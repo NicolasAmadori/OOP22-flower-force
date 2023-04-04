@@ -1,7 +1,5 @@
 package flowerforce.model.game;
 
-import java.util.Optional;
-
 /**
  * An implementation of a new level game.
  * This game will spawn a specific number of zombie.
@@ -46,8 +44,8 @@ public class LevelGame extends AbstractGameImpl {
     @Override
     public boolean isOver() {
         final var end = super.isOver();
-        if (end && this.result() &&
-                super.getWorld().getPlayer().getLastUnlockedLevelId() == this.id) {
+        if (end && this.result()
+                && super.getWorld().getPlayer().getLastUnlockedLevelId() == this.id) {
             super.getWorld().getPlayer().unlockedNextLevel();
             super.getWorld().getPlayer().addCoins(Level.getLevelCoins(id));
         }
