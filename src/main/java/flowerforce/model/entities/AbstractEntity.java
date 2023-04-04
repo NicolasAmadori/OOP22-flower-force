@@ -8,7 +8,7 @@ import javafx.geometry.Point2D;
 public abstract class AbstractEntity implements Entity {
 
     private final String entityName;
-    private final EntityInfo<String,Point2D> entityInfo;
+    private final EntityInfo entityInfo;
     private Point2D pos;
 
     /**
@@ -19,7 +19,7 @@ public abstract class AbstractEntity implements Entity {
     protected AbstractEntity(final Point2D pos, final String entityName) {
         this.pos = pos;
         this.entityName = entityName;
-        this.entityInfo = new EntityInfo<>(entityName, pos);
+        this.entityInfo = new EntityInfoImpl(entityName, pos);
     }
 
     /**
@@ -42,7 +42,7 @@ public abstract class AbstractEntity implements Entity {
      * {@inheritDoc}
      */
     @Override
-    public EntityInfo<String,Point2D> getEntityInfo() {
+    public EntityInfo getEntityInfo() {
         return this.entityInfo;
     }
 
@@ -52,5 +52,6 @@ public abstract class AbstractEntity implements Entity {
      */
     protected void setPosition(final Point2D newPos) {
         this.pos = newPos;
+        this.entityInfo.setPosition(newPos);
     }
 }

@@ -1,5 +1,6 @@
 package flowerforce.controller;
 
+import flowerforce.model.entities.EntityInfo;
 import flowerforce.model.game.Game;
 import flowerforce.view.entities.CardView;
 import flowerforce.view.entities.EntityView;
@@ -105,10 +106,28 @@ public interface Controller {
     boolean buyPlant(CardView cardView);
 
     /**
-     * Get all the entities to draw.
+     * Get all the plants to draw.
      * @return A set of EntityView.
      */
-    Set<EntityView> getPlacedEntities();
+    Set<EntityView> getPlacedPlants();
+
+    /**
+     * Get all the zombies to draw.
+     * @return A set of EntityView.
+     */
+    Set<EntityView> getPlacedZombies();
+
+    /**
+     * Get all the zombies to draw.
+     * @return A set of EntityView.
+     */
+    Set<EntityView> getPlacedBullets();
+
+    /**
+     * Get all the entities that received damage.
+     * @return A set of entityInfo
+     */
+    Set<EntityView> getDamagedEntities();
 
     /**
      * All the cards that are enabled to select.
