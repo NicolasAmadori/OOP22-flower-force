@@ -73,9 +73,7 @@ public class PlayerImpl implements Player {
      */
     @Override
     public void addNewScore(final int score) {
-        if (score > this.scoreRecord) {
-            this.scoreRecord = score;
-        }
+        this.scoreRecord = Math.max(this.scoreRecord, score);
     }
 
     /**

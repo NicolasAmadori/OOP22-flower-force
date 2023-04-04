@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import flowerforce.controller.utilities.CardGenerator;
 import flowerforce.controller.utilities.EntityConverter;
 import flowerforce.controller.utilities.WorldSavingManager;
+import flowerforce.model.entities.EntityInfo;
 import flowerforce.model.game.Game;
 import flowerforce.model.game.World;
 import flowerforce.controller.utilities.EntityConverterImpl;
@@ -33,9 +34,9 @@ public final class ControllerImpl implements Controller {
     private Optional<Game> game;
 
     private Map<CardView, Pair<String, Integer>> cards = new HashMap<>();
-    private Map<Pair<String, Point2D>, EntityView> previousPlant = new HashMap<>();
-    private Map<Pair<String, Point2D>, EntityView> previousZombie = new HashMap<>();
-    private Map<Pair<String, Point2D>, EntityView> previousBullet = new HashMap<>();
+    private Map<EntityInfo<String, Point2D>, EntityView> previousPlant = new HashMap<>();
+    private Map<EntityInfo<String, Point2D>, EntityView> previousZombie = new HashMap<>();
+    private Map<EntityInfo<String, Point2D>, EntityView> previousBullet = new HashMap<>();
     private Map<CardView, Pair<String,Integer>> purchasablePlants = new HashMap<>();
 
     /**
@@ -83,7 +84,7 @@ public final class ControllerImpl implements Controller {
     @Override
     public void setGameEngine(final GameEngine gameEngine) {
         this.gameEngine = Optional.ofNullable(gameEngine);
-        checkGameEngine();
+        this.checkGameEngine();
         this.entityConverter = new EntityConverterImpl(this.world.getYardDimension(), this.gameEngine.get().getYardDimension());
     }
 
@@ -92,7 +93,7 @@ public final class ControllerImpl implements Controller {
      */
     @Override
     public GameEngine getGameEngine() {
-        checkGameEngine();
+        this.checkGameEngine();
         return this.gameEngine.get();
     }
 
@@ -101,7 +102,7 @@ public final class ControllerImpl implements Controller {
      */
     @Override
     public int getSunCounter() {
-        checkGame();
+        this.checkGame();
         return this.game.get().getSun();
     }
 
@@ -110,7 +111,7 @@ public final class ControllerImpl implements Controller {
      */
     @Override
     public int getScore() {
-        checkGame();
+        this.checkGame();
         return this.game.get().getScore();
     }
 
@@ -119,7 +120,7 @@ public final class ControllerImpl implements Controller {
      */
     @Override
     public double getProgressState() {
-        checkGame();
+        this.checkGame();
         return this.game.get().getProgressState();
     }
 
@@ -128,13 +129,13 @@ public final class ControllerImpl implements Controller {
      */
     @Override
     public boolean placePlant(final CardView cardView, final int row, final int col) {
-        checkGame();
+        this.checkGame();
         return this.game.get().placePlant(this.cards.get(cardView), row, col);
     }
 
     @Override
     public boolean removePlant(final int row, final int col) {
-        checkGame();
+        this.checkGame();
         return this.game.get().removePlant(row, col);
     }
 
@@ -152,10 +153,10 @@ public final class ControllerImpl implements Controller {
      */
     @Override
     public Game startNewLevelGame(final int levelId) {
-        resetGame();
+        this.resetGame();
         this.game = Optional.of(this.world.createLevelGame(levelId));
-        checkGame();
-        checkGameEngine();
+        this.checkGame();
+        this.checkGameEngine();
         this.gameEngine.get().loadCards(this.getCards());
         return this.game.get();
     }
@@ -165,24 +166,21 @@ public final class ControllerImpl implements Controller {
      */
     @Override
     public Game startNewInfiniteGame() {
-        resetGame();
+        this.resetGame();
         this.game = Optional.of(this.world.createInfiniteGame());
-        checkGame();
-        checkGameEngine();
+        this.checkGame();
+        this.checkGameEngine();
         this.gameEngine.get().loadCards(this.getCards());
         return this.game.get();
     }
 
     @Override
-    public Set<EntityView> getPlacedEntities() {
-        checkGame();
-        final Set<Pair<String, Point2D>> plants = this.game.get().getPlacedPlants();
-        final Set<Pair<String, Point2D>> zombies = this.game.get().getPlacedZombies();
-        final Set<Pair<String, Point2D>> bullets = this.game.get().getPlacedBullet();
+    public Set<EntityView> getPlacedPlants() {
+        this.checkGame();
+        final Set<EntityInfo<String, Point2D>> plants = this.game.get().getPlacedPlants();
 
-        //TODO: refactor
         //region Plants
-        final Set<Pair<String, Point2D>> plantsToRemove = new HashSet<>();
+        final Set<EntityInfo<String, Point2D>> plantsToRemove = new HashSet<>();
         //Remove the entities that are no longer there
         this.previousPlant.keySet().forEach(p -> {
             if (!plants.contains(p)) {
@@ -198,8 +196,16 @@ public final class ControllerImpl implements Controller {
         });
         //endregion
 
+        return new HashSet<>(this.previousPlant.values());
+    }
+
+    @Override
+    public Set<EntityView> getPlacedZombies() {
+        this.checkGame();
+        final Set<EntityInfo<String, Point2D>> zombies = this.game.get().getPlacedZombies();
+
         //region Zombies
-        final Set<Pair<String, Point2D>> zombiesToRemove = new HashSet<>();
+        final Set<EntityInfo<String, Point2D>> zombiesToRemove = new HashSet<>();
         this.previousZombie.keySet().forEach(z -> {
             if (!zombies.contains(z)) {
                 zombiesToRemove.add(z);
@@ -215,8 +221,16 @@ public final class ControllerImpl implements Controller {
         });
         //endregion
 
+        return new HashSet<>(this.previousZombie.values());
+    }
+
+    @Override
+    public Set<EntityView> getPlacedBullets() {
+        this.checkGame();
+        final Set<EntityInfo<String, Point2D>> bullets = this.game.get().getPlacedBullet();
+
         //region Bullets
-        final Set<Pair<String, Point2D>> bulletToRemove = new HashSet<>();
+        final Set<EntityInfo<String, Point2D>> bulletToRemove = new HashSet<>();
         this.previousBullet.keySet().forEach(b -> {
             if (!bullets.contains(b)) {
                 bulletToRemove.add(b);
@@ -232,24 +246,19 @@ public final class ControllerImpl implements Controller {
         });
         //endregion
 
-        final Set<EntityView> output = new HashSet<>();
-        output.addAll(this.previousPlant.values());
-        output.addAll(this.previousZombie.values());
-        output.addAll(this.previousBullet.values());
-
-        return output;
+        return new HashSet<>(this.previousBullet.values());
     }
 
     private List<CardView> getCards() {
-        checkGame();
-        this.game.get().getAllPlant()
+        this.checkGame();
+        this.game.get().getPlaceablePlant()
                 .forEach(p -> cards.put(CardGenerator.getCardView(p), p));
         return cards.keySet().stream().toList();
     }
 
     @Override
     public Set<CardView> getEnabledCards() {
-        checkGame();
+        this.checkGame();
         final Set<Pair<String, Integer>> enabledPlants = this.game.get().getEnabledPlants();
         return this.cards.entrySet().stream()
                 .filter(e -> enabledPlants.contains(e.getValue())) //Removed not available cardviews

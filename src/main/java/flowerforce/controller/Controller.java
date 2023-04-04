@@ -105,10 +105,22 @@ public interface Controller {
     boolean buyPlant(CardView cardView);
 
     /**
-     * Get all the entities to draw.
+     * Get all the plants to draw.
      * @return A set of EntityView.
      */
-    Set<EntityView> getPlacedEntities();
+    Set<EntityView> getPlacedPlants();
+
+    /**
+     * Get all the zombies to draw.
+     * @return A set of EntityView.
+     */
+    Set<EntityView> getPlacedZombies();
+
+    /**
+     * Get all the zombies to draw.
+     * @return A set of EntityView.
+     */
+    Set<EntityView> getPlacedBullets();
 
     /**
      * All the cards that are enabled to select.
