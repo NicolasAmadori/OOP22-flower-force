@@ -33,12 +33,11 @@ public final class ControllerImpl implements Controller {
     private final World world;
     private EntityConverter entityConverter;
     private Optional<Game> game;
-
     private Map<CardView, PlantInfo> cards = new HashMap<>();
     private Map<EntityInfo, EntityView> previousPlant = new HashMap<>();
     private Map<EntityInfo, EntityView> previousZombie = new HashMap<>();
     private Map<EntityInfo, EntityView> previousBullet = new HashMap<>();
-    private Map<CardView, Pair<String,Integer>> purchasablePlants = new HashMap<>();
+    private final Map<CardView, PlantInfo> purchasablePlants = new HashMap<>();
 
     /**
      * Create a new instance of Controller.
