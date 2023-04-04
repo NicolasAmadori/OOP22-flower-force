@@ -63,7 +63,7 @@ public final class LevelInfo {
      * @return the zombie to spawn on that level
      */
     public static Integer getTotalZombies(final int id) {
-        return ZOMBIE_LEVEL.get(id - 1);
+        return ZOMBIE_LEVEL.get(Math.min(id, ZOMBIE_LEVEL.size() - 1));
     }
 
     /**

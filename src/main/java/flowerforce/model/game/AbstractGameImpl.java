@@ -29,7 +29,7 @@ public abstract class AbstractGameImpl implements Game {
     private final World world;
     private int score;
     private static final Point2D TEMPORARY_POSITION = new Point2D(0, 0);
-
+    final Map<Zombie, Plant> zombieEating = new HashMap<>();
     /**
      * Constructor to instantiate an infinite game.
      * @param id of the game started
@@ -238,7 +238,6 @@ public abstract class AbstractGameImpl implements Game {
      * Check which zombies are eating and update which plants are still alive.
      */
     private void eatingPlant() {
-        final Map<Zombie, Plant> zombieEating = new HashMap<>();
         this.plants.forEach(plant -> this.zombies.stream()
                 .filter(zombie -> zombie.getPosition().getY() == plant.getPosition().getY())
                 .filter(zombie -> zombie.getPosition().getX() <= plant.getPosition().getX())
@@ -275,10 +274,9 @@ public abstract class AbstractGameImpl implements Game {
             } else if (plant instanceof ShootingPlant) {
                 final int nZombieOnRow = zombies.stream()
                         .filter(zombie -> plant.getPosition().getY() == zombie.getPosition().getY())
-                        .filter(zombie -> plant.getPosition().getX()
-                                - Yard.getCellDimension().getWidth() / 2 <= zombie.getPosition().getX())
+                        .filter(zombie -> plant.getPosition().getX() <= zombie.getPosition().getX())
                         .toList().size();
-                if (nZombieOnRow > 0) {
+                if (nZombieOnRow > 0 && !zombieEating.containsValue(plant)) {
                     final var bullet = ((ShootingPlant) plant).nextBullet();
                     bullet.ifPresent(b -> bullets.add(b));
                 }
@@ -292,6 +290,7 @@ public abstract class AbstractGameImpl implements Game {
                         .toList());
             }
         }
+        zombieEating.clear();
         plantsTimer.keySet().forEach(plantType -> {
             if (!plantsTimer.get(plantType).isReady()) {
                 plantsTimer.get(plantType).updateState();
