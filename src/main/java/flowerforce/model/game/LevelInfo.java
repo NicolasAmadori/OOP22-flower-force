@@ -21,12 +21,12 @@ public final class LevelInfo {
             (pos) -> new ZombieFactoryImpl().quarterback(pos)
     );
     private static final List<Function<Point2D, Plant>> AVAILABLE_PLANTS = List.of(
-            (pos) -> new SunflowerFactoryImpl().createCommonSunflower(pos),
-            (pos) -> new ShootingPlantFactoryImpl().createPeaShooter(pos),
-            (pos) -> new ShootingPlantFactoryImpl().createSnowShooter(pos),
+            SunflowerFactory::createCommonSunflower,
+            ShootingPlantFactory::createPeaShooter,
+            ShootingPlantFactory::createSnowShooter,
             Wallnut::new,
-            (pos) -> new ShootingPlantFactoryImpl().createFireShooter(pos),
-            (pos) -> new ShootingPlantFactoryImpl().createFastShooter(pos)
+            ShootingPlantFactory::createFireShooter,
+            ShootingPlantFactory::createFastShooter
     );
     private static final int COINS = 100;
     private static final List<Integer> ZOMBIE_LEVEL = List.of(34, 51, 68, 68, 68, 85, 85);
