@@ -4,7 +4,6 @@ import flowerforce.model.entities.*;
 import flowerforce.model.utilities.RenderingInformation;
 import flowerforce.model.utilities.TimerImpl;
 import javafx.geometry.Point2D;
-import javafx.util.Pair;
 
 import java.util.*;
 import java.util.function.Function;
@@ -38,7 +37,7 @@ public abstract class AbstractGameImpl implements Game {
      */
     public AbstractGameImpl(final int id, final World world) {
         this.placeablePlant = new HashMap<>();
-        Level.getPlantsInfo(id).forEach(p -> placeablePlant.put(
+        LevelInfo.getPlantsInfo(id).forEach(p -> placeablePlant.put(
                 new PlantInfoImpl(p.apply(TEMPORARY_POSITION).getName(),
                         p.apply(TEMPORARY_POSITION).getCost()),p)
         );

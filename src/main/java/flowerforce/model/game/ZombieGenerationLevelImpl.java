@@ -18,7 +18,7 @@ public class ZombieGenerationLevelImpl extends AbstractZombieGeneration implemen
      */
     public ZombieGenerationLevelImpl(final int levelId) {
         super(levelId, START_NUMBER_ZOMBIE_IN_HORDE);
-        this.boss = Level.getBossId(levelId);
+        this.boss = LevelInfo.getBossId(levelId);
     }
 
     /**

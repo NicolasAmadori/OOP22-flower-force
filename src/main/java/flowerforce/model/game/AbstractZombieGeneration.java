@@ -31,7 +31,7 @@ public abstract class AbstractZombieGeneration implements ZombieGeneration {
     private boolean incrementableHorde;
 
     public AbstractZombieGeneration(final int levelId, final int startNumberZombieHorde) {
-        genZombie = new CreationZombie(Level.getZombiesInfo(levelId));
+        genZombie = new CreationZombie(LevelInfo.getZombiesInfo(levelId));
         this.zombieTimer = new TimerImpl(timeZombie);
         this.startNumberZombieHorde = startNumberZombieHorde;
         this.hordeZombie = startNumberZombieHorde;

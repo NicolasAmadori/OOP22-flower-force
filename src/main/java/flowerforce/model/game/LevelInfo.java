@@ -8,9 +8,9 @@ import java.util.Optional;
 import java.util.function.Function;
 
 /**
- * This is an implementation of .
+ *
  */
-public final class Level {
+public final class LevelInfo {
 
     private static final List<Function<Point2D, Zombie>> AVAILABLE_ZOMBIES = List.of(
             (pos) -> new ZombieFactoryImpl().basic(pos),
@@ -32,7 +32,7 @@ public final class Level {
     private static final List<Integer> ZOMBIE_LEVEL = List.of(34, 51, 68, 68, 68, 85, 85);
     private static final Function<Point2D, Zombie> ZOMBIE_BOSS = (pos) -> new ZombieFactoryImpl().gargantuar(pos);
 
-    private Level() {}
+    private LevelInfo() {}
 
     /**
      * @param id of the level
