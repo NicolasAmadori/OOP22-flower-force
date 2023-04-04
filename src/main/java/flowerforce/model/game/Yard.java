@@ -23,7 +23,7 @@ public final class Yard {
      * @param col of the cell
      * @return the lower right corner of the cell, where the entity will be placed
      */
-    public static Point2D getEntityPosition(int row, int col) {
+    public static Point2D getEntityPosition(final int row, final int col) {
         return new Point2D((col + 1) * CELL.getWidth(), (row + 1) * CELL.getHeight());
     }
 
@@ -57,6 +57,26 @@ public final class Yard {
      */
     public static int getColsNum() {
         return COLS;
+    }
+
+    /**
+     * 
+     * @param center point, that is the bottom right corner of the central cell of the square
+     * @param radius of the square, in number of cells 
+     * @return the top left corner of this square
+     */
+    public static Point2D toTopLeftCorner(final Point2D center, final int radius) {
+        return new Point2D(center.getX() - (radius + 1) * CELL.getWidth(), center.getY() - (radius + 1) * CELL.getHeight());
+    }
+
+    /**
+     * 
+     * @param center point, that is the bottom right corner of the central cell of the square
+     * @param radius of the square, in number of cells 
+     * @return the bottom right corner of this square
+     */
+    public static Point2D toBottomRightCorner(final Point2D center, final int radius) {
+        return new Point2D(center.getX() + radius * CELL.getWidth(), center.getY() + radius * CELL.getHeight());
     }
 
 }

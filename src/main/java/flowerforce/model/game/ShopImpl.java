@@ -16,12 +16,12 @@ import java.util.stream.Collectors;
 import javafx.geometry.Point2D;
 
 /**
- * This is an implementation of {@link Shop}
+ * This is an implementation of {@link Shop}.
  */
-public class ShopImpl implements Shop{
+public class ShopImpl implements Shop {
     private static final List<Pair<Function<Point2D, Plant>, Integer>> SHOP_PLANTS = List.of(
-            new Pair<Function<Point2D, Plant>, Integer> (SunflowerFactory::createDoubleSunflower, 600),
-            new Pair<Function<Point2D, Plant>, Integer> (CherryBomb::new, 900)
+            new Pair<Function<Point2D, Plant>, Integer>(SunflowerFactory::createDoubleSunflower, 600),
+            new Pair<Function<Point2D, Plant>, Integer>(CherryBomb::new, 900)
     );
     private final Player player;
 
@@ -31,7 +31,7 @@ public class ShopImpl implements Shop{
      * This is a constructor for a new shop instance.
      * @param player The player to add bought plants to
      */
-    public ShopImpl(Player player) {
+    public ShopImpl(final Player player) {
         this.player = player;
 
         //Adding all plants in the map
@@ -48,7 +48,7 @@ public class ShopImpl implements Shop{
     @Override
     public Map<PlantInfo, Boolean> getPurchasablePlants() {
         final Map<PlantInfo, Boolean> outputMap = new HashMap<>();
-        var playerPlants = this.getPlayerBoughtPlants();
+        final var playerPlants = this.getPlayerBoughtPlants();
         this.plants.forEach(p -> outputMap.put(p, !playerPlants.contains(p) && this.player.getCoins() >= p.getCost()));
         return outputMap;
     }
@@ -58,9 +58,8 @@ public class ShopImpl implements Shop{
      */
     @Override
     public boolean buyPlant(final PlantInfo plantInfo) {
-        //TODO: refactor
-        if(this.plants.contains(plantInfo) &&
-                this.player.subtractCoins(plantInfo.getCost())) {
+        if (this.plants.contains(plantInfo)
+                && this.player.subtractCoins(plantInfo.getCost())) {
             this.player.addPlant(getKeyIndex(plantInfo));
             return true;
         }

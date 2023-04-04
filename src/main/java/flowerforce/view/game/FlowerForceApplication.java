@@ -27,18 +27,17 @@ public final class FlowerForceApplication extends Application implements FlowerF
 
     private static final double SCREEN_FILL_INDEX = 0.8;
 
-    private Controller controller;//The controller of the game
+    private Controller controller;
 
     private static final String GAMEICON_NAME = "icon.png";
     private Stage stage;
-    private FlowerForceScene sceneClass; 
 
     @Override
     public void start(final Stage primaryStage) throws Exception {
         this.stage = primaryStage;
-        this.controller = new ControllerImpl();//Instantiate the Controller
+        this.controller = new ControllerImpl();
         this.stage.setResizable(false);
-        this.stage.getIcons().add(new Image(ResourceFinder.getImagePath(GAMEICON_NAME)));
+        this.stage.getIcons().add(new Image(ResourceFinder.getMenuImagePath(GAMEICON_NAME)));
         this.stage.setOnCloseRequest(e -> {
             Platform.exit();
             System.exit(0);
@@ -49,13 +48,10 @@ public final class FlowerForceApplication extends Application implements FlowerF
 
     @Override
     public void menu() {
-        try {
-            this.controller.save();
-            FlowerForceScene sceneClass = new MenuScene(this);
-            this.setScene(sceneClass.getScene());
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+        this.controller.save();
+        final FlowerForceScene sceneClass = new MenuScene(this);
+        this.setScene(sceneClass.getScene());
+
     }
 
     @Override
@@ -70,25 +66,17 @@ public final class FlowerForceApplication extends Application implements FlowerF
 
     @Override
     public void howToPlay() {
-        try {
-            FlowerForceScene sceneClass = new HowToPlayScene(this);
-            this.setScene(sceneClass.getScene());
-            this.stage.setTitle("HowToPlay");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        final FlowerForceScene sceneClass = new HowToPlayScene(this);
+        this.setScene(sceneClass.getScene());
+        this.stage.setTitle("HowToPlay");
     }
 
     @Override
     public void shop() {
-        try {
-            FlowerForceScene sceneClass = new ShopScene(this);
-            this.setScene(sceneClass.getScene());
-            this.stage.setTitle("Shop");
-            SoundManager.openShop();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        final FlowerForceScene sceneClass = new ShopScene(this);
+        this.setScene(sceneClass.getScene());
+        this.stage.setTitle("Shop");
+        SoundManager.openShop();
     }
 
     @Override
@@ -97,19 +85,15 @@ public final class FlowerForceApplication extends Application implements FlowerF
     }
 
     private void game(final String title, final Supplier<Game> gameGetter) {
-        try {
-            this.sceneClass = new GameScene(this);
-            this.setScene(this.sceneClass.getScene());
-            this.stage.setTitle(title);
-            AnimationTimer gameLoop = new GameLoop(
-                this.controller.getGameEngine(),
-                gameGetter.get(),
-                this.controller.getFramesPerSecond()
-            );
-            gameLoop.start();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+        final FlowerForceScene sceneClass = new GameScene(this);
+        this.setScene(sceneClass.getScene());
+        this.stage.setTitle(title);
+        final AnimationTimer gameLoop = new GameLoop(
+            this.controller.getGameEngine(),
+            gameGetter.get(),
+            this.controller.getFramesPerSecond()
+        );
+        gameLoop.start();
     }
 
     private void setScene(final Scene scene) {
@@ -162,7 +146,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
      * @return a Dimension2D contaning image's dimensions
      */
     public static Dimension2D getImgDimensions(final String imgName) {
-        final Image image = new Image(ResourceFinder.getImagePath(imgName));
+        final Image image = new Image(ResourceFinder.getMenuImagePath(imgName));
         //image's dimensions
         return new Dimension2D(image.getWidth(), image.getHeight());
     }

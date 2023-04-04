@@ -1,7 +1,6 @@
 package flowerforce.view.game;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +26,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
 
+/**
+ * JavaFx controller of the {@link GameScene},
+ * it's also linked with main controller through {@link GameEngine} interface.
+ */
 public final class GameSceneController implements GameEngine {
 
     @FXML private AnchorPane gamePane;
@@ -62,8 +65,8 @@ public final class GameSceneController implements GameEngine {
     private static final int YARD_WIDTH = 1314;
     private static final int YARD_HEIGHT = 880;
     private static final Effect BLOOM_EFFECT = new Bloom(0.65);
-    private static final Effect BLACK_WHITE_EFFECT = new ColorAdjust(0,-1,0,0);
-    private static final Effect DAMAGE_EFFECT = new ColorAdjust(0, 0, 0.5, 0);
+    private static final Effect BLACK_WHITE_EFFECT = new ColorAdjust(0, -1, 0, 0);
+    private static final Effect DAMAGE_EFFECT = new ColorAdjust(0, 0,  0.5, 0);
     private final int rows;
     private final int cols;
     private final FlowerForceApplication application;
@@ -76,6 +79,10 @@ public final class GameSceneController implements GameEngine {
     private boolean isShovelSelected = false;
     private boolean isFirstZombie = true;
 
+    /**
+     * Creates a new {@link GameSceneController}.
+     * @param application which this class linked to
+     */
     public GameSceneController(final FlowerForceApplication application) {
         this.application = application;
         this.application.getController().setGameEngine(this);
@@ -146,7 +153,7 @@ public final class GameSceneController implements GameEngine {
         }
     }
 
-    private boolean isInsideYard(double x, double y) {
+    private boolean isInsideYard(final double x, final double y) {
         return x >= YARD_FIRST_X && y >= YARD_FIRST_Y
                 && x < YARD_FIRST_X + YARD_WIDTH 
                 && y < YARD_FIRST_Y + YARD_HEIGHT;
@@ -169,13 +176,12 @@ public final class GameSceneController implements GameEngine {
                     this.isShovelSelected = false;
                     SoundManager.useShovel();
                 }
-            }            
+            }
         } else {
             this.removeBloomEffect();
             this.cardSelected = Optional.empty();
             this.isShovelSelected = false;
         }
-        
     }
 
     @FXML
@@ -246,7 +252,7 @@ public final class GameSceneController implements GameEngine {
         final Set<EntityView> placedBullets = this.application.getController().getPlacedBullets();
         //plants
         if (this.removeEntities(placedPlants, this.drawnPlants)) {
-            //TODO: SoundManager.zombieHasEaten();
+            SoundManager.zombieHasEaten();
         }
         this.updateEntities(placedPlants, this.drawnPlants);
         if (this.addEntities(placedPlants, this.drawnPlants)) {
@@ -254,7 +260,7 @@ public final class GameSceneController implements GameEngine {
         }
         //zombies
         if (this.removeEntities(placedZombies, this.drawnZombies)) {
-            //TODO: SoundManager.zombieDied();
+            SoundManager.zombieDied();
         }
         this.updateEntities(placedZombies, this.drawnZombies);
         if (this.addEntities(placedZombies, this.drawnZombies)) {
@@ -275,7 +281,7 @@ public final class GameSceneController implements GameEngine {
 
     }
 
-    private boolean removeEntities(final Set<EntityView> newEntities, final Map<EntityView, ImageView> oldEntities) { //TODO: check if it works with parameter
+    private boolean removeEntities(final Set<EntityView> newEntities, final Map<EntityView, ImageView> oldEntities) {
         final Set<EntityView> toRemove =  oldEntities.keySet().stream()
                 .filter(e -> !newEntities.contains(e))
                 .collect(Collectors.toSet());
@@ -290,7 +296,8 @@ public final class GameSceneController implements GameEngine {
         newEntities.stream()
                 .filter(e -> oldEntities.containsKey(e))
                 .forEach(e -> {
-                    oldEntities.get(e).relocate(e.getPlacingPosition().getX() + YARD_FIRST_X, e.getPlacingPosition().getY() + YARD_FIRST_Y);
+                    oldEntities.get(e).relocate(e.getPlacingPosition().getX() + YARD_FIRST_X,
+                        e.getPlacingPosition().getY() + YARD_FIRST_Y);
                     oldEntities.get(e).setImage(e.getPlaceableImage());
                 });
     }
@@ -377,9 +384,9 @@ public final class GameSceneController implements GameEngine {
         this.imageResult.toFront();
         this.cards.keySet().forEach(card -> card.setDisable(true));
         if (isWon) {
-            imageResult.setImage(new Image(ResourceFinder.getImagePath("victory.png")));
+            imageResult.setImage(new Image(ResourceFinder.getMenuImagePath("victory.png")));
         } else {
-            imageResult.setImage(new Image(ResourceFinder.getImagePath("loss.png")));
+            imageResult.setImage(new Image(ResourceFinder.getMenuImagePath("loss.png")));
         }
     }
 }

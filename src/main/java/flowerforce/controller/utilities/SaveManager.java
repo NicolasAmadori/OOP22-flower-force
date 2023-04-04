@@ -14,7 +14,7 @@ import flowerforce.common.ResourceFinder;
  */
 public final class SaveManager<T> {
     private static final String SAVING_FILES_EXTENSION = ".json";
-    private final Gson GSON = new Gson(); //Instance to json text converter
+    private static final Gson GSON = new Gson(); //Instance to json text converter
     private final Class<T> genericClass; //class of the type to deserialize
     private final String savingFilePath; //path of the savingFile
 

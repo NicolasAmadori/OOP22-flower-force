@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Collections;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
-
 import flowerforce.controller.utilities.CardGenerator;
 import flowerforce.controller.utilities.EntityConverter;
 import flowerforce.controller.utilities.WorldSavingManager;
@@ -21,8 +20,6 @@ import flowerforce.controller.utilities.EntityConverterImpl;
 import flowerforce.view.entities.CardView;
 import flowerforce.view.entities.EntityView;
 import flowerforce.view.game.GameEngine;
-import javafx.util.Pair;
-import javafx.geometry.Point2D;
 
 /**
  * This is an implementation of {@link Controller}.
@@ -33,10 +30,10 @@ public final class ControllerImpl implements Controller {
     private final World world;
     private EntityConverter entityConverter;
     private Optional<Game> game;
-    private Map<CardView, PlantInfo> cards = new HashMap<>();
-    private Map<EntityInfo, EntityView> previousPlant = new HashMap<>();
-    private Map<EntityInfo, EntityView> previousZombie = new HashMap<>();
-    private Map<EntityInfo, EntityView> previousBullet = new HashMap<>();
+    private final Map<CardView, PlantInfo> cards = new HashMap<>();
+    private final Map<EntityInfo, EntityView> previousPlant = new HashMap<>();
+    private final Map<EntityInfo, EntityView> previousZombie = new HashMap<>();
+    private final Map<EntityInfo, EntityView> previousBullet = new HashMap<>();
     private final Map<CardView, PlantInfo> purchasablePlants = new HashMap<>();
 
     /**
@@ -289,12 +286,12 @@ public final class ControllerImpl implements Controller {
      */
     @Override
     public Map<CardView, Boolean> getPurchasablePlants() {
-        Map<PlantInfo, Boolean> shopPlants = this.world.getShop().getPurchasablePlants();
-        Map<CardView, Boolean> toReturn = new HashMap<>();
+        final Map<PlantInfo, Boolean> shopPlants = this.world.getShop().getPurchasablePlants();
+        final Map<CardView, Boolean> toReturn = new HashMap<>();
         this.purchasablePlants.clear();
         shopPlants.keySet().stream()
                 .forEach(p -> {
-                    CardView card = CardGenerator.getCardView(p);
+                    final CardView card = CardGenerator.getCardView(p);
                     this.purchasablePlants.put(card, p);
                     toReturn.put(card, shopPlants.get(p));
                 });
