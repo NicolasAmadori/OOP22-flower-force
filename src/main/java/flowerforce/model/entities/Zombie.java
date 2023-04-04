@@ -18,8 +18,9 @@ public interface Zombie extends MovingEntity, LivingEntity {
     /**
      * 
      * @param plant that can be eaten by the zombie
+     * @return true if the zombie bit the plant, false otherwise
      */
-    void manageEating(Plant plant);
+    boolean manageEating(Plant plant);
 
     /**
      * 
