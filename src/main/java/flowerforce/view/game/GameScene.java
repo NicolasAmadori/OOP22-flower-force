@@ -2,6 +2,9 @@ package flowerforce.view.game;
 
 import java.io.IOException;
 
+/**
+ * Models the scene of the game, extends {@link AbstractFlowerForceScene}.
+ */
 public class GameScene extends AbstractFlowerForceScene {
 
     private static final String FXML_PATH = "flowerforce/game/fxml/Game.fxml";
