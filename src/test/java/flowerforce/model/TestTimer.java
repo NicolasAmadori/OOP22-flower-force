@@ -59,7 +59,7 @@ final class TestTimer {
      * Tests change in Timer's number of cycles.
      */
     @Test
-    void TestSetNumCycles() {
+    void testSetNumCycles() {
         for (int i = 0; i < NUMBER_OF_CYCLES - 1; i++) {
             this.timer.updateState();
             assertFalse(this.timer.isReady());
