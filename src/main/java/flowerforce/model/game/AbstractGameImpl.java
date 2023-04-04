@@ -282,11 +282,14 @@ public abstract class AbstractGameImpl implements Game {
                 }
             } else if (plant instanceof ExplodingPlant && ((ExplodingPlant) plant).hasExploded()) {
                 ((ExplodingPlant) plant).explodeOver(zombies.stream()
-                        .filter(zombie -> zombie.getPosition().getY() == plant.getPosition().getY())
-                        .filter(zombie -> zombie.getPosition().getX() - ((ExplodingPlant) plant).getRadius()
-                        > plant.getPosition().getX())
-                        .filter(zombie -> zombie.getPosition().getX() - ((ExplodingPlant) plant).getRadius()
-                                > plant.getPosition().getX())
+                        .filter(zombie -> zombie.getPosition().getY() <= Yard.toBottomRightCorner(plant.getPosition(),
+                                ((ExplodingPlant) plant).getRadius()).getY())
+                        .filter(zombie -> zombie.getPosition().getY() >= Yard.toTopLeftCorner(plant.getPosition(),
+                                ((ExplodingPlant) plant).getRadius()).getY())
+                        .filter(zombie -> zombie.getPosition().getX() <= Yard.toBottomRightCorner(plant.getPosition(),
+                                        ((ExplodingPlant) plant).getRadius()).getX())
+                        .filter(zombie -> zombie.getPosition().getX() >= Yard.toTopLeftCorner(plant.getPosition(),
+                                ((ExplodingPlant) plant).getRadius()).getX())
                         .toList());
             }
         }
