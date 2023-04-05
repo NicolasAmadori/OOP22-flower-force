@@ -24,7 +24,7 @@ public final class ResourceFinder {
 
     private static final String IMAGES_FOLDER_NAME = "images";
 
-    private static final String MENU_IMAGES_FOLDER_NAME = "menu";
+    private static final String COMMON_IMAGES_FOLDER_NAME = "common";
 
     private static final String PLANTS_IMAGES_FOLDER_NAME = "plants";
 
@@ -38,12 +38,12 @@ public final class ResourceFinder {
     }
 
     /**
-     * Get the image path for a menu element.
+     * Get the image path for a common element.
      * @param filename the name of the file
-     * @return the absolute path of the menu element
+     * @return the absolute path of the common element
      */
-    public static String getMenuImagePath(final String filename) {
-        return getImagePath(MENU_IMAGES_FOLDER_NAME + File.separator + filename);
+    public static String getCommonImagePath(final String filename) {
+        return getImagePath(COMMON_IMAGES_FOLDER_NAME + File.separator + filename);
     }
 
     /**

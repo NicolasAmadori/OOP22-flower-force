@@ -10,7 +10,7 @@
     <children>
         <ImageView fx:id="imgBackground" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <image>
-                <Image url="@../images/menu/shopBackground.png" />
+                <Image url="@../images/common/shopBackground.png" />
             </image>
         </ImageView>
       <ImageView fx:id="imgPrev" fitHeight="129.0" fitWidth="166.0" layoutX="432.0" layoutY="519.0" onMouseClicked="#prevItem" pickOnBounds="true" preserveRatio="true" />
@@ -22,7 +22,7 @@
       </Label>
       <ImageView fx:id="imgBuy" fitHeight="134.0" fitWidth="187.0" layoutX="711.0" layoutY="488.0" onMouseClicked="#buyItem" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../images/menu/buy_button.png" />
+            <Image url="@../images/common/buy_button.png" />
          </image></ImageView>
       <ImageView fx:id="imgMenu" fitHeight="96.0" fitWidth="218.0" layoutX="618.0" layoutY="708.0" onMouseClicked="#mainMenu" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="imgItemToSell" fitHeight="208.0" fitWidth="291.0" layoutX="735.0" layoutY="217.0" pickOnBounds="true" preserveRatio="true" />

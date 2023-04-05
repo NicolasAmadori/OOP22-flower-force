@@ -384,9 +384,9 @@ public final class GameSceneController implements GameEngine {
         this.imageResult.toFront();
         this.cards.keySet().forEach(card -> card.setDisable(true));
         if (isWon) {
-            imageResult.setImage(new Image(ResourceFinder.getMenuImagePath("victory.png")));
+            imageResult.setImage(new Image(ResourceFinder.getCommonImagePath("victory.png")));
         } else {
-            imageResult.setImage(new Image(ResourceFinder.getMenuImagePath("loss.png")));
+            imageResult.setImage(new Image(ResourceFinder.getCommonImagePath("loss.png")));
         }
     }
 }
