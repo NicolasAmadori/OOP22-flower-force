@@ -374,11 +374,12 @@ public final class GameSceneController implements GameEngine {
      */
     @Override
     public void over(final boolean isWon) {
-        this.imageResult.setVisible(true);
-        this.imageMenu.setVisible(true);
-        this.imageMenu.setDisable(false);
-        this.imageMenu.toFront();
-        this.imageResult.toFront();
+        this.resultPane.setVisible(true);
+        this.resultPane.setDisable(false);
+        this.resultPane.toFront();
+        this.cards.keySet().forEach(c -> c.setDisable(true));
+        this.imageShovel.setDisable(true);
+        this.removeBloomEffect();
         this.cards.keySet().forEach(card -> card.setDisable(true));
         if (isWon) {
             imageResult.setImage(new Image(ResourceFinder.getMenuImagePath("victory.png")));
