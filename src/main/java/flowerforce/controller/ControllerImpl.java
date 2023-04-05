@@ -269,7 +269,7 @@ public final class ControllerImpl implements Controller {
      */
     @Override
     public Map<CardView, Boolean> getPurchasablePlants() {
-        final Map<PlantInfo, Boolean> shopPlants = this.world.getShop().getPurchasablePlants();
+        final Map<PlantInfo, Boolean> shopPlants = this.world.getShop().getPlants();
         final Map<CardView, Boolean> toReturn = new HashMap<>();
         this.purchasablePlants.clear();
         shopPlants.keySet().stream()

@@ -16,7 +16,7 @@ public interface Shop {
      * @return A map where the key contain the information of the plant,
      * and the value is a boolean, true if the plant is purchasable, false otherwise
      */
-    Map<PlantInfo, Boolean> getPurchasablePlants();
+    Map<PlantInfo, Boolean> getPlants();
 
     /**
      * Buy a certain plant from the shop.
