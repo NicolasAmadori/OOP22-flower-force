@@ -1,6 +1,5 @@
 package flowerforce.controller;
-
-import flowerforce.model.game.Game;
+g
 import flowerforce.view.entities.CardView;
 import flowerforce.view.entities.EntityView;
 import flowerforce.view.game.GameEngine;
