@@ -105,7 +105,7 @@ public final class SoundManager {
     }
 
     /**
-     * Start the sound effect of zombie screaming when it dies
+     * Start the sound effect of zombie screaming when it dies.
      */
     public static void zombieDied() {
         playSoundEffect(ResourceFinder.getSoundPath("zombieDiedScream" + SOUND_FILE_EXTENSION));
