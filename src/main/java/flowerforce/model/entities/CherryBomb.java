@@ -39,7 +39,7 @@ public class CherryBomb extends AbstractPlant implements ExplodingPlant {
      */
     @Override
     public void explodeOver(final List<Zombie> zombieList) {
-        zombieList.stream().peek(z -> z.receiveDamage(DAMAGE));
+        zombieList.forEach(z -> z.receiveDamage(DAMAGE));
         this.receiveDamage(this.getHealth());
     }
 
