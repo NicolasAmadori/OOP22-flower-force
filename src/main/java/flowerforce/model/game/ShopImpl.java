@@ -1,6 +1,12 @@
 package flowerforce.model.game;
 
-import flowerforce.model.entities.*;
+
+import flowerforce.model.entities.Plant;
+import flowerforce.model.entities.PlantInfo;
+import flowerforce.model.entities.PlantInfoImpl;
+import flowerforce.model.entities.ShootingPlantFactory;
+import flowerforce.model.entities.SunflowerFactory;
+import flowerforce.model.entities.CherryBomb;
 import javafx.util.Pair;
 import java.util.ArrayList;
 import java.util.HashMap;
