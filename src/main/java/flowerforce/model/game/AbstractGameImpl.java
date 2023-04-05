@@ -298,7 +298,8 @@ public abstract class AbstractGameImpl implements Game {
                     bullet.ifPresent(b -> bullets.add(b));
                 }
             } else if (plant instanceof ExplodingPlant && ((ExplodingPlant) plant).hasExploded()) {
-                final var bottomRightCorner = YardInfo.toBottomRightCorner(plant.getPosition(), ((ExplodingPlant) plant).getRadius());
+                final var bottomRightCorner = YardInfo.toBottomRightCorner(plant.getPosition(),
+                        ((ExplodingPlant) plant).getRadius());
                 final var topLeftCorner = YardInfo.toTopLeftCorner(plant.getPosition(), ((ExplodingPlant) plant).getRadius());
 
                 ((ExplodingPlant) plant).explodeOver(zombies.stream()
