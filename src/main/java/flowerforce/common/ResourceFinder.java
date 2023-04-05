@@ -90,7 +90,7 @@ public final class ResourceFinder {
      */
     public static String getFXMLPath(final String filename) {
         String completePath = getFXMLFolderPath() + File.separator + filename;
-        checkPath(completePath);//Check if the file exist
+        checkPath(completePath); //Check if the file exist
 
         //Adapt the path to use with ClassLoader
         completePath = completePath
