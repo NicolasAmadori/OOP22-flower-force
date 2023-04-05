@@ -89,8 +89,14 @@ public final class ResourceFinder {
      * @return A string representing the absolute path of the fxml file
      */
     public static String getFXMLPath(final String filename) {
-        final String completePath = getFXMLFolderPath() + File.separator + filename;
-        return checkPath(completePath);
+        String completePath = getFXMLFolderPath() + File.separator + filename;
+        checkPath(completePath);//Check if the file exist
+
+        //Adapt the path to use with ClassLoader
+        completePath = completePath
+                .substring(getFXMLFolderPath().indexOf("flowerforce")) //get only the packet path
+                .replace("\\", "/"); //replace window separator with linux separator
+        return completePath;
     }
 
     /**
