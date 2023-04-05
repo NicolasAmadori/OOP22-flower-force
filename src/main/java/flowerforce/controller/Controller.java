@@ -33,13 +33,11 @@ public interface Controller {
     /**
      * Start a new game for a specified level.
      * @param levelId The id of the level to play
-     * @return the level game instance
      */
     void startNewLevelGame(int levelId);
 
     /**
      * Start a new game in infinite mode.
-     * @return the infinite game instance
      */
     void startNewInfiniteGame();
 
@@ -146,6 +144,7 @@ public interface Controller {
 
     /**
      * Get the Game Loop instance.
+     * @return the Game Loop already instantiated
      */
     GameLoop getGameLoop();
 }
