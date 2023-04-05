@@ -1,6 +1,5 @@
 package flowerforce.model;
 
-import flowerforce.common.ResourceFinder;
 import flowerforce.controller.utilities.SaveManager;
 import flowerforce.model.game.Player;
 import flowerforce.model.game.PlayerImpl;
