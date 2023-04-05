@@ -38,7 +38,6 @@ public final class FlowerForceApplication extends Application implements FlowerF
         this.stage.getIcons().add(new Image(ResourceFinder.getCommonImagePath(GAMEICON_NAME)));
         this.stage.setOnCloseRequest(e -> {
             Platform.exit();
-            System.exit(0);
         });
         this.menu();
         SoundManager.startMainTheme();
