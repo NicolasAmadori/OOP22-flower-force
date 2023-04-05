@@ -1,12 +1,8 @@
 package flowerforce.view.game;
 
-import java.util.function.Supplier;
-
 import flowerforce.common.ResourceFinder;
 import flowerforce.controller.Controller;
 import flowerforce.controller.ControllerImpl;
-import flowerforce.controller.GameLoop;
-import flowerforce.model.game.Game;
 import flowerforce.view.utilities.SoundManager;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
