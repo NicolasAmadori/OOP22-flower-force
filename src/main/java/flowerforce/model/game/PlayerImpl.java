@@ -45,7 +45,7 @@ public class PlayerImpl implements Player {
      */
     @Override
     public void addCoins(final int nCoins) {
-        if(nCoins < 0) {
+        if (nCoins < 0) {
             throw new IllegalArgumentException("nCoins must be a positive number.");
         }
         this.nCoins += nCoins;
@@ -56,7 +56,7 @@ public class PlayerImpl implements Player {
      */
     @Override
     public boolean subtractCoins(final int nCoins) {
-        if(nCoins < 0) {
+        if (nCoins < 0) {
             throw new IllegalArgumentException("nCoins must be a positive number.");
         }
         if (nCoins > this.nCoins) {
@@ -79,7 +79,7 @@ public class PlayerImpl implements Player {
      */
     @Override
     public void addNewScore(final int score) {
-        if(score < 0) {
+        if (score < 0) {
             throw new IllegalArgumentException("score must be a positive number.");
         }
         this.scoreRecord = Math.max(this.scoreRecord, score);
@@ -106,7 +106,7 @@ public class PlayerImpl implements Player {
      */
     @Override
     public void addPlant(final int plantIndex) {
-        if(plantIndex < 0) {
+        if (plantIndex < 0) {
             throw new IllegalArgumentException("plantIndex must be a positive number.");
         }
         this.plantsIds.add(plantIndex);
