@@ -1,7 +1,7 @@
 package flowerforce.model.entities;
 
 import flowerforce.model.entities.IdConverter.Zombies;
-import flowerforce.model.game.Yard;
+import flowerforce.model.game.YardInfo;
 import flowerforce.model.utilities.RenderingInformation;
 import javafx.geometry.Point2D;
 
@@ -20,7 +20,7 @@ public class ZombieFactoryImpl implements ZombieFactory {
     private static final int GARGANTUAR_DAMAGE = 10_000;
     private static final double BASIC_SECS_PER_CELL = 4.7;
     private static final int BASIC_TICKS_PER_CELL = (int) (BASIC_SECS_PER_CELL * RenderingInformation.getFramesPerSecond());
-    private static final int BASIC_DELTA = (int) (Yard.getCellDimension().getWidth() / BASIC_TICKS_PER_CELL);
+    private static final int BASIC_DELTA = (int) (YardInfo.getCellDimension().getWidth() / BASIC_TICKS_PER_CELL);
     private static final int RUNNING_DELTA = 2 * BASIC_DELTA;
 
     /**

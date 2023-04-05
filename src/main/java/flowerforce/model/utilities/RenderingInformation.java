@@ -1,6 +1,6 @@
 package flowerforce.model.utilities;
 
-import flowerforce.model.game.Yard;
+import flowerforce.model.game.YardInfo;
 
 /**
  * Utility class to get the rendering information.
@@ -29,7 +29,7 @@ public final class RenderingInformation {
      */
     public static int getDeltaFromSecondsPerCell(double secondsPerCell) {
         final int ticksPerCell = (int) (secondsPerCell * RenderingInformation.getFramesPerSecond());
-        final int delta = (int) (Yard.getCellDimension().getWidth() / ticksPerCell);
+        final int delta = (int) (YardInfo.getCellDimension().getWidth() / ticksPerCell);
         return delta;
     }
 

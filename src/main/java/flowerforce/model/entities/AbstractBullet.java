@@ -1,6 +1,6 @@
 package flowerforce.model.entities;
 
-import flowerforce.model.game.Yard;
+import flowerforce.model.game.YardInfo;
 import flowerforce.model.utilities.RenderingInformation;
 import javafx.geometry.Point2D;
 
@@ -12,7 +12,7 @@ public abstract class AbstractBullet extends AbstractEntity implements Bullet {
     private static final double STANDARD_DAMAGE = 20.0;
     private static final double SECS_PER_CELL = 0.5;
     private static final int TICKS_PER_CELL = (int) (SECS_PER_CELL * RenderingInformation.getFramesPerSecond());
-    private static final int DELTA = (int) (Yard.getCellDimension().getWidth() / TICKS_PER_CELL);
+    private static final int DELTA = (int) (YardInfo.getCellDimension().getWidth() / TICKS_PER_CELL);
     private boolean hasHit;
     private final double damage;
 

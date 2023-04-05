@@ -71,9 +71,9 @@ public class ZombieGenerationImpl implements ZombieGeneration {
     public Optional<Zombie> bossGeneration() {
         if (zombieTimer.isReady() && boss.isPresent()) {
             return Optional.of(IdConverter.createZombie(this.boss.get(),
-                    Yard.getEntityPosition(
-                            new Random().nextInt(Yard.getRowsNum()),
-                            Yard.getColsNum()-1
+                    YardInfo.getEntityPosition(
+                            new Random().nextInt(YardInfo.getRowsNum()),
+                            YardInfo.getColsNum()-1
                     )));
         }
         return Optional.empty();
@@ -90,7 +90,7 @@ public class ZombieGenerationImpl implements ZombieGeneration {
 
         int row;
         do {
-            row = new Random().nextInt(Yard.getRowsNum());
+            row = new Random().nextInt(YardInfo.getRowsNum());
         }while (row == prevRow);
         prevRow = row;
 
@@ -98,16 +98,16 @@ public class ZombieGenerationImpl implements ZombieGeneration {
             randomValue = randomValue - (zombieMaxDifficulty + 1 - zombie.getDifficulty());
             if (randomValue <= 0) {
                 return IdConverter.createZombie(zombie,
-                        Yard.getEntityPosition(
+                        YardInfo.getEntityPosition(
                                 row,
-                                Yard.getColsNum()-1
+                                YardInfo.getColsNum()-1
                         ));
             }
         }
         return IdConverter.createZombie(IdConverter.Zombies.BASIC,
-                Yard.getEntityPosition(
+                YardInfo.getEntityPosition(
                         row,
-                        Yard.getColsNum()
+                        YardInfo.getColsNum()
                 ));
     }
 }

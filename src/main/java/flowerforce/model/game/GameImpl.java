@@ -98,7 +98,7 @@ public class GameImpl implements Game {
      */
     @Override
     public boolean placePlant(final int idPlant, final int row, final int col) {
-        final Point2D position = Yard.getEntityPosition(row, col);
+        final Point2D position = YardInfo.getEntityPosition(row, col);
         for (final var plant : this.plants) {
             if (plant.getPosition().equals(position)) {
                 return false;
@@ -161,7 +161,7 @@ public class GameImpl implements Game {
      */
     @Override
     public boolean removePlant(int row, int col) {
-        final var positionPlant = Yard.getEntityPosition(row,col);
+        final var positionPlant = YardInfo.getEntityPosition(row,col);
         for (var plant : plants) {
             if (plant.getPosition().equals(positionPlant)) {
                 plants.remove(plant);
@@ -188,7 +188,7 @@ public class GameImpl implements Game {
         this.bullets.forEach(Bullet::move);
         bullets = bullets.stream()
                 .filter(bullet -> bullet.getPosition().getX() <
-                        Yard.getCellDimension().getWidth() * Yard.getColsNum())
+                        YardInfo.getCellDimension().getWidth() * YardInfo.getColsNum())
                 .collect(Collectors.toSet());
     }
 
@@ -217,7 +217,7 @@ public class GameImpl implements Game {
                 .filter(zombie -> zombie.getPosition().getY() == plant.getPosition().getY())
                 .filter(zombie -> zombie.getPosition().getX() <= plant.getPosition().getX())
                 .filter(zombie -> zombie.getPosition().getX() > plant.getPosition().getX()
-                        - Yard.getCellDimension().getWidth())
+                        - YardInfo.getCellDimension().getWidth())
                 .forEach(zombie -> zombieEating.put(zombie, plant)));
 
         this.zombies.forEach(zombie -> {
@@ -244,7 +244,7 @@ public class GameImpl implements Game {
             } else if (plant instanceof ShootingPlant){
                 int nZombieOnRow = zombies.stream()
                         .filter(zombie -> plant.getPosition().getY() == zombie.getPosition().getY())
-                        .filter(zombie -> plant.getPosition().getX() - Yard.getCellDimension().getWidth() <= zombie.getPosition().getX() )
+                        .filter(zombie -> plant.getPosition().getX() - YardInfo.getCellDimension().getWidth() <= zombie.getPosition().getX() )
                         .toList().size();
                 if (nZombieOnRow > 0) {
                     final var bullet = ((ShootingPlant) plant).nextBullet();

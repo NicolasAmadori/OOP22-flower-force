@@ -6,16 +6,16 @@ import javafx.geometry.Point2D;
 /**
  * Models the yard of the game, in which the entities are placed.
  */
-public final class Yard {
+public final class YardInfo {
 
     private static final int ROWS = 5;
     private static final int COLS = 9;
-    private static final int HEIGHT = 880;
-    private static final int WIDTH = 1314;
+    private static final double HEIGHT = 880.0;
+    private static final double WIDTH = 1314.0;
     private static final Dimension2D YARD = new Dimension2D(WIDTH, HEIGHT);
-    private static final Dimension2D CELL = new Dimension2D((int) (WIDTH / COLS), (int) (HEIGHT / ROWS));;
+    private static final Dimension2D CELL = new Dimension2D(WIDTH / COLS, HEIGHT / ROWS);
 
-    private Yard() {
+    private YardInfo() {
     }
 
     /**
