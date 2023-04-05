@@ -2,7 +2,8 @@ package flowerforce.model.game;
 
 import flowerforce.model.entities.Zombie;
 
-import java.util.*;
+import java.util.Optional;
+
 
 /**
  * This is an implementation of {@link ZombieGeneration}.

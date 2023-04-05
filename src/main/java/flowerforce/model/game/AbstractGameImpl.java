@@ -1,11 +1,28 @@
 package flowerforce.model.game;
 
-import flowerforce.model.entities.*;
+
+import flowerforce.model.entities.Bullet;
+import flowerforce.model.entities.Plant;
+import flowerforce.model.entities.PlantInfo;
+import flowerforce.model.entities.Zombie;
+import flowerforce.model.entities.EntityInfo;
+import flowerforce.model.entities.PlantInfoImpl;
+import flowerforce.model.entities.Entity;
+import flowerforce.model.entities.ExplodingPlant;
+import flowerforce.model.entities.ShootingPlant;
+import flowerforce.model.entities.Sunflower;
+import flowerforce.model.entities.LivingEntity;
+
+
 import flowerforce.model.utilities.RenderingInformation;
 import flowerforce.model.utilities.TimerImpl;
 import javafx.geometry.Point2D;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.Comparator;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -193,7 +210,7 @@ public abstract class AbstractGameImpl implements Game {
         return false;
     }
 
-    /**
+    /*
      * Decides whether to generate a sun.
      */
     private void generateSun() {
@@ -203,7 +220,7 @@ public abstract class AbstractGameImpl implements Game {
         }
     }
 
-    /**
+    /*
      * Check which bullets are still in the field.
      */
     private void updateBullet() {
@@ -214,7 +231,7 @@ public abstract class AbstractGameImpl implements Game {
                 .collect(Collectors.toSet());
     }
 
-    /**
+    /*
      * Checks which bullets hit the zombies and updates which zombies and bullets are still alive.
      */
     private void collidingBullet() {
@@ -234,7 +251,7 @@ public abstract class AbstractGameImpl implements Game {
          this.bullets = this.bullets.stream().filter(b -> !b.isOver()).collect(Collectors.toSet());
     }
 
-    /**
+    /*
      * Check which zombies are eating and update which plants are still alive.
      */
     private void eatingPlant() {
@@ -261,7 +278,7 @@ public abstract class AbstractGameImpl implements Game {
         this.plants = this.plants.stream().filter(p -> !p.isOver()).collect(Collectors.toSet());
     }
 
-    /**
+    /*
      * Update the plants and check what they can do with the actual state.
      */
     private void updatePlant() {

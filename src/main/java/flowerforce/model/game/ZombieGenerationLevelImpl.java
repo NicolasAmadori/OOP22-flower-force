@@ -3,7 +3,9 @@ package flowerforce.model.game;
 import flowerforce.model.entities.Zombie;
 import javafx.geometry.Point2D;
 
-import java.util.*;
+
+import java.util.Optional;
+import java.util.Random;
 import java.util.function.Function;
 
 /**

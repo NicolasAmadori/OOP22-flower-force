@@ -28,7 +28,7 @@ public abstract class AbstractZombieGeneration implements ZombieGeneration {
     private int timeZombie = START_TIME_TO_SPAWN_ZOMBIE;
     private final CreationZombie genZombie;
     private int generatedZombie = 1;
-    private int hordeGeneratedZombie = 0;
+    private int hordeGeneratedZombie;
     private int hordeZombie;
     private final int startNumberZombieHorde;
     private final int zombieBeforeHorde;
@@ -96,8 +96,6 @@ public abstract class AbstractZombieGeneration implements ZombieGeneration {
 
     /**
      * called if you want to increase the number of zombies in the horde.
-     * @param value that you want to increase the horde
-     * @param maxRange check if you can increase the number of zombies in the horde
      */
     protected void increaseHordeZombie(final int value, final int maxRange) {
         if (this.incrementableHorde && this.hordeZombie + value < maxRange) {
