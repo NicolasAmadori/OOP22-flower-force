@@ -9,9 +9,9 @@ public interface ExplodingPlant extends Plant {
 
     /**
      * Damages zombies inside the radius.
-     * @param zombieList the zombies to hit
+     * @param zombieSet the zombies to hit
      */
-    void explodeOver(Set<Zombie> zombieList);
+    void explodeOver(Set<Zombie> zombieSet);
 
     /**
      * 
