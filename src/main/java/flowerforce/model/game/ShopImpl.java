@@ -1,5 +1,6 @@
 package flowerforce.model.game;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import flowerforce.model.entities.Plant;
 import flowerforce.model.entities.PlantInfo;
 import flowerforce.model.entities.PlantInfoImpl;
@@ -31,6 +32,12 @@ public class ShopImpl implements Shop{
      * This is a constructor for a new shop instance.
      * @param player The player to add bought plants to
      */
+    @SuppressFBWarnings (
+            value = {
+                "EI_EXPOSE_REP2"
+            },
+            justification = "I need to access and modify the exact instance of the Player that the world has"
+    )
     public ShopImpl(Player player) {
         this.player = player;
 
