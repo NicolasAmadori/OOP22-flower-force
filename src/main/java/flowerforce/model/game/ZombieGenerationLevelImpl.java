@@ -16,6 +16,8 @@ public class ZombieGenerationLevelImpl extends AbstractZombieGeneration implemen
     private static final int ZOMBIE_BEFORE_HORDE = 8;
     private final Optional<Function<Point2D, Zombie>> boss;
 
+    final Random rand = new Random();
+
     /**
      * @param levelId of the game started
      */
@@ -30,7 +32,7 @@ public class ZombieGenerationLevelImpl extends AbstractZombieGeneration implemen
     @Override
     public Zombie bossGeneration() {
         return boss.get().apply(YardInfo.getEntityPosition(
-                new Random().nextInt(YardInfo.getRowsNum()),
+                rand.nextInt(YardInfo.getRowsNum()),
                 YardInfo.getColsNum()
         ));
     }
