@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import flowerforce.common.ResourceFinder;
 import flowerforce.view.entities.CardView;
 import flowerforce.view.entities.EntityView;
@@ -84,6 +85,10 @@ public final class GameSceneController implements GameEngine {
      * Creates a new {@link GameSceneController}.
      * @param application which this class linked to
      */
+    @SuppressFBWarnings(
+            value = "EI_EXPOSE_REP2",
+            justification = "Cannot copy application because the instance must remain the same for future usages"
+    )
     public GameSceneController(final FlowerForceApplication application) {
         this.application = application;
         this.application.getController().setGameEngine(this);
