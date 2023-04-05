@@ -1,7 +1,6 @@
 package flowerforce.view.game;
 
 import java.util.function.Supplier;
-
 import flowerforce.common.ResourceFinder;
 import flowerforce.controller.Controller;
 import flowerforce.controller.ControllerImpl;
