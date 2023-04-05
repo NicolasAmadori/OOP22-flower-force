@@ -63,8 +63,8 @@ public final class GameSceneController implements GameEngine {
     //Garden size: 1920x1080, yard size: 1320x880. Down-shift: 150px, right-shift: 600px.
     private static final int YARD_FIRST_X = 600;
     private static final int YARD_FIRST_Y = 150;
-    private static final int YARD_WIDTH = 1314;
-    private static final int YARD_HEIGHT = 880;
+    private static final double YARD_WIDTH = 1314.0;
+    private static final double YARD_HEIGHT = 880.0;
     private static final Effect BLOOM_EFFECT = new Bloom(0.65);
     private static final Effect BLACK_WHITE_EFFECT = new ColorAdjust(0, -1, 0, 0);
     private static final Effect DAMAGE_EFFECT = new ColorAdjust(0, 0,  0.5, 0);
@@ -97,7 +97,8 @@ public final class GameSceneController implements GameEngine {
      */
     @Override
     public void loadCards(final List<CardView> cardViews) {
-        final List<ImageView> cardImageViews = new LinkedList<>(List.of(card0, card1, card2, card3, card4, card5, card6, card7, card8));
+        final List<ImageView> cardImageViews = new LinkedList<>(List.of(card0, card1, card2, card3, card4,
+                card5, card6, card7, card8));
         final List<Label> cardLabels = new LinkedList<>(List.of(lbl0, lbl1, lbl2, lbl3, lbl4, lbl5, lbl6, lbl7, lbl8));
         int i = 0;
         for (; i < cardViews.size() && i < cardImageViews.size() && i < cardLabels.size(); i++) {
@@ -127,8 +128,10 @@ public final class GameSceneController implements GameEngine {
     private void removeBloomEffect() {
         if (this.isShovelSelected) {
             this.imageShovel.setEffect(null);
+            this.isShovelSelected = false;
         } else {
             this.cardSelected.ifPresent(cIv -> cIv.setEffect(null));
+            this.cardSelected = Optional.empty();
         }
     }
 
@@ -136,7 +139,6 @@ public final class GameSceneController implements GameEngine {
     void shovelSelected(final MouseEvent event) {
         if (!this.isShovelSelected) {
             this.removeBloomEffect();
-            this.cardSelected = Optional.empty();
             this.isShovelSelected = true;
             SoundManager.useShovel();
             this.addBloomEffect();
@@ -147,7 +149,6 @@ public final class GameSceneController implements GameEngine {
     void selectCard(final MouseEvent event) {
         if (!(this.cardSelected.isPresent() && this.cardSelected.get().equals((ImageView) event.getSource()))) {
             this.removeBloomEffect();
-            this.isShovelSelected = false;
             this.cardSelected = Optional.of((ImageView) (event.getSource()));
             SoundManager.cardSelected();
             this.addBloomEffect();
@@ -165,19 +166,16 @@ public final class GameSceneController implements GameEngine {
         if (isInsideYard(event.getX(), event.getY())) {
             final int row = this.getRow(event.getY());
             final int col = this.getColumn(event.getX());
-            if (this.cardSelected.isPresent() && this.application.getController().placePlant(this.cards.get(this.cardSelected.get()), row, col)) {
+            if (this.cardSelected.isPresent()
+                    && this.application.getController().placePlant(this.cards.get(this.cardSelected.get()), row, col)) {
                 this.removeBloomEffect();
-                this.cardSelected = Optional.empty();
                 SoundManager.plantPlaced();
             } else if (this.isShovelSelected && this.application.getController().removePlant(row, col)) {
                 this.removeBloomEffect();
-                this.isShovelSelected = false;
                 SoundManager.useShovel();
             }
         } else {
             this.removeBloomEffect();
-            this.cardSelected = Optional.empty();
-            this.isShovelSelected = false;
         }
     }
 
