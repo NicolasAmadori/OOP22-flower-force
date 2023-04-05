@@ -1,5 +1,6 @@
 package flowerforce.model.entities;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javafx.geometry.Point2D;
 
 /**
@@ -42,6 +43,10 @@ public abstract class AbstractEntity implements Entity {
      * {@inheritDoc}
      */
     @Override
+    @SuppressFBWarnings(
+            value = "EI_EXPOSE_REP",
+            justification = "An EntityInfo is unique so it can't be returned as a copy"
+    )
     public EntityInfo getEntityInfo() {
         return this.entityInfo;
     }

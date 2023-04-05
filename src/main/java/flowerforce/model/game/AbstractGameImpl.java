@@ -1,11 +1,28 @@
 package flowerforce.model.game;
 
-import flowerforce.model.entities.*;
+
+import flowerforce.model.entities.Bullet;
+import flowerforce.model.entities.Plant;
+import flowerforce.model.entities.PlantInfo;
+import flowerforce.model.entities.Zombie;
+import flowerforce.model.entities.EntityInfo;
+import flowerforce.model.entities.PlantInfoImpl;
+import flowerforce.model.entities.Entity;
+import flowerforce.model.entities.ExplodingPlant;
+import flowerforce.model.entities.ShootingPlant;
+import flowerforce.model.entities.Sunflower;
+import flowerforce.model.entities.LivingEntity;
+
+
 import flowerforce.model.utilities.RenderingInformation;
 import flowerforce.model.utilities.TimerImpl;
 import javafx.geometry.Point2D;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.Comparator;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -29,7 +46,7 @@ public abstract class AbstractGameImpl implements Game {
     private final World world;
     private int score;
     private static final Point2D TEMPORARY_POSITION = new Point2D(0, 0);
-
+    private final Map<Zombie, Plant> zombieEating = new HashMap<>();
     /**
      * Constructor to instantiate an infinite game.
      * @param id of the game started
@@ -39,7 +56,7 @@ public abstract class AbstractGameImpl implements Game {
         this.placeablePlant = new HashMap<>();
         LevelInfo.getPlantsInfo(id).forEach(p -> placeablePlant.put(
                 new PlantInfoImpl(p.apply(TEMPORARY_POSITION).getName(),
-                        p.apply(TEMPORARY_POSITION).getCost()),p)
+                        p.apply(TEMPORARY_POSITION).getCost()), p)
         );
         world.getShop().getBoughtPlantsFunctions().forEach(p -> placeablePlant.put(
                 new PlantInfoImpl(p.apply(TEMPORARY_POSITION).getName(),
@@ -101,7 +118,7 @@ public abstract class AbstractGameImpl implements Game {
      */
     @Override
     public Set<EntityInfo> getDamagedEntity() {
-        var tmpDamagedEntities = Set.copyOf(this.damagedEntities);
+        final var tmpDamagedEntities = Set.copyOf(this.damagedEntities);
         damagedEntities.clear();
         return tmpDamagedEntities;
     }
@@ -135,7 +152,7 @@ public abstract class AbstractGameImpl implements Game {
      */
     @Override
     public boolean placePlant(final PlantInfo plantInfo, final int row, final int col) {
-        final Point2D position = Yard.getEntityPosition(row, col);
+        final Point2D position = YardInfo.getEntityPosition(row, col);
         for (final var plant : this.plants) {
             if (plant.getPosition().equals(position)) {
                 return false;
@@ -183,7 +200,7 @@ public abstract class AbstractGameImpl implements Game {
      */
     @Override
     public boolean removePlant(final int row, final int col) {
-        final var positionPlant = Yard.getEntityPosition(row, col);
+        final var positionPlant = YardInfo.getEntityPosition(row, col);
         for (final var plant : plants) {
             if (plant.getPosition().equals(positionPlant)) {
                 plants.remove(plant);
@@ -193,7 +210,7 @@ public abstract class AbstractGameImpl implements Game {
         return false;
     }
 
-    /**
+    /*
      * Decides whether to generate a sun.
      */
     private void generateSun() {
@@ -203,18 +220,18 @@ public abstract class AbstractGameImpl implements Game {
         }
     }
 
-    /**
+    /*
      * Check which bullets are still in the field.
      */
     private void updateBullet() {
         this.bullets.forEach(Bullet::move);
         bullets = bullets.stream()
                 .filter(bullet -> bullet.getPosition().getX()
-                        < Yard.getCellDimension().getWidth() * Yard.getColsNum())
+                        < YardInfo.getCellDimension().getWidth() * YardInfo.getColsNum())
                 .collect(Collectors.toSet());
     }
 
-    /**
+    /*
      * Checks which bullets hit the zombies and updates which zombies and bullets are still alive.
      */
     private void collidingBullet() {
@@ -234,16 +251,15 @@ public abstract class AbstractGameImpl implements Game {
          this.bullets = this.bullets.stream().filter(b -> !b.isOver()).collect(Collectors.toSet());
     }
 
-    /**
+    /*
      * Check which zombies are eating and update which plants are still alive.
      */
     private void eatingPlant() {
-        final Map<Zombie, Plant> zombieEating = new HashMap<>();
         this.plants.forEach(plant -> this.zombies.stream()
                 .filter(zombie -> zombie.getPosition().getY() == plant.getPosition().getY())
                 .filter(zombie -> zombie.getPosition().getX() <= plant.getPosition().getX())
                 .filter(zombie -> zombie.getPosition().getX() > plant.getPosition().getX()
-                        - Yard.getCellDimension().getWidth())
+                        - YardInfo.getCellDimension().getWidth())
                 .forEach(zombie -> {
                         zombieEating.put(zombie, plant);
                     }
@@ -262,7 +278,7 @@ public abstract class AbstractGameImpl implements Game {
         this.plants = this.plants.stream().filter(p -> !p.isOver()).collect(Collectors.toSet());
     }
 
-    /**
+    /*
      * Update the plants and check what they can do with the actual state.
      */
     private void updatePlant() {
@@ -275,23 +291,26 @@ public abstract class AbstractGameImpl implements Game {
             } else if (plant instanceof ShootingPlant) {
                 final int nZombieOnRow = zombies.stream()
                         .filter(zombie -> plant.getPosition().getY() == zombie.getPosition().getY())
-                        .filter(zombie -> plant.getPosition().getX()
-                                - Yard.getCellDimension().getWidth() / 2 <= zombie.getPosition().getX())
+                        .filter(zombie -> plant.getPosition().getX() <= zombie.getPosition().getX())
                         .toList().size();
-                if (nZombieOnRow > 0) {
+                if (nZombieOnRow > 0 && !zombieEating.containsValue(plant)) {
                     final var bullet = ((ShootingPlant) plant).nextBullet();
                     bullet.ifPresent(b -> bullets.add(b));
                 }
             } else if (plant instanceof ExplodingPlant && ((ExplodingPlant) plant).hasExploded()) {
+                final var bottomRightCorner = YardInfo.toBottomRightCorner(plant.getPosition(),
+                        ((ExplodingPlant) plant).getRadius());
+                final var topLeftCorner = YardInfo.toTopLeftCorner(plant.getPosition(), ((ExplodingPlant) plant).getRadius());
+
                 ((ExplodingPlant) plant).explodeOver(zombies.stream()
-                        .filter(zombie -> zombie.getPosition().getY() == plant.getPosition().getY())
-                        .filter(zombie -> zombie.getPosition().getX() - ((ExplodingPlant) plant).getRadius()
-                        > plant.getPosition().getX())
-                        .filter(zombie -> zombie.getPosition().getX() - ((ExplodingPlant) plant).getRadius()
-                                > plant.getPosition().getX())
-                        .toList());
+                        .filter(zombie -> zombie.getPosition().getY() <= bottomRightCorner.getY())
+                        .filter(zombie -> zombie.getPosition().getY() >= topLeftCorner.getY())
+                        .filter(zombie -> zombie.getPosition().getX() <= bottomRightCorner.getX())
+                        .filter(zombie -> zombie.getPosition().getX() >= topLeftCorner.getX())
+                        .collect(Collectors.toSet()));
             }
         }
+        zombieEating.clear();
         plantsTimer.keySet().forEach(plantType -> {
             if (!plantsTimer.get(plantType).isReady()) {
                 plantsTimer.get(plantType).updateState();

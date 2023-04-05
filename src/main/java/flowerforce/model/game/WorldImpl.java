@@ -64,7 +64,7 @@ public class WorldImpl implements World {
      */
     @Override
     public Dimension2D getYardDimension() {
-        return Yard.getYardDimension();
+        return YardInfo.getYardDimension();
     }
 
     /**
@@ -72,7 +72,7 @@ public class WorldImpl implements World {
      */
     @Override
     public int getRowsNum() {
-        return Yard.getRowsNum();
+        return YardInfo.getRowsNum();
     }
 
     /**
@@ -80,7 +80,7 @@ public class WorldImpl implements World {
      */
     @Override
     public int getColsNum() {
-        return Yard.getColsNum();
+        return YardInfo.getColsNum();
     }
 
     /**

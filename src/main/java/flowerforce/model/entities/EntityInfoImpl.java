@@ -40,7 +40,7 @@ public class EntityInfoImpl implements EntityInfo {
      * {@inheritDoc}
      */
     @Override
-    public void setPosition(Point2D position) {
+    public void setPosition(final Point2D position) {
         this.position = position;
     }
 

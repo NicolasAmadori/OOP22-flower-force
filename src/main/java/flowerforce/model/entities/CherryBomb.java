@@ -1,6 +1,6 @@
 package flowerforce.model.entities;
 
-import java.util.List;
+import java.util.Set;
 
 import flowerforce.model.utilities.RenderingInformation;
 import flowerforce.model.utilities.TimerImpl;
@@ -38,8 +38,8 @@ public class CherryBomb extends AbstractPlant implements ExplodingPlant {
      * {@inheritDoc}
      */
     @Override
-    public void explodeOver(final List<Zombie> zombieList) {
-        zombieList.stream().peek(z -> z.receiveDamage(DAMAGE));
+    public void explodeOver(final Set<Zombie> zombieSet) {
+        zombieSet.forEach(z -> z.receiveDamage(DAMAGE));
         this.receiveDamage(this.getHealth());
     }
 

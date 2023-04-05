@@ -7,7 +7,7 @@ import javafx.geometry.Point2D;
 /**
  * Models a factory for Sunflower entities.
  */
-public class SunflowerFactory {
+public final class SunflowerFactory {
 
     private static final double STANDARD_SECS_SUN_PRODUCING_TIME = 24.25;
     private static final int STANDARD_SUNPRODUCING_TIME = RenderingInformation.convertSecondsToCycles(

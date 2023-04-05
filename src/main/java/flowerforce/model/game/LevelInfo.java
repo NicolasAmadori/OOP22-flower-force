@@ -1,6 +1,11 @@
 package flowerforce.model.game;
 
-import flowerforce.model.entities.*;
+import flowerforce.model.entities.Plant;
+import flowerforce.model.entities.ShootingPlantFactory;
+import flowerforce.model.entities.Zombie;
+import flowerforce.model.entities.SunflowerFactory;
+import flowerforce.model.entities.ZombieFactory;
+import flowerforce.model.entities.Wallnut;
 import javafx.geometry.Point2D;
 
 import java.util.List;
@@ -32,7 +37,7 @@ public final class LevelInfo {
     private static final List<Integer> ZOMBIE_LEVEL = List.of(34, 51, 68, 68, 68, 85, 85);
     private static final Function<Point2D, Zombie> ZOMBIE_BOSS = ZombieFactory::gargantuar;
 
-    private LevelInfo() {}
+    private LevelInfo() { }
 
     /**
      * @param id of the level
@@ -63,7 +68,7 @@ public final class LevelInfo {
      * @return the zombie to spawn on that level
      */
     public static Integer getTotalZombies(final int id) {
-        return ZOMBIE_LEVEL.get(id - 1);
+        return ZOMBIE_LEVEL.get(Math.min(id, ZOMBIE_LEVEL.size() - 1));
     }
 
     /**
