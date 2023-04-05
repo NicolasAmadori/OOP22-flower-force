@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
@@ -7,6 +8,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.paint.RadialGradient?>
 <?import javafx.scene.paint.Stop?>
@@ -15,7 +17,7 @@
 
 <AnchorPane fx:id="gamePane" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fx:id="imgBackground" onMouseClicked="#yardClicked" onMouseMoved="#mouseMoved" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ImageView onMouseClicked="#yardClicked" onMouseMoved="#mouseMoved" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
             <Image url="@../images/menu/Garden.png" />
          </image>
@@ -25,17 +27,32 @@
                <Image url="@../images/menu/sunCounterSign.jpeg" />
            </image>
        </ImageView>
-       <Label fx:id="lblSunCounter" alignment="CENTER" layoutX="31.0" layoutY="172.0" prefHeight="53.0" prefWidth="141.0" text="0">
+       <Label fx:id="lblSunCounter" alignment="CENTER" layoutX="31.0" layoutY="173.0" prefHeight="53.0" prefWidth="141.0" text="0">
            <font>
                <Font size="36.0" />
            </font>
        </Label>
-      <ImageView fx:id="imageResult" disable="true" fitHeight="608.0" fitWidth="525.0" layoutX="818.0" layoutY="163.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" visible="false" />
-      <ImageView fx:id="imageMenu" disable="true" fitHeight="153.0" fitWidth="282.0" layoutX="937.0" layoutY="785.0" onMouseClicked="#selectMenu" pickOnBounds="true" preserveRatio="true" visible="false">
-         <image>
-            <Image url="@../images/menu/returnToMainMenu.png" />
-         </image>
-      </ImageView>
+      <StackPane fx:id="resultPane" disable="true" layoutX="633.0" layoutY="156.0" visible="false">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00000059" height="762.0" stroke="BLACK" strokeType="INSIDE" width="738.0" StackPane.alignment="CENTER" />
+            <ImageView disable="true" fitHeight="161.0" fitWidth="290.0" onMouseClicked="#selectMenu" pickOnBounds="true" preserveRatio="true" StackPane.alignment="BOTTOM_CENTER">
+               <image>
+                  <Image url="@../images/menu/main_menu.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <StackPane.margin>
+                  <Insets bottom="10.0" />
+               </StackPane.margin>
+            </ImageView>
+            <ImageView fx:id="imageResult" disable="true" fitHeight="564.0" fitWidth="656.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
+               <StackPane.margin>
+                  <Insets top="10.0" />
+               </StackPane.margin>
+            </ImageView>
+         </children>
+      </StackPane>
       <FlowPane columnHalignment="CENTER" layoutX="210.0" layoutY="77.0" prefHeight="885.0" prefWidth="135.0" vgap="10.0">
          <children>
             <AnchorPane>
@@ -193,6 +210,9 @@
          <image>
             <Image url="@../images/menu/shovel.png" />
          </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </ImageView>
       <ProgressBar fx:id="progressBar" layoutX="1610.0" layoutY="1044.0" mouseTransparent="true" nodeOrientation="RIGHT_TO_LEFT" prefHeight="30.0" prefWidth="300.0" progress="0.0" />
       <Label layoutX="643.0" layoutY="1032.0" text="Score:">
@@ -205,5 +225,13 @@
             <Font name="System Bold" size="34.0" />
          </font>
       </Label>
+      <ImageView disable="true" fitHeight="36.0" fitWidth="118.0" layoutX="1802.0" layoutY="7.0" onMouseClicked="#selectMenu" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/menu/main_menu.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
    </children>
 </AnchorPane>
