@@ -1,6 +1,6 @@
 package flowerforce.model.entities;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * Models a plant that explodes.
@@ -11,7 +11,7 @@ public interface ExplodingPlant extends Plant {
      * Damages zombies inside the radius.
      * @param zombieList the zombies to hit
      */
-    void explodeOver(List<Zombie> zombieList);
+    void explodeOver(Set<Zombie> zombieList);
 
     /**
      * 
