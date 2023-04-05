@@ -1,5 +1,7 @@
 package flowerforce.model.game;
 
+import java.util.Set;
+
 /**
  * The class representing the player with all his information.
  */
@@ -33,9 +35,8 @@ public interface Player {
     /**
      * Set a new value for the score record of the player.
      * @param score The integer representing the new score record
-     * @return True if the operation was succesful, false otherwise
      */
-    boolean setNewScoreRecord(int score);
+    void addNewScore(int score);
 
     /**
      * Get the id of the last level the player has unlocked.
@@ -47,4 +48,16 @@ public interface Player {
      * Unlock the next level.
      */
     void unlockedNextLevel();
+
+    /**
+     * Add a plant in player inventory.
+     * @param plantIndex an index of the plant to add
+     */
+    void addPlant(int plantIndex);
+
+    /**
+     * Get all the bought plant ids (ids read from the shop).
+     * @return a set of integer representing the ids
+     */
+    Set<Integer> getPlantsIds();
 }

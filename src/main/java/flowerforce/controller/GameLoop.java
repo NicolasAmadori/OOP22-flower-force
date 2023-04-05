@@ -4,6 +4,9 @@ import flowerforce.model.game.Game;
 import flowerforce.view.game.GameEngine;
 import javafx.animation.AnimationTimer;
 
+/**
+ * GameLoop class that run the game.
+ */
 public final class GameLoop extends AnimationTimer {
 
     private static final long SECOND_IN_MILLISECOND = 1_000_000_000;
@@ -11,13 +14,14 @@ public final class GameLoop extends AnimationTimer {
     private final Game model;
     private final long timeSlice;
     private long lastUpdateTime;
-    private long timeAccumulator = 0;
+    private long timeAccumulator;
     private Boolean updated = false;
 
     /**
      * Instantiate a new GameLoop giving it the model and the GameEngine it will communicate with.
      * @param gameEngine The gameEngine to render on the view
      * @param model The GameModel to get the game information
+     * @param framesPerSecond the frame rate the game must be run
      */
     public GameLoop(final GameEngine gameEngine, final Game model, final int framesPerSecond) {
         super();
@@ -28,10 +32,9 @@ public final class GameLoop extends AnimationTimer {
     }
 
     @Override
-    public void handle(long now) {
+    public void handle(final long now) {
         if (!this.model.isOver()) {
-            final long actualTime = now;
-            final long elapsedTime = actualTime - lastUpdateTime;
+            final long elapsedTime = now - lastUpdateTime;
 
             lastUpdateTime += elapsedTime;
             timeAccumulator += elapsedTime;
@@ -46,8 +49,7 @@ public final class GameLoop extends AnimationTimer {
                 this.gameEngine.render();
                 updated = false;
             }
-        }
-        else {
+        } else {
             this.gameEngine.over(this.model.result());
             this.stop();
         }

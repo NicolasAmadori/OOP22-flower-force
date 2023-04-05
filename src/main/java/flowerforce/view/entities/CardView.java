@@ -2,8 +2,9 @@ package flowerforce.view.entities;
 
 import javafx.scene.image.Image;
 
-import java.util.Optional;
-
+/**
+ * Models a card view entity.
+ */
 public interface CardView {
 
     /**

@@ -19,19 +19,13 @@ public interface GameEngine {
      * 
      * @return the dimensions of the yard view
      */
-    Dimension2D getYardSize();
+    Dimension2D getYardDimension();
 
     /**
      * This method can be called to show the outcome of the game.
      * @param isWon true if the game is won, false otherwise
      */
     void over(boolean isWon);
-
-    /**
-     *
-     * @return the factor to resize correctly the entity images
-     */
-    double getImageResizeFactor();
 
     /**
      * This method should be called as soon as the controller starts a new game.

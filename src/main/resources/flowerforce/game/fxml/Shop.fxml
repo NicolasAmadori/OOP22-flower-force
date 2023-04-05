@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="gamePane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <ImageView fx:id="imgBackground" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <image>
+                <Image url="@../images/common/shopBackground.png" />
+            </image>
+        </ImageView>
+      <ImageView fx:id="imgPrev" fitHeight="129.0" fitWidth="166.0" layoutX="432.0" layoutY="519.0" onMouseClicked="#prevItem" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imgNext" fitHeight="140.0" fitWidth="209.0" layoutX="960.0" layoutY="516.0" onMouseClicked="#nextItem" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="lblCostItem" layoutX="1046.0" layoutY="676.0" prefHeight="48.0" prefWidth="119.0">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="imgBuy" fitHeight="134.0" fitWidth="187.0" layoutX="711.0" layoutY="488.0" onMouseClicked="#buyItem" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/common/buy_button.png" />
+         </image></ImageView>
+      <ImageView fx:id="imgMenu" fitHeight="96.0" fitWidth="218.0" layoutX="618.0" layoutY="708.0" onMouseClicked="#mainMenu" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imgItemToSell" fitHeight="208.0" fitWidth="291.0" layoutX="735.0" layoutY="217.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="lblCoins" layoutX="10.0" layoutY="21.0" textFill="#13e243">
+         <font>
+            <Font size="80.0" />
+         </font>
+      </Label>
+    </children>
+</AnchorPane>

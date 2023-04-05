@@ -2,9 +2,12 @@ package flowerforce.view.game;
 
 import java.io.IOException;
 
+/**
+ * Models the scene of the game, extends {@link AbstractFlowerForceScene}.
+ */
 public class GameScene extends AbstractFlowerForceScene {
 
-    private static final String FXML_PATH = "flowerforce/game/fxml/Garden.fxml";
+    private static final String FXML_PATH = "flowerforce/game/fxml/Game.fxml";
     private static final String IMAGE_NAME = "Garden.png";
 
     /**
@@ -12,7 +15,7 @@ public class GameScene extends AbstractFlowerForceScene {
      * @param application which sets the scene
      * @throws IOException if some files couldn't be found
      */
-    public GameScene(final FlowerForceApplication application) throws IOException {
+    public GameScene(final FlowerForceApplication application) {
         super(FXML_PATH, IMAGE_NAME, new GameSceneController(application));
     }
 }

@@ -1,11 +1,9 @@
 package flowerforce.view.game;
 
-import java.io.IOException;
-
 import flowerforce.common.ResourceFinder;
 import flowerforce.controller.Controller;
 import flowerforce.controller.ControllerImpl;
-import flowerforce.controller.GameLoop;
+import flowerforce.view.utilities.SoundManager;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.geometry.Dimension2D;
@@ -25,55 +23,75 @@ public final class FlowerForceApplication extends Application implements FlowerF
 
     private static final double SCREEN_FILL_INDEX = 0.8;
 
-    private Controller controller;//The controller of the game
+    private Controller controller;
 
     private static final String GAMEICON_NAME = "icon.png";
     private Stage stage;
-    private FlowerForceScene sceneClass; 
+
+    private AnimationTimer gameLoop;
 
     @Override
     public void start(final Stage primaryStage) throws Exception {
         this.stage = primaryStage;
-        this.controller = new ControllerImpl();//Instantiate the Controller
-        //TODO: setStageSize()
-        //this.stage.setFullScreen(true);
+        this.controller = new ControllerImpl();
         this.stage.setResizable(false);
-        this.stage.setTitle("Flower Force");
-        this.stage.getIcons().add(new Image(ResourceFinder.getImagePath(GAMEICON_NAME)));
+        this.stage.getIcons().add(new Image(ResourceFinder.getCommonImagePath(GAMEICON_NAME)));
         this.stage.setOnCloseRequest(e -> {
             Platform.exit();
             System.exit(0);
         });
         this.menu();
+        SoundManager.startMainTheme();
     }
 
     @Override
     public void menu() {
-        try {
-            this.controller.save();
-            FlowerForceScene sceneClass = new MenuScene(this);
-            this.setScene(sceneClass.getScene());
-        } catch (Exception e) {
-            System.out.println(e);
+        if (gameLoop != null) {
+            gameLoop.stop();
         }
+        this.controller.save();
+        final FlowerForceScene sceneClass = new MenuScene(this);
+        this.setScene(sceneClass.getScene());
     }
 
     @Override
-    public void game(final int levelId) {
-        try {
-            this.sceneClass = new GameScene(this);
-            this.setScene(this.sceneClass.getScene());
+    public void levelGame(final int levelId) {
+        this.controller.startNewLevelGame(levelId);
+        this.game("Level " + levelId);
+    }
 
-            AnimationTimer gameLoop = new GameLoop(this.controller.getGameEngine(), this.controller.startNewLevelGame(levelId), 30);//TODO: use world method instead of 30
-            gameLoop.start();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+    @Override
+    public void adventureGame() {
+        this.controller.startNewInfiniteGame();
+        this.game("Adventure mode");
+    }
+
+    @Override
+    public void howToPlay() {
+        final FlowerForceScene sceneClass = new HowToPlayScene(this);
+        this.setScene(sceneClass.getScene());
+        this.stage.setTitle("HowToPlay");
+    }
+
+    @Override
+    public void shop() {
+        final FlowerForceScene sceneClass = new ShopScene(this);
+        this.setScene(sceneClass.getScene());
+        this.stage.setTitle("Shop");
+        SoundManager.openShop();
     }
 
     @Override
     public Controller getController() {
         return this.controller;
+    }
+
+    private void game(final String title) {
+        final FlowerForceScene sceneClass = new GameScene(this);
+        this.setScene(sceneClass.getScene());
+        this.stage.setTitle(title);
+        gameLoop = this.controller.getGameLoop();
+        gameLoop.start();
     }
 
     private void setScene(final Scene scene) {
@@ -86,9 +104,8 @@ public final class FlowerForceApplication extends Application implements FlowerF
      * @param root the root element to resize
      * @param imageName the image to take proportions from
      * @return a scaled scene based on screen's dimensions
-     * @throws IOException
      */
-    public static Scene getScaledScene(final AnchorPane root, final String imageName) throws IOException {
+    public static Scene getScaledScene(final AnchorPane root, final String imageName) {
         //background's dimensions
         final Dimension2D imgDimensions = getImgDimensions(imageName);
         //app's dimensions
@@ -127,8 +144,9 @@ public final class FlowerForceApplication extends Application implements FlowerF
      * @return a Dimension2D contaning image's dimensions
      */
     public static Dimension2D getImgDimensions(final String imgName) {
-        final Image image = new Image(ResourceFinder.getImagePath(imgName));
+        final Image image = new Image(ResourceFinder.getCommonImagePath(imgName));
         //image's dimensions
         return new Dimension2D(image.getWidth(), image.getHeight());
     }
+
 }
