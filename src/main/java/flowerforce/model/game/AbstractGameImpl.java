@@ -281,15 +281,14 @@ public abstract class AbstractGameImpl implements Game {
                     bullet.ifPresent(b -> bullets.add(b));
                 }
             } else if (plant instanceof ExplodingPlant && ((ExplodingPlant) plant).hasExploded()) {
+                final var bottomRightCorner = Yard.toBottomRightCorner(plant.getPosition(), ((ExplodingPlant) plant).getRadius());
+                final var topLeftCorner = Yard.toTopLeftCorner(plant.getPosition(), ((ExplodingPlant) plant).getRadius());
+
                 ((ExplodingPlant) plant).explodeOver(zombies.stream()
-                        .filter(zombie -> zombie.getPosition().getY() <= Yard.toBottomRightCorner(plant.getPosition(),
-                                ((ExplodingPlant) plant).getRadius()).getY())
-                        .filter(zombie -> zombie.getPosition().getY() >= Yard.toTopLeftCorner(plant.getPosition(),
-                                ((ExplodingPlant) plant).getRadius()).getY())
-                        .filter(zombie -> zombie.getPosition().getX() <= Yard.toBottomRightCorner(plant.getPosition(),
-                                        ((ExplodingPlant) plant).getRadius()).getX())
-                        .filter(zombie -> zombie.getPosition().getX() >= Yard.toTopLeftCorner(plant.getPosition(),
-                                ((ExplodingPlant) plant).getRadius()).getX())
+                        .filter(zombie -> zombie.getPosition().getY() <= bottomRightCorner.getY())
+                        .filter(zombie -> zombie.getPosition().getY() >= topLeftCorner.getY())
+                        .filter(zombie -> zombie.getPosition().getX() <= bottomRightCorner.getX())
+                        .filter(zombie -> zombie.getPosition().getX() >= topLeftCorner.getX())
                         .toList());
             }
         }
