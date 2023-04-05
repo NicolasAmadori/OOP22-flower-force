@@ -42,49 +42,34 @@ final class TestShop {
                 .filter(Map.Entry::getValue)
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toSet());
-        purchasablePlants.forEach(p -> System.out.println(p.getName()));
+
         //when the player has 0 coins, the number of purchasable plants must be 0
         assertEquals(0, purchasablePlants.size());
 
         this.player.addCoins(COINS1); //Add enough coins to buy the doublesunflower
-        purchasablePlants = this.shop.getPlants().entrySet().stream()
-                .filter(Map.Entry::getValue)
-                .map(Map.Entry::getKey)
-                .collect(Collectors.toSet());
+        purchasablePlants = getPurchasablePlants();
         //when the player has 600 coins, the number of purchasable plants must be 1 (double sunflower)
         assertEquals(1, purchasablePlants.size());
 
         this.player.addCoins(COINS2); //Add enough coins to the player to buy the cherrybomb
-        purchasablePlants = this.shop.getPlants().entrySet().stream()
-                .filter(Map.Entry::getValue)
-                .map(Map.Entry::getKey)
-                .collect(Collectors.toSet());
+        purchasablePlants = getPurchasablePlants();
         //when the player has 1000 coins, the number of purchasable plants must be 2 (double sunflower and cherrybomb)
         assertEquals(2, purchasablePlants.size());
 
         this.player.addCoins(COINS3); //Add enough coins to the player to buy the strongshooter
-        purchasablePlants = this.shop.getPlants().entrySet().stream()
-                .filter(Map.Entry::getValue)
-                .map(Map.Entry::getKey)
-                .collect(Collectors.toSet());
+        purchasablePlants = getPurchasablePlants();
         //when the player has 1200 coins, the number of purchasable plants
         // must be 3 (double sunflower, cherrybomb and strongshooter)
         assertEquals(3, purchasablePlants.size());
-//
+
         this.shop.buyPlant(purchasablePlants.stream().findAny().get()); //buy one of the 3 purchasable plants
-        purchasablePlants = this.shop.getPlants().entrySet().stream()
-                .filter(Map.Entry::getValue)
-                .map(Map.Entry::getKey)
-                .collect(Collectors.toSet());
+        purchasablePlants = getPurchasablePlants();
         //the number of purchasable plants must be 0,
         //because one is bought and for the other there can't be enough coins remaining
         assertEquals(0, purchasablePlants.size());
-//
+
         this.player.addCoins(COINS4); //Add enough coins to the player to buy every plant
-        purchasablePlants = this.shop.getPlants().entrySet().stream()
-                .filter(Map.Entry::getValue)
-                .map(Map.Entry::getKey)
-                .collect(Collectors.toSet());
+        purchasablePlants = getPurchasablePlants();
         //the number of purchasable plants should be 2 because 1 is already bought, and the other are available
         assertEquals(2, purchasablePlants.size());
 
@@ -96,9 +81,7 @@ final class TestShop {
     @Test
     void testPurchase() {
         this.player.addCoins(COINS4);
-        final PlantInfo anyPurchasablePlant = this.shop.getPlants().entrySet().stream()
-                                                            .filter(e -> e.getValue())
-                                                            .map(e -> e.getKey())
+        final PlantInfo anyPurchasablePlant = getPurchasablePlants().stream()
                                                             .findAny()
                                                             .get();
 
@@ -111,4 +94,12 @@ final class TestShop {
         //the method should return false because the player already have bought that plant
         assertFalse(this.shop.buyPlant(anyPurchasablePlant));
     }
+
+    private Set<PlantInfo> getPurchasablePlants() {
+        return this.shop.getPlants().entrySet().stream()
+                .filter(Map.Entry::getValue)
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toSet());
+    }
+
 }
