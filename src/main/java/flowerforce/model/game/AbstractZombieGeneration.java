@@ -96,6 +96,9 @@ public abstract class AbstractZombieGeneration implements ZombieGeneration {
 
     /**
      * called if you want to increase the number of zombies in the horde.
+     * @param value used to increase the number of zombies in the horde
+     * @param maxRange used to check that the number of zombies in the
+     *                 horde does not exceed a certain value
      */
     protected void increaseHordeZombie(final int value, final int maxRange) {
         if (this.incrementableHorde && this.hordeZombie + value < maxRange) {
