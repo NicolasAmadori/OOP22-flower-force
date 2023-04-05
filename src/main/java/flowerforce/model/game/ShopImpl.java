@@ -1,10 +1,6 @@
 package flowerforce.model.game;
 
-<<<<<<< HEAD
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-=======
-
->>>>>>> main
 import flowerforce.model.entities.Plant;
 import flowerforce.model.entities.PlantInfo;
 import flowerforce.model.entities.PlantInfoImpl;
