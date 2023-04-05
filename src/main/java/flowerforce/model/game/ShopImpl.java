@@ -49,7 +49,7 @@ public class ShopImpl implements Shop {
      * {@inheritDoc}
      */
     @Override
-    public Map<PlantInfo, Boolean> getPurchasablePlants() {
+    public Map<PlantInfo, Boolean> getPlants() {
         final Map<PlantInfo, Boolean> outputMap = new HashMap<>();
         final var playerPlants = this.getPlayerBoughtPlants();
         this.plants.forEach(p -> outputMap.put(p, !playerPlants.contains(p) && this.player.getCoins() >= p.getCost()));
