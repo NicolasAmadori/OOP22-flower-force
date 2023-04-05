@@ -306,7 +306,7 @@ public abstract class AbstractGameImpl implements Game {
                         .filter(zombie -> zombie.getPosition().getY() >= topLeftCorner.getY())
                         .filter(zombie -> zombie.getPosition().getX() <= bottomRightCorner.getX())
                         .filter(zombie -> zombie.getPosition().getX() >= topLeftCorner.getX())
-                        .toList());
+                        .collect(Collectors.toSet()));
             }
         }
         zombieEating.clear();
