@@ -2,17 +2,22 @@ package flowerforce.model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import flowerforce.model.game.Player;
 import flowerforce.model.game.PlayerImpl;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 final class TestPlayer {
 
-    Player player;
+    private static final int STARTING_COINS = 0;
+    private static final int COINS1 = 50;
+    private static final int COINS2 = 100;
+    private static final int SCORE1 = 4_000;
+    private static final int SCORE2 = 1_500;
+    private static final int SCORE3 = 10_000;
+
+    private Player player;
 
     /**
      * Sets up the testing.
@@ -23,36 +28,36 @@ final class TestPlayer {
     }
 
     /**
-     * Test the player's coins management
+     * Test the player's coins management.
      */
     @Test
     void testCoins() {
-        assertEquals(0, this.player.getCoins());
+        assertEquals(STARTING_COINS, this.player.getCoins());
 
-        this.player.addCoins(100);
-        assertEquals(100, this.player.getCoins());
+        this.player.addCoins(COINS2);
+        assertEquals(COINS2, this.player.getCoins());
 
-        assertTrue(this.player.subtractCoins(50));
-        assertEquals(50, this.player.getCoins());
+        assertTrue(this.player.subtractCoins(COINS1));
+        assertEquals(COINS1, this.player.getCoins());
 
-        assertFalse(this.player.subtractCoins(100));
-        assertEquals(50, this.player.getCoins());
+        assertFalse(this.player.subtractCoins(COINS2));
+        assertEquals(COINS1, this.player.getCoins());
     }
 
     /**
-     * Test the player's score management
+     * Test the player's score management.
      */
     @Test
     void testScore() {
-        assertEquals(0, this.player.getScoreRecord());
+        assertEquals(STARTING_COINS, this.player.getScoreRecord());
 
-        this.player.addNewScore(4_000);
-        assertEquals(4_000, this.player.getScoreRecord());
+        this.player.addNewScore(SCORE1);
+        assertEquals(SCORE1, this.player.getScoreRecord());
 
-        this.player.addNewScore(1_500);
-        assertEquals(4_000, this.player.getScoreRecord());
+        this.player.addNewScore(SCORE2);
+        assertEquals(SCORE1, this.player.getScoreRecord());
 
-        this.player.addNewScore(10_000);
-        assertEquals(10_000, this.player.getScoreRecord());
+        this.player.addNewScore(SCORE3);
+        assertEquals(SCORE3, this.player.getScoreRecord());
     }
 }
