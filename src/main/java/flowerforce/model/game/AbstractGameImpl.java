@@ -152,7 +152,7 @@ public abstract class AbstractGameImpl implements Game {
      */
     @Override
     public boolean placePlant(final PlantInfo plantInfo, final int row, final int col) {
-        final Point2D position = Yard.getEntityPosition(row, col);
+        final Point2D position = YardInfo.getEntityPosition(row, col);
         for (final var plant : this.plants) {
             if (plant.getPosition().equals(position)) {
                 return false;
@@ -200,7 +200,7 @@ public abstract class AbstractGameImpl implements Game {
      */
     @Override
     public boolean removePlant(final int row, final int col) {
-        final var positionPlant = Yard.getEntityPosition(row, col);
+        final var positionPlant = YardInfo.getEntityPosition(row, col);
         for (final var plant : plants) {
             if (plant.getPosition().equals(positionPlant)) {
                 plants.remove(plant);
@@ -227,7 +227,7 @@ public abstract class AbstractGameImpl implements Game {
         this.bullets.forEach(Bullet::move);
         bullets = bullets.stream()
                 .filter(bullet -> bullet.getPosition().getX()
-                        < Yard.getCellDimension().getWidth() * Yard.getColsNum())
+                        < YardInfo.getCellDimension().getWidth() * YardInfo.getColsNum())
                 .collect(Collectors.toSet());
     }
 
@@ -259,7 +259,7 @@ public abstract class AbstractGameImpl implements Game {
                 .filter(zombie -> zombie.getPosition().getY() == plant.getPosition().getY())
                 .filter(zombie -> zombie.getPosition().getX() <= plant.getPosition().getX())
                 .filter(zombie -> zombie.getPosition().getX() > plant.getPosition().getX()
-                        - Yard.getCellDimension().getWidth())
+                        - YardInfo.getCellDimension().getWidth())
                 .forEach(zombie -> {
                         zombieEating.put(zombie, plant);
                     }
@@ -298,8 +298,8 @@ public abstract class AbstractGameImpl implements Game {
                     bullet.ifPresent(b -> bullets.add(b));
                 }
             } else if (plant instanceof ExplodingPlant && ((ExplodingPlant) plant).hasExploded()) {
-                final var bottomRightCorner = Yard.toBottomRightCorner(plant.getPosition(), ((ExplodingPlant) plant).getRadius());
-                final var topLeftCorner = Yard.toTopLeftCorner(plant.getPosition(), ((ExplodingPlant) plant).getRadius());
+                final var bottomRightCorner = YardInfo.toBottomRightCorner(plant.getPosition(), ((ExplodingPlant) plant).getRadius());
+                final var topLeftCorner = YardInfo.toTopLeftCorner(plant.getPosition(), ((ExplodingPlant) plant).getRadius());
 
                 ((ExplodingPlant) plant).explodeOver(zombies.stream()
                         .filter(zombie -> zombie.getPosition().getY() <= bottomRightCorner.getY())

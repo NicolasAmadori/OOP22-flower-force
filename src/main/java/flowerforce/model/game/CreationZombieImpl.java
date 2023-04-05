@@ -50,7 +50,7 @@ public class CreationZombieImpl implements CreationZombie {
 
         int row;
         do {
-            row = new Random().nextInt(Yard.getRowsNum());
+            row = new Random().nextInt(YardInfo.getRowsNum());
         } while (row == prevRow);
         prevRow = row;
 
@@ -58,15 +58,15 @@ public class CreationZombieImpl implements CreationZombie {
             randomValue = randomValue - (zombieMaxDifficulty + delta - zombie.apply(TEMPORARY_POSITION).getDifficulty());
             if (randomValue <= 0) {
                 return zombie.apply(
-                        Yard.getEntityPosition(
+                        YardInfo.getEntityPosition(
                                 row,
-                                Yard.getColsNum() - 1
+                                YardInfo.getColsNum() - 1
                         ));
             }
         }
-        return ZombieFactory.basic(Yard.getEntityPosition(
+        return ZombieFactory.basic(YardInfo.getEntityPosition(
                 row,
-                Yard.getColsNum() - 1
+                YardInfo.getColsNum() - 1
         ));
     }
 

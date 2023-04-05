@@ -29,9 +29,9 @@ public class ZombieGenerationLevelImpl extends AbstractZombieGeneration implemen
      */
     @Override
     public Zombie bossGeneration() {
-        return boss.get().apply(Yard.getEntityPosition(
-                new Random().nextInt(Yard.getRowsNum()),
-                Yard.getColsNum()
+        return boss.get().apply(YardInfo.getEntityPosition(
+                new Random().nextInt(YardInfo.getRowsNum()),
+                YardInfo.getColsNum()
         ));
     }
 }

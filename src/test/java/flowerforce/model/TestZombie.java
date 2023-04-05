@@ -2,7 +2,7 @@ package flowerforce.model;
 
 import flowerforce.model.entities.Zombie;
 import flowerforce.model.entities.ZombieFactory;
-import flowerforce.model.game.Yard;
+import flowerforce.model.game.YardInfo;
 import javafx.geometry.Point2D;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,8 +11,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 final class TestZombie {
 
-    private static final double INITIAL_X = Yard.getYardDimension().getWidth();
-    private static final double INITIAL_Y = Yard.getYardDimension().getHeight();
+    private static final double INITIAL_X = YardInfo.getYardDimension().getWidth();
+    private static final double INITIAL_Y = YardInfo.getYardDimension().getHeight();
     private static final double FREEZE_FACTOR = 2; //Freeze factor of ZombieImpl
     private static final double ACCELERATE_FACTOR = 3; //Accelerate factor of Newspaper zombie
     private static final int DAMAGE = 10;
