@@ -71,27 +71,10 @@ public final class ControllerImpl implements Controller {
      * {@inheritDoc}
      */
     @Override
-    public int getFramesPerSecond() {
-        return this.world.getRenderingInformations();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void setGameEngine(final GameEngine gameEngine) {
         this.gameEngine = Optional.ofNullable(gameEngine);
         this.checkGameEngine();
         this.entityConverter = new EntityConverterImpl(this.world.getYardDimension(), this.gameEngine.get().getYardDimension());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public GameEngine getGameEngine() {
-        this.checkGameEngine();
-        return this.gameEngine.get();
     }
 
     /**
@@ -130,6 +113,9 @@ public final class ControllerImpl implements Controller {
         return this.game.get().placePlant(this.cards.get(cardView), row, col);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean removePlant(final int row, final int col) {
         this.checkGame();
@@ -150,28 +136,23 @@ public final class ControllerImpl implements Controller {
      * {@inheritDoc}
      */
     @Override
-    public Game startNewLevelGame(final int levelId) {
+    public void startNewLevelGame(final int levelId) {
         this.resetGame();
         this.game = Optional.of(this.world.createLevelGame(levelId));
-        this.checkGame();
-        this.checkGameEngine();
-        this.gameEngine.get().loadCards(this.getCards());
-        return this.game.get();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Game startNewInfiniteGame() {
+    public void startNewInfiniteGame() {
         this.resetGame();
         this.game = Optional.of(this.world.createInfiniteGame());
-        this.checkGame();
-        this.checkGameEngine();
-        this.gameEngine.get().loadCards(this.getCards());
-        return this.game.get();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Set<EntityView> getPlacedPlants() {
         this.checkGame();
@@ -197,6 +178,9 @@ public final class ControllerImpl implements Controller {
         return new HashSet<>(this.previousPlant.values());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Set<EntityView> getPlacedZombies() {
         this.checkGame();
@@ -222,6 +206,9 @@ public final class ControllerImpl implements Controller {
         return new HashSet<>(this.previousZombie.values());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Set<EntityView> getPlacedBullets() {
         this.checkGame();
@@ -264,13 +251,9 @@ public final class ControllerImpl implements Controller {
         return output;
     }
 
-    private List<CardView> getCards() {
-        this.checkGame();
-        this.game.get().getPlaceablePlant()
-                .forEach(p -> cards.put(CardGenerator.getCardView(p), p));
-        return cards.keySet().stream().toList();
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Set<CardView> getEnabledCards() {
         this.checkGame();
@@ -298,19 +281,46 @@ public final class ControllerImpl implements Controller {
         return Collections.unmodifiableMap(toReturn);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getTotalRows() {
         return this.world.getRowsNum();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getTotalColumns() {
         return this.world.getColsNum();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void save() {
         WorldSavingManager.save(this.world);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameLoop getGameLoop() {
+        checkGame();
+        checkGameEngine();
+        this.gameEngine.get().loadCards(this.getCards());
+        return new GameLoop(this.gameEngine.get(), this.game.get(), this.world.getRenderingInformations());
+    }
+
+    private List<CardView> getCards() {
+        this.checkGame();
+        this.game.get().getPlaceablePlant()
+                .forEach(p -> cards.put(CardGenerator.getCardView(p), p));
+        return cards.keySet().stream().toList();
     }
 
     private void checkGameEngine() {

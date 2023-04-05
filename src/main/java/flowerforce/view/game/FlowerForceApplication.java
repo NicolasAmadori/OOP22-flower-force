@@ -32,6 +32,8 @@ public final class FlowerForceApplication extends Application implements FlowerF
     private static final String GAMEICON_NAME = "icon.png";
     private Stage stage;
 
+    private AnimationTimer gameLoop;
+
     @Override
     public void start(final Stage primaryStage) throws Exception {
         this.stage = primaryStage;
@@ -48,20 +50,24 @@ public final class FlowerForceApplication extends Application implements FlowerF
 
     @Override
     public void menu() {
+        if (gameLoop != null) {
+            gameLoop.stop();
+        }
         this.controller.save();
         final FlowerForceScene sceneClass = new MenuScene(this);
         this.setScene(sceneClass.getScene());
-
     }
 
     @Override
     public void levelGame(final int levelId) {
-        this.game("Level " + levelId, () -> this.controller.startNewLevelGame(levelId));
+        this.controller.startNewLevelGame(levelId);
+        this.game("Level " + levelId);
     }
 
     @Override
     public void adventureGame() {
-        this.game("Adventure mode", () -> this.controller.startNewInfiniteGame());
+        this.controller.startNewInfiniteGame();
+        this.game("Adventure mode");
     }
 
     @Override
@@ -84,15 +90,11 @@ public final class FlowerForceApplication extends Application implements FlowerF
         return this.controller;
     }
 
-    private void game(final String title, final Supplier<Game> gameGetter) {
+    private void game(final String title) {
         final FlowerForceScene sceneClass = new GameScene(this);
         this.setScene(sceneClass.getScene());
         this.stage.setTitle(title);
-        final AnimationTimer gameLoop = new GameLoop(
-            this.controller.getGameEngine(),
-            gameGetter.get(),
-            this.controller.getFramesPerSecond()
-        );
+        gameLoop = this.controller.getGameLoop();
         gameLoop.start();
     }
 
