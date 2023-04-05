@@ -3,7 +3,9 @@ package flowerforce.model.game;
 import flowerforce.model.entities.Zombie;
 import javafx.geometry.Point2D;
 
-import java.util.*;
+
+import java.util.Optional;
+import java.util.Random;
 import java.util.function.Function;
 
 /**
@@ -11,7 +13,7 @@ import java.util.function.Function;
  */
 public class ZombieGenerationLevelImpl extends AbstractZombieGeneration implements ZombieGenerationLevel {
     private static final int START_NUMBER_ZOMBIE_IN_HORDE = 10;
-    private static final int ZOMBIE_BEFORE_HORDE = 7;
+    private static final int ZOMBIE_BEFORE_HORDE = 8;
     private final Optional<Function<Point2D, Zombie>> boss;
 
     /**

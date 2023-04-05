@@ -6,6 +6,9 @@ import flowerforce.model.utilities.TimerImpl;
 
 import java.util.Optional;
 
+/**
+ *This is an implementation of {@link ZombieGeneration}.
+ */
 public abstract class AbstractZombieGeneration implements ZombieGeneration {
 
     private static final double MIN_SECS_SPAWN_ZOMBIE = 5.0;
@@ -25,15 +28,20 @@ public abstract class AbstractZombieGeneration implements ZombieGeneration {
     private int timeZombie = START_TIME_TO_SPAWN_ZOMBIE;
     private final CreationZombie genZombie;
     private int generatedZombie = 1;
-    private int hordeGeneratedZombie = 0;
+    private int hordeGeneratedZombie;
     private int hordeZombie;
     private final int startNumberZombieHorde;
     private final int zombieBeforeHorde;
     private boolean incrementableHorde;
 
+    /**
+     * @param levelId of the level started
+     * @param zombieBeforeHorde number of zombies to spawn before the horde
+     * @param startNumberZombieHorde number of zombies in the starting horde
+     */
     public AbstractZombieGeneration(final int levelId, final int zombieBeforeHorde,
                                     final int startNumberZombieHorde) {
-        genZombie = new CreationZombie(LevelInfo.getZombiesInfo(levelId));
+        genZombie = new CreationZombieImpl(LevelInfo.getZombiesInfo(levelId));
         this.zombieBeforeHorde = zombieBeforeHorde;
         this.zombieTimer = new TimerImpl(timeZombie);
         this.startNumberZombieHorde = startNumberZombieHorde;
@@ -68,6 +76,7 @@ public abstract class AbstractZombieGeneration implements ZombieGeneration {
         }
         return Optional.empty();
     }
+
     /**
      * {@inheritDoc}
      */
@@ -85,6 +94,9 @@ public abstract class AbstractZombieGeneration implements ZombieGeneration {
         return this.hordeZombie + this.zombieBeforeHorde;
     }
 
+    /**
+     * called if you want to increase the number of zombies in the horde.
+     */
     protected void increaseHordeZombie(final int value, final int maxRange) {
         if (this.incrementableHorde && this.hordeZombie + value < maxRange) {
             this.hordeZombie += value;
