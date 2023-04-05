@@ -16,7 +16,7 @@ public class BulletImpl extends AbstractEntity implements Bullet {
 
     private final int damage;
     private boolean hasHit;
-    private Optional<Consumer<Zombie>> actionOverZombie = Optional.empty();
+    private final Optional<Consumer<Zombie>> actionOverZombie;
 
     /**
      * 
@@ -25,8 +25,7 @@ public class BulletImpl extends AbstractEntity implements Bullet {
      * @param bulletName the bullet's name
      */
     public BulletImpl(final Point2D pos, final int damage, final String bulletName) {
-        super(pos, bulletName);
-        this.damage = damage;
+        this(pos, damage, bulletName, null);
     }
 
     /**
@@ -37,8 +36,9 @@ public class BulletImpl extends AbstractEntity implements Bullet {
      * @param action an action to do on a zombie when hit
      */
     public BulletImpl(final Point2D pos, final int damage, final String bulletName, final Consumer<Zombie> action) {
-        this(pos, damage, bulletName);
-        this.actionOverZombie = Optional.of(action);
+        super(pos, bulletName);
+        this.damage = damage;
+        this.actionOverZombie = Optional.ofNullable(action);
     }
 
 
