@@ -43,6 +43,7 @@ public final class GameSceneController implements GameEngine {
     @FXML private ImageView card5;
     @FXML private ImageView card6;
     @FXML private ImageView card7;
+    @FXML private ImageView card8;
     @FXML private Label lbl0;
     @FXML private Label lbl1;
     @FXML private Label lbl2;
@@ -51,6 +52,7 @@ public final class GameSceneController implements GameEngine {
     @FXML private Label lbl5;
     @FXML private Label lbl6;
     @FXML private Label lbl7;
+    @FXML private Label lbl8;
     @FXML private ImageView imageMenu;
     @FXML private ImageView imageResult;
     @FXML private Rectangle coloredCell;
@@ -96,8 +98,8 @@ public final class GameSceneController implements GameEngine {
      */
     @Override
     public void loadCards(final List<CardView> cardViews) {
-        final List<ImageView> cardImageViews = new LinkedList<>(List.of(card0, card1, card2, card3, card4, card5, card6, card7));
-        final List<Label> cardLabels = new LinkedList<>(List.of(lbl0, lbl1, lbl2, lbl3, lbl4, lbl5, lbl6, lbl7));
+        final List<ImageView> cardImageViews = new LinkedList<>(List.of(card0, card1, card2, card3, card4, card5, card6, card7, card8));
+        final List<Label> cardLabels = new LinkedList<>(List.of(lbl0, lbl1, lbl2, lbl3, lbl4, lbl5, lbl6, lbl7, lbl8));
         int i = 0;
         for (; i < cardViews.size() && i < cardImageViews.size() && i < cardLabels.size(); i++) {
             this.cards.put(cardImageViews.get(i), cardViews.get(i));
