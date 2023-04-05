@@ -19,4 +19,16 @@ public interface Entity {
      */
     boolean isOver();
 
+    /**
+     * 
+     * @return the name of the entity (this is not an identifier, there could be two or more entities with the same name)
+     */
+    String getName();
+
+    /**
+     * 
+     * @return the info about the name and the position of the entity, wrapped in an unique object (in order to be a key of maps)
+     */
+    EntityInfo getEntityInfo();
+
 }

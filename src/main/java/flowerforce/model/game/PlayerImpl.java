@@ -1,5 +1,8 @@
 package flowerforce.model.game;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * This is an implementation of {@link Player}.
  */
@@ -8,6 +11,7 @@ public class PlayerImpl implements Player {
     private int nCoins;
     private int scoreRecord;
     private int lastUnlockedLevelId;
+    private final Set<Integer> plantsIds = new HashSet<>();
 
     /**
      * Constructor to instantiate a totally new player.
@@ -68,12 +72,8 @@ public class PlayerImpl implements Player {
      * {@inheritDoc}
      */
     @Override
-    public boolean setNewScoreRecord(final int score) {
-        if (score <= this.scoreRecord) {
-            return false;
-        }
-        this.scoreRecord = score;
-        return true;
+    public void addNewScore(final int score) {
+        this.scoreRecord = Math.max(this.scoreRecord, score);
     }
 
     /**
@@ -90,5 +90,21 @@ public class PlayerImpl implements Player {
     @Override
     public void unlockedNextLevel() {
         this.lastUnlockedLevelId++;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void addPlant(final int plantIndex) {
+        this.plantsIds.add(plantIndex);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Set<Integer> getPlantsIds() {
+        return this.plantsIds;
     }
 }

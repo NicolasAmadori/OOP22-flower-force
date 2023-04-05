@@ -11,7 +11,7 @@ import javafx.scene.text.Text;
 public class MenuSceneController {
 
     @FXML
-    private Text scoreText;
+    private Text scoreRecord;
 
     private final FlowerForceApplication application;
 
@@ -24,11 +24,11 @@ public class MenuSceneController {
     }
 
     /**
-     * Sets Player's score in the Menu
+     * Sets Player's score in the Menu.
      */
     public void initialize() {
-        final int coins = this.application.getController().getPlayerCoins();
-        this.scoreText.setText(this.scoreText.getText().concat(Integer.toString(coins)));
+        final int record = this.application.getController().getPlayerScoreRecord();
+        this.scoreRecord.setText(this.scoreRecord.getText().concat(Integer.toString(record)));
     }
 
     /**
@@ -36,10 +36,10 @@ public class MenuSceneController {
      * @param event the MouseEvent to handle
      */
     @FXML
-    void start(final MouseEvent event) {
+    void startLevel(final MouseEvent event) {
         final int levelId = Integer.parseInt(((ImageView) event.getSource()).getAccessibleText());
         if (levelId <= this.application.getController().getLastUnlockedLevelId()) {
-            this.application.game(levelId);
+            this.application.levelGame(levelId);
         } else  {
             final Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Level not unlocked");
@@ -48,5 +48,32 @@ public class MenuSceneController {
                                   + this.application.getController().getLastUnlockedLevelId() + ".");
             alert.showAndWait();
         }
+    }
+
+    /**
+     * Starts an Adventure mode game.
+     * @param event the MouseEvent to handle
+     */
+    @FXML
+    void startAdventureGame(final MouseEvent event) {
+        this.application.adventureGame();
+    }
+
+    /**
+     * Opens How to play tutorial.
+     * @param event the MouseEvent to handle
+     */
+    @FXML
+    void howToPlay(final MouseEvent event) {
+        this.application.howToPlay();
+    }
+
+    /**
+     * Opens the shop.
+     * @param event the MouseEvent to handle
+     */
+    @FXML
+    void shop(final MouseEvent event) {
+        this.application.shop();
     }
 }

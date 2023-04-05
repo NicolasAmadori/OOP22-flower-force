@@ -13,6 +13,7 @@ public class TimerImpl implements Timer {
      * @param nCycles indicates every how many game loop cycles an action must be performed
      */
     public TimerImpl(final int nCycles) {
+        verifyNCycles(nCycles);
         this.nCycles = nCycles;
     }
 
@@ -40,12 +41,22 @@ public class TimerImpl implements Timer {
         this.timerCyclesCount = 0;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void setNumCycles(final int numCycles) {
-        if (this.timerCyclesCount >= numCycles) {
-            this.timerCyclesCount = numCycles - 1;
+    public void setNumCycles(final int newNCycles) {
+        verifyNCycles(newNCycles);
+        if (this.timerCyclesCount >= newNCycles) {
+            this.timerCyclesCount = newNCycles - 1;
         }
-        this.nCycles = numCycles;
+        this.nCycles = newNCycles;
+    }
+
+    private static void verifyNCycles(final int nCycles) {
+        if (nCycles <= 0) {
+            throw new IllegalArgumentException("Timer must be set to a positive integer!");
+        }
     }
 
 

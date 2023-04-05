@@ -1,7 +1,5 @@
 package flowerforce.model.game;
 
-import java.util.Map;
-
 import javafx.geometry.Dimension2D;
 
 /**
@@ -14,12 +12,6 @@ public interface World {
      * @return the current player
      */
     Player getPlayer();
-
-    /**
-     * 
-     * @return a Map representing the levels that the player has unlocked.
-     */
-    Map<Integer, Boolean> getLevels();
 
     /**
      * Creates a level game.
@@ -35,7 +27,8 @@ public interface World {
     Game createInfiniteGame();
 
     /**
-     * Returns the maximum number of frames per second the game must be set to.
+     * 
+     * @return the maximum number of frames per second the game must be set to.
      */
     int getRenderingInformations();
 
@@ -56,4 +49,10 @@ public interface World {
      * @return the columns number of yard's cells matrix
      */
     int getColsNum();
+
+    /**
+     * 
+     * @return this World's Shop
+     */
+    Shop getShop();
 }

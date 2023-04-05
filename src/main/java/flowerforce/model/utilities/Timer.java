@@ -2,6 +2,8 @@ package flowerforce.model.utilities;
 
 /**
  * Models a timer based on game loop's cycles, used by entities for synchronization.
+ * The timer gets updated every cycle and becomes ready every N times it's updated
+ * (with N greater than 0).
  */
 public interface Timer {
 
@@ -12,7 +14,7 @@ public interface Timer {
 
     /**
      * 
-     * @return true if it's time to perform an action
+     * @return true if timer is ready
      */
     boolean isReady();
 
@@ -22,8 +24,8 @@ public interface Timer {
     void reset();
 
     /**
-     * 
-     * @param numCycles before performing an action
+     * Sets the timer to a number of cycles (greater than 0).
+     * @param numCycles number the timer is set to
      */
     void setNumCycles(int numCycles);
 }

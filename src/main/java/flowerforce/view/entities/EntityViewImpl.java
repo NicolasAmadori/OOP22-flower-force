@@ -3,8 +3,6 @@ package flowerforce.view.entities;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 
-import java.util.Objects;
-
 /**
  * This is an implementation of {@link EntityView}.
  */
@@ -16,7 +14,7 @@ public class EntityViewImpl implements EntityView {
      * @param placingPosition position of the entity in the field
      * @param pathPlaceableImage of the entity to show in the field
      */
-    public EntityViewImpl ( final Point2D placingPosition, final String pathPlaceableImage) {
+    public EntityViewImpl(final Point2D placingPosition, final String pathPlaceableImage) {
         this.pathPlaceableImage = pathPlaceableImage;
         this.position = placingPosition;
     }
