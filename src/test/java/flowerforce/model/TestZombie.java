@@ -20,13 +20,13 @@ final class TestZombie {
     private Zombie newspaper;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         this.zombie = ZombieFactory.basic(new Point2D(INITIAL_X, INITIAL_Y));
         this.newspaper = ZombieFactory.newspaper(new Point2D(INITIAL_X, INITIAL_Y));
     }
 
     @Test
-    public void testMove() {
+    void testMove() {
         double expectedPosX = INITIAL_X;
         assertEquals(new Point2D(expectedPosX, INITIAL_Y), this.zombie.getPosition()); //Check initial pos
         this.zombie.move();
@@ -40,8 +40,8 @@ final class TestZombie {
     }
 
     @Test
-    public void testFreeze() {
-        double initialDelta = this.zombie.getDeltaMovement();
+    void testFreeze() {
+        final double initialDelta = this.zombie.getDeltaMovement();
         double expectedDelta = initialDelta;
         assertEquals(expectedDelta, this.zombie.getDeltaMovement());
         this.zombie.freeze();
@@ -57,7 +57,7 @@ final class TestZombie {
     }
 
     @Test
-    public void testReceiveDamage() {
+    void testReceiveDamage() {
         int expectedHealth = this.zombie.getHealth();
         assertEquals(expectedHealth, this.zombie.getHealth());
         this.zombie.receiveDamage(DAMAGE);
@@ -68,8 +68,9 @@ final class TestZombie {
         assertEquals(expectedHealth, this.zombie.getHealth());
     }
 
-    public void testNewspaper() {
-        double initialDelta = this.newspaper.getDeltaMovement();
+    @Test
+    void testNewspaper() {
+        final double initialDelta = this.newspaper.getDeltaMovement();
         while (this.newspaper.getDeltaMovement() == initialDelta) {
             this.newspaper.receiveDamage(DAMAGE);
         }

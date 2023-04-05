@@ -1,9 +1,7 @@
 package flowerforce.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +16,7 @@ import javafx.geometry.Point2D;
 /**
  * Tests for classes {@link EntityInfo} and {@link PlantInfo}. 
  */
-public final class TestInfo {
+final class TestInfo {
 
     private static final Point2D POS_TEST = new Point2D(10, 20);
     private static final String NAME_TEST = "test";
@@ -30,14 +28,12 @@ public final class TestInfo {
      * (name and position could be the same to different entities).
      */
     @Test
-    public void testEqualsEntityInfo() {
+    void testEqualsEntityInfo() {
         final EntityInfo eInfo1 = new EntityInfoImpl(NAME_TEST, POS_TEST);
         final EntityInfo eInfo2 = new EntityInfoImpl(NAME_TEST, POS_TEST);
         assertNotEquals(eInfo1, eInfo2);
-        assertFalse(eInfo1.equals(eInfo2));
         final EntityInfo eInfo3 = eInfo1;
         assertEquals(eInfo1, eInfo3);
-        assertTrue(eInfo1.equals(eInfo3));
     }
 
     /**
@@ -45,14 +41,12 @@ public final class TestInfo {
      * even if its fields are the same of others {@link PlantInfo}.
      */
     @Test
-    public void testEqualsPlantInfo() {
+    void testEqualsPlantInfo() {
         final PlantInfo eInfo1 = new PlantInfoImpl(NAME_TEST, COST_TEST);
         final PlantInfo eInfo2 = new PlantInfoImpl(NAME_TEST, COST_TEST);
         assertNotEquals(eInfo1, eInfo2);
-        assertFalse(eInfo1.equals(eInfo2));
         final PlantInfo eInfo3 = eInfo1;
         assertEquals(eInfo1, eInfo3);
-        assertTrue(eInfo1.equals(eInfo3));
     }
 
     /**
@@ -60,7 +54,7 @@ public final class TestInfo {
      * using {@link EntityInfo#setPosition(Point2D)} method.
      */
     @Test
-    public void testMoveEntityInfo() {
+    void testMoveEntityInfo() {
         final Zombie basic = ZombieFactory.basic(POS_TEST);
         final EntityInfo e1 = basic.getEntityInfo();
         assertEquals(e1, basic.getEntityInfo());
