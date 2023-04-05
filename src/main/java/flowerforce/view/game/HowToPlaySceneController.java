@@ -1,10 +1,12 @@
 package flowerforce.view.game;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 
-public class HowToPlaySceneController {
+/**
+ * The controller of the HowToPlayScene.
+ */
+public final class HowToPlaySceneController {
     private final FlowerForceApplication application;
 
     /**
@@ -16,7 +18,7 @@ public class HowToPlaySceneController {
     }
 
     @FXML
-    void returnToMenu(MouseEvent event) {
+    void returnToMenu(final MouseEvent event) {
         this.application.menu();
     }
 }
