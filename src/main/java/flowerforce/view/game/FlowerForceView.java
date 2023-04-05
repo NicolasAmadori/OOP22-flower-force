@@ -2,6 +2,9 @@ package flowerforce.view.game;
 
 import flowerforce.controller.Controller;
 
+/**
+ * Models the view of the entire application.
+ */
 public interface FlowerForceView {
 
     /**
