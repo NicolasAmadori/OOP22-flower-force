@@ -1,9 +1,6 @@
 package flowerforce.controller.utilities;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Optional;
 import com.google.gson.Gson;
 import flowerforce.common.ResourceFinder;
@@ -34,7 +31,7 @@ public final class SaveManager<T> {
      * @return True if the save operation was successful, false otherwise.
      */
     public boolean save(final T p) {
-        try (FileWriter fw = new FileWriter(savingFilePath)) {
+        try (Writer fw = new OutputStreamWriter(new FileOutputStream(savingFilePath),"UTF-8")) {
             fw.write(GSON.toJson(p));
             return true;
 
@@ -55,7 +52,7 @@ public final class SaveManager<T> {
             return Optional.empty();
         }
 
-        try (FileReader fr = new FileReader(file)) {
+        try (Reader fr = new InputStreamReader(new FileInputStream(file), "UTF-8")) {
             return Optional.of(GSON.fromJson(fr, genericClass));
         } catch (IOException e) {
             return Optional.empty();
