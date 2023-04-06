@@ -12,7 +12,7 @@ public class PlayerImpl implements Player {
     private int nCoins;
     private int scoreRecord;
     private int lastUnlockedLevelId;
-    private final Set<Integer> plantsIds = new HashSet<>();
+    private final Set<Integer> plantsIds;
 
     /**
      * Constructor to instantiate a totally new player.
@@ -44,9 +44,7 @@ public class PlayerImpl implements Player {
         this.nCoins = nCoins;
         this.scoreRecord = scoreRecord;
         this.lastUnlockedLevelId = lastUnlockedLevelId;
-        if (plantsIds.isPresent()) {
-            this.plantsIds = plantsIds.get();
-        }
+        this.plantsIds = plantsIds.isPresent() ? plantsIds.get() : new HashSet<>();
     }
 
     /**
