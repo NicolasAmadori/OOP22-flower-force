@@ -1,5 +1,6 @@
 package flowerforce.view.game;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;
@@ -19,6 +20,10 @@ public class MenuSceneController {
      * Creates a new controller for a Menu scene.
      * @param application the application to communicate scene changes
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2",
+        justification = "application is stored to call its methods and obtain controller"
+    )
     public MenuSceneController(final FlowerForceApplication application) {
         this.application = application;
     }
