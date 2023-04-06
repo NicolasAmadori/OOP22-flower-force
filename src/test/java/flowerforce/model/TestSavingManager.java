@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 final class TestSavingManager {
 
     private static final String FILE_NAME = "player";
-    private Player player;
+    private Player player = new PlayerImpl();
 
     /**
      * Sets up the testing.
@@ -27,12 +27,16 @@ final class TestSavingManager {
      */
     @Test
     void testSaving() {
-        final SaveManager<Player> playerSaveManager = new SaveManager(
-                PlayerImpl.class,
-                FILE_NAME);
-        playerSaveManager.save(this.player);
+        final SaveManager<PlayerImpl> playerSaveManager = new SaveManager<>(PlayerImpl.class, FILE_NAME);
 
-        final Optional<Player> newPlayer = playerSaveManager.load();
+        //random operation to modify player values
+        this.player.addCoins(160);
+        this.player.addNewScore(56560);
+        this.player.unlockedNextLevel();
+        this.player.unlockedNextLevel();
+        playerSaveManager.save((PlayerImpl) this.player); //cast to save the player
+
+        final Optional<PlayerImpl> newPlayer = playerSaveManager.load();
         assertTrue(newPlayer.isPresent());
 
 

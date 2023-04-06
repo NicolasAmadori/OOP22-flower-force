@@ -12,10 +12,11 @@ public class LevelGame extends AbstractGame {
     /**
      * Constructor to instantiate a level game.
      * @param levelId of the game started
-     * @param world an instance of the world that started the game
+     * @param shop an instance of the shop of the game
+     * @param player an instance of the player
      */
-    public LevelGame(final int levelId, final World world) {
-        super(levelId, world);
+    public LevelGame(final int levelId, final Shop shop, final Player player) {
+        super(levelId, shop, player);
         this.id = levelId;
         this.remainingZombie = LevelInfo.getTotalZombies(levelId);
         generateZombie = new ZombieGenerationLevelImpl(levelId);
@@ -44,9 +45,9 @@ public class LevelGame extends AbstractGame {
     public boolean isOver() {
         final var end = super.isOver();
         if (end && this.result()
-                && super.getWorld().getPlayer().getLastUnlockedLevelId() == this.id) {
-            super.getWorld().getPlayer().unlockedNextLevel();
-            super.getWorld().getPlayer().addCoins(LevelInfo.getLevelCoins(id));
+                && super.getPlayer().getLastUnlockedLevelId() == this.id) {
+            super.getPlayer().unlockedNextLevel();
+            super.getPlayer().addCoins(LevelInfo.getLevelCoins(id));
         }
         return end || result();
     }

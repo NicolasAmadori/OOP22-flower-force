@@ -16,8 +16,8 @@ final class TestZombie {
     private static final double FREEZE_FACTOR = 2; //Freeze factor of ZombieImpl
     private static final double ACCELERATE_FACTOR = 3; //Accelerate factor of Newspaper zombie
     private static final int DAMAGE = 10;
-    private Zombie zombie;
-    private Zombie newspaper;
+    private Zombie zombie = null;
+    private Zombie newspaper = null;
 
     @BeforeEach
     void setup() {

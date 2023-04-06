@@ -19,7 +19,7 @@ final class TestTimer {
      * Sets up testing.
      */
     @BeforeEach
-    void setUp() {
+    void setup() {
         this.timer = new TimerImpl(NUMBER_OF_CYCLES);
     }
 

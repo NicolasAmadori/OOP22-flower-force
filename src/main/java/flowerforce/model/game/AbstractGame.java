@@ -1,6 +1,7 @@
 package flowerforce.model.game;
 
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import flowerforce.model.entities.Bullet;
 import flowerforce.model.entities.Plant;
 import flowerforce.model.entities.PlantInfo;
@@ -43,30 +44,35 @@ public abstract class AbstractGame implements Game {
     private final TimerImpl sunTimer;
     private final Map<PlantInfo, TimerImpl> plantsTimer = new HashMap<>();
     private int sun;
-    private final World world;
+    private final Player player;
     private int score;
     private static final Point2D TEMPORARY_POSITION = new Point2D(0, 0);
     private final Map<Zombie, Plant> zombieEating = new HashMap<>();
     /**
      * Constructor to instantiate an infinite game.
      * @param id of the game started
-     * @param world an instance of the world that started the game
+     * @param shop an instance of the shop
+     * @param player an instance of the player
      */
-    public AbstractGame(final int id, final World world) {
+    @SuppressFBWarnings(
+            value = "EI_EXPOSE_REP2",
+            justification = "Cannot copy player because the instance must remain the same"
+    )
+    public AbstractGame(final int id, final Shop shop, final Player player) {
         this.placeablePlant = new HashMap<>();
         LevelInfo.getPlantsInfo(id).forEach(p -> placeablePlant.put(
                 new PlantInfoImpl(p.apply(TEMPORARY_POSITION).getName(),
                         p.apply(TEMPORARY_POSITION).getCost()), p)
         );
-        world.getShop().getBoughtPlantsFunctions().forEach(p -> placeablePlant.put(
+        shop.getBoughtPlantsFunctions().forEach(p -> placeablePlant.put(
                 new PlantInfoImpl(p.apply(TEMPORARY_POSITION).getName(),
                         p.apply(TEMPORARY_POSITION).getCost()), p)
         );
         this.sun = INITIAL_SUN * SUN_VALUE;
+        this.player = player;
         this.sunTimer = new TimerImpl(TIME_TO_SPAWN_SUN);
         this.placeablePlant.keySet().forEach(p -> plantsTimer
                 .put(p, new TimerImpl(placeablePlant.get(p).apply(TEMPORARY_POSITION).getRechargeTime())));
-        this.world = world;
         this.score = 0;
     }
 
@@ -101,8 +107,8 @@ public abstract class AbstractGame implements Game {
     /**
      * @return the instance of the World
      */
-    protected World getWorld() {
-        return this.world;
+    protected Player getPlayer() {
+        return this.player;
     }
 
     /**

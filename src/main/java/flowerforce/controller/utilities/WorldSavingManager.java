@@ -2,7 +2,6 @@ package flowerforce.controller.utilities;
 
 import flowerforce.model.game.World;
 import flowerforce.model.game.WorldImpl;
-import flowerforce.model.game.Player;
 import flowerforce.model.game.PlayerImpl;
 import java.util.Optional;
 
@@ -19,12 +18,11 @@ public final class WorldSavingManager {
     /**
      * This method get an instance of World from the saving files.
      * @return the instance of the World
-     * @throws InstantiationException In case of missing saved files
      */
-    public static World load() throws InstantiationException {
-        final Optional<Player> p = loadPlayer();
+    public static World load() {
+        final Optional<PlayerImpl> p = loadPlayer();
 
-        return new WorldImpl(p);
+        return new WorldImpl(Optional.ofNullable(p.orElse(null)));
     }
 
     /**
@@ -32,12 +30,12 @@ public final class WorldSavingManager {
      * @param world The instance of World to save
      */
     public static void save(final World world) {
-        final SaveManager<Player> playerSaveManager = new SaveManager(PlayerImpl.class, PLAYER_FILE_NAME);
-        playerSaveManager.save(world.getPlayer());
+        final SaveManager<PlayerImpl> playerSaveManager = new SaveManager<>(PlayerImpl.class, PLAYER_FILE_NAME);
+        playerSaveManager.save((PlayerImpl) world.getPlayer());
     }
 
-    private static Optional<Player> loadPlayer() {
-        final SaveManager<Player> playerSaveManager = new SaveManager(PlayerImpl.class, PLAYER_FILE_NAME);
+    private static Optional<PlayerImpl> loadPlayer() {
+        final SaveManager<PlayerImpl> playerSaveManager = new SaveManager<>(PlayerImpl.class, PLAYER_FILE_NAME);
         return playerSaveManager.load();
     }
 }

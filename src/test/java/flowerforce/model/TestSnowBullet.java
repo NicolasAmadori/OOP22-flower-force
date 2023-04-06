@@ -32,7 +32,7 @@ final class TestSnowBullet {
      * Sets up the testing.
      */
     @BeforeEach
-    void setUp() {
+    void setup() {
         this.zombie = ZombieFactory.basic(new Point2D(STARTING_PLANT_POS_X + 1, STARTING_PLANT_POS_Y));
         this.bullet = Optional.empty();
         while (this.bullet.isEmpty()) {

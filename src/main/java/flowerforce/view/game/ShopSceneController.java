@@ -1,5 +1,6 @@
 package flowerforce.view.game;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import flowerforce.view.entities.CardView;
 import flowerforce.view.utilities.SoundManager;
 import javafx.fxml.FXML;
@@ -38,6 +39,10 @@ public final class ShopSceneController {
      * Creates a new controller for a Shop scene.
      * @param application the application to communicate scene changes
      */
+    @SuppressFBWarnings(
+            value = "EI_EXPOSE_REP2",
+            justification = "Cannot copy application because the instance must remain the same for future usages"
+    )
     public ShopSceneController(final FlowerForceApplication application) {
         this.application = application;
     }

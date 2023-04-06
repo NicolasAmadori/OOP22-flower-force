@@ -19,7 +19,6 @@ final class TestZombieGeneration {
             (STANDARD_SECS_SPAWN_ZOMBIE * RenderingInformation.getFramesPerSecond());
     private static final int FIRST_ZOMBIE_HORDE = 13;
     private static final int SECOND_ZOMBIE_HORDE = 18;
-
     /**
      * Sets up the testing.
      */
@@ -35,15 +34,21 @@ final class TestZombieGeneration {
      */
     @Test
     void testZombieGeneration() {
-        assertEquals(1, this.zombieGen.getSpawnedZombie());
+        //at the beginning there will be 0 zombie spawned
+        assertEquals(0, this.zombieGen.getSpawnedZombie() - 1);
+
+
         for (int i = 0; i < TIME_TO_SPAWN_ZOMBIE; i++) {
             zombieGen.zombieGeneration();
         }
-        assertEquals(2, this.zombieGen.getSpawnedZombie());
+        //after waiting this amount of time, total spawned zombies will be 2
+        assertEquals(1, this.zombieGen.getSpawnedZombie() - 1);
+
         for (int i = 0; i < TIME_TO_SPAWN_ZOMBIE; i++) {
             zombieGen.zombieGeneration();
         }
-        assertEquals(3, this.zombieGen.getSpawnedZombie());
+        //after waiting this amount of time, total spawned zombies will be 2
+        assertEquals(2, this.zombieGen.getSpawnedZombie() - 1);
     }
 
     /**
@@ -51,12 +56,15 @@ final class TestZombieGeneration {
      */
     @Test
     void testIncreaseHorde() {
+        //the first wave of zombies consists of 8 zombies + 5 horde zombies
         assertEquals(FIRST_ZOMBIE_HORDE, this.zombieGenInfinite.getNumberHordeZombie());
 
         while (this.zombieGenInfinite.getSpawnedZombie() != FIRST_ZOMBIE_HORDE) {
             zombieGenInfinite.zombieGeneration();
         }
 
+        //the second wave of zombies consists of 8 zombies + 10 horde zombies,
+        //because the horde increases by 5
         assertEquals(SECOND_ZOMBIE_HORDE, this.zombieGenInfinite.getNumberHordeZombie());
     }
 }
