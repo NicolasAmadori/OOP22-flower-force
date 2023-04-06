@@ -56,6 +56,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
         this.controller.save();
         final FlowerForceScene sceneClass = new MenuScene(this);
         this.setScene(sceneClass.getScene());
+        this.stage.setTitle("Flower Force");
     }
 
     @Override
