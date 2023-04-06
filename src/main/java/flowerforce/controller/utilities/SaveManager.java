@@ -39,7 +39,7 @@ public final class SaveManager<T> {
      * @return True if the save operation was successful, false otherwise.
      */
     public boolean save(final T p) {
-        try (Writer fw = new OutputStreamWriter(new FileOutputStream(savingFilePath),"UTF-8")) {
+        try (Writer fw = new OutputStreamWriter(new FileOutputStream(savingFilePath), "UTF-8")) {
             fw.write(GSON.toJson(p));
             return true;
 
