@@ -39,7 +39,7 @@ public class WorldImpl implements World {
      * {@inheritDoc}
      */
     @Override
-    public Game createLevelGame(final int levelId) {
+    public Game createAdventureModeGame(final int levelId) {
         return new LevelGame(levelId, this);
     }
 
@@ -47,7 +47,7 @@ public class WorldImpl implements World {
      * {@inheritDoc}
      */
     @Override
-    public Game createInfiniteGame() {
+    public Game createSurvivalModeGame() {
         return new InfiniteGame(this);
     }
 
@@ -64,7 +64,7 @@ public class WorldImpl implements World {
      */
     @Override
     public Dimension2D getYardDimension() {
-        return Yard.getYardDimension();
+        return YardInfo.getYardDimension();
     }
 
     /**
@@ -72,7 +72,7 @@ public class WorldImpl implements World {
      */
     @Override
     public int getRowsNum() {
-        return Yard.getRowsNum();
+        return YardInfo.getRowsNum();
     }
 
     /**
@@ -80,7 +80,7 @@ public class WorldImpl implements World {
      */
     @Override
     public int getColsNum() {
-        return Yard.getColsNum();
+        return YardInfo.getColsNum();
     }
 
     /**

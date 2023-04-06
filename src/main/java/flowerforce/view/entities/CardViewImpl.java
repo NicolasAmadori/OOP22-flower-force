@@ -2,10 +2,8 @@ package flowerforce.view.entities;
 
 import javafx.scene.image.Image;
 
-import java.util.Optional;
-
 /**
- * This is an implementation of {@link EntityView}.
+ * This is an implementation of {@link CardView}.
  */
 public class CardViewImpl implements CardView {
     private final int cost;

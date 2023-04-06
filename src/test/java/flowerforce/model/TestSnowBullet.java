@@ -14,7 +14,6 @@ import flowerforce.model.entities.ShootingPlant;
 import flowerforce.model.entities.ShootingPlantFactory;
 import flowerforce.model.entities.Zombie;
 import flowerforce.model.entities.ZombieFactory;
-import flowerforce.model.entities.ZombieFactory;
 import javafx.geometry.Point2D;
 
 

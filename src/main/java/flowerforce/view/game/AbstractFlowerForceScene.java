@@ -2,6 +2,8 @@ package flowerforce.view.game;
 
 import java.io.IOException;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -11,7 +13,7 @@ import javafx.scene.layout.AnchorPane;
  */
 public abstract class AbstractFlowerForceScene implements FlowerForceScene {
 
-    private final Scene scene;
+    private Scene scene;
 
     /**
      * 
@@ -20,17 +22,25 @@ public abstract class AbstractFlowerForceScene implements FlowerForceScene {
      * @param controller the scene's controller to pass to the FXML Loader
      * @throws IOException
      */
-    protected AbstractFlowerForceScene(final String fxmlPath, final String imgName, final Object controller) throws IOException {
-        final FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(ClassLoader.getSystemResource(fxmlPath));
-        loader.setController(controller);
-        final AnchorPane root = loader.load();
-        this.scene = FlowerForceApplication.getScaledScene(root, imgName);
+    protected AbstractFlowerForceScene(final String fxmlPath, final String imgName, final Object controller) {
+        try {
+            final FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(ClassLoader.getSystemResource(fxmlPath));
+            loader.setController(controller);
+            final AnchorPane root = loader.load();
+            this.scene = FlowerForceApplication.getScaledScene(root, imgName);
+        } catch (IOException e) {
+            Platform.exit();
+        } 
     }
 
     /**
      * {@inheritDoc}
      */
+    @SuppressFBWarnings(
+        value = "EI",
+        justification = "The scene returned was created to be requested by other classes"
+    )
     @Override
     public Scene getScene() {
         return this.scene;

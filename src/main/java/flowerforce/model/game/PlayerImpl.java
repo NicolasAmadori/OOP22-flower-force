@@ -134,6 +134,6 @@ public class PlayerImpl implements Player {
      */
     @Override
     public Set<Integer> getPlantsIds() {
-        return this.plantsIds;
+        return Set.copyOf(this.plantsIds);
     }
 }

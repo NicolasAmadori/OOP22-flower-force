@@ -2,8 +2,6 @@ package flowerforce.model.game;
 
 import flowerforce.model.entities.EntityInfo;
 import flowerforce.model.entities.PlantInfo;
-import javafx.geometry.Point2D;
-import javafx.util.Pair;
 
 import java.util.Set;
 

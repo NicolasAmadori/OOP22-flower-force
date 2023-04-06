@@ -1,6 +1,5 @@
 package flowerforce.view.entities;
 
-import flowerforce.view.game.GameEngine;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 
@@ -10,7 +9,7 @@ import javafx.scene.image.Image;
  */
 public interface EntityView {
     /**
-     * @return the position to correctly draw the entity on the {@link GameEngine}.
+     * @return the position to correctly draw the entity on the view.
      */
     Point2D getPlacingPosition();
 
@@ -21,6 +20,7 @@ public interface EntityView {
 
     /**
      * Set a new position for the entityView.
+     * @param position to set
      */
     void setPosition(Point2D position);
 }

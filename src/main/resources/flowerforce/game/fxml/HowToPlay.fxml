@@ -8,12 +8,12 @@
    <children>
       <ImageView fx:id="background" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
-            <Image url="@../images/howtoplay.png" />
+            <Image url="@../images/common/howtoplay.png" />
          </image>
       </ImageView>
       <ImageView fx:id="imgMenu" fitHeight="269.0" fitWidth="897.0" layoutX="68.0" layoutY="82.0" onMouseClicked="#returnToMenu" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../images/main_menu.png" />
+            <Image url="@../images/common/main_menu.png" />
          </image>
       </ImageView>
    </children>

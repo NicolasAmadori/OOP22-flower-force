@@ -1,6 +1,5 @@
 package flowerforce.controller;
 
-import flowerforce.model.game.Game;
 import flowerforce.view.entities.CardView;
 import flowerforce.view.entities.EntityView;
 import flowerforce.view.game.GameEngine;
@@ -31,35 +30,21 @@ public interface Controller {
     int getLastUnlockedLevelId();
 
     /**
-     * Get the number of frames per second the game must run.
-     * @return the integer representing the fps number
-     */
-    int getFramesPerSecond();
-
-    /**
      * Start a new game for a specified level.
      * @param levelId The id of the level to play
-     * @return the level game instance
      */
-    Game startNewLevelGame(int levelId);
+    void startNewAdventureModelGame(int levelId);
 
     /**
-     * Start a new game in infinite mode.
-     * @return the infinite game instance
+     * Start a new game in survival mode.
      */
-    Game startNewInfiniteGame();
+    void startNewSurvivalModeGame();
 
     /**
      * Set up the GameEngine that the controller will communicate with.
      * @param gameEngine The GameEngine of the GameScene
      */
     void setGameEngine(GameEngine gameEngine);
-
-    /**
-     * Get the game engine instance to call rendering methods.
-     * @return The gameEngine instance
-     */
-    GameEngine getGameEngine();
 
     /**
      * Get the number of currently present suns in the game.
@@ -155,4 +140,10 @@ public interface Controller {
      * Save the actual state of the game.
      */
     void save();
+
+    /**
+     * Get the Game Loop instance.
+     * @return the Game Loop already instantiated
+     */
+    GameLoop getGameLoop();
 }
