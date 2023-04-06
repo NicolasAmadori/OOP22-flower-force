@@ -40,7 +40,7 @@ public class PlayerImpl implements Player {
     }
 
     //Constructor that get all the private information to create a copy of an instance.
-    private PlayerImpl(final int nCoins, final int scoreRecord, final int lastUnlockedLevelId, Optional<Set<Integer>> plantsIds) {
+    private PlayerImpl(final int nCoins, final int scoreRecord, final int lastUnlockedLevelId, final Optional<Set<Integer>> plantsIds) {
         this.nCoins = nCoins;
         this.scoreRecord = scoreRecord;
         this.lastUnlockedLevelId = lastUnlockedLevelId;
