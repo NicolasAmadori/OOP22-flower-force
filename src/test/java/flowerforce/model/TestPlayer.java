@@ -21,8 +21,8 @@ final class TestPlayer {
      * Sets up the testing.
      */
     @BeforeEach
-    void setUp() {
-        player = new PlayerImpl(); //The default player has 0 coins
+    void setup() {
+        this.player = new PlayerImpl(); //The default player has 0 coins
     }
 
     /**

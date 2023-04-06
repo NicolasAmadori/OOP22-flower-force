@@ -28,7 +28,7 @@ final class TestShop {
      * Sets up the testing.
      */
     @BeforeEach
-    void setUp() {
+    void setup() {
         this.player = new PlayerImpl(); //The default player has 0 coins
         this.shop = new ShopImpl(this.player);
     }
