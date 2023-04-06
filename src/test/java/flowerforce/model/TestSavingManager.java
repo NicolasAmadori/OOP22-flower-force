@@ -32,7 +32,7 @@ final class TestSavingManager {
         //random operation to modify player values
         //CHECKSTYLE: MagicNumber OFF
         this.player.addCoins(160);
-        this.player.addNewScore(56560);
+        this.player.addNewScore(56_560);
         //CHECKSTYLE: MagicNumber ON
         this.player.unlockedNextLevel();
         this.player.unlockedNextLevel();
