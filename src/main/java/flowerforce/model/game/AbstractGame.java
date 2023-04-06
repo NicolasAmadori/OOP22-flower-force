@@ -1,6 +1,7 @@
 package flowerforce.model.game;
 
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import flowerforce.model.entities.Bullet;
 import flowerforce.model.entities.Plant;
 import flowerforce.model.entities.PlantInfo;
@@ -50,8 +51,13 @@ public abstract class AbstractGame implements Game {
     /**
      * Constructor to instantiate an infinite game.
      * @param id of the game started
-     * @param shop an instance of the shop that started the game
+     * @param shop an instance of the shop
+     * @param player an instance of the player
      */
+    @SuppressFBWarnings(
+            value = "EI_EXPOSE_REP2",
+            justification = "Cannot copy player because the instance must remain the same"
+    )
     public AbstractGame(final int id, final Shop shop, final Player player) {
         this.placeablePlant = new HashMap<>();
         LevelInfo.getPlantsInfo(id).forEach(p -> placeablePlant.put(

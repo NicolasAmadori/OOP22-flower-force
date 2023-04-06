@@ -7,6 +7,7 @@ public class InfiniteGame extends AbstractGame {
     private final ZombieGenerationInfiniteImpl generateZombie;
     /**
      * Constructor to instantiate an infinite game.
+     * @param shop an instance of the shop
      * @param player an instance of the player
      */
     public InfiniteGame(final Shop shop, final Player player) {
