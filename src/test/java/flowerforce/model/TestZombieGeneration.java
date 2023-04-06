@@ -12,8 +12,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 final class TestZombieGeneration {
-    private ZombieGenerationLevelImpl zombieGen;
-    private ZombieGenerationInfiniteImpl zombieGenInfinite;
+    private Player player = new PlayerImpl();
+    private ZombieGenerationLevelImpl zombieGen =
+            new ZombieGenerationLevelImpl(this.player.getLastUnlockedLevelId());
+    private ZombieGenerationInfiniteImpl zombieGenInfinite =
+            new ZombieGenerationInfiniteImpl(this.player.getLastUnlockedLevelId());
     private static final double STANDARD_SECS_SPAWN_ZOMBIE = 15.0;
     private static final int TIME_TO_SPAWN_ZOMBIE = (int)
             (STANDARD_SECS_SPAWN_ZOMBIE * RenderingInformation.getFramesPerSecond());
@@ -23,10 +26,10 @@ final class TestZombieGeneration {
      * Sets up the testing.
      */
     @BeforeEach
-    void setUp() {
-        final Player player = new PlayerImpl();
-        zombieGen = new ZombieGenerationLevelImpl(player.getLastUnlockedLevelId());
-        zombieGenInfinite = new ZombieGenerationInfiniteImpl(player.getLastUnlockedLevelId());
+    void setup() {
+        this.player = new PlayerImpl();
+        this.zombieGen = new ZombieGenerationLevelImpl(this.player.getLastUnlockedLevelId());
+        this.zombieGenInfinite = new ZombieGenerationInfiniteImpl(this.player.getLastUnlockedLevelId());
     }
 
     /**

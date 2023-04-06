@@ -23,16 +23,18 @@ final class TestGame {
             (STANDARD_SECS_SPAWN_SUN * RenderingInformation.getFramesPerSecond());
     private static final int START_SUN_GAME = 50;
     private static final int SUN_VALUE = 25;
-    private Game game;
+    private Player player = new PlayerImpl();
+    private World world = new WorldImpl(Optional.of(this.player));
+    private Game game = this.world.createAdventureModeGame(this.player.getLastUnlockedLevelId());
 
     /**
      * Sets up the testing.
      */
     @BeforeEach
-    void setUp() {
-        final Player player = new PlayerImpl();
-        final World world = new WorldImpl(Optional.of(player));
-        game = world.createAdventureModeGame(player.getLastUnlockedLevelId());
+    void setup() {
+        this.player = new PlayerImpl();
+        this.world = new WorldImpl(Optional.of(this.player));
+        this.game = this.world.createAdventureModeGame(this.player.getLastUnlockedLevelId());
     }
 
     /**
