@@ -54,14 +54,14 @@ public final class FlowerForceApplication extends Application implements FlowerF
     }
 
     @Override
-    public void levelGame(final int levelId) {
-        this.controller.startNewLevelGame(levelId);
+    public void adventureModeGame(final int levelId) {
+        this.controller.startNewAdventureModelGame(levelId);
         this.game("Level " + levelId);
     }
 
     @Override
-    public void adventureGame() {
-        this.controller.startNewInfiniteGame();
+    public void survivalModeGame() {
+        this.controller.startNewSurvivalModeGame();
         this.game("Adventure mode");
     }
 

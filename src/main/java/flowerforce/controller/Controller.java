@@ -33,12 +33,12 @@ public interface Controller {
      * Start a new game for a specified level.
      * @param levelId The id of the level to play
      */
-    void startNewLevelGame(int levelId);
+    void startNewAdventureModelGame(int levelId);
 
     /**
-     * Start a new game in infinite mode.
+     * Start a new game in survival mode.
      */
-    void startNewInfiniteGame();
+    void startNewSurvivalModeGame();
 
     /**
      * Set up the GameEngine that the controller will communicate with.
