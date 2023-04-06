@@ -4,7 +4,6 @@ import flowerforce.model.entities.Zombie;
 import flowerforce.model.entities.ZombieFactory;
 import javafx.geometry.Point2D;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -19,7 +18,7 @@ public class CreationZombieImpl implements CreationZombie {
     private final List<Function<Point2D, Zombie>> zombies;
     private int levelZombieToSpawn;
     private int prevRow = -1;
-    final Random rand = new Random();
+    private final Random rand = new Random();
 
     private static final Point2D TEMPORARY_POSITION = new Point2D(0, 0);
 

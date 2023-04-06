@@ -3,7 +3,7 @@ package flowerforce.model.game;
 /**
  * This game will spawn zombies until the player loses.
  */
-public class InfiniteGame extends AbstractGameImpl {
+public class InfiniteGame extends AbstractGame {
     private final ZombieGenerationInfiniteImpl generateZombie;
     /**
      * Constructor to instantiate an infinite game.

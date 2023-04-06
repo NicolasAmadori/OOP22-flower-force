@@ -4,7 +4,7 @@ package flowerforce.model.game;
  * This game will spawn a specific number of zombie.
  * If the player defeat all this zombie, he will pass the level.
  */
-public class LevelGame extends AbstractGameImpl {
+public class LevelGame extends AbstractGame {
     private int remainingZombie;
     private final int id;
     private final ZombieGenerationLevel generateZombie;
@@ -63,7 +63,7 @@ public class LevelGame extends AbstractGameImpl {
                 super.addZombie(zombie.get());
             }
             if (LevelInfo.getBossId(id).isPresent() && remainingZombie == 0) {
-                final var boss = this.generateZombie.bossGeneration();
+                final var boss = this.generateZombie.bossGeneration(LevelInfo.getBossId(id).get());
                 super.addZombie(boss);
             }
         }
