@@ -1,5 +1,6 @@
 package flowerforce.controller;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import flowerforce.model.game.Game;
 import flowerforce.view.game.GameEngine;
 import javafx.animation.AnimationTimer;
@@ -23,6 +24,12 @@ public final class GameLoop extends AnimationTimer {
      * @param model The GameModel to get the game information
      * @param framesPerSecond the frame rate the game must be run
      */
+    @SuppressFBWarnings(
+            value = {
+                    "EI_EXPOSE_REP2"
+            },
+            justification = "I need to access and modify the exact instance of the Game model to update it"
+    )
     public GameLoop(final GameEngine gameEngine, final Game model, final int framesPerSecond) {
         super();
         this.gameEngine = gameEngine;
