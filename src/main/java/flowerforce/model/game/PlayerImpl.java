@@ -1,6 +1,7 @@
 package flowerforce.model.game;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -21,15 +22,31 @@ public class PlayerImpl implements Player {
     }
 
     /**
-     * Constructor to instantiate an existing player, with give values.
+     * Constructor to instantiate an existing player (probably loaded from a saving file), with give values.
      * @param nCoins The integer representing the number of coins the player has
      * @param scoreRecord The integer representing the score record of the player
      * @param lastUnlockedLevelId The integer representing the id of the last level the player has unlocked
      */
     public PlayerImpl(final int nCoins, final int scoreRecord, final int lastUnlockedLevelId) {
+        this(nCoins, scoreRecord, lastUnlockedLevelId, Optional.empty());
+    }
+
+    /**
+     * Instantiate a copy of an existing Player instance.
+     * @param p The player instance to copy
+     */
+    public PlayerImpl(final Player p) {
+        this(p.getCoins(), p.getScoreRecord(), p.getLastUnlockedLevelId(), Optional.of(p.getPlantsIds()));
+    }
+
+    //Constructor that get all the private information to create a copy of an instance.
+    private PlayerImpl(final int nCoins, final int scoreRecord, final int lastUnlockedLevelId, Optional<Set<Integer>> plantsIds) {
         this.nCoins = nCoins;
         this.scoreRecord = scoreRecord;
         this.lastUnlockedLevelId = lastUnlockedLevelId;
+        if (plantsIds.isPresent()) {
+            this.plantsIds = plantsIds.get();
+        }
     }
 
     /**
