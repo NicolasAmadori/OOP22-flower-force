@@ -28,7 +28,7 @@ public class TestLevelGame {
     void setUp() {
         player = new PlayerImpl();
         world = new WorldImpl(Optional.of(this.player));
-        game = world.createLevelGame(this.player.getLastUnlockedLevelId());
+        game = world.createAdventureModeGame(this.player.getLastUnlockedLevelId());
     }
 
     /**

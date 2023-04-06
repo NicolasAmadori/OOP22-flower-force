@@ -23,10 +23,10 @@ public interface GameController {
      * Start a new level Game.
      * @param levelId The level id to start the new game
      */
-    void startLevelGame(int levelId);
+    void startAdventureModeGame(int levelId);
 
     /**
-     * Start a new game in infinite mode.
+     * Start a new game in survival mode.
      */
-    void startInfiniteGame();
+    void startSurvivalModeGame();
 }
