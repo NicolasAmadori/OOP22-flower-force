@@ -32,7 +32,7 @@ public class WorldImpl implements World {
      */
     @Override
     public Player getPlayer() {
-        return this.player;
+        return new PlayerImpl(this.player);
     }
 
     /**
@@ -40,7 +40,7 @@ public class WorldImpl implements World {
      */
     @Override
     public Game createAdventureModeGame(final int levelId) {
-        return new LevelGame(levelId, this);
+        return new LevelGame(levelId, this.shop, this.player);
     }
 
     /**
@@ -48,7 +48,7 @@ public class WorldImpl implements World {
      */
     @Override
     public Game createSurvivalModeGame() {
-        return new InfiniteGame(this);
+        return new InfiniteGame(this.shop, this.player);
     }
 
     /**
