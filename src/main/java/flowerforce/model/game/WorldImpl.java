@@ -32,7 +32,7 @@ public class WorldImpl implements World {
      */
     @Override
     public Player getPlayer() {
-        return this.player;
+        return new PlayerImpl(this.player);
     }
 
     /**
