@@ -27,12 +27,10 @@ final class TestSavingManager {
      */
     @Test
     void testSaving() {
-        final SaveManager<Player> playerSaveManager = new SaveManager(
-                PlayerImpl.class,
-                FILE_NAME);
-        playerSaveManager.save(this.player);
+        final SaveManager<PlayerImpl> playerSaveManager = new SaveManager<>(PlayerImpl.class, FILE_NAME);
+        playerSaveManager.save((PlayerImpl) this.player); //cast to save the player
 
-        final Optional<Player> newPlayer = playerSaveManager.load();
+        final Optional<PlayerImpl> newPlayer = playerSaveManager.load();
         assertTrue(newPlayer.isPresent());
 
 
