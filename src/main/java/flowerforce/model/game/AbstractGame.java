@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 /**
  * This is an implementation of {@link Game}.
  */
-public abstract class AbstractGameImpl implements Game {
+public abstract class AbstractGame implements Game {
     private final Map<PlantInfo, Function<Point2D, Plant>> placeablePlant;
     private static final double STANDARD_SECS_SPAWN_SUN = 5.0;
     private static final int TIME_TO_SPAWN_SUN = (int)
@@ -52,7 +52,7 @@ public abstract class AbstractGameImpl implements Game {
      * @param id of the game started
      * @param world an instance of the world that started the game
      */
-    public AbstractGameImpl(final int id, final World world) {
+    public AbstractGame(final int id, final World world) {
         this.placeablePlant = new HashMap<>();
         LevelInfo.getPlantsInfo(id).forEach(p -> placeablePlant.put(
                 new PlantInfoImpl(p.apply(TEMPORARY_POSITION).getName(),
