@@ -67,7 +67,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
     @Override
     public void survivalModeGame() {
         this.controller.startNewSurvivalModeGame();
-        this.game("Adventure mode");
+        this.game("Survival Mode");
     }
 
     @Override
@@ -85,6 +85,10 @@ public final class FlowerForceApplication extends Application implements FlowerF
         SoundManager.openShop();
     }
 
+    @SuppressFBWarnings(
+            value = "EI_EXPOSE_REP",
+            justification = "we need to interact with always the same controller instance"
+    )
     @Override
     public Controller getController() {
         return this.controller;
