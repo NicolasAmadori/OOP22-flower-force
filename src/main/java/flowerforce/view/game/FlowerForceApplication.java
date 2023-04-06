@@ -85,6 +85,10 @@ public final class FlowerForceApplication extends Application implements FlowerF
         SoundManager.openShop();
     }
 
+    @SuppressFBWarnings(
+            value = "EI_EXPOSE_REP",
+            justification = "we need to interact with always the same controller instance"
+    )
     @Override
     public Controller getController() {
         return this.controller;
