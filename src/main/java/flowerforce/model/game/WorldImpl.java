@@ -39,7 +39,7 @@ public class WorldImpl implements World {
      * {@inheritDoc}
      */
     @Override
-    public Game createLevelGame(final int levelId) {
+    public Game createAdventureModeGame(final int levelId) {
         return new LevelGame(levelId, this);
     }
 
@@ -47,7 +47,7 @@ public class WorldImpl implements World {
      * {@inheritDoc}
      */
     @Override
-    public Game createInfiniteGame() {
+    public Game createSurvivalModeGame() {
         return new InfiniteGame(this);
     }
 

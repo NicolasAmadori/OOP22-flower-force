@@ -32,7 +32,7 @@ final class TestGame {
     void setUp() {
         final Player player = new PlayerImpl();
         final World world = new WorldImpl(Optional.of(player));
-        game = world.createLevelGame(player.getLastUnlockedLevelId());
+        game = world.createAdventureModeGame(player.getLastUnlockedLevelId());
     }
 
     /**

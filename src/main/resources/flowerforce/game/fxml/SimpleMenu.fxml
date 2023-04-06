@@ -47,9 +47,9 @@
                   <Image url="@../images/common/L6.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="adventureMode" fitHeight="500.0" fitWidth="500.0" onMouseClicked="#startAdventureGame" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="survivalMode" fitHeight="500.0" fitWidth="500.0" onMouseClicked="#startSurvivalMode" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/common/Ladventure.png" />
+                  <Image url="@../images/common/survivalmode.png" />
                </image>
             </ImageView>
          </children>

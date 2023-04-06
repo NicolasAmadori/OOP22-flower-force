@@ -1,5 +1,6 @@
 package flowerforce.view.game;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import flowerforce.common.ResourceFinder;
 import flowerforce.controller.Controller;
 import flowerforce.controller.ControllerImpl;
@@ -30,6 +31,10 @@ public final class FlowerForceApplication extends Application implements FlowerF
 
     private AnimationTimer gameLoop;
 
+    @SuppressFBWarnings(
+        value = "EI2",
+        justification = "the showed stage is saved as a field to change its scene"
+    )
     @Override
     public void start(final Stage primaryStage) throws Exception {
         this.stage = primaryStage;
@@ -54,15 +59,15 @@ public final class FlowerForceApplication extends Application implements FlowerF
     }
 
     @Override
-    public void levelGame(final int levelId) {
-        this.controller.startNewLevelGame(levelId);
+    public void adventureModeGame(final int levelId) {
+        this.controller.startNewAdventureModelGame(levelId);
         this.game("Level " + levelId);
     }
 
     @Override
-    public void adventureGame() {
-        this.controller.startNewInfiniteGame();
-        this.game("Adventure mode");
+    public void survivalModeGame() {
+        this.controller.startNewSurvivalModeGame();
+        this.game("Survival Mode");
     }
 
     @Override
@@ -80,6 +85,10 @@ public final class FlowerForceApplication extends Application implements FlowerF
         SoundManager.openShop();
     }
 
+    @SuppressFBWarnings(
+            value = "EI_EXPOSE_REP",
+            justification = "we need to interact with always the same controller instance"
+    )
     @Override
     public Controller getController() {
         return this.controller;
