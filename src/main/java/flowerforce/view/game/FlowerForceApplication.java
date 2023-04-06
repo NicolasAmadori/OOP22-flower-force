@@ -67,7 +67,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
     @Override
     public void survivalModeGame() {
         this.controller.startNewSurvivalModeGame();
-        this.game("Adventure mode");
+        this.game("Survival Mode");
     }
 
     @Override
