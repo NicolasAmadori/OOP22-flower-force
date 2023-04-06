@@ -30,8 +30,10 @@ final class TestSavingManager {
         final SaveManager<PlayerImpl> playerSaveManager = new SaveManager<>(PlayerImpl.class, FILE_NAME);
 
         //random operation to modify player values
+        //CHECKSTYLE: MagicNumber OFF
         this.player.addCoins(160);
         this.player.addNewScore(56560);
+        //CHECKSTYLE: MagicNumber ON
         this.player.unlockedNextLevel();
         this.player.unlockedNextLevel();
         playerSaveManager.save((PlayerImpl) this.player); //cast to save the player
