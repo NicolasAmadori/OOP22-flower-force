@@ -21,8 +21,8 @@ final class TestShop {
     private static final int COINS2 = 400;
     private static final int COINS3 = 200;
     private static final int COINS4 = 1_000;
-    private Player player;
-    private Shop shop;
+    private Player player = new PlayerImpl();
+    private Shop shop = new ShopImpl(this.player);
 
     /**
      * Sets up the testing.

@@ -15,7 +15,7 @@ final class TestPlayer {
     private static final int SECOND_SCORE_TO_ADD = 1_500;
     private static final int THIRD_SCORE_TO_ADD = 10_000;
 
-    private Player player;
+    private Player player = new PlayerImpl();
 
     /**
      * Sets up the testing.
