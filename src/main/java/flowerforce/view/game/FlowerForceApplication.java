@@ -1,5 +1,6 @@
 package flowerforce.view.game;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import flowerforce.common.ResourceFinder;
 import flowerforce.controller.Controller;
 import flowerforce.controller.ControllerImpl;
@@ -30,6 +31,10 @@ public final class FlowerForceApplication extends Application implements FlowerF
 
     private AnimationTimer gameLoop;
 
+    @SuppressFBWarnings(
+        value = "EI2",
+        justification = "the showed stage is saved as a field to change its scene"
+    )
     @Override
     public void start(final Stage primaryStage) throws Exception {
         this.stage = primaryStage;

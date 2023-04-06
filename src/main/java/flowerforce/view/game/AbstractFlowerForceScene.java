@@ -3,6 +3,7 @@ package flowerforce.view.game;
 import java.io.IOException;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -29,7 +30,7 @@ public abstract class AbstractFlowerForceScene implements FlowerForceScene {
             final AnchorPane root = loader.load();
             this.scene = FlowerForceApplication.getScaledScene(root, imgName);
         } catch (IOException e) {
-            throw new IllegalStateException("All fxmls loaded in the program must be present!");
+            Platform.exit();
         } 
     }
 
