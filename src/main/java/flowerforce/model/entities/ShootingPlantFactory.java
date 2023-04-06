@@ -18,9 +18,9 @@ public final class ShootingPlantFactory {
 
     private static final int COMMON_SHOOTER_COST = 100;
     private static final int SNOW_SHOOTER_COST = 175;
-    private static final int FIRE_SHOOTER_COST = 175;
-    private static final int FAST_SHOOTER_COST = 225;
-    private static final int STRONG_SHOOTER_COST = 300;
+    private static final int FIRE_SHOOTER_COST = 225;
+    private static final int FAST_SHOOTER_COST = 200;
+    private static final int STRONG_SHOOTER_COST = 250;
 
     private ShootingPlantFactory() {
     }
