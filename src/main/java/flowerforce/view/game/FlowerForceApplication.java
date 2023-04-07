@@ -56,6 +56,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
         this.controller.save();
         final FlowerForceScene sceneClass = new MenuScene(this);
         this.setScene(sceneClass.getScene());
+        this.stage.setTitle("Flower Force");
     }
 
     @Override
@@ -131,7 +132,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
      * @param imgDimensions image's dimensions in pixel
      * @return a Dimension2D representing app's dimensions
      */
-    public static Dimension2D getAppDimensionFromImage(final Dimension2D imgDimensions) {
+    private static Dimension2D getAppDimensionFromImage(final Dimension2D imgDimensions) {
         //screen's dimensions
         final Rectangle2D screenBounds = Screen.getPrimary().getBounds();
         //calculation of app's width
@@ -151,7 +152,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
      * @param imgName the image name (located in the standard image folder)
      * @return a Dimension2D contaning image's dimensions
      */
-    public static Dimension2D getImgDimensions(final String imgName) {
+    private static Dimension2D getImgDimensions(final String imgName) {
         final Image image = new Image(ResourceFinder.getCommonImagePath(imgName));
         //image's dimensions
         return new Dimension2D(image.getWidth(), image.getHeight());
