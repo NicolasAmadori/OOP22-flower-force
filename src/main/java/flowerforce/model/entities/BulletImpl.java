@@ -19,7 +19,7 @@ public class BulletImpl extends AbstractEntity implements Bullet {
     private final Optional<Consumer<Zombie>> actionOverZombie;
 
     /**
-     * 
+     * Creates a bullet that doesn't do additional actions on a zombie when hit.
      * @param pos the initial position to place the bullet in
      * @param damage the damage that the bullet does to zombies
      * @param bulletName the bullet's name
@@ -29,7 +29,7 @@ public class BulletImpl extends AbstractEntity implements Bullet {
     }
 
     /**
-     * 
+     * Creates a bullet that does additional actions on a zombie when hit.
      * @param pos the initial position to place the bullet in
      * @param damage the damage that the bullet does to zombies
      * @param bulletName the bullet's name
