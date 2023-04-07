@@ -118,8 +118,7 @@ public final class ResourceFinder {
      * @return A string representing the absolute path of the saving file
      */
     public static String getSavingFilePath(final String filename) {
-        final String completePath = getSavingFolderPath() + File.separator + filename;
-        return completePath; //do NOT check for file existence, because the saving file could be created in the moment
+        return getSavingFolderPath() + File.separator + filename; //do NOT check for file existence, because the saving file could be created in the moment
     }
 
     private static String getImagesFolderPath() {
