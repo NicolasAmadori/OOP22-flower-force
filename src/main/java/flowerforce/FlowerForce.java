@@ -14,7 +14,7 @@ public final class FlowerForce {
 
     /**
      * Program's entry point.
-     * @param args
+     * @param args arguments
      */
     public static void main(final String[] args) {
         launch(FlowerForceApplication.class, args);
