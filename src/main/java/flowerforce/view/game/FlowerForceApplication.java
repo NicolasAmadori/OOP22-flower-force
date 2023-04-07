@@ -18,7 +18,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 /**
- * This class is the effective entry point of the view, indeed it implements {@link FlowerForceView}.
+ * This is the central class of the view, indeed it implements {@link FlowerForceView}.
  */
 public final class FlowerForceApplication extends Application implements FlowerForceView {
 
