@@ -42,7 +42,9 @@ public class ShootingPlantImpl extends AbstractPlant implements ShootingPlant {
      */
     @Override
     public Optional<Bullet> nextBullet() {
-        final Optional<Bullet> optBullet = Optional.of(this.bulletProducer.get()).filter(e -> this.canShoot);
+        final Optional<Bullet> optBullet = Optional.of(this.canShoot)
+                                    .filter(p -> p)
+                                    .map(x -> this.bulletProducer.get());
         if (this.canShoot) {
             this.canShoot = false;
             this.getTimer().reset();

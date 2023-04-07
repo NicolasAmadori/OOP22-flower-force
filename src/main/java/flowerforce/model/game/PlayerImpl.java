@@ -22,7 +22,7 @@ public class PlayerImpl implements Player {
     }
 
     /**
-     * Constructor to instantiate an existing player (probably loaded from a saving file), with give values.
+     * Constructor to instantiate an existing player (probably loaded from a saving file), with given values.
      * @param nCoins The integer representing the number of coins the player has
      * @param scoreRecord The integer representing the score record of the player
      * @param lastUnlockedLevelId The integer representing the id of the last level the player has unlocked

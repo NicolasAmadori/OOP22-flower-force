@@ -1,7 +1,6 @@
 package flowerforce.view.utilities;
 
 import flowerforce.common.ResourceFinder;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
@@ -122,17 +121,15 @@ public final class SoundManager {
 
     private static void playLoopSound(final String path) {
         final Optional<Clip> clip = createClip(path, MAIN_THEME_VOLUME);
-        if (clip.isPresent()) {
-            clip.get().start();
+        clip.ifPresent(c -> {
+            c.start();
             clip.get().loop(Clip.LOOP_CONTINUOUSLY);
-        }
+        });
     }
 
     private static void playSoundEffect(final String path) {
         final Optional<Clip> clip = createClip(path, SOUND_EFFECT_VOLUME);
-        if (clip.isPresent()) {
-            clip.get().start();
-        }
+        clip.ifPresent(Clip::start);
     }
 
     private static Optional<Clip> createClip(final String path, final float volume) {
@@ -143,6 +140,7 @@ public final class SoundManager {
             clip.open(ais);
             final FloatControl fc = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
             fc.setValue(volume);
+
             return Optional.of(clip);
         } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
             return Optional.empty();

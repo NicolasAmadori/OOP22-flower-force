@@ -20,7 +20,6 @@ public abstract class AbstractFlowerForceScene implements FlowerForceScene {
      * @param fxmlName the path of the FXML file to load
      * @param imgName the image name to pass to getScaledScene method
      * @param controller the scene's controller to pass to the FXML Loader
-     * @throws IOException
      */
     protected AbstractFlowerForceScene(final String fxmlName, final String imgName, final Object controller) {
         try {
