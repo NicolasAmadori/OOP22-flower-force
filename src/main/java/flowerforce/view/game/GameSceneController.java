@@ -30,7 +30,7 @@ import javafx.scene.shape.Rectangle;
 
 /**
  * This class is the JavaFx controller of the {@link GameScene}.
- * It also implements {@link GameEngine} interface through which is linked with the main controller.
+ * It also implements {@link GameEngine} interface methods, needed by the main controller.
  */
 public final class GameSceneController implements GameEngine {
 
