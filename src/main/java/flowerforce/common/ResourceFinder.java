@@ -8,7 +8,9 @@ import java.util.NoSuchElementException;
  */
 public final class ResourceFinder {
 
-    private static final String PROJECT_FOLDER_ABSOLUTE_PATH = System.getProperty("user.dir");
+    private static final String PROJECT_NAME = "OOP22-flower-force";
+
+    private static final String PROJECT_FOLDER_ABSOLUTE_PATH = System.getProperty("user.dir").split(PROJECT_NAME)[0] + PROJECT_NAME;
 
     private static final String RESOURCES_FOLDER_PATH = "src" + File.separator + "main" + File.separator
             + "resources" + File.separator + "flowerforce" + File.separator + "game";
