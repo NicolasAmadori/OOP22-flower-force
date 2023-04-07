@@ -8,7 +8,7 @@ import javafx.geometry.Point2D;
 public final class BulletFactory {
 
     private static final int STANDARD_DAMAGE = 20;
-    private static final int FIRE_DAMAGE = STANDARD_DAMAGE * 2;
+    private static final int FIRE_DAMAGE = STANDARD_DAMAGE * 3;
     private static final int STRONG_DAMAGE = STANDARD_DAMAGE * 25;
 
     private BulletFactory() {

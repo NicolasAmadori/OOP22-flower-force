@@ -61,22 +61,22 @@ public final class YardInfo {
 
     /**
      * 
-     * @param center point, that is the bottom right corner of the central cell of the square
+     * @param centre point, that is the bottom right corner of the central cell of the square
      * @param radius of the square, in number of cells 
      * @return the top left corner of this square
      */
-    public static Point2D toTopLeftCorner(final Point2D center, final int radius) {
-        return new Point2D(center.getX() - (radius + 1) * CELL.getWidth(), center.getY() - (radius + 1) * CELL.getHeight());
+    public static Point2D toTopLeftCorner(final Point2D centre, final int radius) {
+        return new Point2D(centre.getX() - (radius + 1) * CELL.getWidth(), centre.getY() - (radius + 1) * CELL.getHeight());
     }
 
     /**
      * 
-     * @param center point, that is the bottom right corner of the central cell of the square
+     * @param centre point, that is the bottom right corner of the central cell of the square
      * @param radius of the square, in number of cells 
      * @return the bottom right corner of this square
      */
-    public static Point2D toBottomRightCorner(final Point2D center, final int radius) {
-        return new Point2D(center.getX() + radius * CELL.getWidth(), center.getY() + radius * CELL.getHeight());
+    public static Point2D toBottomRightCorner(final Point2D centre, final int radius) {
+        return new Point2D(centre.getX() + radius * CELL.getWidth(), centre.getY() + radius * CELL.getHeight());
     }
 
 }
