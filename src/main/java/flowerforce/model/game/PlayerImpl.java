@@ -1,6 +1,7 @@
 package flowerforce.model.game;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -11,7 +12,7 @@ public class PlayerImpl implements Player {
     private int nCoins;
     private int scoreRecord;
     private int lastUnlockedLevelId;
-    private final Set<Integer> plantsIds = new HashSet<>();
+    private final Set<Integer> plantsIds;
 
     /**
      * Constructor to instantiate a totally new player.
@@ -21,15 +22,30 @@ public class PlayerImpl implements Player {
     }
 
     /**
-     * Constructor to instantiate an existing player, with give values.
+     * Constructor to instantiate an existing player (probably loaded from a saving file), with given values.
      * @param nCoins The integer representing the number of coins the player has
      * @param scoreRecord The integer representing the score record of the player
      * @param lastUnlockedLevelId The integer representing the id of the last level the player has unlocked
      */
     public PlayerImpl(final int nCoins, final int scoreRecord, final int lastUnlockedLevelId) {
+        this(nCoins, scoreRecord, lastUnlockedLevelId, Optional.empty());
+    }
+
+    /**
+     * Instantiate a copy of an existing Player instance.
+     * @param p The player instance to copy
+     */
+    public PlayerImpl(final Player p) {
+        this(p.getCoins(), p.getScoreRecord(), p.getLastUnlockedLevelId(), Optional.of(p.getPlantsIds()));
+    }
+
+    //Constructor that get all the private information to create a copy of an instance.
+    private PlayerImpl(final int nCoins, final int scoreRecord,
+                       final int lastUnlockedLevelId, final Optional<Set<Integer>> plantsIds) {
         this.nCoins = nCoins;
         this.scoreRecord = scoreRecord;
         this.lastUnlockedLevelId = lastUnlockedLevelId;
+        this.plantsIds = plantsIds.isPresent() ? plantsIds.get() : new HashSet<>();
     }
 
     /**
@@ -45,6 +61,9 @@ public class PlayerImpl implements Player {
      */
     @Override
     public void addCoins(final int nCoins) {
+        if (nCoins < 0) {
+            throw new IllegalArgumentException("nCoins must be a positive number.");
+        }
         this.nCoins += nCoins;
     }
 
@@ -53,6 +72,9 @@ public class PlayerImpl implements Player {
      */
     @Override
     public boolean subtractCoins(final int nCoins) {
+        if (nCoins < 0) {
+            throw new IllegalArgumentException("nCoins must be a positive number.");
+        }
         if (nCoins > this.nCoins) {
             return false;
         }
@@ -73,6 +95,9 @@ public class PlayerImpl implements Player {
      */
     @Override
     public void addNewScore(final int score) {
+        if (score < 0) {
+            throw new IllegalArgumentException("score must be a positive number.");
+        }
         this.scoreRecord = Math.max(this.scoreRecord, score);
     }
 
@@ -97,6 +122,9 @@ public class PlayerImpl implements Player {
      */
     @Override
     public void addPlant(final int plantIndex) {
+        if (plantIndex < 0) {
+            throw new IllegalArgumentException("plantIndex must be a positive number.");
+        }
         this.plantsIds.add(plantIndex);
     }
 
@@ -105,6 +133,6 @@ public class PlayerImpl implements Player {
      */
     @Override
     public Set<Integer> getPlantsIds() {
-        return this.plantsIds;
+        return Set.copyOf(this.plantsIds);
     }
 }

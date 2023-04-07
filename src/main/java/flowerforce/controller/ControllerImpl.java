@@ -39,7 +39,7 @@ public final class ControllerImpl implements Controller {
     /**
      * Create a new instance of Controller.
      */
-    public ControllerImpl() throws InstantiationException {
+    public ControllerImpl() {
         this.world = WorldSavingManager.load();
     }
 
@@ -136,18 +136,18 @@ public final class ControllerImpl implements Controller {
      * {@inheritDoc}
      */
     @Override
-    public void startNewLevelGame(final int levelId) {
+    public void startNewAdventureModelGame(final int levelId) {
         this.resetGame();
-        this.game = Optional.of(this.world.createLevelGame(levelId));
+        this.game = Optional.of(this.world.createAdventureModeGame(levelId));
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void startNewInfiniteGame() {
+    public void startNewSurvivalModeGame() {
         this.resetGame();
-        this.game = Optional.of(this.world.createInfiniteGame());
+        this.game = Optional.of(this.world.createSurvivalModeGame());
     }
 
     /**
@@ -269,7 +269,7 @@ public final class ControllerImpl implements Controller {
      */
     @Override
     public Map<CardView, Boolean> getPurchasablePlants() {
-        final Map<PlantInfo, Boolean> shopPlants = this.world.getShop().getPurchasablePlants();
+        final Map<PlantInfo, Boolean> shopPlants = this.world.getShop().getPlants();
         final Map<CardView, Boolean> toReturn = new HashMap<>();
         this.purchasablePlants.clear();
         shopPlants.keySet().stream()

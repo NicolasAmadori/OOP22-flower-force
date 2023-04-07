@@ -14,17 +14,17 @@ public interface World {
     Player getPlayer();
 
     /**
-     * Creates a level game.
+     * Creates an Adventure Mode game.
      * @param levelId the level to create
      * @return the game to be played
      */
-    Game createLevelGame(int levelId);
+    Game createAdventureModeGame(int levelId);
 
     /**
-     * Creates an infinite game.
+     * Creates a Survival Mode game.
      * @return the game to be played
      */
-    Game createInfiniteGame();
+    Game createSurvivalModeGame();
 
     /**
      * 

@@ -1,5 +1,6 @@
 package flowerforce.view.game;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import flowerforce.common.ResourceFinder;
 import flowerforce.controller.Controller;
 import flowerforce.controller.ControllerImpl;
@@ -17,7 +18,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 /**
- * This is an implementation of {@link GameEngine}.
+ * This class is the effective entry point of the view, indeed it implements {@link FlowerForceView}.
  */
 public final class FlowerForceApplication extends Application implements FlowerForceView {
 
@@ -30,6 +31,10 @@ public final class FlowerForceApplication extends Application implements FlowerF
 
     private AnimationTimer gameLoop;
 
+    @SuppressFBWarnings(
+        value = "EI2",
+        justification = "the showed stage is saved as a field to change its scene"
+    )
     @Override
     public void start(final Stage primaryStage) throws Exception {
         this.stage = primaryStage;
@@ -38,7 +43,6 @@ public final class FlowerForceApplication extends Application implements FlowerF
         this.stage.getIcons().add(new Image(ResourceFinder.getCommonImagePath(GAMEICON_NAME)));
         this.stage.setOnCloseRequest(e -> {
             Platform.exit();
-            System.exit(0);
         });
         this.menu();
         SoundManager.startMainTheme();
@@ -52,18 +56,19 @@ public final class FlowerForceApplication extends Application implements FlowerF
         this.controller.save();
         final FlowerForceScene sceneClass = new MenuScene(this);
         this.setScene(sceneClass.getScene());
+        this.stage.setTitle("Flower Force");
     }
 
     @Override
-    public void levelGame(final int levelId) {
-        this.controller.startNewLevelGame(levelId);
+    public void adventureModeGame(final int levelId) {
+        this.controller.startNewAdventureModelGame(levelId);
         this.game("Level " + levelId);
     }
 
     @Override
-    public void adventureGame() {
-        this.controller.startNewInfiniteGame();
-        this.game("Adventure mode");
+    public void survivalModeGame() {
+        this.controller.startNewSurvivalModeGame();
+        this.game("Survival Mode");
     }
 
     @Override
@@ -78,9 +83,13 @@ public final class FlowerForceApplication extends Application implements FlowerF
         final FlowerForceScene sceneClass = new ShopScene(this);
         this.setScene(sceneClass.getScene());
         this.stage.setTitle("Shop");
-        SoundManager.openShop();
+        SoundManager.shopEffect();
     }
 
+    @SuppressFBWarnings(
+            value = "EI_EXPOSE_REP",
+            justification = "we need to interact with always the same controller instance"
+    )
     @Override
     public Controller getController() {
         return this.controller;
@@ -123,7 +132,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
      * @param imgDimensions image's dimensions in pixel
      * @return a Dimension2D representing app's dimensions
      */
-    public static Dimension2D getAppDimensionFromImage(final Dimension2D imgDimensions) {
+    private static Dimension2D getAppDimensionFromImage(final Dimension2D imgDimensions) {
         //screen's dimensions
         final Rectangle2D screenBounds = Screen.getPrimary().getBounds();
         //calculation of app's width
@@ -143,7 +152,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
      * @param imgName the image name (located in the standard image folder)
      * @return a Dimension2D contaning image's dimensions
      */
-    public static Dimension2D getImgDimensions(final String imgName) {
+    private static Dimension2D getImgDimensions(final String imgName) {
         final Image image = new Image(ResourceFinder.getCommonImagePath(imgName));
         //image's dimensions
         return new Dimension2D(image.getWidth(), image.getHeight());

@@ -8,7 +8,10 @@ import java.util.NoSuchElementException;
  */
 public final class ResourceFinder {
 
-    private static final String PROJECT_FOLDER_ABSOLUTE_PATH = System.getProperty("user.dir");
+    private static final String PROJECT_NAME = "OOP22-flower-force";
+
+    private static final String PROJECT_FOLDER_ABSOLUTE_PATH =
+            System.getProperty("user.dir").split(PROJECT_NAME)[0] + PROJECT_NAME;
 
     private static final String RESOURCES_FOLDER_PATH = "src" + File.separator + "main" + File.separator
             + "resources" + File.separator + "flowerforce" + File.separator + "game";
@@ -89,8 +92,14 @@ public final class ResourceFinder {
      * @return A string representing the absolute path of the fxml file
      */
     public static String getFXMLPath(final String filename) {
-        final String completePath = getFXMLFolderPath() + File.separator + filename;
-        return checkPath(completePath);
+        String completePath = getFXMLFolderPath() + File.separator + filename;
+        checkPath(completePath); //Check if the file exist
+
+        //Adapt the path to use with ClassLoader
+        completePath = completePath
+                .substring(getFXMLFolderPath().indexOf("flowerforce")) //get only the packet path
+                .replace("\\", "/"); //replace window separator with linux separator
+        return completePath;
     }
 
     /**
@@ -109,8 +118,8 @@ public final class ResourceFinder {
      * @return A string representing the absolute path of the saving file
      */
     public static String getSavingFilePath(final String filename) {
-        final String completePath = getSavingFolderPath() + File.separator + filename;
-        return checkPath(completePath);
+        //do NOT check for file existence, because the saving file could be created in the moment
+        return getSavingFolderPath() + File.separator + filename;
     }
 
     private static String getImagesFolderPath() {

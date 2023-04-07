@@ -4,7 +4,7 @@ package flowerforce.model.game;
  * This game will spawn a specific number of zombie.
  * If the player defeat all this zombie, he will pass the level.
  */
-public class LevelGame extends AbstractGameImpl {
+public class LevelGame extends AbstractGame {
     private int remainingZombie;
     private final int id;
     private final ZombieGenerationLevel generateZombie;
@@ -12,10 +12,11 @@ public class LevelGame extends AbstractGameImpl {
     /**
      * Constructor to instantiate a level game.
      * @param levelId of the game started
-     * @param world an instance of the world that started the game
+     * @param shop an instance of the shop of the game
+     * @param player an instance of the player
      */
-    public LevelGame(final int levelId, final World world) {
-        super(levelId, world);
+    public LevelGame(final int levelId, final Shop shop, final Player player) {
+        super(levelId, shop, player);
         this.id = levelId;
         this.remainingZombie = LevelInfo.getTotalZombies(levelId);
         generateZombie = new ZombieGenerationLevelImpl(levelId);
@@ -41,12 +42,20 @@ public class LevelGame extends AbstractGameImpl {
      * {@inheritDoc}
      */
     @Override
+    public int getScore() {
+        return 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public boolean isOver() {
         final var end = super.isOver();
         if (end && this.result()
-                && super.getWorld().getPlayer().getLastUnlockedLevelId() == this.id) {
-            super.getWorld().getPlayer().unlockedNextLevel();
-            super.getWorld().getPlayer().addCoins(LevelInfo.getLevelCoins(id));
+                && super.getPlayer().getLastUnlockedLevelId() == this.id) {
+            super.getPlayer().unlockedNextLevel();
+            super.getPlayer().addCoins(LevelInfo.getLevelCoins(id));
         }
         return end || result();
     }
@@ -63,7 +72,7 @@ public class LevelGame extends AbstractGameImpl {
                 super.addZombie(zombie.get());
             }
             if (LevelInfo.getBossId(id).isPresent() && remainingZombie == 0) {
-                final var boss = this.generateZombie.bossGeneration();
+                final var boss = this.generateZombie.bossGeneration(LevelInfo.getBossId(id).get());
                 super.addZombie(boss);
             }
         }

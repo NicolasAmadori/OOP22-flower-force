@@ -1,6 +1,12 @@
 package flowerforce.model.game;
 
-import flowerforce.model.entities.*;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import flowerforce.model.entities.Plant;
+import flowerforce.model.entities.PlantInfo;
+import flowerforce.model.entities.PlantInfoImpl;
+import flowerforce.model.entities.ShootingPlantFactory;
+import flowerforce.model.entities.SunflowerFactory;
+import flowerforce.model.entities.CherryBomb;
 import javafx.util.Pair;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,6 +34,12 @@ public class ShopImpl implements Shop {
      * This is a constructor for a new shop instance.
      * @param player The player to add bought plants to
      */
+    @SuppressFBWarnings (
+            value = {
+                "EI_EXPOSE_REP2"
+            },
+            justification = "I need to access and modify the exact instance of the Player that the world has"
+    )
     public ShopImpl(final Player player) {
         this.player = player;
 
@@ -43,7 +55,7 @@ public class ShopImpl implements Shop {
      * {@inheritDoc}
      */
     @Override
-    public Map<PlantInfo, Boolean> getPurchasablePlants() {
+    public Map<PlantInfo, Boolean> getPlants() {
         final Map<PlantInfo, Boolean> outputMap = new HashMap<>();
         final var playerPlants = this.getPlayerBoughtPlants();
         this.plants.forEach(p -> outputMap.put(p, !playerPlants.contains(p) && this.player.getCoins() >= p.getCost()));

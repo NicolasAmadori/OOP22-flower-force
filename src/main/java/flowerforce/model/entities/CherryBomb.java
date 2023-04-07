@@ -1,7 +1,5 @@
 package flowerforce.model.entities;
 
-import java.util.Set;
-
 import flowerforce.model.utilities.RenderingInformation;
 import flowerforce.model.utilities.TimerImpl;
 import javafx.geometry.Point2D;
@@ -10,12 +8,12 @@ import javafx.geometry.Point2D;
  * Models a CherryBomb, an exploding plant that explodes after a certain time
  * and damages enemies in its and adjacent cells.
  */
-public class CherryBomb extends AbstractPlant implements ExplodingPlant {
+public class CherryBomb extends AbstractExplodingPlant {
 
-    private static final int CHERRY_HEALTH = 1;
+    private static final int CHERRY_HEALTH = 3000;
     private static final int CHERRY_COST = 150;
     private static final int DAMAGE = 1800;
-    private static final int CHERRY_RADIUS = 1;
+    private static final int CHERRY_RADIUS = 2;
     private static final double SECONDS_BEFORE_EXPLOSION = 1.2;
     private static final String CHERRY_NAME = "cherrybomb";
 
@@ -30,33 +28,10 @@ public class CherryBomb extends AbstractPlant implements ExplodingPlant {
             CHERRY_HEALTH,
             CHERRY_COST,
             RechargeTimes.getVerySlowRechargeTime(),
+            DAMAGE,
+            CHERRY_RADIUS,
             CHERRY_NAME
         );
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void explodeOver(final Set<Zombie> zombieSet) {
-        zombieSet.forEach(z -> z.receiveDamage(DAMAGE));
-        this.receiveDamage(this.getHealth());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getRadius() {
-        return CHERRY_RADIUS;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean hasExploded() {
-        return this.getTimer().isReady();
     }
 
 }

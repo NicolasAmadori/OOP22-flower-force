@@ -1,5 +1,6 @@
 package flowerforce.view.game;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 
@@ -13,6 +14,10 @@ public final class HowToPlaySceneController {
      * Creates a new controller for a How To Play scene.
      * @param application the application to communicate scene changes
      */
+    @SuppressFBWarnings(
+            value = "EI_EXPOSE_REP2",
+            justification = "I need the exact application instance"
+    )
     public HowToPlaySceneController(final FlowerForceApplication application) {
         this.application = application;
     }

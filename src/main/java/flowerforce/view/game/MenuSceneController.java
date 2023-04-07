@@ -1,5 +1,6 @@
 package flowerforce.view.game;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;
@@ -13,12 +14,16 @@ public class MenuSceneController {
     @FXML
     private Text scoreRecord;
 
-    private final FlowerForceApplication application;
+    private final FlowerForceView application;
 
     /**
      * Creates a new controller for a Menu scene.
      * @param application the application to communicate scene changes
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2",
+        justification = "application is stored to call its methods and obtain controller"
+    )
     public MenuSceneController(final FlowerForceApplication application) {
         this.application = application;
     }
@@ -39,7 +44,7 @@ public class MenuSceneController {
     void startLevel(final MouseEvent event) {
         final int levelId = Integer.parseInt(((ImageView) event.getSource()).getAccessibleText());
         if (levelId <= this.application.getController().getLastUnlockedLevelId()) {
-            this.application.levelGame(levelId);
+            this.application.adventureModeGame(levelId);
         } else  {
             final Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Level not unlocked");
@@ -51,12 +56,12 @@ public class MenuSceneController {
     }
 
     /**
-     * Starts an Adventure mode game.
+     * Starts a Survival mode game.
      * @param event the MouseEvent to handle
      */
     @FXML
-    void startAdventureGame(final MouseEvent event) {
-        this.application.adventureGame();
+    void startSurvivalMode(final MouseEvent event) {
+        this.application.survivalModeGame();
     }
 
     /**

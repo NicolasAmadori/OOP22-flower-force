@@ -1,6 +1,6 @@
 package flowerforce.model.utilities;
 
-import flowerforce.model.game.Yard;
+import flowerforce.model.game.YardInfo;
 
 /**
  * Utility class to get the rendering information.
@@ -29,12 +29,12 @@ public final class RenderingInformation {
      */
     public static double getDeltaFromSecondsPerCell(final double secondsPerCell) {
         final int cyclesPerCell = convertSecondsToCycles(secondsPerCell);
-        return Yard.getCellDimension().getWidth() / cyclesPerCell;
+        return YardInfo.getCellDimension().getWidth() / cyclesPerCell;
     }
 
     /**
      * Convert seconds to number of frames in that time.
-     * @param seconds
+     * @param seconds number of seconds to convert
      * @return number of frames
      */
     public static int convertSecondsToCycles(final double seconds) {

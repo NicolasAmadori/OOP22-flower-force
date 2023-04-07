@@ -11,8 +11,8 @@ public final class ZombieFactory {
     private static final int BASIC_HEALTH = 181;
     private static final int BASIC_DAMAGE = 100;
     private static final int CONE_HEALTH = 370;
-    private static final int BUCKET_HEALTH = 1100;
-    private static final int HELMET_HEALTH = 1400;
+    private static final int BUCKET_HEALTH = 900;
+    private static final int HELMET_HEALTH = 1200;
     private static final int NEWSPAPER_HEALTH = 150;
     private static final int GARGANTUAR_HEALTH = 3000;
     private static final int GARGANTUAR_DAMAGE = 10_000;

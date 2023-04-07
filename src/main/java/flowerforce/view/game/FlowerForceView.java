@@ -2,6 +2,9 @@ package flowerforce.view.game;
 
 import flowerforce.controller.Controller;
 
+/**
+ * Models the entry point interface of the view which can be used by controller.
+ */
 public interface FlowerForceView {
 
     /**
@@ -10,15 +13,15 @@ public interface FlowerForceView {
     void menu();
 
     /**
-     * This method is called to start a level.
-     * @param levelId
+     * This method is called to start an Adventure Mode game (i.e. a level).
+     * @param levelId the id of the selected level
      */
-    void levelGame(int levelId);
+    void adventureModeGame(int levelId);
 
     /**
-     * This method is called to start an Adventure game.
+     * This method is called to start a Survival mode game.
      */
-    void adventureGame();
+    void survivalModeGame();
 
     /**
      * This method is called to set the how to play scene in the application.
