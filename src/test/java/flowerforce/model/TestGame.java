@@ -112,7 +112,7 @@ final class TestGame {
     }
 
     /**
-     * Test the end of the game
+     * Test the end of the game.
      */
     @Test
     void testEndGame() {
