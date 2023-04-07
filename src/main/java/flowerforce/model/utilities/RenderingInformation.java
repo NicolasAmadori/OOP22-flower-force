@@ -34,7 +34,7 @@ public final class RenderingInformation {
 
     /**
      * Convert seconds to number of frames in that time.
-     * @param seconds
+     * @param seconds number of seconds to convert
      * @return number of frames
      */
     public static int convertSecondsToCycles(final double seconds) {
