@@ -11,6 +11,7 @@ bin/
 .settings
 
 .metals
+.vscode
 
 #ignore json saving file
 .json

@@ -11,7 +11,7 @@ import java.util.function.Function;
  */
 public class ZombieGenerationLevelImpl extends AbstractZombieGeneration implements ZombieGenerationLevel {
     private static final int START_NUMBER_ZOMBIE_IN_HORDE = 10;
-    private static final int ZOMBIE_BEFORE_HORDE = 8;
+    private static final int ZOMBIE_BEFORE_HORDE = 7;
 
     private final Random rand = new Random();
 
