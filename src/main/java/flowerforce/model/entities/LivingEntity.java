@@ -1,7 +1,7 @@
 package flowerforce.model.entities;
 
 /**
- * Models a in-game entity that has a health associated.
+ * Models an in-game {@link Entity} with an health associated.
  */
 public interface LivingEntity extends Entity {
 
