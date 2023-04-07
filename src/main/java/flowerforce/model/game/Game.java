@@ -70,7 +70,7 @@ public interface Game {
     boolean result();
 
     /**
-     * @return the list of plants IDS of the level.
+     * @return the set of plants info of the level.
      */
     Set<PlantInfo> getPlaceablePlant();
 
