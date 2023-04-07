@@ -1,17 +1,19 @@
 package flowerforce.model;
 
+import flowerforce.common.ResourceFinder;
 import flowerforce.controller.utilities.SaveManager;
 import flowerforce.model.game.Player;
 import flowerforce.model.game.PlayerImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import java.io.File;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 final class TestSavingManager {
 
-    private static final String FILE_NAME = "player";
+    private static final String FILE_NAME = "test_player";
     private Player player = new PlayerImpl();
 
     /**
@@ -29,8 +31,8 @@ final class TestSavingManager {
     void testSaving() {
         final SaveManager<PlayerImpl> playerSaveManager = new SaveManager<>(PlayerImpl.class, FILE_NAME);
 
-        //random operation to modify player values
         //CHECKSTYLE: MagicNumber OFF
+        //random operation to modify player values (the numbers are random)
         this.player.addCoins(160);
         this.player.addNewScore(56_560);
         //CHECKSTYLE: MagicNumber ON
@@ -47,5 +49,8 @@ final class TestSavingManager {
         assertEquals(this.player.getScoreRecord(), newPlayer.get().getScoreRecord());
         assertEquals(this.player.getPlantsIds(), newPlayer.get().getPlantsIds());
         assertEquals(this.player.getLastUnlockedLevelId(), newPlayer.get().getLastUnlockedLevelId());
+
+        final File testFile = new File(ResourceFinder.getSavingFilePath(FILE_NAME) + ".json");
+        testFile.deleteOnExit();
     }
 }
