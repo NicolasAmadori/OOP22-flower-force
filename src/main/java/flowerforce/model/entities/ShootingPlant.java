@@ -9,8 +9,6 @@ public interface ShootingPlant extends Plant {
     /**
      * 
      * @return a non-empty Optional if the next bullet has already been produced.
-     * @throws SecurityException
-     * @throws NoSuchMethodException
      */
     Optional<Bullet> nextBullet();
 }
