@@ -39,7 +39,7 @@ public final class ControllerImpl implements Controller {
     /**
      * Create a new instance of Controller.
      */
-    public ControllerImpl() throws InstantiationException {
+    public ControllerImpl() {
         this.world = WorldSavingManager.load();
     }
 
