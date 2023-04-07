@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.function.Function;
 
 /**
- *
+ * Models world levels, it contains level information
  */
 public final class LevelInfo {
 

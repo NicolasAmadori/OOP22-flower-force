@@ -7,7 +7,7 @@ import flowerforce.model.utilities.TimerImpl;
 import java.util.Optional;
 
 /**
- *This is an implementation of {@link ZombieGeneration}.
+ * This is an implementation of {@link ZombieGeneration}.
  */
 public abstract class AbstractZombieGeneration implements ZombieGeneration {
 
@@ -27,7 +27,7 @@ public abstract class AbstractZombieGeneration implements ZombieGeneration {
     private final TimerImpl zombieTimer;
     private int timeZombie = START_TIME_TO_SPAWN_ZOMBIE;
     private final CreationZombie genZombie;
-    private int generatedZombie = 1;
+    private int generatedZombie;
     private int hordeGeneratedZombie;
     private int hordeZombie;
     private final int startNumberZombieHorde;
@@ -55,7 +55,7 @@ public abstract class AbstractZombieGeneration implements ZombieGeneration {
     public Optional<Zombie> zombieGeneration() {
         this.zombieTimer.updateState();
         if (this.zombieTimer.isReady()) {
-            if (this.generatedZombie % zombieBeforeHorde == 0) {
+            if (this.generatedZombie == this.zombieBeforeHorde) {
                 this.hordeGeneratedZombie++;
                 if (this.hordeGeneratedZombie == this.hordeZombie) {
                     if (timeZombie - DEC_TIME_ZOMBIE > MIN_TIME_TO_SPAWN_ZOMBIE) {
@@ -63,7 +63,7 @@ public abstract class AbstractZombieGeneration implements ZombieGeneration {
                     }
                     this.zombieTimer.setNumCycles(timeZombie);
                     this.incrementableHorde = true;
-                    this.generatedZombie = 1;
+                    this.generatedZombie = 0;
                     this.hordeGeneratedZombie = 0;
                     genZombie.increaseLevelZombieToSpawn();
                 } else {
@@ -72,7 +72,7 @@ public abstract class AbstractZombieGeneration implements ZombieGeneration {
             } else {
                 this.generatedZombie++;
             }
-            return Optional.of(genZombie.creationZombie(this.hordeZombie / this.startNumberZombieHorde + 1));
+            return Optional.of(genZombie.creationZombie(this.hordeZombie / this.startNumberZombieHorde));
         }
         return Optional.empty();
     }

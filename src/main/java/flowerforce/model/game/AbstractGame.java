@@ -49,7 +49,7 @@ public abstract class AbstractGame implements Game {
     private static final Point2D TEMPORARY_POSITION = new Point2D(0, 0);
     private final Map<Zombie, Plant> zombieEating = new HashMap<>();
     /**
-     * Constructor to instantiate an infinite game.
+     * Constructor to instantiate a game.
      * @param id of the game started
      * @param shop an instance of the shop
      * @param player an instance of the player
@@ -105,7 +105,7 @@ public abstract class AbstractGame implements Game {
     }
 
     /**
-     * @return the instance of the World
+     * @return the instance of the Player
      */
     protected Player getPlayer() {
         return this.player;
@@ -227,7 +227,7 @@ public abstract class AbstractGame implements Game {
     }
 
     /*
-     * Check which bullets are still in the field.
+     * Moves bullets and removes those that are no longer in the field.
      */
     private void updateBullet() {
         this.bullets.forEach(Bullet::move);
@@ -238,7 +238,7 @@ public abstract class AbstractGame implements Game {
     }
 
     /*
-     * Checks which bullets hit the zombies and updates which zombies and bullets are still alive.
+     * Check and remove bullets colliding with zombies and remove dead zombies.
      */
     private void collidingBullet() {
          this.bullets.forEach(bullet -> zombies.stream()
@@ -258,7 +258,7 @@ public abstract class AbstractGame implements Game {
     }
 
     /*
-     * Check which zombies are eating and update which plants are still alive.
+     * It hits plants that are being eaten by zombies and moves zombies that aren't eating.
      */
     private void eatingPlant() {
         this.plants.forEach(plant -> this.zombies.stream()
