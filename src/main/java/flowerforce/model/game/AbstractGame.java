@@ -48,6 +48,7 @@ public abstract class AbstractGame implements Game {
     private int score;
     private static final Point2D TEMPORARY_POSITION = new Point2D(0, 0);
     private final Map<Zombie, Plant> zombieEating = new HashMap<>();
+
     /**
      * Constructor to instantiate a game.
      * @param id of the game started
