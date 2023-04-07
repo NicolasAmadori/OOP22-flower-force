@@ -22,6 +22,7 @@ final class TestZombieGeneration {
             (STANDARD_SECS_SPAWN_ZOMBIE * RenderingInformation.getFramesPerSecond());
     private static final int FIRST_ZOMBIE_HORDE = 12;
     private static final int SECOND_ZOMBIE_HORDE = 17;
+
     /**
      * Sets up the testing.
      */
