@@ -17,28 +17,23 @@ import java.util.Optional;
  */
 public final class SoundManager {
 
-    private static final float MAIN_THEME_VOLUME = -20f;
-
-    private static final float SOUND_EFFECT_VOLUME = -10f;
-
+    private static final float MAIN_THEME_VOLUME = -23f;
+    private static final float SOUND_EFFECT_VOLUME = -13f;
     private static final String SOUND_FILE_EXTENSION = ".wav";
-
     private static final String MAIN_THEME_FILE_NAME = "mainTheme" + SOUND_FILE_EXTENSION;
-
     private static final String ZOMBIES_SIREN_FILE_NAME = "zombiesSiren" + SOUND_FILE_EXTENSION;
-
-    private static final String SHOP_OPENING_FILE_NAME = "shopEffect" + SOUND_FILE_EXTENSION;
-
+    private static final String SHOP_EFFECT_FILE_NAME = "shopEffect" + SOUND_FILE_EXTENSION;
     private static final String SHOVEL_FILE_NAME = "shovel" + SOUND_FILE_EXTENSION;
-
     private static final String CARD_SELECTED_FILE_NAME = "cardSelected" + SOUND_FILE_EXTENSION;
-
-    private static final String GROAN_FILE_NAME = "zombieGroan" + SOUND_FILE_EXTENSION;
-
     private static final String PLANT_PLACED_FILE_NAME = "plantPlaced" + SOUND_FILE_EXTENSION;
+    private static final String GROAN_FILE_NAME = "zombieGroan" + SOUND_FILE_EXTENSION;
+    private static final String ZOMBIE_EATING_FILE_NAME = "zombieEating" + SOUND_FILE_EXTENSION;
+    private static final String PLANT_EATEN_FILE_NAME = "plantEaten" + SOUND_FILE_EXTENSION;
+    private static final String ZOMBIE_DIED_FILE_NAME = "zombieDiedScream" + SOUND_FILE_EXTENSION;
+    private static final String BULLET_SHOT_FILE_NAME = "bulletShot" + SOUND_FILE_EXTENSION;
+    private static final String BULLET_IMPACT_FILE_NAME = "bulletImpact" + SOUND_FILE_EXTENSION;
 
     private SoundManager() {
-
     }
 
     /**
@@ -56,73 +51,73 @@ public final class SoundManager {
     }
 
     /**
-     * Start the openShop effect.
+     * Start the shop effect.
      */
-    public static void openShop() {
-        playSoundEffect(ResourceFinder.getSoundPath(SHOP_OPENING_FILE_NAME));
+    public static void shopEffect() {
+        playSoundEffect(ResourceFinder.getSoundPath(SHOP_EFFECT_FILE_NAME));
     }
 
     /**
-     * Start the useShovel effect.
+     * Start the shovel effect.
      */
     public static void useShovel() {
         playSoundEffect(ResourceFinder.getSoundPath(SHOVEL_FILE_NAME));
     }
 
     /**
-     * Start the cardSelected effect.
+     * Start the selected card effect.
      */
     public static void cardSelected() {
         playSoundEffect(ResourceFinder.getSoundPath(CARD_SELECTED_FILE_NAME));
     }
 
     /**
-     * Start the plantPlaced effect.
+     * Start the plant placed effect.
      */
     public static void plantPlaced() {
         playSoundEffect(ResourceFinder.getSoundPath(PLANT_PLACED_FILE_NAME));
     }
 
     /**
-     * Start the zombieGroan effect.
+     * Start the zombie groan effect.
      */
     public static void zombieGroan() {
         playSoundEffect(ResourceFinder.getSoundPath(GROAN_FILE_NAME));
     }
 
     /**
-     * Start the zombieEating effect.
+     * Start the zombie eating effect.
      */
     public static void zombieEating() {
-        playSoundEffect(ResourceFinder.getSoundPath("zombieEating" + SOUND_FILE_EXTENSION));
+        playSoundEffect(ResourceFinder.getSoundPath(ZOMBIE_EATING_FILE_NAME));
     }
 
     /**
-     * Start the sound effect of zombie that has eaten a plant.
+     * Start the zombie has eaten a plant effect.
      */
     public static void zombieHasEaten() {
-        playSoundEffect(ResourceFinder.getSoundPath("plantEaten" + SOUND_FILE_EXTENSION));
+        playSoundEffect(ResourceFinder.getSoundPath(PLANT_EATEN_FILE_NAME));
     }
 
     /**
-     * Start the sound effect of zombie screaming when it dies.
+     * Start the zombie has died effect.
      */
     public static void zombieDied() {
-        playSoundEffect(ResourceFinder.getSoundPath("zombieDiedScream" + SOUND_FILE_EXTENSION));
+        playSoundEffect(ResourceFinder.getSoundPath(ZOMBIE_DIED_FILE_NAME));
     }
 
     /**
-     * Start the bulletShot effect.
+     * Start the bullet has been shot effect.
      */
     public static void bulletShot() {
-        playSoundEffect(ResourceFinder.getSoundPath("bulletShot" + SOUND_FILE_EXTENSION));
+        playSoundEffect(ResourceFinder.getSoundPath(BULLET_SHOT_FILE_NAME));
     }
 
     /**
-     * Start the bulletHit effect.
+     * Start the bullet hit effect.
      */
     public static void bulletHit() {
-        playSoundEffect(ResourceFinder.getSoundPath("bulletImpact" + SOUND_FILE_EXTENSION));
+        playSoundEffect(ResourceFinder.getSoundPath(BULLET_IMPACT_FILE_NAME));
     }
 
     private static void playLoopSound(final String path) {

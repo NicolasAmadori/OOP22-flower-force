@@ -9,7 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 
 /**
- * Models a generic FlowerForceScene.
+ * Models an abstract {@link FlowerForceScene}.
  */
 public abstract class AbstractFlowerForceScene implements FlowerForceScene {
 
@@ -17,15 +17,15 @@ public abstract class AbstractFlowerForceScene implements FlowerForceScene {
 
     /**
      * 
-     * @param fxmlPath the path of the FXML file to load
+     * @param fxmlName the path of the FXML file to load
      * @param imgName the image name to pass to getScaledScene method
      * @param controller the scene's controller to pass to the FXML Loader
      * @throws IOException
      */
-    protected AbstractFlowerForceScene(final String fxmlPath, final String imgName, final Object controller) {
+    protected AbstractFlowerForceScene(final String fxmlName, final String imgName, final Object controller) {
         try {
             final FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(ClassLoader.getSystemResource(fxmlPath));
+            loader.setLocation(ClassLoader.getSystemResource(fxmlName));
             loader.setController(controller);
             final AnchorPane root = loader.load();
             this.scene = FlowerForceApplication.getScaledScene(root, imgName);

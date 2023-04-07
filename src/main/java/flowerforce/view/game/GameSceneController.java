@@ -29,8 +29,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 
 /**
- * JavaFx controller of the {@link GameScene},
- * it's also linked with main controller through {@link GameEngine} interface.
+ * This class is the JavaFx controller of the {@link GameScene}.
+ * It also implements {@link GameEngine} interface through which is linked with the main controller.
  */
 public final class GameSceneController implements GameEngine {
 

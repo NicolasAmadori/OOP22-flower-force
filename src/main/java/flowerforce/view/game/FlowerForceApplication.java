@@ -18,7 +18,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 /**
- * This is an implementation of {@link GameEngine}.
+ * This class is the effective entry point of the view, indeed it implements {@link FlowerForceView}.
  */
 public final class FlowerForceApplication extends Application implements FlowerForceView {
 
@@ -83,7 +83,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
         final FlowerForceScene sceneClass = new ShopScene(this);
         this.setScene(sceneClass.getScene());
         this.stage.setTitle("Shop");
-        SoundManager.openShop();
+        SoundManager.shopEffect();
     }
 
     @SuppressFBWarnings(
