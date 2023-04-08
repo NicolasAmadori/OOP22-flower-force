@@ -142,8 +142,8 @@ public interface Controller {
     void save();
 
     /**
-     * Get the Game Loop instance.
+     * Get the Game Loop Runnable, that has to run continuously.
      * @return the Game Loop already instantiated
      */
-    GameLoop getGameLoop();
+    Runnable getGameLoopRunnable();
 }
