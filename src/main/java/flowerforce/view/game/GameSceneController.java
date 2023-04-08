@@ -16,6 +16,8 @@ import flowerforce.view.utilities.SoundManager;
 import javafx.fxml.FXML;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.effect.Bloom;
@@ -81,6 +83,7 @@ public final class GameSceneController implements GameEngine {
     private boolean isShovelSelected;
     private boolean isFirstZombie = true;
     private boolean isSoundMuted;
+    private boolean isOver;
 
     /**
      * Creates a new {@link GameSceneController}.
@@ -209,7 +212,18 @@ public final class GameSceneController implements GameEngine {
 
     @FXML
     void selectMenu(final MouseEvent event) {
-        this.application.menu();
+        if (!isOver) {
+            final Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirm dialog");
+            alert.setHeaderText("Are you sure to leave?");
+            alert.setContentText("Progress of this game will not be saved");
+            final Optional<ButtonType> result = alert.showAndWait();
+            if (result.get().equals(ButtonType.OK)) {
+                this.application.menu();
+            }
+        } else {
+            this.application.menu();
+        }
     }
 
     private int getRow(final double y) {
@@ -389,6 +403,7 @@ public final class GameSceneController implements GameEngine {
      */
     @Override
     public void over(final boolean isWon) {
+        this.isOver = true;
         this.resultPane.setVisible(true);
         this.resultPane.setDisable(false);
         this.resultPane.toFront();
