@@ -1,6 +1,5 @@
 package flowerforce.view.game;
 
-import flowerforce.common.ResourceFinder;
 /**
  * Models the scene of the game, extends {@link AbstractFlowerForceScene}.
  */
@@ -14,6 +13,6 @@ public class GameScene extends AbstractFlowerForceScene {
      * @param application which sets the scene
      */
     public GameScene(final FlowerForceApplication application) {
-        super(ResourceFinder.getFXMLPath(FXML_FILE_NAME), IMAGE_NAME, new GameSceneController(application));
+        super(FXML_FILE_NAME, IMAGE_NAME, new GameSceneController(application));
     }
 }

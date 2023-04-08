@@ -9,6 +9,8 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.FloatControl;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Optional;
 
 /**
@@ -119,22 +121,22 @@ public final class SoundManager {
         playSoundEffect(ResourceFinder.getSoundPath(BULLET_IMPACT_FILE_NAME));
     }
 
-    private static void playLoopSound(final String path) {
-        final Optional<Clip> clip = createClip(path, MAIN_THEME_VOLUME);
+    private static void playLoopSound(final URL url) {
+        final Optional<Clip> clip = createClip(url, MAIN_THEME_VOLUME);
         clip.ifPresent(c -> {
             c.start();
             clip.get().loop(Clip.LOOP_CONTINUOUSLY);
         });
     }
 
-    private static void playSoundEffect(final String path) {
-        final Optional<Clip> clip = createClip(path, SOUND_EFFECT_VOLUME);
+    private static void playSoundEffect(final URL url) {
+        final Optional<Clip> clip = createClip(url, SOUND_EFFECT_VOLUME);
         clip.ifPresent(Clip::start);
     }
 
-    private static Optional<Clip> createClip(final String path, final float volume) {
+    private static Optional<Clip> createClip(final URL url, final float volume) {
         try {
-            final File file = new File(path);
+            final File file = new File(url.toURI());
             final AudioInputStream ais = AudioSystem.getAudioInputStream(file);
             final Clip clip = AudioSystem.getClip();
             clip.open(ais);
@@ -142,7 +144,7 @@ public final class SoundManager {
             fc.setValue(volume);
 
             return Optional.of(clip);
-        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
+        } catch (URISyntaxException | UnsupportedAudioFileException | LineUnavailableException | IOException e) {
             return Optional.empty();
         }
     }

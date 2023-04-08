@@ -89,7 +89,7 @@ final class TestGame {
     }
 
     /**
-     * Test which plant can place.
+     * Test placeable plant.
      */
     @Test
     void testEnabledPlant() {
@@ -111,6 +111,9 @@ final class TestGame {
         assertEquals(0, this.game.getEnabledPlants().size());
     }
 
+    /**
+     * Test the end of the game.
+     */
     @Test
     void testEndGame() {
         //at the beginning is over should be false

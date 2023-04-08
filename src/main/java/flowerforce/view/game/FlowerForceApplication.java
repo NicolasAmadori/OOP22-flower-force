@@ -18,7 +18,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 /**
- * This class is the effective entry point of the view, indeed it implements {@link FlowerForceView}.
+ * This is the central class of the view, indeed it implements {@link FlowerForceView}.
  */
 public final class FlowerForceApplication extends Application implements FlowerForceView {
 
@@ -40,7 +40,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
         this.stage = primaryStage;
         this.controller = new ControllerImpl();
         this.stage.setResizable(false);
-        this.stage.getIcons().add(new Image(ResourceFinder.getCommonImagePath(GAMEICON_NAME)));
+        this.stage.getIcons().add(new Image(ResourceFinder.getCommonImagePath(GAMEICON_NAME).toExternalForm()));
         this.stage.setOnCloseRequest(e -> {
             Platform.exit();
         });
@@ -153,7 +153,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
      * @return a Dimension2D contaning image's dimensions
      */
     private static Dimension2D getImgDimensions(final String imgName) {
-        final Image image = new Image(ResourceFinder.getCommonImagePath(imgName));
+        final Image image = new Image(ResourceFinder.getCommonImagePath(imgName).toExternalForm());
         //image's dimensions
         return new Dimension2D(image.getWidth(), image.getHeight());
     }

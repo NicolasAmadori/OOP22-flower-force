@@ -25,7 +25,7 @@ final class TestInfo {
     /**
      * Tests the uniqueness of {@link EntityInfo}, so that it can be used as key of maps
      * even if its fields are the same of others {@link EntityInfo} 
-     * (name and position could be the same to different entities).
+     * (name and position could be the same in different entities).
      */
     @Test
     void testEqualsEntityInfo() {
@@ -38,7 +38,8 @@ final class TestInfo {
 
     /**
      * Tests the uniqueness of {@link PlantInfo}, so that it can be used as key of maps
-     * even if its fields are the same of others {@link PlantInfo}.
+     * even if its fields are the same of others {@link PlantInfo}
+     * (name and cost could theoretically be the same).
      */
     @Test
     void testEqualsPlantInfo() {
@@ -50,7 +51,7 @@ final class TestInfo {
     }
 
     /**
-     * Tests the correct and automatic update of position in a {@link EntityInfo}
+     * Tests the correct and automatic update of position in an {@link EntityInfo}
      * using {@link EntityInfo#setPosition(Point2D)} method.
      */
     @Test

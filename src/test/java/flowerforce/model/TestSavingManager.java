@@ -29,8 +29,8 @@ final class TestSavingManager {
     void testSaving() {
         final SaveManager<PlayerImpl> playerSaveManager = new SaveManager<>(PlayerImpl.class, FILE_NAME);
 
-        //random operation to modify player values
         //CHECKSTYLE: MagicNumber OFF
+        //random operation to modify player values (the numbers are random)
         this.player.addCoins(160);
         this.player.addNewScore(56_560);
         //CHECKSTYLE: MagicNumber ON
@@ -47,5 +47,7 @@ final class TestSavingManager {
         assertEquals(this.player.getScoreRecord(), newPlayer.get().getScoreRecord());
         assertEquals(this.player.getPlantsIds(), newPlayer.get().getPlantsIds());
         assertEquals(this.player.getLastUnlockedLevelId(), newPlayer.get().getLastUnlockedLevelId());
+
+        playerSaveManager.save(new PlayerImpl()); //save the empty player
     }
 }

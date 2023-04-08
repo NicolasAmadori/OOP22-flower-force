@@ -9,6 +9,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Test for class {@link Zombie}.
+ */
 final class TestZombie {
 
     private static final double INITIAL_X = YardInfo.getYardDimension().getWidth();
@@ -19,12 +22,18 @@ final class TestZombie {
     private Zombie zombie = ZombieFactory.basic(new Point2D(INITIAL_X, INITIAL_Y));
     private Zombie newspaper = ZombieFactory.newspaper(new Point2D(INITIAL_X, INITIAL_Y));
 
+    /**
+     * Setup before each test.
+     */
     @BeforeEach
     void setup() {
         this.zombie = ZombieFactory.basic(new Point2D(INITIAL_X, INITIAL_Y));
         this.newspaper = ZombieFactory.newspaper(new Point2D(INITIAL_X, INITIAL_Y));
     }
 
+    /**
+     * Test the {@link Zombie#move()}.
+     */
     @Test
     void testMove() {
         double expectedPosX = INITIAL_X;
@@ -39,6 +48,9 @@ final class TestZombie {
         assertEquals(new Point2D(expectedPosX, INITIAL_Y), this.zombie.getPosition());
     }
 
+    /**
+     * Test the {@link Zombie#freeze()}.
+     */
     @Test
     void testFreeze() {
         final double initialDelta = this.zombie.getDeltaMovement();
@@ -56,6 +68,9 @@ final class TestZombie {
         assertEquals(initialDelta, this.zombie.getDeltaMovement());
     }
 
+    /**
+     * Test the {@link Zombie#receiveDamage(int)}.
+     */
     @Test
     void testReceiveDamage() {
         int expectedHealth = this.zombie.getHealth();
@@ -68,12 +83,16 @@ final class TestZombie {
         assertEquals(expectedHealth, this.zombie.getHealth());
     }
 
+    /**
+     * Test the {@link NewspaperZombie}.
+     */
     @Test
     void testNewspaper() {
         final double initialDelta = this.newspaper.getDeltaMovement();
         while (this.newspaper.getDeltaMovement() == initialDelta) {
             this.newspaper.receiveDamage(DAMAGE);
         }
+        //Must accelerate after receiving some damage
         assertEquals(initialDelta * ACCELERATE_FACTOR, this.newspaper.getDeltaMovement());
     }
 }

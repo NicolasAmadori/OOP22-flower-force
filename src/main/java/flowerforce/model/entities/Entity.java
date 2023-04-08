@@ -3,7 +3,7 @@ package flowerforce.model.entities;
 import javafx.geometry.Point2D;
 
 /**
- * Models a in-game entity.
+ * Models an in-game entity.
  */
 public interface Entity {
 

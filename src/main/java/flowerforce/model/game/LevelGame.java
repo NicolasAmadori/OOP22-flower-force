@@ -42,6 +42,14 @@ public class LevelGame extends AbstractGame {
      * {@inheritDoc}
      */
     @Override
+    public int getScore() {
+        return 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public boolean isOver() {
         final var end = super.isOver();
         if (end && this.result()
