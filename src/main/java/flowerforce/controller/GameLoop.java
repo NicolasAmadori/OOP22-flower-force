@@ -3,7 +3,6 @@ package flowerforce.controller;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import flowerforce.model.game.Game;
 import flowerforce.view.game.GameEngine;
-import javafx.animation.AnimationTimer;
 
 /**
  * GameLoop class that run the game.

@@ -13,7 +13,6 @@ import flowerforce.common.ResourceFinder;
 import flowerforce.view.entities.CardView;
 import flowerforce.view.entities.EntityView;
 import flowerforce.view.utilities.SoundManager;
-import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
