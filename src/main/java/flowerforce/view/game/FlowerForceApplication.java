@@ -29,7 +29,9 @@ public final class FlowerForceApplication extends Application implements FlowerF
     private static final String GAMEICON_NAME = "icon.png";
     private Stage stage;
 
-    private AnimationTimer gameLoop;
+    private Runnable gameLoopRunnable;
+
+    private AnimationTimer gameLoopAnimationTimer;
 
     @SuppressFBWarnings(
         value = "EI2",
@@ -50,8 +52,8 @@ public final class FlowerForceApplication extends Application implements FlowerF
 
     @Override
     public void menu() {
-        if (gameLoop != null) {
-            gameLoop.stop();
+        if (this.gameLoopAnimationTimer != null) {
+            this.gameLoopAnimationTimer.stop();
         }
         this.controller.save();
         final FlowerForceScene sceneClass = new MenuScene(this);
@@ -99,8 +101,16 @@ public final class FlowerForceApplication extends Application implements FlowerF
         final FlowerForceScene sceneClass = new GameScene(this);
         this.setScene(sceneClass.getScene());
         this.stage.setTitle(title);
-        gameLoop = this.controller.getGameLoop();
-        gameLoop.start();
+
+        this.gameLoopRunnable = controller.getGameLoopRunnable();
+        //Create the animation timer to run the gameLoop continuously.
+        this.gameLoopAnimationTimer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                gameLoopRunnable.run();
+            }
+        };
+        this.gameLoopAnimationTimer.start();
     }
 
     private void setScene(final Scene scene) {
