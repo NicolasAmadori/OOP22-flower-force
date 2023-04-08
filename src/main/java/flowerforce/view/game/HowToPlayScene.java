@@ -1,7 +1,5 @@
 package flowerforce.view.game;
 
-import flowerforce.common.ResourceFinder;
-
 /**
  * Models an HowToPlay scene.
  */
@@ -14,6 +12,6 @@ public class HowToPlayScene extends AbstractFlowerForceScene {
      * @param application The application that displays the scene
      */
     protected HowToPlayScene(final FlowerForceApplication application) {
-        super(ResourceFinder.getFXMLPath(FXML_FILE_NAME), IMAGE_NAME, new HowToPlaySceneController(application));
+        super(FXML_FILE_NAME, IMAGE_NAME, new HowToPlaySceneController(application));
     }
 }
