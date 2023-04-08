@@ -1,7 +1,7 @@
 package flowerforce.model.entities;
 
 /**
- * Models an entity that is able to move.
+ * Models an in-game {@link Entity} that is able to move.
  */
 public interface MovingEntity extends Entity {
 

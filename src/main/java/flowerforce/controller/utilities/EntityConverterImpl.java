@@ -36,7 +36,7 @@ public final class EntityConverterImpl implements EntityConverter {
     @Override
     public EntityView getPlantView(final EntityInfo plantInfo) {
         final String completeImagePath = ResourceFinder.getPlantImagePath(
-                plantInfo.getName().concat(IMAGES_EXTENSION));
+                plantInfo.getName().concat(IMAGES_EXTENSION)).toExternalForm();
         final Point2D newPosition = convertPlantPosition(plantInfo.getPosition(), completeImagePath);
         return new EntityViewImpl(newPosition, completeImagePath);
     }
@@ -47,7 +47,7 @@ public final class EntityConverterImpl implements EntityConverter {
     @Override
     public EntityView getZombieView(final EntityInfo zombieInfo) {
         final String completeImagePath = ResourceFinder.getZombieImagePath(
-                zombieInfo.getName().concat(IMAGES_EXTENSION));
+                zombieInfo.getName().concat(IMAGES_EXTENSION)).toExternalForm();
         final Point2D newPosition = convertZombiePosition(zombieInfo.getPosition(), completeImagePath);
         return new EntityViewImpl(newPosition, completeImagePath);
     }
@@ -58,7 +58,7 @@ public final class EntityConverterImpl implements EntityConverter {
     @Override
     public EntityView getBulletView(final EntityInfo bulletInfo) {
         final String completeImagePath = ResourceFinder.getBulletImagePath(
-                bulletInfo.getName().concat(IMAGES_EXTENSION));
+                bulletInfo.getName().concat(IMAGES_EXTENSION)).toExternalForm();
         final Point2D newPosition = convertBulletPosition(bulletInfo.getPosition(), completeImagePath);
         return new EntityViewImpl(newPosition, completeImagePath);
     }

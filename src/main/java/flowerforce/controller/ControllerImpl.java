@@ -136,7 +136,7 @@ public final class ControllerImpl implements Controller {
      * {@inheritDoc}
      */
     @Override
-    public void startNewAdventureModelGame(final int levelId) {
+    public void startNewAdventureModeGame(final int levelId) {
         this.resetGame();
         this.game = Optional.of(this.world.createAdventureModeGame(levelId));
     }

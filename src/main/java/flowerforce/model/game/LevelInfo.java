@@ -30,8 +30,8 @@ public final class LevelInfo {
             ShootingPlantFactory::createPeaShooter,
             ShootingPlantFactory::createSnowShooter,
             Wallnut::new,
-            ShootingPlantFactory::createFireShooter,
-            ShootingPlantFactory::createFastShooter
+            ShootingPlantFactory::createFastShooter,
+            ShootingPlantFactory::createFireShooter
     );
     private static final int COINS = 100;
     private static final List<Integer> ZOMBIE_LEVEL = List.of(34, 51, 68, 68, 68, 85, 85);

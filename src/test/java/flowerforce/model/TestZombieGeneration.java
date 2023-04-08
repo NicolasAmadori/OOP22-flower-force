@@ -3,7 +3,7 @@ package flowerforce.model;
 import flowerforce.model.game.Player;
 import flowerforce.model.game.PlayerImpl;
 import flowerforce.model.game.ZombieGenerationLevelImpl;
-import flowerforce.model.game.ZombieGenerationInfiniteImpl;
+import flowerforce.model.game.ZombieGenerationInfinite;
 import flowerforce.model.utilities.RenderingInformation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,13 +15,14 @@ final class TestZombieGeneration {
     private Player player = new PlayerImpl();
     private ZombieGenerationLevelImpl zombieGen =
             new ZombieGenerationLevelImpl(this.player.getLastUnlockedLevelId());
-    private ZombieGenerationInfiniteImpl zombieGenInfinite =
-            new ZombieGenerationInfiniteImpl(this.player.getLastUnlockedLevelId());
+    private ZombieGenerationInfinite zombieGenInfinite =
+            new ZombieGenerationInfinite(this.player.getLastUnlockedLevelId());
     private static final double STANDARD_SECS_SPAWN_ZOMBIE = 15.0;
     private static final int TIME_TO_SPAWN_ZOMBIE = (int)
             (STANDARD_SECS_SPAWN_ZOMBIE * RenderingInformation.getFramesPerSecond());
     private static final int FIRST_ZOMBIE_HORDE = 12;
     private static final int SECOND_ZOMBIE_HORDE = 17;
+
     /**
      * Sets up the testing.
      */
@@ -29,7 +30,7 @@ final class TestZombieGeneration {
     void setup() {
         this.player = new PlayerImpl();
         this.zombieGen = new ZombieGenerationLevelImpl(this.player.getLastUnlockedLevelId());
-        this.zombieGenInfinite = new ZombieGenerationInfiniteImpl(this.player.getLastUnlockedLevelId());
+        this.zombieGenInfinite = new ZombieGenerationInfinite(this.player.getLastUnlockedLevelId());
     }
 
     /**

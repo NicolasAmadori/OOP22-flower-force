@@ -4,7 +4,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javafx.geometry.Point2D;
 
 /**
- * Represents a generic entity.
+ * Represents an abstract {@link Entity}.
  */
 public abstract class AbstractEntity implements Entity {
 

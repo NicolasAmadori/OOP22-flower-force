@@ -4,16 +4,16 @@ import flowerforce.model.utilities.RenderingInformation;
 import javafx.geometry.Point2D;
 
 /**
- * Static factory of different istances of {@link Zombie}.
+ * Static factory of different types of {@link Zombie}.
  */
 public final class ZombieFactory {
 
     private static final int BASIC_HEALTH = 181;
     private static final int BASIC_DAMAGE = 100;
     private static final int CONE_HEALTH = 370;
-    private static final int BUCKET_HEALTH = 900;
-    private static final int HELMET_HEALTH = 1200;
-    private static final int NEWSPAPER_HEALTH = 150;
+    private static final int BUCKET_HEALTH = 950;
+    private static final int HELMET_HEALTH = 1250;
+    private static final int NEWSPAPER_HEALTH = 200;
     private static final int GARGANTUAR_HEALTH = 3000;
     private static final int GARGANTUAR_DAMAGE = 10_000;
     private static final double BASIC_SECS_PER_CELL = 4.7;
