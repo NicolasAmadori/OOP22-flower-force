@@ -30,7 +30,7 @@ import javafx.scene.shape.Rectangle;
 
 /**
  * This class is the JavaFx controller of the {@link GameScene}.
- * It also implements {@link GameEngine} interface through which is linked with the main controller.
+ * It also implements {@link GameEngine} interface methods, needed by the main controller.
  */
 public final class GameSceneController implements GameEngine {
 
@@ -397,9 +397,9 @@ public final class GameSceneController implements GameEngine {
         this.removeBloomEffect();
         this.cards.keySet().forEach(card -> card.setDisable(true));
         if (isWon) {
-            imageResult.setImage(new Image(ResourceFinder.getCommonImagePath("victory.png")));
+            imageResult.setImage(new Image(ResourceFinder.getCommonImagePath("victory.png").toExternalForm()));
         } else {
-            imageResult.setImage(new Image(ResourceFinder.getCommonImagePath("loss.png")));
+            imageResult.setImage(new Image(ResourceFinder.getCommonImagePath("loss.png").toExternalForm()));
         }
     }
 }

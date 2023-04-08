@@ -3,7 +3,7 @@ package flowerforce.view.game;
 import flowerforce.controller.Controller;
 
 /**
- * Models the entry point interface of the view which can be used by controller.
+ * Models the central interface of the view.
  */
 public interface FlowerForceView {
 
