@@ -146,7 +146,7 @@ public final class GameSceneController implements GameEngine {
         if (!this.isShovelSelected) {
             this.removeBloomEffect();
             this.isShovelSelected = true;
-            this.handleSound(() -> SoundManager.useShovel());
+            this.handleSound(SoundManager::useShovel);
             this.addBloomEffect();
         }
     }
@@ -156,7 +156,7 @@ public final class GameSceneController implements GameEngine {
         if (!(this.cardSelected.isPresent() && this.cardSelected.get().equals((ImageView) event.getSource()))) {
             this.removeBloomEffect();
             this.cardSelected = Optional.of((ImageView) (event.getSource()));
-            this.handleSound(() -> SoundManager.cardSelected());
+            this.handleSound(SoundManager::cardSelected);
             this.addBloomEffect();
         }
     }
@@ -175,10 +175,10 @@ public final class GameSceneController implements GameEngine {
             if (this.cardSelected.isPresent()
                     && this.application.getController().placePlant(this.cards.get(this.cardSelected.get()), row, col)) {
                 this.removeBloomEffect();
-                this.handleSound(() -> SoundManager.plantPlaced());
+                this.handleSound(SoundManager::plantPlaced);
             } else if (this.isShovelSelected && this.application.getController().removePlant(row, col)) {
                 this.removeBloomEffect();
-                this.handleSound(() -> SoundManager.useShovel());
+                this.handleSound(SoundManager::useShovel);
             }
         } else {
             this.removeBloomEffect();
@@ -264,31 +264,31 @@ public final class GameSceneController implements GameEngine {
         final Set<EntityView> placedBullets = this.application.getController().getPlacedBullets();
         //plants
         if (this.removeEntities(placedPlants, this.drawnPlants)) {
-            this.handleSound(() -> SoundManager.zombieHasEaten());
+            this.handleSound(SoundManager::zombieHasEaten);
         }
         this.updateEntities(placedPlants, this.drawnPlants);
         if (this.addEntities(placedPlants, this.drawnPlants)) {
-            this.handleSound(() -> SoundManager.plantPlaced());
+            this.handleSound(SoundManager::plantPlaced);
         }
         //zombies
         if (this.removeEntities(placedZombies, this.drawnZombies)) {
-            this.handleSound(() -> SoundManager.zombieDied());
+            this.handleSound(SoundManager::zombieDied);
         }
         this.updateEntities(placedZombies, this.drawnZombies);
         if (this.addEntities(placedZombies, this.drawnZombies)) {
             if (this.isFirstZombie) {
-                this.handleSound(() -> SoundManager.zombiesAreComing());
+                this.handleSound(SoundManager::zombiesAreComing);
                 this.isFirstZombie = false;
             }
-            this.handleSound(() -> SoundManager.zombieGroan());
+            this.handleSound(SoundManager::zombieGroan);
         }
         //bullets
         if (this.removeEntities(placedBullets, this.drawnBullets)) {
-            this.handleSound(() -> SoundManager.bulletHit());
+            this.handleSound(SoundManager::bulletHit);
         }
         this.updateEntities(placedBullets, this.drawnBullets);
         if (this.addEntities(placedBullets, this.drawnBullets)) {
-            this.handleSound(() -> SoundManager.bulletShot());
+            this.handleSound(SoundManager::bulletShot);
         }
 
     }
@@ -329,11 +329,11 @@ public final class GameSceneController implements GameEngine {
         final Set<EntityView> damagedEntities = this.application.getController().getDamagedEntities();
         //plants
         if (this.damageDrawnEntities(damagedEntities, this.drawnPlants)) {
-            this.handleSound(() -> SoundManager.zombieEating());
+            this.handleSound(SoundManager::zombieEating);
         }
         //zombies
         if (this.damageDrawnEntities(damagedEntities, this.drawnZombies)) {
-            this.handleSound(() -> SoundManager.bulletHit());
+            this.handleSound(SoundManager::bulletHit);
         }
     }
 
