@@ -106,7 +106,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
         //Create the animation timer to run the gameLoop continuously.
         this.gameLoopAnimationTimer = new AnimationTimer() {
             @Override
-            public void handle(long now) {
+            public void handle(final long now) {
                 gameLoopRunnable.run();
             }
         };
