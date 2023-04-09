@@ -7,9 +7,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.FloatControl;
-import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Optional;
 
@@ -121,30 +119,29 @@ public final class SoundManager {
         playSoundEffect(ResourceFinder.getSoundPath(BULLET_IMPACT_FILE_NAME));
     }
 
-    private static void playLoopSound(final URL url) {
-        final Optional<Clip> clip = createClip(url, MAIN_THEME_VOLUME);
+    private static void playLoopSound(final URL soundUrl) {
+        final Optional<Clip> clip = createClip(soundUrl, MAIN_THEME_VOLUME);
         clip.ifPresent(c -> {
             c.start();
             clip.get().loop(Clip.LOOP_CONTINUOUSLY);
         });
     }
 
-    private static void playSoundEffect(final URL url) {
-        final Optional<Clip> clip = createClip(url, SOUND_EFFECT_VOLUME);
+    private static void playSoundEffect(final URL soundUrl) {
+        final Optional<Clip> clip = createClip(soundUrl, SOUND_EFFECT_VOLUME);
         clip.ifPresent(Clip::start);
     }
 
-    private static Optional<Clip> createClip(final URL url, final float volume) {
+    private static Optional<Clip> createClip(final URL soundUrl, final float volume) {
         try {
-            final File file = new File(url.toURI());
-            final AudioInputStream ais = AudioSystem.getAudioInputStream(file);
+            final AudioInputStream ais = AudioSystem.getAudioInputStream(soundUrl);
             final Clip clip = AudioSystem.getClip();
             clip.open(ais);
             final FloatControl fc = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
             fc.setValue(volume);
 
             return Optional.of(clip);
-        } catch (URISyntaxException | UnsupportedAudioFileException | LineUnavailableException | IOException e) {
+        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
             return Optional.empty();
         }
     }

@@ -1,5 +1,6 @@
 package flowerforce.common;
 
+import java.io.File;
 import java.net.URL;
 import java.util.NoSuchElementException;
 
@@ -8,7 +9,7 @@ import java.util.NoSuchElementException;
  */
 public final class ResourceFinder {
 
-    private static final String RISORSE = "/".concat("flowerforce").concat("/").concat("game");
+    private static final String RESOURCE_PARENT_PATH = "/".concat("flowerforce").concat("/").concat("game");
 
     private static final String SOUNDS_FOLDER_NAME = "sounds";
 
@@ -26,7 +27,7 @@ public final class ResourceFinder {
 
     private static final String BULLETS_IMAGES_FOLDER_NAME = "bullets";
 
-
+    private static final String USER_HOME_PATH = System.getProperty("user.home");
     private ResourceFinder() {
 
     }
@@ -99,24 +100,26 @@ public final class ResourceFinder {
      * @param filename The complete name of the saving file requested
      * @return A string representing the absolute path of the saving file
      */
-    public static URL getSavingFilePath(final String filename) {
-        return getURL(getSavingFolderPath().concat("/").concat(filename));
+    public static String getSavingFilePath(final String filename) {
+        return getSavingFolderPath().concat(File.separator).concat(filename);
     }
 
     private static String getImagesFolderPath() {
-        return RISORSE.concat("/").concat(IMAGES_FOLDER_NAME);
+        return RESOURCE_PARENT_PATH.concat("/").concat(IMAGES_FOLDER_NAME);
     }
 
     private static String getSoundsFolderPath() {
-        return RISORSE.concat("/").concat(SOUNDS_FOLDER_NAME);
+        return RESOURCE_PARENT_PATH.concat("/").concat(SOUNDS_FOLDER_NAME);
     }
 
     private static String getFXMLFolderPath() {
-        return RISORSE.concat("/").concat(FXML_FOLDER_NAME);
+        return RESOURCE_PARENT_PATH.concat("/").concat(FXML_FOLDER_NAME);
     }
 
     private static String getSavingFolderPath() {
-        return RISORSE.concat("/").concat(SAVING_FOLDER_NAME);
+        return USER_HOME_PATH
+                .concat(File.separator).concat(".FlowerForce")
+                .concat(File.separator).concat(SAVING_FOLDER_NAME);
     }
 
     private static URL getURL(final String relativePath) {
