@@ -1,7 +1,7 @@
 package flowerforce.model;
 
-import flowerforce.model.entities.Zombie;
-import flowerforce.model.entities.ZombieFactory;
+import flowerforce.model.entities.zombies.Zombie;
+import flowerforce.model.entities.zombies.ZombieFactory;
 import flowerforce.model.game.YardInfo;
 import javafx.geometry.Point2D;
 import org.junit.jupiter.api.BeforeEach;

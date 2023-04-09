@@ -1,4 +1,4 @@
-package flowerforce.model.entities;
+package flowerforce.model.entities.zombies;
 
 import flowerforce.model.utilities.RenderingInformation;
 import javafx.geometry.Point2D;

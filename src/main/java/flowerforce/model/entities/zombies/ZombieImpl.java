@@ -1,5 +1,6 @@
-package flowerforce.model.entities;
+package flowerforce.model.entities.zombies;
 
+import flowerforce.model.entities.AbstractLivingEntity;
 import flowerforce.model.entities.plants.Plant;
 import flowerforce.model.utilities.RenderingInformation;
 import flowerforce.model.utilities.Timer;

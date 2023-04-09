@@ -1,9 +1,10 @@
 package flowerforce.model.game;
 
-import flowerforce.model.entities.Zombie;
 import javafx.geometry.Point2D;
 
 import java.util.function.Function;
+
+import flowerforce.model.entities.zombies.Zombie;
 
 /**
  * Models the game zombie generation in a level game.

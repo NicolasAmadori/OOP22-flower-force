@@ -1,6 +1,6 @@
 package flowerforce.model.game;
 
-import flowerforce.model.entities.Zombie;
+import flowerforce.model.entities.zombies.Zombie;
 
 /**
  * Models a zombie spawn.

@@ -1,5 +1,7 @@
-package flowerforce.model.entities;
+package flowerforce.model.entities.zombies;
 
+import flowerforce.model.entities.LivingEntity;
+import flowerforce.model.entities.MovingEntity;
 import flowerforce.model.entities.plants.Plant;
 
 /**

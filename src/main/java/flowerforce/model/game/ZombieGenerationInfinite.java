@@ -1,8 +1,8 @@
 package flowerforce.model.game;
 
-import flowerforce.model.entities.Zombie;
-
 import java.util.Optional;
+
+import flowerforce.model.entities.zombies.Zombie;
 
 
 /**
