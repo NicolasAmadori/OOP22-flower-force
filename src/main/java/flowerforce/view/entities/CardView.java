@@ -13,7 +13,7 @@ public interface CardView {
     Image getMenuImage();
 
     /**
-     * @return if it's present, return the cost of entity
+     * @return the cost of entity
      */
     int getCost();
 }

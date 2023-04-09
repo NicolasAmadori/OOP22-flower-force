@@ -55,7 +55,7 @@ public final class ShopSceneController {
                 !bought
         );
         if (bought) {
-            SoundManager.openShop();
+            SoundManager.shopEffect();
         }
         lblCoins.setText(this.application.getController().getPlayerCoins() + "$");
         changePlant();

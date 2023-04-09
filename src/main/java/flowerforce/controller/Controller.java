@@ -33,7 +33,7 @@ public interface Controller {
      * Start a new game for a specified level.
      * @param levelId The id of the level to play
      */
-    void startNewAdventureModelGame(int levelId);
+    void startNewAdventureModeGame(int levelId);
 
     /**
      * Start a new game in survival mode.
@@ -142,8 +142,8 @@ public interface Controller {
     void save();
 
     /**
-     * Get the Game Loop instance.
+     * Get the Game Loop Runnable, that has to run continuously.
      * @return the Game Loop already instantiated
      */
-    GameLoop getGameLoop();
+    Runnable getGameLoopRunnable();
 }

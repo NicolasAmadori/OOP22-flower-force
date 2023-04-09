@@ -6,7 +6,8 @@ import javafx.geometry.Dimension2D;
 import java.util.List;
 
 /**
- * Interface of the engine of the game view.
+ * Models the engine of the {@link GameScene},
+ * which allows the controller to control it through this interface.
  */
 public interface GameEngine {
 

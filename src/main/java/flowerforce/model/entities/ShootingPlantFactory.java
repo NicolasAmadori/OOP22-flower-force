@@ -35,7 +35,7 @@ public final class ShootingPlantFactory {
             pos,
             new TimerImpl(STANDARD_SHOOTING_TIME),
             STANDARD_SHOOTER_HEALTH,
-            () -> BulletFactory.createStandardBullet(new Point2D(pos.getX(), pos.getY())),
+            () -> BulletFactory.createStandardBullet(pos),
             COMMON_SHOOTER_COST,
             RechargeTimes.getFastRechargeTime(),
             "peashooter"
@@ -52,7 +52,7 @@ public final class ShootingPlantFactory {
             pos,
             new TimerImpl(STANDARD_SHOOTING_TIME),
             STANDARD_SHOOTER_HEALTH,
-            () -> BulletFactory.createSnowBullet(new Point2D(pos.getX(), pos.getY())),
+            () -> BulletFactory.createSnowBullet(pos),
             SNOW_SHOOTER_COST,
             RechargeTimes.getFastRechargeTime(),
             "snowshooter"
@@ -69,7 +69,7 @@ public final class ShootingPlantFactory {
             pos,
             new TimerImpl(STANDARD_SHOOTING_TIME),
             STANDARD_SHOOTER_HEALTH,
-            () -> BulletFactory.createFireBullet(new Point2D(pos.getX(), pos.getY())),
+            () -> BulletFactory.createFireBullet(pos),
             FIRE_SHOOTER_COST,
             RechargeTimes.getFastRechargeTime(),
             "fireshooter"
@@ -86,7 +86,7 @@ public final class ShootingPlantFactory {
             pos,
             new TimerImpl(STANDARD_SHOOTING_TIME / 2),
             STANDARD_SHOOTER_HEALTH,
-            () -> BulletFactory.createStandardBullet(new Point2D(pos.getX(), pos.getY())),
+            () -> BulletFactory.createStandardBullet(pos),
             FAST_SHOOTER_COST,
             RechargeTimes.getFastRechargeTime(),
             "fastshooter"
@@ -103,7 +103,7 @@ public final class ShootingPlantFactory {
             pos,
             new TimerImpl(STANDARD_SHOOTING_TIME * 10),
             STRONG_SHOOTER_HEALTH,
-            () -> BulletFactory.createStrongBullet(new Point2D(pos.getX(), pos.getY())),
+            () -> BulletFactory.createStrongBullet(pos),
             STRONG_SHOOTER_COST,
             RechargeTimes.getVerySlowRechargeTime(),
             "strongshooter"

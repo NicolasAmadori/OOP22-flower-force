@@ -39,7 +39,7 @@ public final class ControllerImpl implements Controller {
     /**
      * Create a new instance of Controller.
      */
-    public ControllerImpl() throws InstantiationException {
+    public ControllerImpl() {
         this.world = WorldSavingManager.load();
     }
 
@@ -136,7 +136,7 @@ public final class ControllerImpl implements Controller {
      * {@inheritDoc}
      */
     @Override
-    public void startNewAdventureModelGame(final int levelId) {
+    public void startNewAdventureModeGame(final int levelId) {
         this.resetGame();
         this.game = Optional.of(this.world.createAdventureModeGame(levelId));
     }
@@ -156,19 +156,19 @@ public final class ControllerImpl implements Controller {
     @Override
     public Set<EntityView> getPlacedPlants() {
         this.checkGame();
-        final Set<EntityInfo> plants = this.game.get().getPlacedPlants();
+        final Set<EntityInfo> updatedPlants = this.game.get().getPlacedPlants();
 
-        //region Plants
+        //region Update Plants
         final Set<EntityInfo> plantsToRemove = new HashSet<>();
         //Remove the entities that are no longer there
         this.previousPlant.keySet().forEach(p -> {
-            if (!plants.contains(p)) {
+            if (!updatedPlants.contains(p)) {
                 plantsToRemove.add(p);
             }
         });
-        plantsToRemove.forEach(p -> this.previousPlant.remove(p));
+        plantsToRemove.forEach(this.previousPlant::remove);
         //Create the plant EntityView if plant not already present
-        plants.forEach(p -> {
+        updatedPlants.forEach(p -> {
             if (!this.previousPlant.containsKey(p)) {
                 this.previousPlant.put(p, this.entityConverter.getPlantView(p));
             }
@@ -184,17 +184,17 @@ public final class ControllerImpl implements Controller {
     @Override
     public Set<EntityView> getPlacedZombies() {
         this.checkGame();
-        final Set<EntityInfo> zombies = this.game.get().getPlacedZombies();
+        final Set<EntityInfo> updatedZombies = this.game.get().getPlacedZombies();
 
-        //region Zombies
+        //region Update Zombies
         final Set<EntityInfo> zombiesToRemove = new HashSet<>();
         this.previousZombie.keySet().forEach(z -> {
-            if (!zombies.contains(z)) {
+            if (!updatedZombies.contains(z)) {
                 zombiesToRemove.add(z);
             }
         });
-        zombiesToRemove.forEach(z -> this.previousZombie.remove(z));
-        zombies.forEach(z -> {
+        zombiesToRemove.forEach(this.previousZombie::remove);
+        updatedZombies.forEach(z -> {
             if (this.previousZombie.containsKey(z)) {
                 this.entityConverter.changeZombieViewPosition(this.previousZombie.get(z), z.getPosition());
             } else {
@@ -212,17 +212,17 @@ public final class ControllerImpl implements Controller {
     @Override
     public Set<EntityView> getPlacedBullets() {
         this.checkGame();
-        final Set<EntityInfo> bullets = this.game.get().getPlacedBullet();
+        final Set<EntityInfo> updatedBullets = this.game.get().getPlacedBullet();
 
-        //region Bullets
+        //region Update Bullets
         final Set<EntityInfo> bulletToRemove = new HashSet<>();
         this.previousBullet.keySet().forEach(b -> {
-            if (!bullets.contains(b)) {
+            if (!updatedBullets.contains(b)) {
                 bulletToRemove.add(b);
             }
         });
-        bulletToRemove.forEach(b -> this.previousBullet.remove(b));
-        bullets.forEach(b -> {
+        bulletToRemove.forEach(this.previousBullet::remove);
+        updatedBullets.forEach(b -> {
             if (this.previousBullet.containsKey(b)) {
                 this.entityConverter.changeBulletViewPosition(this.previousBullet.get(b), b.getPosition());
             } else {
@@ -309,7 +309,7 @@ public final class ControllerImpl implements Controller {
      * {@inheritDoc}
      */
     @Override
-    public GameLoop getGameLoop() {
+    public Runnable getGameLoopRunnable() {
         checkGame();
         checkGameEngine();
         this.gameEngine.get().loadCards(this.getCards());
@@ -340,6 +340,5 @@ public final class ControllerImpl implements Controller {
         this.previousPlant.clear();
         this.previousZombie.clear();
         this.previousBullet.clear();
-        this.purchasablePlants.clear();
     }
 }

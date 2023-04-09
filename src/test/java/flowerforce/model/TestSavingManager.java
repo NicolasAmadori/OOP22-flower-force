@@ -12,14 +12,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 final class TestSavingManager {
 
     private static final String FILE_NAME = "player";
-    private Player player;
+    private Player player = new PlayerImpl();
 
     /**
      * Sets up the testing.
      */
     @BeforeEach
-    void setUp() {
-        player = new PlayerImpl(); //The default player has 0 coins
+    void setup() {
+        this.player = new PlayerImpl(); //The default player has 0 coins
     }
 
     /**
@@ -28,6 +28,14 @@ final class TestSavingManager {
     @Test
     void testSaving() {
         final SaveManager<PlayerImpl> playerSaveManager = new SaveManager<>(PlayerImpl.class, FILE_NAME);
+
+        //CHECKSTYLE: MagicNumber OFF
+        //random operation to modify player values (the numbers are random)
+        this.player.addCoins(160);
+        this.player.addNewScore(56_560);
+        //CHECKSTYLE: MagicNumber ON
+        this.player.unlockedNextLevel();
+        this.player.unlockedNextLevel();
         playerSaveManager.save((PlayerImpl) this.player); //cast to save the player
 
         final Optional<PlayerImpl> newPlayer = playerSaveManager.load();
@@ -39,5 +47,7 @@ final class TestSavingManager {
         assertEquals(this.player.getScoreRecord(), newPlayer.get().getScoreRecord());
         assertEquals(this.player.getPlantsIds(), newPlayer.get().getPlantsIds());
         assertEquals(this.player.getLastUnlockedLevelId(), newPlayer.get().getLastUnlockedLevelId());
+
+        playerSaveManager.save(new PlayerImpl()); //save the empty player
     }
 }

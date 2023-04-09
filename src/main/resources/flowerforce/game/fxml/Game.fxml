@@ -4,6 +4,7 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -53,9 +54,9 @@
             </ImageView>
          </children>
       </StackPane>
-      <FlowPane columnHalignment="CENTER" layoutX="210.0" layoutY="77.0" prefHeight="885.0" prefWidth="135.0" vgap="10.0">
+      <FlowPane columnHalignment="CENTER" layoutX="210.0" layoutY="77.0" prefHeight="793.0" prefWidth="134.0" vgap="10.0">
          <children>
-            <AnchorPane>
+            <AnchorPane style="-fx-border-color: grey;">
                <children>
                   <ImageView fx:id="card0" disable="true" fitWidth="150.0" onMouseClicked="#selectCard" pickOnBounds="true" preserveRatio="true" visible="false">
                      <cursor>
@@ -69,7 +70,7 @@
                   </Label>
                </children>
             </AnchorPane>
-            <AnchorPane>
+            <AnchorPane style="-fx-border-color: grey;">
                <children>
                   <ImageView fx:id="card1" disable="true" fitWidth="150.0" onMouseClicked="#selectCard" pickOnBounds="true" preserveRatio="true" visible="false">
                      <cursor>
@@ -83,7 +84,7 @@
                   </Label>
                </children>
             </AnchorPane>
-            <AnchorPane>
+            <AnchorPane style="-fx-border-color: grey;">
                <children>
                   <ImageView fx:id="card2" disable="true" fitWidth="150.0" onMouseClicked="#selectCard" pickOnBounds="true" preserveRatio="true" visible="false">
                      <cursor>
@@ -97,7 +98,7 @@
                   </Label>
                </children>
             </AnchorPane>
-            <AnchorPane>
+            <AnchorPane style="-fx-border-color: grey;">
                <children>
                   <ImageView fx:id="card3" disable="true" fitWidth="150.0" onMouseClicked="#selectCard" pickOnBounds="true" preserveRatio="true" visible="false">
                      <cursor>
@@ -111,7 +112,7 @@
                   </Label>
                </children>
             </AnchorPane>
-            <AnchorPane>
+            <AnchorPane style="-fx-border-color: grey;">
                <children>
                   <ImageView fx:id="card4" disable="true" fitWidth="150.0" onMouseClicked="#selectCard" pickOnBounds="true" preserveRatio="true" visible="false">
                      <cursor>
@@ -125,7 +126,7 @@
                   </Label>
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="10.0" layoutY="467.0">
+            <AnchorPane layoutX="10.0" layoutY="467.0" style="-fx-border-color: grey;">
                <children>
                   <ImageView fx:id="card5" disable="true" fitWidth="150.0" onMouseClicked="#selectCard" pickOnBounds="true" preserveRatio="true" visible="false">
                      <cursor>
@@ -139,7 +140,7 @@
                   </Label>
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="10.0" layoutY="582.0">
+            <AnchorPane layoutX="10.0" layoutY="582.0" style="-fx-border-color: grey;">
                <children>
                   <ImageView fx:id="card6" disable="true" fitWidth="150.0" onMouseClicked="#selectCard" pickOnBounds="true" preserveRatio="true" visible="false">
                      <cursor>
@@ -153,7 +154,7 @@
                   </Label>
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="10.0" layoutY="678.0">
+            <AnchorPane layoutX="10.0" layoutY="678.0" style="-fx-border-color: grey;">
                <children>
                   <ImageView fx:id="card7" disable="true" fitWidth="150.0" onMouseClicked="#selectCard" pickOnBounds="true" preserveRatio="true" visible="false">
                      <cursor>
@@ -167,7 +168,7 @@
                   </Label>
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="10.0" layoutY="717.0">
+            <AnchorPane layoutX="10.0" layoutY="717.0" style="-fx-border-color: grey;">
                <children>
                   <ImageView fx:id="card8" disable="true" fitWidth="150.0" onMouseClicked="#selectCard" pickOnBounds="true" preserveRatio="true" visible="false">
                      <cursor>
@@ -233,5 +234,13 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
+      <ToggleButton layoutX="14.0" layoutY="1024.0" mnemonicParsing="false" onMouseClicked="#changeSoundMute" prefHeight="40.0" prefWidth="122.0" style="-fx-background-image: url(volume.png);" text="Mute sounds">
+         <graphic>
+            <ImageView fitHeight="39.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/common/volume.png" />
+               </image>
+            </ImageView>
+         </graphic></ToggleButton>
    </children>
 </AnchorPane>

@@ -1,7 +1,5 @@
 package flowerforce.view.game;
 
-import flowerforce.common.ResourceFinder;
-
 /**
  * Models the Menu screen.
  */
@@ -14,7 +12,7 @@ public class MenuScene extends AbstractFlowerForceScene {
      * @param application the application that displays the scene
      */
     public MenuScene(final FlowerForceApplication application) {
-        super(ResourceFinder.getFXMLPath(FXML_FILE_NAME), new MenuSceneController(application));
+        super(FXML_FILE_NAME, new MenuSceneController(application));
     }
 
 }

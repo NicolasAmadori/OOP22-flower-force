@@ -3,7 +3,7 @@ package flowerforce.view.game;
 import flowerforce.controller.Controller;
 
 /**
- * Models the view of the entire application.
+ * Models the central interface of the view.
  */
 public interface FlowerForceView {
 
@@ -14,7 +14,7 @@ public interface FlowerForceView {
 
     /**
      * This method is called to start an Adventure Mode game (i.e. a level).
-     * @param levelId
+     * @param levelId the id of the selected level
      */
     void adventureModeGame(int levelId);
 

@@ -16,6 +16,8 @@ import flowerforce.view.utilities.SoundManager;
 import javafx.fxml.FXML;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.effect.Bloom;
@@ -29,8 +31,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 
 /**
- * JavaFx controller of the {@link GameScene},
- * it's also linked with main controller through {@link GameEngine} interface.
+ * This class is the JavaFx controller of the {@link GameScene}.
+ * It also implements {@link GameEngine} interface methods, needed by the main controller.
  */
 public final class GameSceneController implements GameEngine {
 
@@ -80,6 +82,8 @@ public final class GameSceneController implements GameEngine {
     private Optional<ImageView> cardSelected = Optional.empty();
     private boolean isShovelSelected;
     private boolean isFirstZombie = true;
+    private boolean isSoundMuted;
+    private boolean isOver;
 
     /**
      * Creates a new {@link GameSceneController}.
@@ -145,7 +149,7 @@ public final class GameSceneController implements GameEngine {
         if (!this.isShovelSelected) {
             this.removeBloomEffect();
             this.isShovelSelected = true;
-            SoundManager.useShovel();
+            this.handleSound(SoundManager::useShovel);
             this.addBloomEffect();
         }
     }
@@ -155,7 +159,7 @@ public final class GameSceneController implements GameEngine {
         if (!(this.cardSelected.isPresent() && this.cardSelected.get().equals((ImageView) event.getSource()))) {
             this.removeBloomEffect();
             this.cardSelected = Optional.of((ImageView) (event.getSource()));
-            SoundManager.cardSelected();
+            this.handleSound(SoundManager::cardSelected);
             this.addBloomEffect();
         }
     }
@@ -174,10 +178,10 @@ public final class GameSceneController implements GameEngine {
             if (this.cardSelected.isPresent()
                     && this.application.getController().placePlant(this.cards.get(this.cardSelected.get()), row, col)) {
                 this.removeBloomEffect();
-                SoundManager.plantPlaced();
+                this.handleSound(SoundManager::plantPlaced);
             } else if (this.isShovelSelected && this.application.getController().removePlant(row, col)) {
                 this.removeBloomEffect();
-                SoundManager.useShovel();
+                this.handleSound(SoundManager::useShovel);
             }
         } else {
             this.removeBloomEffect();
@@ -196,8 +200,30 @@ public final class GameSceneController implements GameEngine {
     }
 
     @FXML
+    void changeSoundMute() {
+        this.isSoundMuted = !this.isSoundMuted; //mute or unmute sounds
+    }
+
+    private void handleSound(final Runnable runnable) {
+        if (!this.isSoundMuted) {
+            runnable.run();
+        }
+    }
+
+    @FXML
     void selectMenu(final MouseEvent event) {
-        this.application.menu();
+        if (!isOver) {
+            final Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirm dialog");
+            alert.setHeaderText("Are you sure to leave?");
+            alert.setContentText("Progress of this game will not be saved");
+            final Optional<ButtonType> result = alert.showAndWait();
+            if (result.get().equals(ButtonType.OK)) {
+                this.application.menu();
+            }
+        } else {
+            this.application.menu();
+        }
     }
 
     private int getRow(final double y) {
@@ -252,31 +278,31 @@ public final class GameSceneController implements GameEngine {
         final Set<EntityView> placedBullets = this.application.getController().getPlacedBullets();
         //plants
         if (this.removeEntities(placedPlants, this.drawnPlants)) {
-            SoundManager.zombieHasEaten();
+            this.handleSound(SoundManager::zombieHasEaten);
         }
         this.updateEntities(placedPlants, this.drawnPlants);
         if (this.addEntities(placedPlants, this.drawnPlants)) {
-            SoundManager.plantPlaced();
+            this.handleSound(SoundManager::plantPlaced);
         }
         //zombies
         if (this.removeEntities(placedZombies, this.drawnZombies)) {
-            SoundManager.zombieDied();
+            this.handleSound(SoundManager::zombieDied);
         }
         this.updateEntities(placedZombies, this.drawnZombies);
         if (this.addEntities(placedZombies, this.drawnZombies)) {
             if (this.isFirstZombie) {
-                SoundManager.zombiesAreComing();
+                this.handleSound(SoundManager::zombiesAreComing);
                 this.isFirstZombie = false;
             }
-            SoundManager.zombieGroan();
+            this.handleSound(SoundManager::zombieGroan);
         }
         //bullets
         if (this.removeEntities(placedBullets, this.drawnBullets)) {
-            SoundManager.bulletHit();
+            this.handleSound(SoundManager::bulletHit);
         }
         this.updateEntities(placedBullets, this.drawnBullets);
         if (this.addEntities(placedBullets, this.drawnBullets)) {
-            SoundManager.bulletShot();
+            this.handleSound(SoundManager::bulletShot);
         }
 
     }
@@ -317,11 +343,11 @@ public final class GameSceneController implements GameEngine {
         final Set<EntityView> damagedEntities = this.application.getController().getDamagedEntities();
         //plants
         if (this.damageDrawnEntities(damagedEntities, this.drawnPlants)) {
-            SoundManager.zombieEating();
+            this.handleSound(SoundManager::zombieEating);
         }
         //zombies
         if (this.damageDrawnEntities(damagedEntities, this.drawnZombies)) {
-            SoundManager.bulletHit();
+            this.handleSound(SoundManager::bulletHit);
         }
     }
 
@@ -377,6 +403,7 @@ public final class GameSceneController implements GameEngine {
      */
     @Override
     public void over(final boolean isWon) {
+        this.isOver = true;
         this.resultPane.setVisible(true);
         this.resultPane.setDisable(false);
         this.resultPane.toFront();
@@ -385,9 +412,9 @@ public final class GameSceneController implements GameEngine {
         this.removeBloomEffect();
         this.cards.keySet().forEach(card -> card.setDisable(true));
         if (isWon) {
-            imageResult.setImage(new Image(ResourceFinder.getCommonImagePath("victory.png")));
+            imageResult.setImage(new Image(ResourceFinder.getCommonImagePath("victory.png").toExternalForm()));
         } else {
-            imageResult.setImage(new Image(ResourceFinder.getCommonImagePath("loss.png")));
+            imageResult.setImage(new Image(ResourceFinder.getCommonImagePath("loss.png").toExternalForm()));
         }
     }
 }
