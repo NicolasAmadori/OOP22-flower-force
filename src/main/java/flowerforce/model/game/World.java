@@ -9,7 +9,7 @@ public interface World {
 
     /**
      * 
-     * @return the current player
+     * @return the player that is playing the game
      */
     Player getPlayer();
 

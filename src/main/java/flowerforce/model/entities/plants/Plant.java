@@ -1,4 +1,6 @@
-package flowerforce.model.entities;
+package flowerforce.model.entities.plants;
+
+import flowerforce.model.entities.LivingEntity;
 
 /**
  * An interface modelling any kind of plants.

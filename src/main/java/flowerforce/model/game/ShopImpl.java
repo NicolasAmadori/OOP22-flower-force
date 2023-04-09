@@ -1,12 +1,12 @@
 package flowerforce.model.game;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import flowerforce.model.entities.Plant;
 import flowerforce.model.entities.PlantInfo;
 import flowerforce.model.entities.PlantInfoImpl;
-import flowerforce.model.entities.ShootingPlantFactory;
-import flowerforce.model.entities.SunflowerFactory;
-import flowerforce.model.entities.CherryBomb;
+import flowerforce.model.entities.plants.CherryBomb;
+import flowerforce.model.entities.plants.Plant;
+import flowerforce.model.entities.plants.ShootingPlantFactory;
+import flowerforce.model.entities.plants.SunflowerFactory;
 import javafx.util.Pair;
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,5 +1,7 @@
 package flowerforce.model.entities;
 
+import flowerforce.model.entities.plants.Plant;
+
 /**
  * Models a zombie that is both {@link MovingEntity} and {@link LivingEntity}.
  */

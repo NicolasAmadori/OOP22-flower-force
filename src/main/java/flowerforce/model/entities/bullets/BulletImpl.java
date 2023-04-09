@@ -1,8 +1,10 @@
-package flowerforce.model.entities;
+package flowerforce.model.entities.bullets;
 
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import flowerforce.model.entities.AbstractEntity;
+import flowerforce.model.entities.Zombie;
 import flowerforce.model.utilities.RenderingInformation;
 import javafx.geometry.Point2D;
 
