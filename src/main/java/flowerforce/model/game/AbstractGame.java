@@ -2,15 +2,15 @@ package flowerforce.model.game;
 
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import flowerforce.model.entities.PlantInfo;
 import flowerforce.model.entities.bullets.Bullet;
 import flowerforce.model.entities.plants.ExplodingPlant;
 import flowerforce.model.entities.plants.Plant;
+import flowerforce.model.entities.plants.PlantInfo;
+import flowerforce.model.entities.plants.PlantInfoImpl;
 import flowerforce.model.entities.plants.ShootingPlant;
 import flowerforce.model.entities.plants.Sunflower;
 import flowerforce.model.entities.zombies.Zombie;
 import flowerforce.model.entities.EntityInfo;
-import flowerforce.model.entities.PlantInfoImpl;
 import flowerforce.model.entities.Entity;
 import flowerforce.model.entities.LivingEntity;
 

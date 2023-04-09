@@ -13,7 +13,7 @@ import flowerforce.controller.utilities.CardGenerator;
 import flowerforce.controller.utilities.EntityConverter;
 import flowerforce.controller.utilities.WorldSavingManager;
 import flowerforce.model.entities.EntityInfo;
-import flowerforce.model.entities.PlantInfo;
+import flowerforce.model.entities.plants.PlantInfo;
 import flowerforce.model.game.Game;
 import flowerforce.model.game.World;
 import flowerforce.controller.utilities.EntityConverterImpl;
