@@ -5,8 +5,7 @@ import flowerforce.model.utilities.TimerImpl;
 import javafx.geometry.Point2D;
 
 /**
- * Models a CherryBomb, an exploding plant that explodes after a certain time
- * and damages enemies in its and adjacent cells.
+ * Models a CherryBomb, a plant that explodes.
  */
 public class CherryBomb extends BaseExplodingPlant {
 
