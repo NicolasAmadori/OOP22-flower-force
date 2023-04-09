@@ -118,7 +118,7 @@ public final class ResourceFinder {
 
     private static String getSavingFolderPath() {
         return USER_HOME_PATH
-                .concat(File.separator).concat(".FlowerForce")
+                .concat(File.separator).concat(".flowerforce")
                 .concat(File.separator).concat(SAVING_FOLDER_NAME);
     }
 
