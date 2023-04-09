@@ -1,7 +1,7 @@
 package flowerforce.view.game;
 
 /**
- * Models the Menu screen.
+ * Models the Menu scene.
  */
 public class MenuScene extends AbstractFlowerForceScene {
 
