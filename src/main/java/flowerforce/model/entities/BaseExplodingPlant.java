@@ -8,7 +8,7 @@ import javafx.geometry.Point2D;
 /**
  * This is an implementation of {@link ExplodingPlant}.
  */
-public abstract class AbstractExplodingPlant extends AbstractPlant implements ExplodingPlant {
+public class BaseExplodingPlant extends AbstractPlant implements ExplodingPlant {
 
     private final int damage;
     private final int radius;
@@ -24,7 +24,7 @@ public abstract class AbstractExplodingPlant extends AbstractPlant implements Ex
      * @param radius the explosion radius
      * @param plantName the plant's name
      */
-    protected AbstractExplodingPlant(
+    protected BaseExplodingPlant(
         final Point2D pos,
         final Timer timer,
         final int health,
