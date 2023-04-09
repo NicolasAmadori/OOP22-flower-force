@@ -1,6 +1,7 @@
 package flowerforce.model.entities;
 
 import java.util.Optional;
+
 /**
  * Models a plant that shoots bullets.
  */

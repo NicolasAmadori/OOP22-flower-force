@@ -4,7 +4,7 @@ import flowerforce.model.utilities.Timer;
 import javafx.geometry.Point2D;
 
 /**
- * Represents a generic living entity.
+ * This class implements commons aspects to all living entities.
  */
 public abstract class AbstractLivingEntity extends AbstractEntity implements LivingEntity {
 

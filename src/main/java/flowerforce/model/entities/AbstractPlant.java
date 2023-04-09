@@ -4,7 +4,7 @@ import flowerforce.model.utilities.Timer;
 import javafx.geometry.Point2D;
 
 /**
- * Models a generic plant.
+ * This abstract class implements some aspects common to all Plant objects.
  */
 public abstract class AbstractPlant extends AbstractLivingEntity implements Plant {
 

@@ -7,7 +7,7 @@ import flowerforce.model.utilities.Timer;
 import javafx.geometry.Point2D;
 
 /**
- * Models a generical plant that shoots bullets.
+ * This is an implementation of {@link ShootingPlant}.
  */
 public class ShootingPlantImpl extends AbstractPlant implements ShootingPlant {
 

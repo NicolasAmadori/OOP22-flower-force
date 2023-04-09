@@ -3,7 +3,7 @@ package flowerforce.model.entities;
 import flowerforce.model.utilities.RenderingInformation;
 
 /**
- * This class contains the possible plant's recharge times in the game.
+ * This utility class contains the possible plant's recharge times in the game.
  */
 public final class RechargeTimes {
     private static final double FAST_RECHARGE_SECS = 7.5;

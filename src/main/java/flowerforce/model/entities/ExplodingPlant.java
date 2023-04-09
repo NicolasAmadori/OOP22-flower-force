@@ -3,7 +3,8 @@ package flowerforce.model.entities;
 import java.util.Set;
 
 /**
- * Models a plant that explodes.
+ * Models a plant that explodes after a certain time
+ * and damages enemies in its and adjacent cells.
  */
 public interface ExplodingPlant extends Plant {
 
