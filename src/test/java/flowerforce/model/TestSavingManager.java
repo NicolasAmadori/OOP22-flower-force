@@ -36,7 +36,7 @@ final class TestSavingManager {
         //CHECKSTYLE: MagicNumber ON
         this.player.unlockedNextLevel();
         this.player.unlockedNextLevel();
-        playerSaveManager.save((PlayerImpl) this.player); //cast to save the player
+        assertTrue(playerSaveManager.save((PlayerImpl) this.player)); //cast to save the player
 
         final Optional<PlayerImpl> newPlayer = playerSaveManager.load();
         assertTrue(newPlayer.isPresent());
@@ -48,6 +48,6 @@ final class TestSavingManager {
         assertEquals(this.player.getPlantsIds(), newPlayer.get().getPlantsIds());
         assertEquals(this.player.getLastUnlockedLevelId(), newPlayer.get().getLastUnlockedLevelId());
 
-        playerSaveManager.save(new PlayerImpl()); //save the empty player
+        assertTrue(playerSaveManager.save(new PlayerImpl())); //save the empty player
     }
 }
