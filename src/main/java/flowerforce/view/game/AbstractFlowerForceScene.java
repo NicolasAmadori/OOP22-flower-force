@@ -23,7 +23,7 @@ public abstract class AbstractFlowerForceScene implements FlowerForceScene {
     protected AbstractFlowerForceScene(final String fxmlFileName, final Object controller) {
         try {
             final FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(ResourceFinder.getFXMLPath(fxmlFileName));
+            loader.setLocation(ResourceFinder.getFXMLURL(fxmlFileName));
             loader.setController(controller);
             final AnchorPane root = loader.load();
             this.scene = FlowerForceApplication.getScaledScene(root);

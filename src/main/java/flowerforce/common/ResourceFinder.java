@@ -5,7 +5,7 @@ import java.net.URL;
 import java.util.NoSuchElementException;
 
 /**
- * Utility class to get resources complete path.
+ * Utility class to get resources url by just giving the name of them.
  */
 public final class ResourceFinder {
 
@@ -35,64 +35,64 @@ public final class ResourceFinder {
     /**
      * Get the image path for a common element.
      * @param filename the name of the file
-     * @return the absolute path of the common element
+     * @return The URL instance of the common image file
      */
-    public static URL getCommonImagePath(final String filename) {
-        return getImagePath(COMMON_IMAGES_FOLDER_NAME.concat("/").concat(filename));
+    public static URL getCommonImageURL(final String filename) {
+        return getImageURL(COMMON_IMAGES_FOLDER_NAME.concat("/").concat(filename));
     }
 
     /**
      * Get the image for a Plant.
      * @param filename the name of the file
-     * @return the absolute path of the plant image
+     * @return The URL instance of the plant image file
      */
-    public static URL getPlantImagePath(final String filename) {
-        return getImagePath(PLANTS_IMAGES_FOLDER_NAME.concat("/").concat(filename));
+    public static URL getPlantImageURL(final String filename) {
+        return getImageURL(PLANTS_IMAGES_FOLDER_NAME.concat("/").concat(filename));
     }
 
     /**
      * Get the image for a Zombie.
      * @param filename the name of the file
-     * @return the absolute path of the zombie image
+     * @return The URL instance of the zombie image file
      */
-    public static URL getZombieImagePath(final String filename) {
-        return getImagePath(ZOMBIES_IMAGES_FOLDER_NAME.concat("/").concat(filename));
+    public static URL getZombieImageURL(final String filename) {
+        return getImageURL(ZOMBIES_IMAGES_FOLDER_NAME.concat("/").concat(filename));
     }
 
     /**
      * Get the image for a Bullet.
      * @param filename the name of the file
-     * @return the absolute path of the bullet image
+     * @return The URL instance of the bullet image file
      */
-    public static URL getBulletImagePath(final String filename) {
-        return getImagePath(BULLETS_IMAGES_FOLDER_NAME.concat("/").concat(filename));
+    public static URL getBulletImageURL(final String filename) {
+        return getImageURL(BULLETS_IMAGES_FOLDER_NAME.concat("/").concat(filename));
     }
 
     /**
      * Get the complete path of a generic image (not plant, zombie or bullet).
      * @param filename The complete name of the image requested
-     * @return A string representing the absolute path of the image file
+     * @return The URL instance of the image file
      */
-    private static URL getImagePath(final String filename) {
-        return getURL(getImagesFolderPath().concat("/").concat(filename));
+    private static URL getImageURL(final String filename) {
+        return getResourceURL(getImagesFolderPath().concat("/").concat(filename));
     }
 
     /**
      * Get the complete path of a fxml file.
      * @param filename The complete name of the fxml file requested
-     * @return A string representing the absolute path of the fxml file
+     * @return The URL instance of the fxml file
      */
-    public static URL getFXMLPath(final String filename) {
-        return getURL(getFXMLFolderPath().concat("/").concat(filename));
+    public static URL getFXMLURL(final String filename) {
+        return getResourceURL(getFXMLFolderPath().concat("/").concat(filename));
     }
 
     /**
      * Get the complete path of a sound file.
      * @param filename The complete name of the sound file requested
-     * @return A string representing the absolute path of the sound file
+     * @return The URL instance of the sound file
      */
-    public static URL getSoundPath(final String filename) {
-        return getURL(getSoundsFolderPath().concat("/").concat(filename));
+    public static URL getSoundURL(final String filename) {
+        return getResourceURL(getSoundsFolderPath().concat("/").concat(filename));
     }
 
     /**
@@ -122,7 +122,7 @@ public final class ResourceFinder {
                 .concat(File.separator).concat(SAVING_FOLDER_NAME);
     }
 
-    private static URL getURL(final String relativePath) {
+    private static URL getResourceURL(final String relativePath) {
         final URL url = ResourceFinder.class.getResource(relativePath);
         if (url == null) {
             throw new NoSuchElementException("The requested resource does not exists (" + relativePath + ").");

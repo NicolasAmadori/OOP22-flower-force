@@ -44,7 +44,7 @@ public final class FlowerForceApplication extends Application implements FlowerF
         this.stage = primaryStage;
         this.controller = new ControllerImpl();
         this.stage.setResizable(false);
-        this.stage.getIcons().add(new Image(ResourceFinder.getCommonImagePath(GAMEICON_NAME).toExternalForm()));
+        this.stage.getIcons().add(new Image(ResourceFinder.getCommonImageURL(GAMEICON_NAME).toExternalForm()));
         this.stage.setOnCloseRequest(e -> {
             Platform.exit();
         });

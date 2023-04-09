@@ -23,7 +23,7 @@ public final class CardGenerator {
      * @return The cardView instance
      */
     public static CardView getCardView(final PlantInfo plantInfo) {
-        final String completeImagePath = ResourceFinder.getPlantImagePath(
+        final String completeImagePath = ResourceFinder.getPlantImageURL(
                 plantInfo.getName().concat(CARD_SUFFIX).concat(IMAGES_EXTENSION)).toExternalForm();
         return new CardViewImpl(plantInfo.getCost(), completeImagePath);
     }
