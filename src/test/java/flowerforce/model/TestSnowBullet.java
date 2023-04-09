@@ -9,11 +9,11 @@ import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import flowerforce.model.entities.Bullet;
-import flowerforce.model.entities.ShootingPlant;
-import flowerforce.model.entities.ShootingPlantFactory;
 import flowerforce.model.entities.Zombie;
 import flowerforce.model.entities.ZombieFactory;
+import flowerforce.model.entities.bullets.Bullet;
+import flowerforce.model.entities.plants.ShootingPlant;
+import flowerforce.model.entities.plants.ShootingPlantFactory;
 import javafx.geometry.Point2D;
 
 

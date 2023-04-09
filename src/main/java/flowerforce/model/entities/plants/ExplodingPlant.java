@@ -1,6 +1,8 @@
-package flowerforce.model.entities;
+package flowerforce.model.entities.plants;
 
 import java.util.Set;
+
+import flowerforce.model.entities.Zombie;
 
 /**
  * Models a plant that explodes after a certain time

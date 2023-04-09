@@ -1,4 +1,4 @@
-package flowerforce.model.entities;
+package flowerforce.model.entities.plants;
 
 import flowerforce.model.utilities.RenderingInformation;
 
@@ -20,7 +20,7 @@ public final class RechargeTimes {
      * 
      * @return a fast plant's recharge time
      */
-    static int getFastRechargeTime() {
+    public static int getFastRechargeTime() {
         return FAST_RECHARGE_TICKS;
     }
 
@@ -28,7 +28,7 @@ public final class RechargeTimes {
      * 
      * @return a slow plant's recharge time
      */
-    static int getSlowRechargeTime() {
+    public static int getSlowRechargeTime() {
         return SLOW_RECHARGE_TICKS;
     }
 
@@ -36,7 +36,7 @@ public final class RechargeTimes {
      * 
      * @return a very slow plant's recharge time
      */
-    static int getVerySlowRechargeTime() {
+    public static int getVerySlowRechargeTime() {
         return VERY_SLOW_RECHARGE_TICKS;
     }
 }

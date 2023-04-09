@@ -1,5 +1,6 @@
-package flowerforce.model.entities;
+package flowerforce.model.entities.plants;
 
+import flowerforce.model.entities.bullets.BulletFactory;
 import flowerforce.model.utilities.RenderingInformation;
 import flowerforce.model.utilities.TimerImpl;
 import javafx.geometry.Point2D;

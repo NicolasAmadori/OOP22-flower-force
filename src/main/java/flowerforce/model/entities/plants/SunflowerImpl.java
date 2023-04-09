@@ -1,4 +1,4 @@
-package flowerforce.model.entities;
+package flowerforce.model.entities.plants;
 
 import flowerforce.model.utilities.Timer;
 import javafx.geometry.Point2D;

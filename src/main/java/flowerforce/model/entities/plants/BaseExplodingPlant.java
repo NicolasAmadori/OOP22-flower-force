@@ -1,7 +1,8 @@
-package flowerforce.model.entities;
+package flowerforce.model.entities.plants;
 
 import java.util.Set;
 
+import flowerforce.model.entities.Zombie;
 import flowerforce.model.utilities.Timer;
 import javafx.geometry.Point2D;
 

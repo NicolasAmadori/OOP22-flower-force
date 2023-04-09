@@ -1,4 +1,4 @@
-package flowerforce.model.entities;
+package flowerforce.model.entities.bullets;
 
 import javafx.geometry.Point2D;
 
