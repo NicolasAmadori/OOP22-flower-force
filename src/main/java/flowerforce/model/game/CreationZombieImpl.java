@@ -19,7 +19,6 @@ public class CreationZombieImpl implements CreationZombie {
     private int levelZombieToSpawn;
     private int prevRow = -1;
     private final Random rand = new Random();
-    int zombie = 0;
 
     private static final Point2D TEMPORARY_POSITION = new Point2D(0, 0);
 
@@ -67,7 +66,6 @@ public class CreationZombieImpl implements CreationZombie {
                         ));
             }
         }
-        System.out.println("jajaj");
         return ZombieFactory.basic(YardInfo.getEntityPosition(
                 row,
                 YardInfo.getColsNum() - 1
