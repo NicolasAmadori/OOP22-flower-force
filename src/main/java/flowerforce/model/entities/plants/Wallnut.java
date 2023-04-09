@@ -1,11 +1,11 @@
-package flowerforce.model.entities;
+package flowerforce.model.entities.plants;
 
 import flowerforce.model.utilities.RenderingInformation;
 import flowerforce.model.utilities.TimerImpl;
 import javafx.geometry.Point2D;
 
 /**
- * Models a Nut, a tank plant that loses life the more times passes.
+ * Models a Wallnut, a tank plant that loses life the more time goes by.
  */
 public class Wallnut extends AbstractPlant {
 

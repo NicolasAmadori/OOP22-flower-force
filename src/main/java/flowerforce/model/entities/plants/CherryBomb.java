@@ -1,14 +1,13 @@
-package flowerforce.model.entities;
+package flowerforce.model.entities.plants;
 
 import flowerforce.model.utilities.RenderingInformation;
 import flowerforce.model.utilities.TimerImpl;
 import javafx.geometry.Point2D;
 
 /**
- * Models a CherryBomb, an exploding plant that explodes after a certain time
- * and damages enemies in its and adjacent cells.
+ * Models a CherryBomb, a plant that explodes.
  */
-public class CherryBomb extends AbstractExplodingPlant {
+public class CherryBomb extends BaseExplodingPlant {
 
     private static final int CHERRY_HEALTH = 3000;
     private static final int CHERRY_COST = 150;

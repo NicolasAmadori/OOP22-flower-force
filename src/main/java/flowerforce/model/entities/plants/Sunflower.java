@@ -1,4 +1,4 @@
-package flowerforce.model.entities;
+package flowerforce.model.entities.plants;
 
 /**
  * Models a plant that doesn't shoot bullets and produce suns.

@@ -6,6 +6,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+
 /**
  * Manages JavaFX Menu scene.
  */

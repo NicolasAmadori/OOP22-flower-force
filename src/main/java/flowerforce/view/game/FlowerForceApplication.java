@@ -7,6 +7,7 @@ import flowerforce.controller.ControllerImpl;
 import flowerforce.view.utilities.SoundManager;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.geometry.Bounds;
 import javafx.geometry.Dimension2D;
 import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
@@ -22,6 +23,7 @@ import javafx.stage.Stage;
  */
 public final class FlowerForceApplication extends Application implements FlowerForceView {
 
+    // percentage of screen's width or height to be occupied by the application
     private static final double SCREEN_FILL_INDEX = 0.8;
 
     private Controller controller;
@@ -29,7 +31,9 @@ public final class FlowerForceApplication extends Application implements FlowerF
     private static final String GAMEICON_NAME = "icon.png";
     private Stage stage;
 
-    private AnimationTimer gameLoop;
+    private Runnable gameLoopRunnable;
+
+    private AnimationTimer gameLoopAnimationTimer;
 
     @SuppressFBWarnings(
         value = "EI2",
@@ -50,8 +54,8 @@ public final class FlowerForceApplication extends Application implements FlowerF
 
     @Override
     public void menu() {
-        if (gameLoop != null) {
-            gameLoop.stop();
+        if (this.gameLoopAnimationTimer != null) {
+            this.gameLoopAnimationTimer.stop();
         }
         this.controller.save();
         final FlowerForceScene sceneClass = new MenuScene(this);
@@ -99,8 +103,16 @@ public final class FlowerForceApplication extends Application implements FlowerF
         final FlowerForceScene sceneClass = new GameScene(this);
         this.setScene(sceneClass.getScene());
         this.stage.setTitle(title);
-        gameLoop = this.controller.getGameLoop();
-        gameLoop.start();
+
+        this.gameLoopRunnable = controller.getGameLoopRunnable();
+        //Create the animation timer to run the gameLoop continuously.
+        this.gameLoopAnimationTimer = new AnimationTimer() {
+            @Override
+            public void handle(final long now) {
+                gameLoopRunnable.run();
+            }
+        };
+        this.gameLoopAnimationTimer.start();
     }
 
     private void setScene(final Scene scene) {
@@ -110,52 +122,36 @@ public final class FlowerForceApplication extends Application implements FlowerF
 
     /**
      * Produces a scene scaled on screen's dimensions.
-     * @param root the root element to resize
-     * @param imageName the image to take proportions from
+     * @param root the root element of the scene
      * @return a scaled scene based on screen's dimensions
      */
-    public static Scene getScaledScene(final AnchorPane root, final String imageName) {
-        //background's dimensions
-        final Dimension2D imgDimensions = getImgDimensions(imageName);
-        //app's dimensions
-        final Dimension2D appDimensions = getAppDimensionFromImage(imgDimensions);
-        //calculation of scale factors
-        final double scaleFactorWidth = appDimensions.getWidth() / imgDimensions.getWidth();
-        final double scaleFactorHeight = appDimensions.getHeight() / imgDimensions.getHeight();
-        final Scale scaleTransformation = new Scale(scaleFactorWidth, scaleFactorHeight, 0, 0);
+    public static Scene getScaledScene(final AnchorPane root) {
+        // app's dimensions
+        final Dimension2D appDimensions = getAppDimensionFromRootBounds(root.getBoundsInLocal());
+        // calculation of scale factors
+        final double scaleFactorWidth = appDimensions.getWidth() / root.getBoundsInLocal().getWidth();
+        final double scaleFactorHeight = appDimensions.getHeight() / root.getBoundsInLocal().getHeight();
+        final Scale scaleTransformation = new Scale(scaleFactorWidth, scaleFactorHeight);
         root.getTransforms().add(scaleTransformation);
         return new Scene(root, appDimensions.getWidth(), appDimensions.getHeight());
     }
 
-    /**
-     * Returns the Application dimensions based on a given background image.
-     * @param imgDimensions image's dimensions in pixel
-     * @return a Dimension2D representing app's dimensions
+    /*
+     * Returns the application's dimensions based on root node's bounds.
      */
-    private static Dimension2D getAppDimensionFromImage(final Dimension2D imgDimensions) {
-        //screen's dimensions
+    private static Dimension2D getAppDimensionFromRootBounds(final Bounds rootBounds) {
+        // screen's dimensions
         final Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-        //calculation of app's width
+        // calculation of app's width
         double appSizeWidth = SCREEN_FILL_INDEX * screenBounds.getWidth();
-        //calculation of app's height
-        double appSizeHeight = appSizeWidth / imgDimensions.getWidth() * imgDimensions.getHeight();
-        //case where app's height would be greater than screen's height
+        // calculation of app's height
+        double appSizeHeight = appSizeWidth / rootBounds.getWidth() * rootBounds.getHeight();
+        // case where app's height would be greater than screen's height
         if (appSizeHeight > screenBounds.getHeight()) {
             appSizeHeight = screenBounds.getHeight();
-            appSizeWidth = appSizeHeight / imgDimensions.getHeight() * imgDimensions.getWidth();
+            appSizeWidth = appSizeHeight / rootBounds.getHeight() * rootBounds.getWidth();
         }
         return new Dimension2D(appSizeWidth, appSizeHeight);
-    }
-
-    /**
-     * Gets an image's dimension.
-     * @param imgName the image name (located in the standard image folder)
-     * @return a Dimension2D contaning image's dimensions
-     */
-    private static Dimension2D getImgDimensions(final String imgName) {
-        final Image image = new Image(ResourceFinder.getCommonImagePath(imgName).toExternalForm());
-        //image's dimensions
-        return new Dimension2D(image.getWidth(), image.getHeight());
     }
 
 }

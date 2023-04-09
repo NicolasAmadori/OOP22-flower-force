@@ -1,10 +1,10 @@
-package flowerforce.model.entities;
+package flowerforce.model.entities.plants;
 
 import flowerforce.model.utilities.Timer;
 import javafx.geometry.Point2D;
 
 /**
- * Models a flower that doesn't attack zombies but produces suns.
+ * This is an implementation of {@link Sunflower}.
  */
 public class SunflowerImpl extends AbstractPlant implements Sunflower {
 

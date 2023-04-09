@@ -1,5 +1,6 @@
 package flowerforce.model.entities;
 
+import flowerforce.model.entities.plants.Plant;
 import flowerforce.model.utilities.RenderingInformation;
 import flowerforce.model.utilities.Timer;
 import flowerforce.model.utilities.TimerImpl;

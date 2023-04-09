@@ -53,7 +53,7 @@ public abstract class AbstractEntity implements Entity {
 
     /**
      * Called by subclasses to update entity's position.
-     * @param newPos the position to update
+     * @param newPos the new entity's position
      */
     protected void setPosition(final Point2D newPos) {
         this.pos = newPos;

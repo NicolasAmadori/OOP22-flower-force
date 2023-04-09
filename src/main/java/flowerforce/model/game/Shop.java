@@ -1,7 +1,7 @@
 package flowerforce.model.game;
 
-import flowerforce.model.entities.Plant;
 import flowerforce.model.entities.PlantInfo;
+import flowerforce.model.entities.plants.Plant;
 import javafx.geometry.Point2D;
 import java.util.Map;
 import java.util.Set;
