@@ -1,6 +1,6 @@
 package flowerforce.model.game;
 
-import flowerforce.model.entities.Zombie;
+import flowerforce.model.entities.zombies.Zombie;
 import flowerforce.model.utilities.RenderingInformation;
 import flowerforce.model.utilities.TimerImpl;
 

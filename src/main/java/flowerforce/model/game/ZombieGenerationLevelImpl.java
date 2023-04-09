@@ -1,10 +1,11 @@
 package flowerforce.model.game;
 
-import flowerforce.model.entities.Zombie;
 import javafx.geometry.Point2D;
 
 import java.util.Random;
 import java.util.function.Function;
+
+import flowerforce.model.entities.zombies.Zombie;
 
 /**
  * This is an implementation of {@link ZombieGenerationLevel}.

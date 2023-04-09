@@ -7,10 +7,10 @@ import org.junit.jupiter.api.Test;
 
 import flowerforce.model.entities.EntityInfo;
 import flowerforce.model.entities.EntityInfoImpl;
-import flowerforce.model.entities.PlantInfo;
-import flowerforce.model.entities.PlantInfoImpl;
-import flowerforce.model.entities.Zombie;
-import flowerforce.model.entities.ZombieFactory;
+import flowerforce.model.entities.plants.PlantInfo;
+import flowerforce.model.entities.plants.PlantInfoImpl;
+import flowerforce.model.entities.zombies.Zombie;
+import flowerforce.model.entities.zombies.ZombieFactory;
 import javafx.geometry.Point2D;
 
 /**

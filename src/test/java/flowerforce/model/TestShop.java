@@ -1,8 +1,9 @@
 package flowerforce.model;
 
-import flowerforce.model.entities.PlantInfo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import flowerforce.model.entities.plants.PlantInfo;
 import flowerforce.model.game.Player;
 import flowerforce.model.game.PlayerImpl;
 import flowerforce.model.game.Shop;

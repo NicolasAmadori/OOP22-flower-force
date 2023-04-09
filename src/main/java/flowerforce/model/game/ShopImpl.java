@@ -1,10 +1,10 @@
 package flowerforce.model.game;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import flowerforce.model.entities.PlantInfo;
-import flowerforce.model.entities.PlantInfoImpl;
 import flowerforce.model.entities.plants.CherryBomb;
 import flowerforce.model.entities.plants.Plant;
+import flowerforce.model.entities.plants.PlantInfo;
+import flowerforce.model.entities.plants.PlantInfoImpl;
 import flowerforce.model.entities.plants.ShootingPlantFactory;
 import flowerforce.model.entities.plants.SunflowerFactory;
 import javafx.util.Pair;

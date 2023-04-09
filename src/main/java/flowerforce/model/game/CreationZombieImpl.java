@@ -1,7 +1,7 @@
 package flowerforce.model.game;
 
-import flowerforce.model.entities.Zombie;
-import flowerforce.model.entities.ZombieFactory;
+import flowerforce.model.entities.zombies.Zombie;
+import flowerforce.model.entities.zombies.ZombieFactory;
 import javafx.geometry.Point2D;
 
 import java.util.Collections;
@@ -19,6 +19,7 @@ public class CreationZombieImpl implements CreationZombie {
     private int levelZombieToSpawn;
     private int prevRow = -1;
     private final Random rand = new Random();
+    int zombie = 0;
 
     private static final Point2D TEMPORARY_POSITION = new Point2D(0, 0);
 
@@ -47,7 +48,7 @@ public class CreationZombieImpl implements CreationZombie {
                 .collect(Collectors.toSet());
 
         int randomValue = rand.nextInt(zombieToSpawn.stream()
-                .mapToInt(z -> z.apply(TEMPORARY_POSITION).getDifficulty() + delta)
+                .mapToInt(z -> zombieMaxDifficulty - z.apply(TEMPORARY_POSITION).getDifficulty() + delta)
                 .sum() + 1);
 
         int row;
@@ -66,6 +67,7 @@ public class CreationZombieImpl implements CreationZombie {
                         ));
             }
         }
+        System.out.println("jajaj");
         return ZombieFactory.basic(YardInfo.getEntityPosition(
                 row,
                 YardInfo.getColsNum() - 1

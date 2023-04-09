@@ -1,11 +1,11 @@
 package flowerforce.model.game;
 
-import flowerforce.model.entities.Zombie;
-import flowerforce.model.entities.ZombieFactory;
 import flowerforce.model.entities.plants.Plant;
 import flowerforce.model.entities.plants.ShootingPlantFactory;
 import flowerforce.model.entities.plants.SunflowerFactory;
 import flowerforce.model.entities.plants.Wallnut;
+import flowerforce.model.entities.zombies.Zombie;
+import flowerforce.model.entities.zombies.ZombieFactory;
 import javafx.geometry.Point2D;
 
 import java.util.List;

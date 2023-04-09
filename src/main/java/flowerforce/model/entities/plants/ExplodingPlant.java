@@ -2,7 +2,7 @@ package flowerforce.model.entities.plants;
 
 import java.util.Set;
 
-import flowerforce.model.entities.Zombie;
+import flowerforce.model.entities.zombies.Zombie;
 
 /**
  * Models a plant that explodes after a certain time

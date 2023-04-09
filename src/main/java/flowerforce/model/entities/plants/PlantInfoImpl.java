@@ -1,4 +1,4 @@
-package flowerforce.model.entities;
+package flowerforce.model.entities.plants;
 
 /**
  * Implementation of {@link PlantInfo}.

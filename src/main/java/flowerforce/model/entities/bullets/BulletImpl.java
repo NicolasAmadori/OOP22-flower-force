@@ -4,7 +4,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 import flowerforce.model.entities.AbstractEntity;
-import flowerforce.model.entities.Zombie;
+import flowerforce.model.entities.zombies.Zombie;
 import flowerforce.model.utilities.RenderingInformation;
 import javafx.geometry.Point2D;
 

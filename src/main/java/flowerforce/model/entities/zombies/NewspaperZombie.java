@@ -1,4 +1,4 @@
-package flowerforce.model.entities;
+package flowerforce.model.entities.zombies;
 
 import javafx.geometry.Point2D;
 
@@ -37,7 +37,7 @@ public class NewspaperZombie extends ZombieImpl {
     public void receiveDamage(final int damage) {
         super.receiveDamage(damage);
         if (!this.isRunning && super.getHealth() <= this.criticalHealth) {
-            super.setDelta(super.getDeltaMovement() * ACCELERATE_FACTOR);
+            super.changeVelocity(ACCELERATE_FACTOR);
             this.isRunning = true;
         }
     }

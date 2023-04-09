@@ -1,5 +1,6 @@
-package flowerforce.model.entities;
+package flowerforce.model.entities.zombies;
 
+import flowerforce.model.entities.AbstractLivingEntity;
 import flowerforce.model.entities.plants.Plant;
 import flowerforce.model.utilities.RenderingInformation;
 import flowerforce.model.utilities.Timer;
@@ -120,12 +121,16 @@ public class ZombieImpl extends AbstractLivingEntity implements Zombie {
     }
 
     /**
-     * This method can be called by subtypes to change the delta (i.e. the velocity) of the zombie.
-     * @param newDelta to be set
+     * This method can be called by subtypes to change the total velocity of the zombie (i.e.
+     * its moving and eating velocity)
+     * @param accelerationFactor used to change zombie velocity
      */
-    protected void setDelta(final double newDelta) {
+    protected void changeVelocity(final double accelerationFactor) {
+            final double newDelta = this.delta * accelerationFactor;
+            final int newNumCycles = RenderingInformation.convertSecondsToCycles(EAT_WAITING_SECS / accelerationFactor);
             this.delta = this.isFrozen ? newDelta / FREEZE_FACTOR : newDelta;
             this.defaultDelta = newDelta;
+            super.getTimer().setNumCycles(this.isFrozen ? newNumCycles * FREEZE_FACTOR : newNumCycles);
     }
 
     /**

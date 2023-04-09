@@ -1,7 +1,7 @@
 package flowerforce.controller.utilities;
 
 import flowerforce.common.ResourceFinder;
-import flowerforce.model.entities.PlantInfo;
+import flowerforce.model.entities.plants.PlantInfo;
 import flowerforce.view.entities.CardView;
 import flowerforce.view.entities.CardViewImpl;
 

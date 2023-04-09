@@ -1,4 +1,4 @@
-package flowerforce.model.entities;
+package flowerforce.model.entities.plants;
 
 /**
  * Models the info that must be saved about a {@link Plant} in order to identify its type in maps.

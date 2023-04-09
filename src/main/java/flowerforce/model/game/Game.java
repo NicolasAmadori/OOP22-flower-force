@@ -1,7 +1,7 @@
 package flowerforce.model.game;
 
 import flowerforce.model.entities.EntityInfo;
-import flowerforce.model.entities.PlantInfo;
+import flowerforce.model.entities.plants.PlantInfo;
 
 import java.util.Set;
 
