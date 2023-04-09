@@ -215,7 +215,7 @@ public final class GameSceneController implements GameEngine {
         if (!isOver) {
             final Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirm dialog");
-            alert.setHeaderText("Are you sure to leave?");
+            alert.setHeaderText("Are you sure you want to leave?");
             alert.setContentText("Progress of this game will not be saved");
             final Optional<ButtonType> result = alert.showAndWait();
             if (result.get().equals(ButtonType.OK)) {
