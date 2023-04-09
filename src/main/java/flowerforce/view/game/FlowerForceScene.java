@@ -9,7 +9,7 @@ public interface FlowerForceScene {
 
     /**
      * 
-     * @return the JavaFX scene
+     * @return a JavaFX scene
      */
     Scene getScene();
 
