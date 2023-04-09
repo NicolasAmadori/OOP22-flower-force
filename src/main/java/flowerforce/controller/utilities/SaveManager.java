@@ -9,9 +9,9 @@ import java.io.File;
 import java.io.Reader;
 import java.io.InputStreamReader;
 import java.io.FileInputStream;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Optional;
+import java.util.concurrent.RejectedExecutionException;
+
 import com.google.gson.Gson;
 import flowerforce.common.ResourceFinder;
 
@@ -23,7 +23,7 @@ public final class SaveManager<T> {
     private static final String SAVING_FILES_EXTENSION = ".json";
     private static final Gson GSON = new Gson(); //Instance to json text converter
     private final Class<T> genericClass; //class of the type to deserialize
-    private final URL savingFileURL; //path of the savingFile
+    private final String savingFilePath; //path of the savingFile
 
     /**
      * Create a new instance of the game saving manager.
@@ -32,7 +32,8 @@ public final class SaveManager<T> {
      */
     public SaveManager(final Class<T> genericClass, final String fileName) {
         this.genericClass = genericClass;
-        this.savingFileURL = ResourceFinder.getSavingFilePath(fileName + SAVING_FILES_EXTENSION);
+        this.savingFilePath = ResourceFinder.getSavingFilePath(fileName + SAVING_FILES_EXTENSION);
+        createFolders(this.savingFilePath);
     }
 
     /**
@@ -41,10 +42,10 @@ public final class SaveManager<T> {
      * @return True if the save operation was successful, false otherwise.
      */
     public boolean save(final T p) {
-        try (Writer fw = new OutputStreamWriter(new FileOutputStream(new File(this.savingFileURL.toURI())), "UTF-8")) {
+        try (Writer fw = new OutputStreamWriter(new FileOutputStream(this.savingFilePath), "UTF-8")) {
             fw.write(GSON.toJson(p));
             return true;
-        } catch (URISyntaxException | IOException e) {
+        } catch (IOException e) {
             return false;
         }
     }
@@ -57,7 +58,7 @@ public final class SaveManager<T> {
     public Optional<T> load() {
         final File file;
         try {
-            file = new File(this.savingFileURL.toURI());
+            file = new File(this.savingFilePath);
             if (!file.exists()) {
                 return Optional.empty();
             }
@@ -65,9 +66,16 @@ public final class SaveManager<T> {
             final Reader fr = new InputStreamReader(new FileInputStream(file), "UTF-8");
             return Optional.of(GSON.fromJson(fr, genericClass));
 
-        } catch (URISyntaxException | IOException e) {
+        } catch (IOException e) {
             return Optional.empty();
         }
     }
 
+    private void createFolders(final String filePath) {
+        final String folderPathString = new File(filePath).getParent();
+        final File folderPath = new File(folderPathString);
+        if (!folderPath.exists() && !folderPath.mkdirs()) {
+            throw new RejectedExecutionException("Impossible to create saving folder: (" + folderPathString + ")");
+        }
+    }
 }
