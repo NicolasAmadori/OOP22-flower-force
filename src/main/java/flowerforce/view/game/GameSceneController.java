@@ -412,9 +412,9 @@ public final class GameSceneController implements GameEngine {
         this.removeBloomEffect();
         this.cards.keySet().forEach(card -> card.setDisable(true));
         if (isWon) {
-            imageResult.setImage(new Image(ResourceFinder.getCommonImagePath("victory.png").toExternalForm()));
+            imageResult.setImage(new Image(ResourceFinder.getCommonImageURL("victory.png").toExternalForm()));
         } else {
-            imageResult.setImage(new Image(ResourceFinder.getCommonImagePath("loss.png").toExternalForm()));
+            imageResult.setImage(new Image(ResourceFinder.getCommonImageURL("loss.png").toExternalForm()));
         }
     }
 }

@@ -39,84 +39,84 @@ public final class SoundManager {
      * Start the main theme (in loop).
      */
     public static void startMainTheme() {
-        playLoopSound(ResourceFinder.getSoundPath(MAIN_THEME_FILE_NAME));
+        playLoopSound(ResourceFinder.getSoundURL(MAIN_THEME_FILE_NAME));
     }
 
     /**
      * Start the zombiesAreComing effect.
      */
     public static void zombiesAreComing() {
-        playSoundEffect(ResourceFinder.getSoundPath(ZOMBIES_SIREN_FILE_NAME));
+        playSoundEffect(ResourceFinder.getSoundURL(ZOMBIES_SIREN_FILE_NAME));
     }
 
     /**
      * Start the shop effect.
      */
     public static void shopEffect() {
-        playSoundEffect(ResourceFinder.getSoundPath(SHOP_EFFECT_FILE_NAME));
+        playSoundEffect(ResourceFinder.getSoundURL(SHOP_EFFECT_FILE_NAME));
     }
 
     /**
      * Start the shovel effect.
      */
     public static void useShovel() {
-        playSoundEffect(ResourceFinder.getSoundPath(SHOVEL_FILE_NAME));
+        playSoundEffect(ResourceFinder.getSoundURL(SHOVEL_FILE_NAME));
     }
 
     /**
      * Start the selected card effect.
      */
     public static void cardSelected() {
-        playSoundEffect(ResourceFinder.getSoundPath(CARD_SELECTED_FILE_NAME));
+        playSoundEffect(ResourceFinder.getSoundURL(CARD_SELECTED_FILE_NAME));
     }
 
     /**
      * Start the plant placed effect.
      */
     public static void plantPlaced() {
-        playSoundEffect(ResourceFinder.getSoundPath(PLANT_PLACED_FILE_NAME));
+        playSoundEffect(ResourceFinder.getSoundURL(PLANT_PLACED_FILE_NAME));
     }
 
     /**
      * Start the zombie groan effect.
      */
     public static void zombieGroan() {
-        playSoundEffect(ResourceFinder.getSoundPath(GROAN_FILE_NAME));
+        playSoundEffect(ResourceFinder.getSoundURL(GROAN_FILE_NAME));
     }
 
     /**
      * Start the zombie eating effect.
      */
     public static void zombieEating() {
-        playSoundEffect(ResourceFinder.getSoundPath(ZOMBIE_EATING_FILE_NAME));
+        playSoundEffect(ResourceFinder.getSoundURL(ZOMBIE_EATING_FILE_NAME));
     }
 
     /**
      * Start the zombie has eaten a plant effect.
      */
     public static void zombieHasEaten() {
-        playSoundEffect(ResourceFinder.getSoundPath(PLANT_EATEN_FILE_NAME));
+        playSoundEffect(ResourceFinder.getSoundURL(PLANT_EATEN_FILE_NAME));
     }
 
     /**
      * Start the zombie has died effect.
      */
     public static void zombieDied() {
-        playSoundEffect(ResourceFinder.getSoundPath(ZOMBIE_DIED_FILE_NAME));
+        playSoundEffect(ResourceFinder.getSoundURL(ZOMBIE_DIED_FILE_NAME));
     }
 
     /**
      * Start the bullet has been shot effect.
      */
     public static void bulletShot() {
-        playSoundEffect(ResourceFinder.getSoundPath(BULLET_SHOT_FILE_NAME));
+        playSoundEffect(ResourceFinder.getSoundURL(BULLET_SHOT_FILE_NAME));
     }
 
     /**
      * Start the bullet hit effect.
      */
     public static void bulletHit() {
-        playSoundEffect(ResourceFinder.getSoundPath(BULLET_IMPACT_FILE_NAME));
+        playSoundEffect(ResourceFinder.getSoundURL(BULLET_IMPACT_FILE_NAME));
     }
 
     private static void playLoopSound(final URL soundUrl) {
