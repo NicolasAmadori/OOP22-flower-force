@@ -8,7 +8,7 @@ import javafx.geometry.Point2D;
  * Models a CherryBomb, an exploding plant that explodes after a certain time
  * and damages enemies in its and adjacent cells.
  */
-public class CherryBomb extends AbstractExplodingPlant {
+public class CherryBomb extends BaseExplodingPlant {
 
     private static final int CHERRY_HEALTH = 3000;
     private static final int CHERRY_COST = 150;
