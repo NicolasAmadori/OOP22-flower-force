@@ -216,7 +216,7 @@
          </cursor>
       </ImageView>
       <ProgressBar fx:id="progressBar" layoutX="1610.0" layoutY="1044.0" mouseTransparent="true" nodeOrientation="RIGHT_TO_LEFT" prefHeight="30.0" prefWidth="300.0" progress="0.0" />
-      <Label fx:id="lblScore" layoutX="643.0" layoutY="1032.0" text="Score: 0">
+      <Label fx:id="lblScore" layoutX="643.0" layoutY="1032.0" prefHeight="40.0" prefWidth="954.0" text="Score: 0">
          <font>
             <Font name="System Bold Italic" size="28.0" />
          </font>

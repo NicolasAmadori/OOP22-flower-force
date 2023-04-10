@@ -78,4 +78,10 @@ public final class LevelInfo {
     public static Optional<Function<Point2D, Zombie>> getBossId(final int id) {
         return 1 + id > AVAILABLE_ZOMBIES.size() ? Optional.of(ZOMBIE_BOSS) : Optional.empty();
     }
+    /**
+     * @return the last level ID
+     */
+    public static int getLastLevelId() {
+        return AVAILABLE_ZOMBIES.size();
+    }
 }

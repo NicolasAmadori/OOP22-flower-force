@@ -72,8 +72,8 @@ public abstract class AbstractGame implements Game {
         this.sun = INITIAL_SUN * SUN_VALUE;
         this.player = player;
         this.sunTimer = new TimerImpl(TIME_TO_SPAWN_SUN);
-        this.placeablePlant.keySet().forEach(p -> plantsTimer
-                .put(p, new TimerImpl(placeablePlant.get(p).apply(TEMPORARY_POSITION).getRechargeTime())));
+        this.placeablePlant.keySet().forEach(p -> this.plantsTimer
+                .put(p, new TimerImpl(this.placeablePlant.get(p).apply(TEMPORARY_POSITION).getRechargeTime())));
         this.score = 0;
     }
 
@@ -117,7 +117,7 @@ public abstract class AbstractGame implements Game {
      */
     @Override
     public Set<EntityInfo> getPlacedZombies() {
-        return zombies.stream().map(Entity::getEntityInfo).collect(Collectors.toSet());
+        return this.zombies.stream().map(Entity::getEntityInfo).collect(Collectors.toSet());
     }
 
     /**
@@ -126,7 +126,7 @@ public abstract class AbstractGame implements Game {
     @Override
     public Set<EntityInfo> getDamagedEntity() {
         final var tmpDamagedEntities = Set.copyOf(this.damagedEntities);
-        damagedEntities.clear();
+        this.damagedEntities.clear();
         return tmpDamagedEntities;
     }
 
@@ -135,7 +135,7 @@ public abstract class AbstractGame implements Game {
      */
     @Override
     public Set<EntityInfo> getPlacedPlants() {
-        return plants.stream().map(Entity::getEntityInfo).collect(Collectors.toSet());
+        return this.plants.stream().map(Entity::getEntityInfo).collect(Collectors.toSet());
     }
 
     /**
@@ -143,7 +143,7 @@ public abstract class AbstractGame implements Game {
      */
     @Override
     public Set<EntityInfo> getPlacedBullet() {
-        return bullets.stream().map(Entity::getEntityInfo).collect(Collectors.toSet());
+        return this.bullets.stream().map(Entity::getEntityInfo).collect(Collectors.toSet());
     }
 
     /**
@@ -165,8 +165,8 @@ public abstract class AbstractGame implements Game {
                 return false;
             }
         }
-        final var plant = placeablePlant.get(plantInfo).apply(position);
-        plants.add(plant);
+        final var plant = this.placeablePlant.get(plantInfo).apply(position);
+        this.plants.add(plant);
         this.plantsTimer.get(plantInfo).reset();
         this.plantsTimer.get(plantInfo).updateState();
         this.sun -= plantInfo.getCost();
@@ -189,8 +189,8 @@ public abstract class AbstractGame implements Game {
     @Override
     public Set<PlantInfo> getEnabledPlants() {
         return this.placeablePlant.keySet().stream()
-                .filter(plantType -> plantType.getCost() <= sun)
-                .filter(plantType -> plantsTimer.get(plantType).isReady())
+                .filter(plantType -> plantType.getCost() <= this.sun)
+                .filter(plantType -> this.plantsTimer.get(plantType).isReady())
                 .collect(Collectors.toSet());
     }
 
@@ -208,9 +208,9 @@ public abstract class AbstractGame implements Game {
     @Override
     public boolean removePlant(final int row, final int col) {
         final var positionPlant = YardInfo.getEntityPosition(row, col);
-        for (final var plant : plants) {
+        for (final var plant : this.plants) {
             if (plant.getPosition().equals(positionPlant)) {
-                plants.remove(plant);
+                this.plants.remove(plant);
                 return true;
             }
         }
@@ -232,7 +232,7 @@ public abstract class AbstractGame implements Game {
      */
     private void updateBullet() {
         this.bullets.forEach(Bullet::move);
-        bullets = bullets.stream()
+        this.bullets = this.bullets.stream()
                 .filter(bullet -> bullet.getPosition().getX()
                         < YardInfo.getCellDimension().getWidth() * YardInfo.getColsNum())
                 .collect(Collectors.toSet());
@@ -242,7 +242,7 @@ public abstract class AbstractGame implements Game {
      * Check and remove bullets colliding with zombies and remove dead zombies.
      */
     private void collidingBullet() {
-         this.bullets.forEach(bullet -> zombies.stream()
+         this.bullets.forEach(bullet -> this.zombies.stream()
                  .filter(zombie -> zombie.getPosition().getY() == bullet.getPosition().getY())
                  .filter(zombie -> zombie.getPosition().getX() <= bullet.getPosition().getX())
                  .filter(zombie -> zombie.getPosition().getX() >= bullet.getPosition().getX()
@@ -251,9 +251,9 @@ public abstract class AbstractGame implements Game {
                  .min(Comparator.comparing(zombie -> zombie.getPosition().getX()))
                  .ifPresent(z -> {
                      bullet.hit(z);
-                     damagedEntities.add(z.getEntityInfo());
+                     this.damagedEntities.add(z.getEntityInfo());
                  }));
-         this.zombies.stream().filter(Entity::isOver).forEach(z -> score += z.getDifficulty() * 100);
+         this.zombies.stream().filter(Entity::isOver).forEach(z -> this.score += z.getDifficulty() * 100);
          this.zombies = this.zombies.stream().filter(z -> !z.isOver()).collect(Collectors.toSet());
          this.bullets = this.bullets.stream().filter(b -> !b.isOver()).collect(Collectors.toSet());
     }
@@ -268,14 +268,14 @@ public abstract class AbstractGame implements Game {
                 .filter(zombie -> zombie.getPosition().getX() > plant.getPosition().getX()
                         - YardInfo.getCellDimension().getWidth())
                 .forEach(zombie -> {
-                        zombieEating.put(zombie, plant);
+                        this.zombieEating.put(zombie, plant);
                     }
                 ));
 
         this.zombies.forEach(zombie -> {
-            if (zombieEating.containsKey(zombie)) {
-                if (zombie.manageEating(zombieEating.get(zombie))) {
-                    this.damagedEntities.add(zombieEating.get(zombie).getEntityInfo());
+            if (this.zombieEating.containsKey(zombie)) {
+                if (zombie.manageEating(this.zombieEating.get(zombie))) {
+                    this.damagedEntities.add(this.zombieEating.get(zombie).getEntityInfo());
                 }
             } else {
                 zombie.move();
@@ -289,18 +289,18 @@ public abstract class AbstractGame implements Game {
      * Update the plants and check what they can do with the actual state.
      */
     private void updatePlant() {
-        for (final var plant : plants) {
+        for (final var plant : this.plants) {
             plant.updateState();
             if (plant instanceof Sunflower) {
                 if (((Sunflower) plant).isSunGenerated()) {
                     this.sun += SUN_VALUE;
                 }
             } else if (plant instanceof ShootingPlant) {
-                final int nZombieOnRow = zombies.stream()
+                final int nZombieOnRow = this.zombies.stream()
                         .filter(zombie -> plant.getPosition().getY() == zombie.getPosition().getY())
                         .filter(zombie -> plant.getPosition().getX() <= zombie.getPosition().getX())
                         .toList().size();
-                if (nZombieOnRow > 0 && !zombieEating.containsValue(plant)) {
+                if (nZombieOnRow > 0 && !this.zombieEating.containsValue(plant)) {
                     final var bullet = ((ShootingPlant) plant).nextBullet();
                     bullet.ifPresent(b -> bullets.add(b));
                 }
@@ -309,7 +309,7 @@ public abstract class AbstractGame implements Game {
                         ((ExplodingPlant) plant).getRadius());
                 final var topLeftCorner = YardInfo.toTopLeftCorner(plant.getPosition(), ((ExplodingPlant) plant).getRadius());
 
-                ((ExplodingPlant) plant).explodeOver(zombies.stream()
+                ((ExplodingPlant) plant).explodeOver(this.zombies.stream()
                         .filter(zombie -> zombie.getPosition().getY() <= bottomRightCorner.getY())
                         .filter(zombie -> zombie.getPosition().getY() >= topLeftCorner.getY())
                         .filter(zombie -> zombie.getPosition().getX() <= bottomRightCorner.getX())
@@ -317,10 +317,10 @@ public abstract class AbstractGame implements Game {
                         .collect(Collectors.toSet()));
             }
         }
-        zombieEating.clear();
-        plantsTimer.keySet().forEach(plantType -> {
-            if (!plantsTimer.get(plantType).isReady()) {
-                plantsTimer.get(plantType).updateState();
+        this.zombieEating.clear();
+        this.plantsTimer.keySet().forEach(plantType -> {
+            if (!this.plantsTimer.get(plantType).isReady()) {
+                this.plantsTimer.get(plantType).updateState();
             }
         });
     }

@@ -19,7 +19,7 @@ public class LevelGame extends AbstractGame {
         super(levelId, shop, player);
         this.id = levelId;
         this.remainingZombie = LevelInfo.getTotalZombies(levelId);
-        generateZombie = new ZombieGenerationLevelImpl(levelId);
+        this.generateZombie = new ZombieGenerationLevelImpl(levelId);
     }
 
     /**
@@ -35,7 +35,8 @@ public class LevelGame extends AbstractGame {
      */
     @Override
     public double getProgressState() {
-        return (LevelInfo.getTotalZombies(this.id) - remainingZombie) / (double) LevelInfo.getTotalZombies(this.id);
+        return (LevelInfo.getTotalZombies(this.id) - this.remainingZombie)
+                / (double) LevelInfo.getTotalZombies(this.id);
     }
 
     /**
@@ -47,7 +48,7 @@ public class LevelGame extends AbstractGame {
         if (end && this.result()
                 && super.getPlayer().getLastUnlockedLevelId() == this.id) {
             super.getPlayer().unlockedNextLevel();
-            super.getPlayer().addCoins(LevelInfo.getLevelCoins(id));
+            super.getPlayer().addCoins(LevelInfo.getLevelCoins(this.id));
         }
         return end || result();
     }
@@ -57,14 +58,14 @@ public class LevelGame extends AbstractGame {
      */
     @Override
     protected void generateZombie() {
-        if (remainingZombie != 0) {
+        if (this.remainingZombie != 0) {
             final var zombie = this.generateZombie.zombieGeneration();
             if (zombie.isPresent()) {
-                remainingZombie--;
+                this.remainingZombie--;
                 super.addZombie(zombie.get());
             }
-            if (LevelInfo.getBossId(id).isPresent() && remainingZombie == 0) {
-                final var boss = this.generateZombie.bossGeneration(LevelInfo.getBossId(id).get());
+            if (LevelInfo.getBossId(this.id).isPresent() && this.remainingZombie == 0) {
+                final var boss = this.generateZombie.bossGeneration(LevelInfo.getBossId(this.id).get());
                 super.addZombie(boss);
             }
         }
