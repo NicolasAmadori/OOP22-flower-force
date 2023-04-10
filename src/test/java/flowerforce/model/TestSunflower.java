@@ -30,7 +30,7 @@ final class TestSunflower {
     }
 
     /**
-     * Tests sunflower's damage reception.
+     * Tests Sunflower's damage reception.
      */
     @Test
     void testReceiveDamage() {
