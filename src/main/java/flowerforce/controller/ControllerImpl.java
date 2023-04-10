@@ -199,10 +199,10 @@ public final class ControllerImpl implements Controller {
     /*
     * This method update the entities map, removing old entities, update previous entities and adding new entities
     */
-    private void updateEntities(Map<EntityInfo, EntityView> previousEntities,
-                                Set<EntityInfo> updatedEntities,
-                                Function<EntityInfo, EntityView> entityConverter,
-                                BiConsumer<EntityView, Point2D> positionConverter) {
+    private void updateEntities(final Map<EntityInfo, EntityView> previousEntities,
+                                final Set<EntityInfo> updatedEntities,
+                                final Function<EntityInfo, EntityView> entityConverter,
+                                final BiConsumer<EntityView, Point2D> positionConverter) {
 
         final Set<EntityInfo> entitiesToRemove = new HashSet<>();
         previousEntities.keySet().forEach(z -> {
@@ -213,7 +213,7 @@ public final class ControllerImpl implements Controller {
         entitiesToRemove.forEach(previousEntities::remove);
         updatedEntities.forEach(e -> {
             if (previousEntities.containsKey(e)) {
-                if(positionConverter != null) {
+                if (positionConverter != null) {
                     positionConverter.accept(previousEntities.get(e), e.getPosition());
                 }
             } else {
