@@ -30,7 +30,7 @@ public class MenuSceneController {
     }
 
     /**
-     * Sets Player's score in the Menu.
+     * Sets Player's Survial Mode score record in the Menu.
      */
     public void initialize() {
         final int record = this.application.getController().getPlayerScoreRecord();
