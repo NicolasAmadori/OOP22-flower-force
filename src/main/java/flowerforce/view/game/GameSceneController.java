@@ -368,8 +368,8 @@ public final class GameSceneController implements GameEngine {
 
     private void updateScore() {
         final int newScore = this.application.getController().getScore();
-        if (newScore != Integer.parseInt(this.lblScore.getText())) {
-            this.lblScore.setText(Integer.toString(newScore));
+        if (newScore != Integer.parseInt(this.lblScore.getText().split(" ")[1])) {
+            this.lblScore.setText("Score: ".concat(Integer.toString(newScore)));
         }
     }
 
