@@ -7,7 +7,7 @@ import java.util.Set;
 /**
  * This is an implementation of {@link Player}.
  */
-public class PlayerImpl implements Player {
+public final class PlayerImpl implements Player {
 
     private int nCoins;
     private int scoreRecord;
