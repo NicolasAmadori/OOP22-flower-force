@@ -13,7 +13,7 @@ public class InfiniteGame extends AbstractGame {
     public InfiniteGame(final Shop shop, final Player player) {
         super(player.getLastUnlockedLevelId(), shop, player);
         this.generateZombie = new ZombieGenerationInfinite(
-                player.getLastUnlockedLevelId());
+                LevelInfo.getLastLevelId());
     }
 
     /**
