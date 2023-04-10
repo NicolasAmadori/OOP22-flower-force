@@ -20,7 +20,7 @@ import javafx.geometry.Point2D;
 /**
  * This is an implementation of {@link Shop}.
  */
-public class ShopImpl implements Shop {
+public final class ShopImpl implements Shop {
     private static final List<Pair<Function<Point2D, Plant>, Integer>> SHOP_PLANTS = List.of(
             new Pair<Function<Point2D, Plant>, Integer>(SunflowerFactory::createDoubleSunflower, 600),
             new Pair<Function<Point2D, Plant>, Integer>(CherryBomb::new, 1000),
