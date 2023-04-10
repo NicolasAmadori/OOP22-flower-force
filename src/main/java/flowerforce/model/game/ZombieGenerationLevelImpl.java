@@ -29,7 +29,7 @@ public class ZombieGenerationLevelImpl extends AbstractZombieGeneration implemen
     @Override
     public Zombie bossGeneration(final Function<Point2D, Zombie> boss) {
         return boss.apply(YardInfo.getEntityPosition(
-                rand.nextInt(YardInfo.getRowsNum()),
+                this.rand.nextInt(YardInfo.getRowsNum()),
                 YardInfo.getColsNum()
         ));
     }

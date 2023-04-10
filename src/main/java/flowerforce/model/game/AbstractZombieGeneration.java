@@ -43,7 +43,7 @@ public abstract class AbstractZombieGeneration implements ZombieGeneration {
                                     final int startNumberZombieHorde) {
         genZombie = new CreationZombieImpl(LevelInfo.getZombiesInfo(levelId));
         this.zombieBeforeHorde = zombieBeforeHorde;
-        this.zombieTimer = new TimerImpl(timeZombie);
+        this.zombieTimer = new TimerImpl(this.timeZombie);
         this.startNumberZombieHorde = startNumberZombieHorde;
         this.hordeZombie = startNumberZombieHorde;
     }
@@ -61,18 +61,18 @@ public abstract class AbstractZombieGeneration implements ZombieGeneration {
                     if (timeZombie - DEC_TIME_ZOMBIE > MIN_TIME_TO_SPAWN_ZOMBIE) {
                         this.timeZombie -= DEC_TIME_ZOMBIE;
                     }
-                    this.zombieTimer.setNumCycles(timeZombie);
+                    this.zombieTimer.setNumCycles(this.timeZombie);
                     this.incrementableHorde = true;
                     this.generatedZombie = 0;
                     this.hordeGeneratedZombie = 0;
-                    genZombie.increaseLevelZombieToSpawn();
+                    this.genZombie.increaseLevelZombieToSpawn();
                 } else {
                     this.zombieTimer.setNumCycles(TIME_TO_SPAWN_HORDE_ZOMBIE);
                 }
             } else {
                 this.generatedZombie++;
             }
-            return Optional.of(genZombie.creationZombie(this.hordeZombie / this.startNumberZombieHorde));
+            return Optional.of(this.genZombie.creationZombie(this.hordeZombie / this.startNumberZombieHorde));
         }
         return Optional.empty();
     }
