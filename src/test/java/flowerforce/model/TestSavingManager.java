@@ -9,6 +9,10 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Test class for the saving manager.
+ * Note that when this test is run the saving file will be overwritten
+ */
 final class TestSavingManager {
 
     private static final String FILE_NAME = "player";
