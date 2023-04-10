@@ -30,7 +30,7 @@ final class TestSunflower {
     }
 
     /**
-     * Tests plants' damage reception.
+     * Tests sunflower's damage reception.
      */
     @Test
     void testReceiveDamage() {
@@ -40,6 +40,9 @@ final class TestSunflower {
         assertEquals(sunflowerStartingHealth - damage, this.sunflower.getHealth());
     }
 
+    /**
+     * Tests Sunflower's sun production.
+     */
     @Test 
     void testSunProduction() {
         for (int i = 0; i < STANDARD_SUNPRODUCING_TIME - 1; i++) {
