@@ -7,6 +7,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.LineEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
@@ -136,6 +137,11 @@ public final class SoundManager {
         try {
             final AudioInputStream ais = AudioSystem.getAudioInputStream(soundUrl);
             final Clip clip = AudioSystem.getClip();
+            clip.addLineListener(event -> {
+                if (LineEvent.Type.STOP.equals(event.getType())) {
+                    clip.close();
+                }
+            });
             clip.open(ais);
             final FloatControl fc = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
             fc.setValue(volume);
