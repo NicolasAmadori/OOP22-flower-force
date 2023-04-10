@@ -216,14 +216,9 @@
          </cursor>
       </ImageView>
       <ProgressBar fx:id="progressBar" layoutX="1610.0" layoutY="1044.0" mouseTransparent="true" nodeOrientation="RIGHT_TO_LEFT" prefHeight="30.0" prefWidth="300.0" progress="0.0" />
-      <Label layoutX="643.0" layoutY="1032.0" text="Score:">
+      <Label fx:id="lblScore" layoutX="643.0" layoutY="1032.0" text="Score: 0">
          <font>
             <Font name="System Bold Italic" size="28.0" />
-         </font>
-      </Label>
-      <Label fx:id="lblScore" alignment="BASELINE_LEFT" layoutX="726.0" layoutY="1029.0" mouseTransparent="true" prefHeight="50.0" prefWidth="875.0" text="0">
-         <font>
-            <Font name="System Bold" size="34.0" />
          </font>
       </Label>
       <ImageView fitHeight="36.0" fitWidth="118.0" layoutX="1802.0" layoutY="7.0" onMouseClicked="#selectMenu" pickOnBounds="true" preserveRatio="true">

@@ -8,6 +8,10 @@ import java.util.Optional;
 import java.util.List;
 import java.util.Collections;
 import java.util.NoSuchElementException;
+import java.util.function.BiConsumer;
+import javafx.geometry.Point2D;
+
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import flowerforce.controller.utilities.CardGenerator;
 import flowerforce.controller.utilities.EntityConverter;
@@ -156,24 +160,10 @@ public final class ControllerImpl implements Controller {
     @Override
     public Set<EntityView> getPlacedPlants() {
         this.checkGame();
-        final Set<EntityInfo> updatedPlants = this.game.get().getPlacedPlants();
-
-        //region Update Plants
-        final Set<EntityInfo> plantsToRemove = new HashSet<>();
-        //Remove the entities that are no longer there
-        this.previousPlant.keySet().forEach(p -> {
-            if (!updatedPlants.contains(p)) {
-                plantsToRemove.add(p);
-            }
-        });
-        plantsToRemove.forEach(this.previousPlant::remove);
-        //Create the plant EntityView if plant not already present
-        updatedPlants.forEach(p -> {
-            if (!this.previousPlant.containsKey(p)) {
-                this.previousPlant.put(p, this.entityConverter.getPlantView(p));
-            }
-        });
-        //endregion
+        updateEntities(this.previousPlant,
+                this.game.get().getPlacedPlants(),
+                (entityInfo) -> this.entityConverter.getPlantView(entityInfo),
+                null);
 
         return new HashSet<>(this.previousPlant.values());
     }
@@ -184,24 +174,10 @@ public final class ControllerImpl implements Controller {
     @Override
     public Set<EntityView> getPlacedZombies() {
         this.checkGame();
-        final Set<EntityInfo> updatedZombies = this.game.get().getPlacedZombies();
-
-        //region Update Zombies
-        final Set<EntityInfo> zombiesToRemove = new HashSet<>();
-        this.previousZombie.keySet().forEach(z -> {
-            if (!updatedZombies.contains(z)) {
-                zombiesToRemove.add(z);
-            }
-        });
-        zombiesToRemove.forEach(this.previousZombie::remove);
-        updatedZombies.forEach(z -> {
-            if (this.previousZombie.containsKey(z)) {
-                this.entityConverter.changeZombieViewPosition(this.previousZombie.get(z), z.getPosition());
-            } else {
-                this.previousZombie.put(z, this.entityConverter.getZombieView(z));
-            }
-        });
-        //endregion
+        updateEntities(this.previousZombie,
+                this.game.get().getPlacedZombies(),
+                (entityInfo) -> this.entityConverter.getZombieView(entityInfo),
+                (entityView, position) -> this.entityConverter.changeZombieViewPosition(entityView, position));
 
         return new HashSet<>(this.previousZombie.values());
     }
@@ -212,26 +188,38 @@ public final class ControllerImpl implements Controller {
     @Override
     public Set<EntityView> getPlacedBullets() {
         this.checkGame();
-        final Set<EntityInfo> updatedBullets = this.game.get().getPlacedBullet();
-
-        //region Update Bullets
-        final Set<EntityInfo> bulletToRemove = new HashSet<>();
-        this.previousBullet.keySet().forEach(b -> {
-            if (!updatedBullets.contains(b)) {
-                bulletToRemove.add(b);
-            }
-        });
-        bulletToRemove.forEach(this.previousBullet::remove);
-        updatedBullets.forEach(b -> {
-            if (this.previousBullet.containsKey(b)) {
-                this.entityConverter.changeBulletViewPosition(this.previousBullet.get(b), b.getPosition());
-            } else {
-                this.previousBullet.put(b, this.entityConverter.getBulletView(b));
-            }
-        });
-        //endregion
+        updateEntities(this.previousBullet,
+                this.game.get().getPlacedBullet(),
+                (entityInfo) -> this.entityConverter.getBulletView(entityInfo),
+                (entityView, position) -> this.entityConverter.changeBulletViewPosition(entityView, position));
 
         return new HashSet<>(this.previousBullet.values());
+    }
+
+    /*
+    * This method update the entities map, removing old entities, update previous entities and adding new entities
+    */
+    private void updateEntities(final Map<EntityInfo, EntityView> previousEntities,
+                                final Set<EntityInfo> updatedEntities,
+                                final Function<EntityInfo, EntityView> entityConverter,
+                                final BiConsumer<EntityView, Point2D> positionConverter) {
+
+        final Set<EntityInfo> entitiesToRemove = new HashSet<>();
+        previousEntities.keySet().forEach(z -> {
+            if (!updatedEntities.contains(z)) {
+                entitiesToRemove.add(z);
+            }
+        });
+        entitiesToRemove.forEach(previousEntities::remove);
+        updatedEntities.forEach(e -> {
+            if (previousEntities.containsKey(e)) {
+                if (positionConverter != null) {
+                    positionConverter.accept(previousEntities.get(e), e.getPosition());
+                }
+            } else {
+                previousEntities.put(e, entityConverter.apply(e));
+            }
+        });
     }
 
     /**

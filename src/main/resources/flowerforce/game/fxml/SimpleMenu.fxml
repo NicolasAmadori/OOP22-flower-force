@@ -57,9 +57,9 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
       </FlowPane>
-      <Text fx:id="scoreRecord" fill="WHITE" layoutX="1690.0" layoutY="335.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Record: " wrappingWidth="2555.736572265625">
+      <Text fx:id="scoreRecord" fill="WHITE" layoutX="1216.0" layoutY="308.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Survival Mode Score Record: " wrappingWidth="2958.9369506835938">
          <font>
-            <Font name="Eras Bold ITC" size="200.0" />
+            <Font name="Eras Bold ITC" size="120.0" />
          </font>
       </Text>
       <FlowPane hgap="200.0" layoutX="2401.0" layoutY="1934.0" prefHeight="526.0" prefWidth="1469.0" styleClass="flowpane" vgap="60.0">

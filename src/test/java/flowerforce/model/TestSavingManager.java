@@ -9,6 +9,10 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Test class for the saving manager.
+ * Note that when this test is run the saving file will be overwritten
+ */
 final class TestSavingManager {
 
     private static final String FILE_NAME = "player";
@@ -36,7 +40,7 @@ final class TestSavingManager {
         //CHECKSTYLE: MagicNumber ON
         this.player.unlockedNextLevel();
         this.player.unlockedNextLevel();
-        playerSaveManager.save((PlayerImpl) this.player); //cast to save the player
+        assertTrue(playerSaveManager.save((PlayerImpl) this.player)); //cast to save the player
 
         final Optional<PlayerImpl> newPlayer = playerSaveManager.load();
         assertTrue(newPlayer.isPresent());
@@ -48,6 +52,6 @@ final class TestSavingManager {
         assertEquals(this.player.getPlantsIds(), newPlayer.get().getPlantsIds());
         assertEquals(this.player.getLastUnlockedLevelId(), newPlayer.get().getLastUnlockedLevelId());
 
-        playerSaveManager.save(new PlayerImpl()); //save the empty player
+        assertTrue(playerSaveManager.save(new PlayerImpl())); //save the empty player
     }
 }
