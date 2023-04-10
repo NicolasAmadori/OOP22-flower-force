@@ -45,10 +45,8 @@ public final class ShopImpl implements Shop {
 
         //Adding all plants in the map
         final Point2D samplePoint = new Point2D(0, 0);
-        SHOP_PLANTS.forEach(p -> {
-            this.plants.add(
-                    new PlantInfoImpl(p.getKey().apply(samplePoint).getName(), p.getValue()));
-        });
+        SHOP_PLANTS.forEach(p -> this.plants.add(
+                new PlantInfoImpl(p.getKey().apply(samplePoint).getName(), p.getValue())));
     }
 
     /**
@@ -87,7 +85,7 @@ public final class ShopImpl implements Shop {
 
     private Set<PlantInfo> getPlayerBoughtPlants() {
         return this.player.getPlantsIds().stream()
-                .map(id -> this.plants.get(id))
+                .map(this.plants::get)
                 .collect(Collectors.toSet());
     }
     private int getKeyIndex(final PlantInfo plantInfo) {
